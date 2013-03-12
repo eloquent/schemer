@@ -37,6 +37,12 @@ class JsonStringReader extends AbstractJsonReader
      */
     public function read()
     {
+        $value = json_decode($this->data());
+        $error = json_last_error();
+        if (JSON_ERROR_NONE !== $error) {
+            throw new Exception\JsonParseException($error);
+        }
+
         return $this->transform()->apply(json_decode($this->data()));
     }
 

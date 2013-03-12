@@ -1,0 +1,26 @@
+{
+    "name": "eloquent/schemer",
+    "description": "Generic schema validation library for PHP, based on JSON Schema.",
+    "keywords": ["schema", "json", "yaml", "validation"],
+    "homepage": "https://github.com/eloquent/schemer",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Erin Millard",
+            "email": "ezzatron@gmail.com",
+            "homepage": "http://ezzatron.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "eloquent/equality": "~2"
+    },
+    "require-dev": {
+        "icecave/archer": "~0.2"
+    },
+    "autoload": {
+        "psr-0": {
+            "Eloquent\\Schemer": "src"
+        }
+    }
+}

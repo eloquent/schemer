@@ -16,7 +16,7 @@ use InvalidArgumentException;
 class ArrayValue extends AbstractValue
 {
     /**
-     * @param array $value
+     * @param array<integer,mixed> $value
      */
     public function __construct(array $value)
     {

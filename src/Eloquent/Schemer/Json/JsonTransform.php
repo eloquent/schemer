@@ -11,7 +11,16 @@
 
 namespace Eloquent\Schemer\Json;
 
+use Eloquent\Schemer\Value\ArrayValue;
+use Eloquent\Schemer\Value\BooleanValue;
+use Eloquent\Schemer\Value\IntegerValue;
+use Eloquent\Schemer\Value\NumberValue;
+use Eloquent\Schemer\Value\NullValue;
+use Eloquent\Schemer\Value\ObjectValue;
+use Eloquent\Schemer\Value\ReferenceValue;
+use Eloquent\Schemer\Value\StringValue;
 use Exception;
+use stdClass;
 
 class JsonTransform
 {
@@ -24,22 +33,61 @@ class JsonTransform
     {
         $type = gettype($value);
         switch ($type) {
-            case 'array':
-                return $this->transformArray($value);
             case 'boolean':
-                return $this->transformBoolean($value);
+                return new BooleanValue($value);
             case 'integer':
-                return $this->transformInteger($value);
+                return new IntegerValue($value);
             case 'double':
-                return $this->transformNumber($value);
+                return new NumberValue($value);
             case 'NULL':
                 return new NullValue;
+            case 'string':
+                return new StringValue($value);
+            case 'array':
+                return $this->transformArray($value);
             case 'object':
                 return $this->transformObject($value);
-            case 'string':
-                return $this->transformString($value);
         }
 
         throw new Exception(sprintf("Unsupported value type '%s'.", $type));
+    }
+
+    /**
+     * @param array<integer,mixed> $value
+     *
+     * @return ArrayValue
+     */
+    public function transformArray(array $value)
+    {
+        foreach ($value as $index => $subValue) {
+            $value[$index] = $this->apply($subValue);
+        }
+
+        return new ArrayValue($value);
+    }
+
+    /**
+     * @param stdClass $value
+     *
+     * @return ObjectValue|ReferenceValue
+     */
+    public function transformObject(stdClass $value)
+    {
+        $value = clone $value;
+
+        $isReference = false;
+        foreach (get_object_vars($value) as $key => $subValue) {
+            $value->{$key} = $this->apply($subValue);
+            $isReference =
+                $isReference ||
+                '$ref' === $key && $value->{$key} instanceof StringValue
+            ;
+        }
+
+        if ($isReference) {
+            return new ReferenceValue($value);
+        }
+
+        return new ObjectValue($value);
     }
 }
