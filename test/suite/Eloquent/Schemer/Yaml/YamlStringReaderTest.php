@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Json;
+namespace Eloquent\Schemer\Yaml;
 
 use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Value\ArrayValue;
@@ -24,10 +24,10 @@ use PHPUnit_Framework_TestCase;
 use stdClass;
 
 /**
- * @covers \Eloquent\Schemer\Json\JsonStringReader
+ * @covers \Eloquent\Schemer\Yaml\YamlStringReader
  * @covers \Eloquent\Schemer\Reader\AbstractReader
  */
-class JsonStringReaderTest extends PHPUnit_Framework_TestCase
+class YamlStringReaderTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
@@ -38,8 +38,17 @@ class JsonStringReaderTest extends PHPUnit_Framework_TestCase
 
     public function testReader()
     {
-        $json = '{"foo": [true, 111, null, 1.11, "bar", {"$ref": "baz", "qux": "doom"}]}';
-        $reader = new JsonStringReader($json);
+        $yaml = <<<'EOD'
+foo:
+  - true
+  - 111
+  - null
+  - 1.11
+  - bar
+  - $ref: baz
+    qux: doom
+EOD;
+        $reader = new YamlStringReader($yaml);
         $expectedReference = new stdClass;
         $expectedReference->{'$ref'} = new StringValue('baz');
         $expectedReference->qux = new StringValue('doom');
@@ -61,12 +70,11 @@ class JsonStringReaderTest extends PHPUnit_Framework_TestCase
 
     public function testReaderFailureSyntaxError()
     {
-        $json = '{';
-        $reader = new JsonStringReader($json);
+        $yaml = "\t";
+        $reader = new YamlStringReader($yaml);
 
         $this->setExpectedException(
-            __NAMESPACE__.'\Exception\JsonParseException',
-            'Unable to parse JSON. Syntax error.'
+            'Symfony\Component\Yaml\Exception\ParseException'
         );
         $reader->read();
     }

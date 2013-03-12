@@ -9,23 +9,34 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Json;
+namespace Eloquent\Schemer\Yaml;
 
 use Eloquent\Schemer\Reader\AbstractReader;
 use Eloquent\Schemer\Value\ValueTransformInterface;
+use Symfony\Component\Yaml\Parser;
 
-class JsonStringReader extends AbstractReader
+class YamlStringReader extends AbstractReader
 {
     /**
      * @param string                       $data
+     * @param Parser|null                  $parser
      * @param ValueTransformInterface|null $transform
      */
     public function __construct(
         $data,
+        Parser $parser = null,
         ValueTransformInterface $transform = null
     ) {
+        if (null === $parser) {
+            $parser = new Parser;
+        }
+        if (null === $transform) {
+            $transform = new YamlTransform;
+        }
+
         parent::__construct($transform);
 
+        $this->parser = $parser;
         $this->data = $data;
     }
 
@@ -38,18 +49,23 @@ class JsonStringReader extends AbstractReader
     }
 
     /**
+     * @return Parser
+     */
+    public function parser()
+    {
+        return $this->parser;
+    }
+
+    /**
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
     public function read()
     {
-        $value = json_decode($this->data());
-        $error = json_last_error();
-        if (JSON_ERROR_NONE !== $error) {
-            throw new Exception\JsonParseException($error);
-        }
-
-        return $this->transform()->apply($value);
+        return $this->transform()->apply(
+            $this->parser()->parse($this->data(), true)
+        );
     }
 
     private $data;
+    private $parser;
 }

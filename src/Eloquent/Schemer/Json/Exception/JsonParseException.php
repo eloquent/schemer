@@ -16,7 +16,7 @@ use Exception;
 final class JsonParseException extends Exception
 {
     /**
-     * @param integer $jsonError
+     * @param integer        $jsonError
      * @param Exception|null $previous
      */
     public function __construct($jsonError, Exception $previous = null)

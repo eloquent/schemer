@@ -9,20 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Json;
+namespace Eloquent\Schemer\Value;
 
-use Eloquent\Schemer\Value\ArrayValue;
-use Eloquent\Schemer\Value\BooleanValue;
-use Eloquent\Schemer\Value\IntegerValue;
-use Eloquent\Schemer\Value\NumberValue;
-use Eloquent\Schemer\Value\NullValue;
-use Eloquent\Schemer\Value\ObjectValue;
-use Eloquent\Schemer\Value\ReferenceValue;
-use Eloquent\Schemer\Value\StringValue;
 use Exception;
 use stdClass;
 
-class JsonTransform
+class ValueTransform implements ValueTransformInterface
 {
     /**
      * @param mixed $value
@@ -57,7 +49,7 @@ class JsonTransform
      *
      * @return ArrayValue
      */
-    public function transformArray(array $value)
+    protected function transformArray(array $value)
     {
         foreach ($value as $index => $subValue) {
             $value[$index] = $this->apply($subValue);
@@ -71,16 +63,16 @@ class JsonTransform
      *
      * @return ObjectValue|ReferenceValue
      */
-    public function transformObject(stdClass $value)
+    protected function transformObject(stdClass $value)
     {
         $value = clone $value;
 
         $isReference = false;
         foreach (get_object_vars($value) as $key => $subValue) {
-            $value->{$key} = $this->apply($subValue);
+            $value->$key = $this->apply($subValue);
             $isReference =
                 $isReference ||
-                '$ref' === $key && $value->{$key} instanceof StringValue
+                '$ref' === $key && $value->$key instanceof StringValue
             ;
         }
 

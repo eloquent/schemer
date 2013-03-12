@@ -9,26 +9,27 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Json;
+namespace Eloquent\Schemer\Reader;
 
-use Eloquent\Schemer\Reader\ReaderInterface;
+use Eloquent\Schemer\Value\ValueTransform;
+use Eloquent\Schemer\Value\ValueTransformInterface;
 
-abstract class AbstractJsonReader implements ReaderInterface
+abstract class AbstractReader implements ReaderInterface
 {
     /**
-     * @param JsonTransform|null $transform
+     * @param ValueTransformInterface|null $transform
      */
-    public function __construct(JsonTransform $transform = null)
+    public function __construct(ValueTransformInterface $transform = null)
     {
         if (null === $transform) {
-            $transform = new JsonTransform;
+            $transform = new ValueTransform;
         }
 
         $this->transform = $transform;
     }
 
     /**
-     * @return JsonTransform
+     * @return ValueTransformInterface
      */
     public function transform()
     {
