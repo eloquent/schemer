@@ -9,35 +9,29 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Yaml;
+namespace Eloquent\Schemer\Toml;
 
 use Eloquent\Schemer\Reader\AbstractReader;
 use Eloquent\Schemer\Value\AssociativeValueTransform;
 use Eloquent\Schemer\Value\ValueTransformInterface;
-use Symfony\Component\Yaml\Parser;
+use Toml\Parser;
 
-class YamlStringReader extends AbstractReader
+class TomlStringReader extends AbstractReader
 {
     /**
      * @param string                       $data
-     * @param Parser|null                  $parser
      * @param ValueTransformInterface|null $transform
      */
     public function __construct(
         $data,
-        Parser $parser = null,
         ValueTransformInterface $transform = null
     ) {
-        if (null === $parser) {
-            $parser = new Parser;
-        }
         if (null === $transform) {
             $transform = new AssociativeValueTransform;
         }
 
         parent::__construct($transform);
 
-        $this->parser = $parser;
         $this->data = $data;
     }
 
@@ -50,23 +44,14 @@ class YamlStringReader extends AbstractReader
     }
 
     /**
-     * @return Parser
-     */
-    public function parser()
-    {
-        return $this->parser;
-    }
-
-    /**
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
     public function read()
     {
         return $this->transform()->apply(
-            $this->parser()->parse($this->data(), true)
+            Parser::fromString($this->data())
         );
     }
 
     private $data;
-    private $parser;
 }

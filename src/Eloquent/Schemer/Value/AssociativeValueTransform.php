@@ -9,17 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Yaml;
+namespace Eloquent\Schemer\Value;
 
-use Eloquent\Schemer\Value\ValueTransform;
 use stdClass;
 
-class YamlTransform extends ValueTransform
+class AssociativeValueTransform extends ValueTransform
 {
     /**
      * @param array<integer,mixed> $value
      *
-     * @return \Eloquent\Schemer\Value\ArrayValue|\Eloquent\Schemer\Value\ObjectValue
+     * @return ArrayValue|ObjectValue
      */
     protected function transformArray(array $value)
     {
