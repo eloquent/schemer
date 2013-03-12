@@ -11,9 +11,11 @@
 
 namespace Eloquent\Schemer\Toml;
 
+use DateTime;
 use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Value\ArrayValue;
 use Eloquent\Schemer\Value\BooleanValue;
+use Eloquent\Schemer\Value\DateTimeValue;
 use Eloquent\Schemer\Value\IntegerValue;
 use Eloquent\Schemer\Value\NumberValue;
 use Eloquent\Schemer\Value\ObjectValue;
@@ -44,12 +46,12 @@ baz = 1.11
 qux = ["doom", "splat"]
 [ping]
 $ref = "pong"
-pang = "peng"
+pang = 2015-10-21T16:29:00Z
 EOD;
         $reader = new TomlStringReader($toml);
         $expectedReference = new stdClass;
         $expectedReference->{'$ref'} = new StringValue('pong');
-        $expectedReference->pang = new StringValue('peng');
+        $expectedReference->pang = new DateTimeValue(new DateTime('2015-10-21T16:29:00Z'));
         $expectedObject = new stdClass;
         $expectedObject->foo = new BooleanValue(true);
         $expectedObject->bar = new IntegerValue(111);

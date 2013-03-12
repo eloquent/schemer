@@ -63,6 +63,13 @@ interface ValueVisitorInterface
     public function visitStringValue(StringValue $value);
 
     /**
+     * @param DateTimeValue $value
+     *
+     * @return mixed
+     */
+    public function visitDateTimeValue(DateTimeValue $value);
+
+    /**
      * @param ReferenceValue $value
      *
      * @return mixed

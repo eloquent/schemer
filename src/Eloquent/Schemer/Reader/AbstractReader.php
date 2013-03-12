@@ -11,8 +11,8 @@
 
 namespace Eloquent\Schemer\Reader;
 
-use Eloquent\Schemer\Value\ValueTransform;
-use Eloquent\Schemer\Value\ValueTransformInterface;
+use Eloquent\Schemer\Value\Transform\ValueTransform;
+use Eloquent\Schemer\Value\Transform\ValueTransformInterface;
 
 abstract class AbstractReader implements ReaderInterface
 {

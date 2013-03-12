@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Value;
+namespace Eloquent\Schemer\Value\Transform;
 
 use stdClass;
 
@@ -18,7 +18,7 @@ class AssociativeValueTransform extends ValueTransform
     /**
      * @param array<integer,mixed> $value
      *
-     * @return ArrayValue|ObjectValue
+     * @return \Eloquent\Schemer\Value\ValueInterface
      */
     protected function transformArray(array $value)
     {

@@ -9,8 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Value;
+namespace Eloquent\Schemer\Value\Transform;
 
+use DateTime;
+use Eloquent\Schemer\Value\ArrayValue;
+use Eloquent\Schemer\Value\BooleanValue;
+use Eloquent\Schemer\Value\DateTimeValue;
+use Eloquent\Schemer\Value\IntegerValue;
+use Eloquent\Schemer\Value\NullValue;
+use Eloquent\Schemer\Value\NumberValue;
+use Eloquent\Schemer\Value\ObjectValue;
+use Eloquent\Schemer\Value\StringValue;
+use Eloquent\Schemer\Value\ReferenceValue;
 use Exception;
 use stdClass;
 
@@ -38,6 +48,10 @@ class ValueTransform implements ValueTransformInterface
             case 'array':
                 return $this->transformArray($value);
             case 'object':
+                if ($value instanceof DateTime) {
+                    return new DateTimeValue($value);
+                }
+
                 return $this->transformObject($value);
         }
 
@@ -47,7 +61,7 @@ class ValueTransform implements ValueTransformInterface
     /**
      * @param array<integer,mixed> $value
      *
-     * @return ArrayValue
+     * @return \Eloquent\Schemer\Value\ValueInterface
      */
     protected function transformArray(array $value)
     {
@@ -61,7 +75,7 @@ class ValueTransform implements ValueTransformInterface
     /**
      * @param stdClass $value
      *
-     * @return ObjectValue|ReferenceValue
+     * @return \Eloquent\Schemer\Value\ValueInterface
      */
     protected function transformObject(stdClass $value)
     {

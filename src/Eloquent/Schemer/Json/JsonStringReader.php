@@ -12,7 +12,7 @@
 namespace Eloquent\Schemer\Json;
 
 use Eloquent\Schemer\Reader\AbstractReader;
-use Eloquent\Schemer\Value\ValueTransformInterface;
+use Eloquent\Schemer\Value\Transform\ValueTransformInterface;
 
 class JsonStringReader extends AbstractReader
 {

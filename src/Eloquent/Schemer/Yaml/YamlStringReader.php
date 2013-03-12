@@ -12,8 +12,8 @@
 namespace Eloquent\Schemer\Yaml;
 
 use Eloquent\Schemer\Reader\AbstractReader;
-use Eloquent\Schemer\Value\AssociativeValueTransform;
-use Eloquent\Schemer\Value\ValueTransformInterface;
+use Eloquent\Schemer\Value\Transform\AssociativeValueTransform;
+use Eloquent\Schemer\Value\Transform\ValueTransformInterface;
 use Symfony\Component\Yaml\Parser;
 
 class YamlStringReader extends AbstractReader
