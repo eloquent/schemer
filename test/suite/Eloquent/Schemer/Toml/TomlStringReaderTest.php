@@ -37,7 +37,7 @@ class TomlStringReaderTest extends PHPUnit_Framework_TestCase
         $this->_comparator = new Comparator;
     }
 
-    public function testReader()
+    public function testRead()
     {
         $toml = <<<'EOD'
 foo = true
@@ -68,7 +68,7 @@ EOD;
         $this->assertTrue($this->_comparator->equals($expected, $actual));
     }
 
-    public function testReaderFailureSyntaxError()
+    public function testReadFailureSyntaxError()
     {
         $toml = 'foo =';
         $reader = new TomlStringReader($toml);

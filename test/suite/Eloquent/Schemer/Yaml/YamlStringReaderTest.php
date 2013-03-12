@@ -36,7 +36,7 @@ class YamlStringReaderTest extends PHPUnit_Framework_TestCase
         $this->_comparator = new Comparator;
     }
 
-    public function testReader()
+    public function testRead()
     {
         $yaml = <<<'EOD'
 foo:
@@ -68,7 +68,7 @@ EOD;
         $this->assertTrue($this->_comparator->equals($expected, $actual));
     }
 
-    public function testReaderFailureSyntaxError()
+    public function testReadFailureSyntaxError()
     {
         $yaml = "\t";
         $reader = new YamlStringReader($yaml);

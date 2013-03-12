@@ -13,6 +13,7 @@ namespace Eloquent\Schemer\Value;
 
 use InvalidArgumentException;
 use stdClass;
+use Zend\Uri\UriFactory;
 
 class ReferenceValue extends AbstractObjectValue
 {
@@ -30,13 +31,13 @@ class ReferenceValue extends AbstractObjectValue
             );
         }
 
-        $this->reference = $value->{'$ref'}->value();
+        $this->reference = UriFactory::factory($value->{'$ref'}->value());
 
         parent::__construct($value);
     }
 
     /**
-     * @return string
+     * @return \Zend\Uri\UriInterface
      */
     public function reference()
     {
