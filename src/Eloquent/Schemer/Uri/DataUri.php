@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Serialization\Exception;
+namespace Eloquent\Schemer\Uri;
 
-interface ThawExceptionInterface
+use Zend\Uri\Uri;
+
+class DataUri extends Uri
 {
+    protected static $validSchemes = array('data');
 }

@@ -11,8 +11,20 @@
 
 namespace Eloquent\Schemer\Loader;
 
+use Zend\Uri\UriInterface;
+
 interface LoaderInterface
 {
+    /**
+     * @param string $defaultType
+     */
+    public function setDefaultType($defaultType);
+
+    /**
+     * @return string
+     */
+    public function defaultType();
+
     /**
      * @param UriInterface $uri
      *

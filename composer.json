@@ -15,6 +15,7 @@
         "php": ">=5.3.0",
         "ext-intl": "*",
         "eloquent/equality": "~2",
+        "eloquent/enumeration": "~3",
         "icecave/isolator": "~2",
         "kriswallsmith/buzz": "~0.9",
         "zendframework/zend-uri": "~2"

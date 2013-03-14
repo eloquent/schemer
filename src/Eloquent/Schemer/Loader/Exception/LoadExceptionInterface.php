@@ -9,8 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Serialization\Exception;
+namespace Eloquent\Schemer\Loader\Exception;
 
-interface ThawExceptionInterface
+interface LoadExceptionInterface
 {
+    /**
+     * @return \Zend\Uri\UriInterface
+     */
+    public function uri();
 }
