@@ -21,7 +21,7 @@ use Eloquent\Schemer\Value\NumberValue;
 use Eloquent\Schemer\Value\ObjectValue;
 use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ReferenceValue;
-use Exception;
+use InvalidArgumentException;
 use stdClass;
 
 class ValueTransform implements ValueTransformInterface
@@ -55,7 +55,9 @@ class ValueTransform implements ValueTransformInterface
                 return $this->transformObject($value);
         }
 
-        throw new Exception(sprintf("Unsupported value type '%s'.", $type));
+        throw new InvalidArgumentException(
+            sprintf("Unsupported value type '%s'.", $type)
+        );
     }
 
     /**
@@ -65,8 +67,20 @@ class ValueTransform implements ValueTransformInterface
      */
     protected function transformArray(array $value)
     {
+        $isObject = false;
+        $expectedIndex = 0;
         foreach ($value as $index => $subValue) {
             $value[$index] = $this->apply($subValue);
+            $isObject = $isObject || $index !== ++$expectedIndex;
+        }
+
+        if ($isObject) {
+            $object = new stdClass;
+            foreach ($value as $key => $subValue) {
+                $object->$key = $subValue;
+            }
+
+            return $this->transformReference($object);
         }
 
         return new ArrayValue($value);
@@ -81,16 +95,24 @@ class ValueTransform implements ValueTransformInterface
     {
         $value = clone $value;
 
-        $isReference = false;
         foreach (get_object_vars($value) as $key => $subValue) {
             $value->$key = $this->apply($subValue);
-            $isReference =
-                $isReference ||
-                '$ref' === $key && $value->$key instanceof StringValue
-            ;
         }
 
-        if ($isReference) {
+        return $this->transformReference($value);
+    }
+
+    /**
+     * @param stdClass $value
+     *
+     * @return \Eloquent\Schemer\Value\ValueInterface
+     */
+    protected function transformReference(stdClass $value)
+    {
+        if (
+            property_exists($value, '$ref') &&
+            $value->{'$ref'} instanceof StringValue
+        ) {
             return new ReferenceValue($value);
         }
 

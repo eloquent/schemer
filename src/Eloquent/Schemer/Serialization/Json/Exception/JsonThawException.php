@@ -9,19 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Json\Exception;
+namespace Eloquent\Schemer\Serialization\Json\Exception;
 
+use Eloquent\Schemer\Serialization\Exception\ThawExceptionInterface;
 use Exception;
 
-final class JsonParseException extends Exception
+final class JsonThawException extends Exception implements ThawExceptionInterface
 {
     /**
-     * @param integer        $jsonError
+     * @param integer        $jsonErrorCode
      * @param Exception|null $previous
      */
-    public function __construct($jsonError, Exception $previous = null)
+    public function __construct($jsonErrorCode, Exception $previous = null)
     {
-        switch ($jsonError) {
+        switch ($jsonErrorCode) {
             case JSON_ERROR_DEPTH:
                 $message = 'Maximum stack depth exceeded.';
                 break;
@@ -41,10 +42,10 @@ final class JsonParseException extends Exception
                 $message = 'Unknown error.';
         }
 
-        $this->jsonError = $jsonError;
+        $this->jsonErrorCode = $jsonErrorCode;
 
         parent::__construct(
-            sprintf('Unable to parse JSON. %s', $message),
+            sprintf('Unable to thaw JSON data. %s', $message),
             0,
             $previous
         );
@@ -53,10 +54,10 @@ final class JsonParseException extends Exception
     /**
      * @return integer
      */
-    public function jsonError()
+    public function jsonErrorCode()
     {
-        return $this->jsonError;
+        return $this->jsonErrorCode;
     }
 
-    private $jsonError;
+    private $jsonErrorCode;
 }
