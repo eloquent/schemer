@@ -29,6 +29,7 @@ interface LoaderInterface
      * @param UriInterface $uri
      *
      * @return Content
+     * @throws Exception\LoadExceptionInterface
      */
     public function load(UriInterface $uri);
 }

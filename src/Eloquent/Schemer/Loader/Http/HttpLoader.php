@@ -24,24 +24,20 @@ use Zend\Uri\UriInterface;
 class HttpLoader implements LoaderInterface
 {
     /**
+     * @param string|null  $defaultType
      * @param Browser|null $browser
      */
-    public function __construct(Browser $browser = null)
+    public function __construct($defaultType = null, Browser $browser = null)
     {
+        if (null === $defaultType) {
+            $defaultType = ContentType::JSON()->primaryType();
+        }
         if (null === $browser) {
             $browser = new Browser;
         }
 
+        $this->defaultType = $defaultType;
         $this->browser = $browser;
-        $this->defaultType = ContentType::JSON()->primaryType();
-    }
-
-    /**
-     * @return Browser
-     */
-    public function browser()
-    {
-        return $this->browser;
     }
 
     /**
@@ -61,9 +57,18 @@ class HttpLoader implements LoaderInterface
     }
 
     /**
+     * @return Browser
+     */
+    public function browser()
+    {
+        return $this->browser;
+    }
+
+    /**
      * @param UriInterface $uri
      *
      * @return Content
+     * @throws LoadException
      */
     public function load(UriInterface $uri)
     {
@@ -103,6 +108,6 @@ class HttpLoader implements LoaderInterface
         return $this->defaultType();
     }
 
-    private $browser;
     private $defaultType;
+    private $browser;
 }

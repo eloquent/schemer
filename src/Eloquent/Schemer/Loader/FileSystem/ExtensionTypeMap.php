@@ -15,20 +15,31 @@ use Eloquent\Schemer\Loader\ContentType;
 
 class ExtensionTypeMap
 {
-    public function __construct()
+    /**
+     * @param array<string,string>|null $map
+     * @param string|null               $default
+     */
+    public function __construct(array $map = null, $default = null)
     {
-        $jsonType = ContentType::JSON()->primaryType();
-        $tomlType = ContentType::TOML()->primaryType();
-        $yamlType = ContentType::YAML()->primaryType();
-        $this->map = array(
-            'js' => $jsonType,
-            'json' => $jsonType,
-            'toml' => $tomlType,
-            'tml' => $tomlType,
-            'yaml' => $yamlType,
-            'yml' => $yamlType,
-        );
-        $this->default = $jsonType;
+        if (null === $map) {
+            $jsonType = ContentType::JSON()->primaryType();
+            $tomlType = ContentType::TOML()->primaryType();
+            $yamlType = ContentType::YAML()->primaryType();
+            $map = array(
+                'js' => $jsonType,
+                'json' => $jsonType,
+                'toml' => $tomlType,
+                'tml' => $tomlType,
+                'yaml' => $yamlType,
+                'yml' => $yamlType,
+            );
+        }
+        if (null === $default) {
+            $default = ContentType::JSON()->primaryType();
+        }
+
+        $this->map = $map;
+        $this->default = $default;
     }
 
     /**

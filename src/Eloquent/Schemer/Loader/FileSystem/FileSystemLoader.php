@@ -66,6 +66,7 @@ class FileSystemLoader implements LoaderInterface
      * @param UriInterface $uri
      *
      * @return Content
+     * @throws LoadException
      */
     public function load(UriInterface $uri)
     {

@@ -130,7 +130,7 @@ class DataUri extends Uri
             )
         ) {
             return false;
-        } else if (!preg_match('/^[!#$&-;=?-[\]_a-z~%]+$/', $this->rawData)) {
+        } elseif (!preg_match('/^[!#$&-;=?-[\]_a-z~%]+$/', $this->rawData)) {
             return false;
         }
 
