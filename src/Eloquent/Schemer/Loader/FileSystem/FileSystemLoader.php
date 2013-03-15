@@ -51,7 +51,7 @@ class FileSystemLoader implements LoaderInterface
      */
     public function setDefaultType($defaultType)
     {
-        $this->extensionMap()->setDefault($defaultType);
+        $this->extensionMap()->setDefaultType($defaultType);
     }
 
     /**
@@ -59,7 +59,7 @@ class FileSystemLoader implements LoaderInterface
      */
     public function defaultType()
     {
-        return $this->extensionMap()->default();
+        return $this->extensionMap()->defaultType();
     }
 
     /**

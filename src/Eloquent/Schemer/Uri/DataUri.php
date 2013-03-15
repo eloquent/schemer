@@ -11,12 +11,38 @@
 
 namespace Eloquent\Schemer\Uri;
 
+use Zend\Uri\Exception\InvalidArgumentException;
 use Zend\Uri\Exception\InvalidUriException;
 use Zend\Uri\Uri;
+use Zend\Uri\UriInterface;
 
 class DataUri extends Uri
 {
     protected static $validSchemes = array('data');
+
+    /**
+     * @param string|UriInterface|null $uri
+     */
+    public function __construct($uri = null)
+    {
+        $this->setScheme('data');
+        $this->setEncoding('base64');
+
+        if ($uri instanceof self) {
+            $this->setMimeType($uri->getMimeType());
+            $this->setEncoding($uri->getEncoding());
+            $this->setRawData($uri->getRawData());
+        } elseif (is_string($uri)) {
+            $this->parse($uri);
+        } elseif ($uri instanceof UriInterface) {
+            $this->parse($uri->toString());
+        } elseif ($uri !== null) {
+            throw new InvalidArgumentException(sprintf(
+                'Expecting a string or a URI object, received "%s"',
+                (is_object($uri) ? get_class($uri) : gettype($uri))
+            ));
+        }
+    }
 
     /**
      * @param string|null $mimeType

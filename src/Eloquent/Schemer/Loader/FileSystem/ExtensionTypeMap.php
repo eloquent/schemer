@@ -17,9 +17,9 @@ class ExtensionTypeMap
 {
     /**
      * @param array<string,string>|null $map
-     * @param string|null               $default
+     * @param string|null               $defaultType
      */
-    public function __construct(array $map = null, $default = null)
+    public function __construct(array $map = null, $defaultType = null)
     {
         if (null === $map) {
             $jsonType = ContentType::JSON()->primaryType();
@@ -34,12 +34,12 @@ class ExtensionTypeMap
                 'yml' => $yamlType,
             );
         }
-        if (null === $default) {
-            $default = ContentType::JSON()->primaryType();
+        if (null === $defaultType) {
+            $defaultType = ContentType::JSON()->primaryType();
         }
 
         $this->map = $map;
-        $this->default = $default;
+        $this->defaultType = $defaultType;
     }
 
     /**
@@ -62,9 +62,9 @@ class ExtensionTypeMap
     /**
      * @param string $type
      */
-    public function setDefault($type)
+    public function setDefaultType($defaultType)
     {
-        $this->default = $type;
+        $this->defaultType = $defaultType;
     }
 
     /**
@@ -78,7 +78,7 @@ class ExtensionTypeMap
             return $this->map[$extension];
         }
 
-        return $this->default();
+        return $this->defaultType();
     }
 
     /**
@@ -99,11 +99,11 @@ class ExtensionTypeMap
     /**
      * @return string
      */
-    public function default()
+    public function defaultType()
     {
-        return $this->default;
+        return $this->defaultType;
     }
 
     private $map;
-    private $default;
+    private $defaultType;
 }

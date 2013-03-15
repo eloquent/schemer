@@ -71,7 +71,7 @@ class ValueTransform implements ValueTransformInterface
         $expectedIndex = 0;
         foreach ($value as $index => $subValue) {
             $value[$index] = $this->apply($subValue);
-            $isObject = $isObject || $index !== ++$expectedIndex;
+            $isObject = $isObject || $index !== $expectedIndex++;
         }
 
         if ($isObject) {

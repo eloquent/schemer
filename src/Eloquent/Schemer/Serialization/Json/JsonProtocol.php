@@ -29,6 +29,6 @@ class JsonProtocol implements SerializationProtocolInterface
             throw new Exception\JsonThawException($error);
         }
 
-        return $this->transform()->apply($value);
+        return $value;
     }
 }

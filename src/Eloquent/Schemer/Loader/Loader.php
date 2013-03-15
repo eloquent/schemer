@@ -86,7 +86,7 @@ class Loader implements LoaderInterface
             throw new Exception\UndefinedLoaderException($scheme);
         }
 
-        return $thia->loaders[$scheme];
+        return $this->loaders[$scheme];
     }
 
     /**
