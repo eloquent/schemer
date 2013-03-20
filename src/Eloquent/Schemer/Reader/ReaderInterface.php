@@ -28,7 +28,7 @@ interface ReaderInterface
     public function readPath($path);
 
     /**
-     * @param string $data
+     * @param string      $data
      * @param string|null $type
      *
      * @return \Eloquent\Schemer\Value\ValueInterface

@@ -11,37 +11,39 @@
 
 namespace Eloquent\Schemer\Value;
 
-use InvalidArgumentException;
 use stdClass;
-use Zend\Uri\UriFactory;
+use Zend\Uri\UriInterface;
 
-class ReferenceValue extends AbstractObjectValue
+class ReferenceValue implements ValueInterface
 {
     /**
-     * @param stdClass $value
+     * @param UriInterface  $reference
+     * @param stdClass|null $additionalProperties
      */
-    public function __construct(stdClass $value)
+    public function __construct(UriInterface $reference, stdClass $additionalProperties = null)
     {
-        if (
-            !property_exists($value, '$ref') ||
-            !$value->{'$ref'} instanceof StringValue
-        ) {
-            throw new InvalidArgumentException(
-                'Value does not contain a valid reference.'
-            );
+        if (null === $additionalProperties) {
+            $additionalProperties = new stdClass;
         }
 
-        $this->reference = UriFactory::factory($value->{'$ref'}->value());
-
-        parent::__construct($value);
+        $this->reference = $reference;
+        $this->additionalProperties = $additionalProperties;
     }
 
     /**
-     * @return \Zend\Uri\UriInterface
+     * @return UriInterface
      */
     public function reference()
     {
         return $this->reference;
+    }
+
+    /**
+     * @return stdClass
+     */
+    public function additionalProperties()
+    {
+        return $this->additionalProperties;
     }
 
     /**
@@ -55,4 +57,5 @@ class ReferenceValue extends AbstractObjectValue
     }
 
     private $reference;
+    private $additionalProperties;
 }

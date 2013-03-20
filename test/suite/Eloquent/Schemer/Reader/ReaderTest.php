@@ -24,9 +24,9 @@ class ReaderTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->_reader = new Reader;
+        $this->reader = new Reader;
 
-        $this->_comparator = new Comparator;
+        $this->comparator = new Comparator;
     }
 
     public function testReadStringJson()
@@ -36,10 +36,10 @@ class ReaderTest extends PHPUnit_Framework_TestCase
             new StringValue('foo'),
             new StringValue('bar'),
         ));
-        $actual = $this->_reader->readString($data);
+        $actual = $this->reader->readString($data);
 
         $this->assertEquals($expected, $actual);
-        $this->assertTrue($this->_comparator->equals($expected, $actual));
+        $this->assertTrue($this->comparator->equals($expected, $actual));
     }
 
     public function testReadStringToml()
@@ -48,10 +48,10 @@ class ReaderTest extends PHPUnit_Framework_TestCase
         $expectedObject = new stdClass;
         $expectedObject->foo = new StringValue('bar');
         $expected = new ObjectValue($expectedObject);
-        $actual = $this->_reader->readString($data, 'application/x-toml');
+        $actual = $this->reader->readString($data, 'application/x-toml');
 
         $this->assertEquals($expected, $actual);
-        $this->assertTrue($this->_comparator->equals($expected, $actual));
+        $this->assertTrue($this->comparator->equals($expected, $actual));
     }
 
     public function testReadStringYaml()
@@ -61,9 +61,9 @@ class ReaderTest extends PHPUnit_Framework_TestCase
             new StringValue('foo'),
             new StringValue('bar'),
         ));
-        $actual = $this->_reader->readString($data, 'application/x-yaml');
+        $actual = $this->reader->readString($data, 'application/x-yaml');
 
         $this->assertEquals($expected, $actual);
-        $this->assertTrue($this->_comparator->equals($expected, $actual));
+        $this->assertTrue($this->comparator->equals($expected, $actual));
     }
 }

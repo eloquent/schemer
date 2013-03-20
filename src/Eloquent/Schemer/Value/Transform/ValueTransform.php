@@ -12,6 +12,8 @@
 namespace Eloquent\Schemer\Value\Transform;
 
 use DateTime;
+use Eloquent\Schemer\Uri\UriFactory;
+use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Value\ArrayValue;
 use Eloquent\Schemer\Value\BooleanValue;
 use Eloquent\Schemer\Value\DateTimeValue;
@@ -26,6 +28,26 @@ use stdClass;
 
 class ValueTransform implements ValueTransformInterface
 {
+    /**
+     * @param UriFactoryInterface|null $uriFactory
+     */
+    public function __construct(UriFactoryInterface $uriFactory = null)
+    {
+        if (null === $uriFactory) {
+            $uriFactory = new UriFactory;
+        }
+
+        $this->uriFactory = $uriFactory;
+    }
+
+    /**
+     * @return UriFactoryInterface
+     */
+    public function uriFactory()
+    {
+        return $this->uriFactory;
+    }
+
     /**
      * @param mixed $value
      *
@@ -113,9 +135,14 @@ class ValueTransform implements ValueTransformInterface
             property_exists($value, '$ref') &&
             $value->{'$ref'} instanceof StringValue
         ) {
-            return new ReferenceValue($value);
+            $reference = $this->uriFactory()->create($value->{'$ref'}->value());
+            unset($value->{'$ref'});
+
+            return new ReferenceValue($reference, $value);
         }
 
         return new ObjectValue($value);
     }
+
+    private $uriFactory;
 }

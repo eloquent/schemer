@@ -16,11 +16,12 @@ use Eloquent\Schemer\Loader\Loader;
 use Eloquent\Schemer\Loader\LoaderInterface;
 use Eloquent\Schemer\Serialization\ProtocolMap;
 use Eloquent\Schemer\Uri\DataUri;
+use Eloquent\Schemer\Uri\UriFactory;
+use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Value\Transform\ValueTransform;
 use Eloquent\Schemer\Value\Transform\ValueTransformInterface;
 use Icecave\Isolator\Isolator;
 use Zend\Uri\File as FileUri;
-use Zend\Uri\UriFactory;
 use Zend\Uri\UriInterface;
 
 class Reader implements ReaderInterface
@@ -29,6 +30,7 @@ class Reader implements ReaderInterface
         LoaderInterface $loader = null,
         ProtocolMap $protocolMap = null,
         ValueTransformInterface $transform = null,
+        UriFactoryInterface $uriFactory = null,
         Isolator $isolator = null
     ) {
         if (null === $loader) {
@@ -37,13 +39,17 @@ class Reader implements ReaderInterface
         if (null === $protocolMap) {
             $protocolMap = new ProtocolMap;
         }
+        if (null === $uriFactory) {
+            $uriFactory = new UriFactory;
+        }
         if (null === $transform) {
-            $transform = new ValueTransform;
+            $transform = new ValueTransform($uriFactory);
         }
 
         $this->loader = $loader;
         $this->protocolMap = $protocolMap;
         $this->transform = $transform;
+        $this->uriFactory = $uriFactory;
         $this->isolator = Isolator::get($isolator);
     }
 
@@ -69,6 +75,14 @@ class Reader implements ReaderInterface
     public function transform()
     {
         return $this->transform;
+    }
+
+    /**
+     * @return UriFactoryInterface
+     */
+    public function uriFactory()
+    {
+        return $this->uriFactory;
     }
 
     /**
@@ -109,7 +123,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param string $data
+     * @param string      $data
      * @param string|null $type
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
@@ -130,5 +144,6 @@ class Reader implements ReaderInterface
     private $loader;
     private $protocolMap;
     private $transform;
+    private $uriFactory;
     private $isolator;
 }
