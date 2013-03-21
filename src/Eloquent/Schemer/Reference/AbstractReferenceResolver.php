@@ -29,6 +29,7 @@ abstract class AbstractReferenceResolver implements ReferenceResolverInterface, 
      * @param ValueInterface $value
      *
      * @return ValueInterface
+     * @throws Exception\UndefinedReferenceException
      */
     public function resolve(ValueInterface $value)
     {

@@ -70,6 +70,7 @@ class ReferenceResolver extends AbstractReferenceResolver
      * @param ReferenceValue $value
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
+     * @throws Exception\UndefinedReferenceException
      */
     public function visitReferenceValue(ReferenceValue $value)
     {
@@ -79,7 +80,16 @@ class ReferenceResolver extends AbstractReferenceResolver
         }
         $pointer = $value->pointer();
 
-        $value = $this->reader()->read($uri);
+        try {
+            $value = $this->reader()->read($uri);
+        } catch (ReadException $e) {
+            throw new Exception\UndefinedReferenceException(
+                $value,
+                $this->uriResolver()->baseUri(),
+                $e
+            );
+        }
+
         if (null !== $pointer) {
             $value = $this->pointerResolver()->resolve($pointer, $value);
         }

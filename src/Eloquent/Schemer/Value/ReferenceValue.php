@@ -61,6 +61,17 @@ class ReferenceValue implements ValueInterface
     }
 
     /**
+     * @return Uri
+     */
+    public function uri()
+    {
+        $uri = new Uri($this->reference()->toString());
+        $uri->setFragment($this->pointer()->string());
+
+        return $uri;
+    }
+
+    /**
      * @param ValueVisitorInterface $visitor
      *
      * @return mixed
