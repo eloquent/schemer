@@ -166,7 +166,16 @@ class ValueTransform implements ValueTransformInterface
             }
             $reference = $this->uriFactory()->create($uri->toString());
 
-            return new ReferenceValue($reference, $pointer, $value);
+            $type = null;
+            if (
+                property_exists($value, '$ref-type') &&
+                $value->{'$ref-type'} instanceof StringValue
+            ) {
+                $type = $value->{'$ref-type'}->value();
+                unset($value->{'$ref-type'});
+            }
+
+            return new ReferenceValue($reference, $pointer, $type, $value);
         }
 
         return new ObjectValue($value);

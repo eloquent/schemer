@@ -47,6 +47,8 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
         return array(
             'Complete document' => array('complete-document'),
             'Partial document' =>  array('partial-document'),
+            'Explicit type' =>  array('explicit-type'),
+            'Implicit type' =>  array('implicit-type'),
         );
     }
 

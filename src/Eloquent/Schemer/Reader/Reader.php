@@ -88,30 +88,35 @@ class Reader implements ReaderInterface
 
     /**
      * @param \Zend\Uri\UriInterface|string $uri
+     * @param string|null                   $type
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    public function read($uri)
+    public function read($uri, $type = null)
     {
         if (!$uri instanceof UriInterface) {
             $uri = $this->uriFactory()->create($uri);
         }
 
         $content = $this->loader()->load($uri);
+        if (null === $type) {
+            $type = $content->type();
+        }
 
         return $this->transform()->apply(
-            $this->protocolMap()->get($content->type())->thaw($content->data())
+            $this->protocolMap()->get($type)->thaw($content->data())
         );
     }
 
     /**
-     * @param string $path
+     * @param string      $path
+     * @param string|null $type
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    public function readPath($path)
+    public function readPath($path, $type = null)
     {
-        return $this->read($this->uriFactory()->fromPath($path));
+        return $this->read($this->uriFactory()->fromPath($path), $type);
     }
 
     /**
@@ -126,7 +131,7 @@ class Reader implements ReaderInterface
             $type = ContentType::JSON()->primaryType();
         }
 
-        return $this->read($this->uriFactory()->fromData($data, $type));
+        return $this->read($this->uriFactory()->fromData($data, $type), $type);
     }
 
     private $loader;

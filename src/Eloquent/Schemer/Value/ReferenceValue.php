@@ -20,11 +20,13 @@ class ReferenceValue implements ValueInterface
     /**
      * @param UriInterface          $reference
      * @param PointerInterface|null $pointer
+     * @param string|null           $type
      * @param stdClass|null         $additionalProperties
      */
     public function __construct(
         UriInterface $reference,
         PointerInterface $pointer = null,
+        $type = null,
         stdClass $additionalProperties = null
     ) {
         if (null === $additionalProperties) {
@@ -33,6 +35,7 @@ class ReferenceValue implements ValueInterface
 
         $this->reference = $reference;
         $this->pointer = $pointer;
+        $this->type = $type;
         $this->additionalProperties = $additionalProperties;
     }
 
@@ -50,6 +53,14 @@ class ReferenceValue implements ValueInterface
     public function pointer()
     {
         return $this->pointer;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function type()
+    {
+        return $this->type;
     }
 
     /**
@@ -83,5 +94,6 @@ class ReferenceValue implements ValueInterface
 
     private $reference;
     private $pointer;
+    private $type;
     private $additionalProperties;
 }
