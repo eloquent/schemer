@@ -11,22 +11,28 @@
 
 namespace Eloquent\Schemer\Value;
 
+use Eloquent\Schemer\Pointer\PointerInterface;
 use stdClass;
 use Zend\Uri\UriInterface;
 
 class ReferenceValue implements ValueInterface
 {
     /**
-     * @param UriInterface  $reference
-     * @param stdClass|null $additionalProperties
+     * @param UriInterface          $reference
+     * @param PointerInterface|null $pointer
+     * @param stdClass|null         $additionalProperties
      */
-    public function __construct(UriInterface $reference, stdClass $additionalProperties = null)
-    {
+    public function __construct(
+        UriInterface $reference,
+        PointerInterface $pointer = null,
+        stdClass $additionalProperties = null
+    ) {
         if (null === $additionalProperties) {
             $additionalProperties = new stdClass;
         }
 
         $this->reference = $reference;
+        $this->pointer = $pointer;
         $this->additionalProperties = $additionalProperties;
     }
 
@@ -36,6 +42,14 @@ class ReferenceValue implements ValueInterface
     public function reference()
     {
         return $this->reference;
+    }
+
+    /**
+     * @return PointerInterface|null
+     */
+    public function pointer()
+    {
+        return $this->pointer;
     }
 
     /**
@@ -57,5 +71,6 @@ class ReferenceValue implements ValueInterface
     }
 
     private $reference;
+    private $pointer;
     private $additionalProperties;
 }

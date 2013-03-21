@@ -12,6 +12,8 @@
 namespace Eloquent\Schemer\Value\Transform;
 
 use DateTime;
+use Eloquent\Schemer\Pointer\PointerFactory;
+use Eloquent\Schemer\Pointer\PointerFactoryInterface;
 use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Value\ArrayValue;
@@ -25,19 +27,27 @@ use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ReferenceValue;
 use InvalidArgumentException;
 use stdClass;
+use Zend\Uri\Uri;
 
 class ValueTransform implements ValueTransformInterface
 {
     /**
-     * @param UriFactoryInterface|null $uriFactory
+     * @param UriFactoryInterface|null     $uriFactory
+     * @param PointerFactoryInterface|null $pointerFactory
      */
-    public function __construct(UriFactoryInterface $uriFactory = null)
-    {
+    public function __construct(
+        UriFactoryInterface $uriFactory = null,
+        PointerFactoryInterface $pointerFactory = null
+    ) {
         if (null === $uriFactory) {
             $uriFactory = new UriFactory;
         }
+        if (null === $pointerFactory) {
+            $pointerFactory = new PointerFactory;
+        }
 
         $this->uriFactory = $uriFactory;
+        $this->pointerFactory = $pointerFactory;
     }
 
     /**
@@ -46,6 +56,14 @@ class ValueTransform implements ValueTransformInterface
     public function uriFactory()
     {
         return $this->uriFactory;
+    }
+
+    /**
+     * @return PointerFactoryInterface
+     */
+    public function pointerFactory()
+    {
+        return $this->pointerFactory;
     }
 
     /**
@@ -138,14 +156,22 @@ class ValueTransform implements ValueTransformInterface
             property_exists($value, '$ref') &&
             $value->{'$ref'} instanceof StringValue
         ) {
-            $reference = $this->uriFactory()->create($value->{'$ref'}->value());
+            $uri = new Uri($value->{'$ref'}->value());
             unset($value->{'$ref'});
 
-            return new ReferenceValue($reference, $value);
+            $pointer = null;
+            if (null !== $uri->getFragment()) {
+                $pointer = $this->pointerFactory()->create($uri->getFragment());
+                $uri->setFragment(null);
+            }
+            $reference = $this->uriFactory()->create($uri->toString());
+
+            return new ReferenceValue($reference, $pointer, $value);
         }
 
         return new ObjectValue($value);
     }
 
     private $uriFactory;
+    private $pointerFactory;
 }

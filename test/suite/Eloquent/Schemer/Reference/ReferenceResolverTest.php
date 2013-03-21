@@ -42,13 +42,24 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
         return $uri;
     }
 
-    public function testResolveRelative()
+    public function resolverData()
     {
-        $path = sprintf('%s/complete.a.json', $this->fixturePath);
+        return array(
+            'Complete document' => array('complete-document'),
+            'Partial document' =>  array('partial-document'),
+        );
+    }
+
+    /**
+     * @dataProvider resolverData
+     */
+    public function testResolveCompleteDocument($testName)
+    {
+        $path = sprintf('%s/%s/document.json', $this->fixturePath, $testName);
         $resolver = $this->factory->create($this->pathUriFixture($path));
         $actual = $resolver->resolve($this->reader->readPath($path));
         $expected = $this->reader->readPath(
-            sprintf('%s/complete.expected.json', $this->fixturePath)
+            sprintf('%s/%s/expected.json', $this->fixturePath, $testName)
         );
 
         $this->assertEquals($expected, $actual);

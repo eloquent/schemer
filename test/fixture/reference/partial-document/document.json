@@ -2,6 +2,6 @@
     "foo": "bar",
     "baz": "qux",
     "doom": {
-        "$ref": "../reference/complete.b.json"
+        "$ref": "other.json#/pong"
     }
 }
