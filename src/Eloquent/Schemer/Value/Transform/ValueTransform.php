@@ -118,6 +118,9 @@ class ValueTransform implements ValueTransformInterface
         $value = clone $value;
 
         foreach (get_object_vars($value) as $key => $subValue) {
+            if ('' === $key) {
+                $key = '_empty_';
+            }
             $value->$key = $this->apply($subValue);
         }
 
