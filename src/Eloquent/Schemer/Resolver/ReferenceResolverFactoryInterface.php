@@ -11,14 +11,14 @@
 
 namespace Eloquent\Schemer\Resolver;
 
-use Eloquent\Schemer\Value\ValueInterface;
+use Zend\Uri\UriInterface;
 
-interface ReferenceResolverInterface
+interface ReferenceResolverFactoryInterface
 {
     /**
-     * @param ValueInterface $value
+     * @param UriInterface $baseUri
      *
-     * @return ValueInterface
+     * @return ReferenceResolverInterface
      */
-    public function resolve(ValueInterface $value);
+    public function create(UriInterface $baseUri);
 }

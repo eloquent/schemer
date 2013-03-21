@@ -26,6 +26,13 @@ use Zend\Uri\UriInterface;
 
 class Reader implements ReaderInterface
 {
+    /**
+     * @param LoaderInterface|null         $loader
+     * @param ProtocolMap|null             $protocolMap
+     * @param ValueTransformInterface|null $transform
+     * @param UriFactoryInterface|null     $uriFactory
+     * @param Isolator|null                $isolator
+     */
     public function __construct(
         LoaderInterface $loader = null,
         ProtocolMap $protocolMap = null,

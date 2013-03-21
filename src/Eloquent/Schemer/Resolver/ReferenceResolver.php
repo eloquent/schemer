@@ -11,30 +11,43 @@
 
 namespace Eloquent\Schemer\Resolver;
 
-use Eloquent\Schemer\Loader\Loader;
-use Eloquent\Schemer\Loader\LoaderInterface;
+use Eloquent\Schemer\Reader\Reader;
+use Eloquent\Schemer\Reader\ReaderInterface;
+use Eloquent\Schemer\Uri\Resolver\BoundUriResolverInterface;
 use Eloquent\Schemer\Value\ReferenceValue;
 
 class ReferenceResolver extends AbstractReferenceResolver
 {
     /**
-     * @param LoaderInterface|null $loader
+     * @param BoundUriResolverInterface $uriResolver
+     * @param ReaderInterface|null      $reader
      */
-    public function __construct(LoaderInterface $loader = null)
-    {
-        if (null === $loader) {
-            $loader = new Loader;
+    public function __construct(
+        BoundUriResolverInterface $uriResolver,
+        ReaderInterface $reader = null
+    ) {
+        if (null === $reader) {
+            $reader = new Reader;
         }
 
-        $this->loader = $loader;
+        $this->uriResolver = $uriResolver;
+        $this->reader = $reader;
     }
 
     /**
-     * @return Loader
+     * @return BoundUriResolverInterface
      */
-    public function loader()
+    public function uriResolver()
     {
-        return $this->loader;
+        return $this->uriResolver;
+    }
+
+    /**
+     * @return Reader
+     */
+    public function reader()
+    {
+        return $this->reader;
     }
 
     /**
@@ -44,11 +57,14 @@ class ReferenceResolver extends AbstractReferenceResolver
      */
     public function visitReferenceValue(ReferenceValue $value)
     {
-        $reference = $value->reference();
-        if (!$reference->isAbsolute()) {
-            // TODO
+        $uri = $value->reference();
+        if (!$uri->isAbsolute()) {
+            $uri = $this->uriResolver()->resolve($uri);
         }
+
+        return $this->reader()->read($uri);
     }
 
-    private $loader;
+    private $uriResolver;
+    private $reader;
 }

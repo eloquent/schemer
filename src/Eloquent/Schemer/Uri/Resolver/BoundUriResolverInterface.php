@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Resolver;
+namespace Eloquent\Schemer\Uri\Resolver;
 
-use Eloquent\Schemer\Value\ValueInterface;
+use Zend\Uri\UriInterface;
 
-interface ReferenceResolverInterface
+interface BoundUriResolverInterface
 {
     /**
-     * @param ValueInterface $value
+     * @param UriInterface $uri
      *
-     * @return ValueInterface
+     * @return UriInterface
      */
-    public function resolve(ValueInterface $value);
+    public function resolve(UriInterface $uri);
 }

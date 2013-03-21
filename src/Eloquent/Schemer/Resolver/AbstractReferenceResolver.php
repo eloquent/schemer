@@ -21,6 +21,7 @@ use Eloquent\Schemer\Value\ObjectValue;
 use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ValueInterface;
 use Eloquent\Schemer\Value\ValueVisitorInterface;
+use stdClass;
 
 abstract class AbstractReferenceResolver implements ReferenceResolverInterface, ValueVisitorInterface
 {
@@ -41,7 +42,12 @@ abstract class AbstractReferenceResolver implements ReferenceResolverInterface, 
      */
     public function visitArrayValue(ArrayValue $value)
     {
-        return $value;
+        $innerValue = array();
+        foreach ($value->value() as $index => $subValue) {
+            $innerValue[$index] = $subValue->accept($this);
+        }
+
+        return new ArrayValue($innerValue);
     }
 
     /**
@@ -91,7 +97,12 @@ abstract class AbstractReferenceResolver implements ReferenceResolverInterface, 
      */
     public function visitObjectValue(ObjectValue $value)
     {
-        return $value;
+        $innerValue = new stdClass;
+        foreach (get_object_vars($value->value()) as $key => $subValue) {
+            $innerValue->$key = $subValue->accept($this);
+        }
+
+        return new ObjectValue($innerValue);
     }
 
     /**
