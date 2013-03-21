@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Resolver;
+namespace Eloquent\Schemer\Reference;
 
 use Eloquent\Schemer\Value\ValueInterface;
 
