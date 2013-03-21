@@ -11,7 +11,9 @@
 
 namespace Eloquent\Schemer\Uri;
 
+use Icecave\Isolator\Isolator;
 use InvalidArgumentException;
+use Zend\Uri\File as FileUri;
 use Zend\Uri\Uri;
 
 class UriFactory implements UriFactoryInterface
@@ -19,10 +21,12 @@ class UriFactory implements UriFactoryInterface
     /**
      * @param array<string,string>|null $schemeClasses
      * @param string|null               $defaultClass
+     * @param Isolator|null             $isolator
      */
     public function __construct(
         array $schemeClasses = null,
-        $defaultClass = null
+        $defaultClass = null,
+        Isolator $isolator = null
     ) {
         if (null === $schemeClasses) {
             $schemeClasses = array(
@@ -41,6 +45,7 @@ class UriFactory implements UriFactoryInterface
 
         $this->schemeClasses = $schemeClasses;
         $this->defaultClass = $defaultClass;
+        $this->isolator = Isolator::get($isolator);
     }
 
     /**
@@ -109,6 +114,40 @@ class UriFactory implements UriFactoryInterface
         return new $schemeClass($uri);
     }
 
+    /**
+     * @param string $path
+     *
+     * @return FileUri
+     */
+    public function fromPath($path)
+    {
+        if ($this->isolator->defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $uri = FileUri::fromWindowsPath($path);
+        } else {
+            $uri = FileUri::fromUnixPath($path);
+        }
+
+        return $uri;
+    }
+
+    /**
+     * @param string      $data
+     * @param string|null $type
+     *
+     * @return DataUri
+     */
+    public function fromData($data, $type = null)
+    {
+        $uri = new DataUri;
+        $uri->setData($data);
+        if (null !== $type) {
+            $uri->setMimeType($type);
+        }
+
+        return $uri;
+    }
+
     private $schemeClasses;
     private $defaultClass;
+    private $isolator;
 }

@@ -15,13 +15,10 @@ use Eloquent\Schemer\Loader\ContentType;
 use Eloquent\Schemer\Loader\Loader;
 use Eloquent\Schemer\Loader\LoaderInterface;
 use Eloquent\Schemer\Serialization\ProtocolMap;
-use Eloquent\Schemer\Uri\DataUri;
 use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Value\Transform\ValueTransform;
 use Eloquent\Schemer\Value\Transform\ValueTransformInterface;
-use Icecave\Isolator\Isolator;
-use Zend\Uri\File as FileUri;
 use Zend\Uri\UriInterface;
 
 class Reader implements ReaderInterface
@@ -31,14 +28,12 @@ class Reader implements ReaderInterface
      * @param ProtocolMap|null             $protocolMap
      * @param ValueTransformInterface|null $transform
      * @param UriFactoryInterface|null     $uriFactory
-     * @param Isolator|null                $isolator
      */
     public function __construct(
         LoaderInterface $loader = null,
         ProtocolMap $protocolMap = null,
         ValueTransformInterface $transform = null,
-        UriFactoryInterface $uriFactory = null,
-        Isolator $isolator = null
+        UriFactoryInterface $uriFactory = null
     ) {
         if (null === $loader) {
             $loader = new Loader;
@@ -57,7 +52,6 @@ class Reader implements ReaderInterface
         $this->protocolMap = $protocolMap;
         $this->transform = $transform;
         $this->uriFactory = $uriFactory;
-        $this->isolator = Isolator::get($isolator);
     }
 
     /**
@@ -100,10 +94,7 @@ class Reader implements ReaderInterface
     public function read($uri)
     {
         if (!$uri instanceof UriInterface) {
-            $uri = UriFactory::factory($uri);
-            if (!$uri instanceof DataUri && 'data' === $uri->getScheme()) {
-                $uri = new DataUri($uri);
-            }
+            $uri = $this->uriFactory()->create($uri);
         }
 
         $content = $this->loader()->load($uri);
@@ -120,13 +111,7 @@ class Reader implements ReaderInterface
      */
     public function readPath($path)
     {
-        if ($this->isolator->defined('PHP_WINDOWS_VERSION_BUILD')) {
-            $uri = FileUri::fromWindowsPath($path);
-        } else {
-            $uri = FileUri::fromUnixPath($path);
-        }
-
-        return $this->read($uri);
+        return $this->read($this->uriFactory()->fromPath($path));
     }
 
     /**
@@ -141,16 +126,11 @@ class Reader implements ReaderInterface
             $type = ContentType::JSON()->primaryType();
         }
 
-        $uri = new DataUri;
-        $uri->setMimeType($type);
-        $uri->setData($data);
-
-        return $this->read($uri);
+        return $this->read($this->uriFactory()->fromData($data, $type));
     }
 
     private $loader;
     private $protocolMap;
     private $transform;
     private $uriFactory;
-    private $isolator;
 }

@@ -20,4 +20,19 @@ interface UriFactoryInterface
      * @return \Zend\Uri\UriInterface
      */
     public function create($uri, $defaultScheme = null);
+
+    /**
+     * @param string $path
+     *
+     * @return \Zend\Uri\File
+     */
+    public function fromPath($path);
+
+    /**
+     * @param string      $data
+     * @param string|null $type
+     *
+     * @return DataUri
+     */
+    public function fromData($data, $type = null);
 }
