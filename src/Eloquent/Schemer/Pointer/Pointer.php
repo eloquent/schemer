@@ -42,6 +42,19 @@ class Pointer implements PointerInterface
     }
 
     /**
+     * @param string $atom
+     *
+     * @return Pointer
+     */
+    public function joinAtom($atom)
+    {
+        $atoms = $this->atoms();
+        array_push($atoms, $atom);
+
+        return new static($atoms);
+    }
+
+    /**
      * @return string
      */
     public function string()
