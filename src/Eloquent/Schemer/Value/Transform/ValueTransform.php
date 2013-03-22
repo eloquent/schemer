@@ -168,11 +168,11 @@ class ValueTransform implements ValueTransformInterface
 
             $type = null;
             if (
-                property_exists($value, '$ref-type') &&
-                $value->{'$ref-type'} instanceof StringValue
+                property_exists($value, '$type') &&
+                $value->{'$type'} instanceof StringValue
             ) {
-                $type = $value->{'$ref-type'}->value();
-                unset($value->{'$ref-type'});
+                $type = $value->{'$type'}->value();
+                unset($value->{'$type'});
             }
 
             return new ReferenceValue($reference, $pointer, $type, $value);

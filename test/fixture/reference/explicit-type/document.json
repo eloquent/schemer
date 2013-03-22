@@ -3,6 +3,6 @@
     "baz": "qux",
     "doom": {
         "$ref": "other",
-        "$ref-type": "application/x-yaml"
+        "$type": "application/x-yaml"
     }
 }
