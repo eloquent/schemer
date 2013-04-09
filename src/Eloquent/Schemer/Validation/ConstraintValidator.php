@@ -14,6 +14,7 @@ namespace Eloquent\Schemer\Validation;
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Pointer\Pointer;
 use Eloquent\Schemer\Pointer\PointerInterface;
@@ -102,6 +103,31 @@ class ConstraintValidator implements
         }
     }
 
+    // object constraints
+
+    /**
+     * @param PropertyConstraint $constraint
+     */
+    public function visitPropertyConstraint(PropertyConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (
+            !$value instanceof ObjectValue ||
+            !$value->has($constraint->property())
+        ) {
+            return;
+        }
+
+        $this->pushContext(array(
+            $value->get($constraint->property()),
+            $this->currentPointer()->joinAtom($constraint->property())
+        ));
+        $constraint->schema()->accept($this);
+        $this->popContext();
+    }
+
+    // implementation details
+
     /**
      * @param tuple<ValueInterface,PointerInterface> $context
      */
@@ -149,6 +175,17 @@ class ConstraintValidator implements
         list($value) = $this->currentContext();
 
         return $value;
+    }
+
+    /**
+     * @return PointerInterface
+     * @throws LogicException
+     */
+    protected function currentPointer()
+    {
+        list(, $pointer) = $this->currentContext();
+
+        return $pointer;
     }
 
     /**

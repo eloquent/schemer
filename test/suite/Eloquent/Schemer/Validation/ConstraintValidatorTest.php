@@ -34,16 +34,16 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
     {
         return array(
             'Successful validation' => array(
-                '{"type": "string"}',
-                '"foo"',
+                '{"type": "object", "properties": {"foo": {"type": "string"}}}',
+                '{"foo": "bar"}',
                 array(),
             ),
 
             'Failed validation' => array(
-                '{"type": "string"}',
-                'null',
+                '{"type": "object", "properties": {"foo": {"type": "string"}}}',
+                '{"foo": null}',
                 array(
-                    "Validation failed for value at '#': The value must be of type 'string'.",
+                    "Validation failed for value at '#/foo': The value must be of type 'string'.",
                 ),
             ),
         );
@@ -54,7 +54,7 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
      */
     public function testValidateSchema($schema, $value, array $expected)
     {
-        $schema = $this->schemaReader->readString('{"type": "string"}');
+        $schema = $this->schemaReader->readString($schema);
         $value = $this->reader->readString($value);
         $result = $this->validator->validate($schema, $value);
         $actual = array();

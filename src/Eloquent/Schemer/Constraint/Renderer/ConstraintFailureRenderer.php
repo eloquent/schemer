@@ -13,10 +13,13 @@ namespace Eloquent\Schemer\Constraint\Renderer;
 
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 
 class ConstraintFailureRenderer implements ConstraintVisitorInterface
 {
+    const UNMATCHED_SCHEMA = 'The value did not match the defined schema.';
+
     /**
      * @param Schema $constraint
      *
@@ -24,7 +27,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
      */
     public function visitSchema(Schema $constraint)
     {
-        return 'The value did not match the defined schema.';
+        return static::UNMATCHED_SCHEMA;
     }
 
     // generic constraints
@@ -39,5 +42,17 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
         return sprintf(
             "The value must be of type '%s'.", $constraint->type()->value()
         );
+    }
+
+    // object constraints
+
+    /**
+     * @param PropertyConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitPropertyConstraint(PropertyConstraint $constraint)
+    {
+        return static::UNMATCHED_SCHEMA;
     }
 }

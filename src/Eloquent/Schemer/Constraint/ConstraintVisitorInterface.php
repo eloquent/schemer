@@ -28,4 +28,13 @@ interface ConstraintVisitorInterface
      * @return mixed
      */
     public function visitTypeConstraint(Generic\TypeConstraint $constraint);
+
+    // object constraints
+
+    /**
+     * @param ObjectValue\PropertyConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitPropertyConstraint(ObjectValue\PropertyConstraint $constraint);
 }
