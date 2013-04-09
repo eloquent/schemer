@@ -15,6 +15,7 @@ use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
 use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Value\ValueType;
 
 class ConstraintFailureRenderer implements ConstraintVisitorInterface
 {
@@ -39,9 +40,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
      */
     public function visitTypeConstraint(TypeConstraint $constraint)
     {
-        return sprintf(
-            "The value must be of type '%s'.", $constraint->type()->value()
-        );
+        $types = array_map(function (ValueType $type) {
+            return $type->value();
+        }, $constraint->types());
+
+        return sprintf("The value must be of type '%s'.", implode('|', $types));
     }
 
     // object constraints

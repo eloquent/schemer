@@ -34,16 +34,25 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
     {
         return array(
             'Successful validation' => array(
-                '{"type": "object", "properties": {"foo": {"type": "string"}}}',
+                '{"type": "object", "properties": {"foo": {"type": "string"}, "bar": {"type": "object"}}}',
                 '{"foo": "bar"}',
                 array(),
             ),
 
             'Failed validation' => array(
-                '{"type": "object", "properties": {"foo": {"type": "string"}}}',
-                '{"foo": null}',
+                '{"type": "object", "properties": {"foo": {"type": "string"}, "bar": {"type": "object"}}}',
+                '{"foo": null, "bar": "baz"}',
                 array(
-                    "Validation failed for value at '#/foo': The value must be of type 'string'.",
+                    "Validation failed for value at '/foo': The value must be of type 'string'.",
+                    "Validation failed for value at '/bar': The value must be of type 'object'.",
+                ),
+            ),
+
+            'Failed validation at document root' => array(
+                '{"type": "string"}',
+                'null',
+                array(
+                    "Validation failed for value at document root: The value must be of type 'string'.",
                 ),
             ),
         );

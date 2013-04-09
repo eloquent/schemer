@@ -79,23 +79,29 @@ class ConstraintValidator implements
     public function visitTypeConstraint(TypeConstraint $constraint)
     {
         $value = $this->currentValue();
+        $isValid = false;
+        foreach ($constraint->types() as $type) {
+            if ($type === ValueType::ARRAY_TYPE()) {
+                $isValid = $value instanceof ArrayValue;
+            } elseif ($type === ValueType::BOOLEAN_TYPE()) {
+                $isValid = $value instanceof BooleanValue;
+            } elseif ($type === ValueType::DATETIME_TYPE()) {
+                $isValid = $value instanceof DateTimeValue;
+            } elseif ($type === ValueType::INTEGER_TYPE()) {
+                $isValid = $value instanceof IntegerValue;
+            } elseif ($type === ValueType::NULL_TYPE()) {
+                $isValid = $value instanceof NullValue;
+            } elseif ($type === ValueType::NUMBER_TYPE()) {
+                $isValid = $value instanceof NumberValue;
+            } elseif ($type === ValueType::OBJECT_TYPE()) {
+                $isValid = $value instanceof ObjectValue;
+            } elseif ($type === ValueType::STRING_TYPE()) {
+                $isValid = $value instanceof StringValue;
+            }
 
-        if ($constraint->type() === ValueType::ARRAY_TYPE()) {
-            $isValid = $value instanceof ArrayValue;
-        } elseif ($constraint->type() === ValueType::BOOLEAN_TYPE()) {
-            $isValid = $value instanceof BooleanValue;
-        } elseif ($constraint->type() === ValueType::DATETIME_TYPE()) {
-            $isValid = $value instanceof DateTimeValue;
-        } elseif ($constraint->type() === ValueType::INTEGER_TYPE()) {
-            $isValid = $value instanceof IntegerValue;
-        } elseif ($constraint->type() === ValueType::NULL_TYPE()) {
-            $isValid = $value instanceof NullValue;
-        } elseif ($constraint->type() === ValueType::NUMBER_TYPE()) {
-            $isValid = $value instanceof NumberValue;
-        } elseif ($constraint->type() === ValueType::OBJECT_TYPE()) {
-            $isValid = $value instanceof ObjectValue;
-        } elseif ($constraint->type() === ValueType::STRING_TYPE()) {
-            $isValid = $value instanceof StringValue;
+            if ($isValid) {
+                break;
+            }
         }
 
         if (!$isValid) {

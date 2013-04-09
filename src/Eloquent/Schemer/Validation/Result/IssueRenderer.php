@@ -44,9 +44,16 @@ class IssueRenderer implements IssueRendererInterface
      */
     public function render(ValidationIssue $issue)
     {
+        if ($issue->pointer()->hasAtoms()) {
+            return sprintf(
+                "Validation failed for value at '%s': %s",
+                $issue->pointer()->string(),
+                $issue->constraint()->accept($this->constraintRenderer())
+            );
+        }
+
         return sprintf(
-            "Validation failed for value at '#%s': %s",
-            $issue->pointer()->string(),
+            "Validation failed for value at document root: %s",
             $issue->constraint()->accept($this->constraintRenderer())
         );
     }

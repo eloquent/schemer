@@ -14,7 +14,9 @@ namespace Eloquent\Schemer\Constraint\Factory;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
 use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Value\ArrayValue;
 use Eloquent\Schemer\Value\ObjectValue;
+use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ValueInterface;
 use Eloquent\Schemer\Value\ValueType;
 
@@ -29,10 +31,10 @@ class SchemaFactory implements SchemaFactoryInterface
     {
         $constraints = array();
         foreach ($schema as $property => $value) {
-            $subConstraints = $this->createConstraints($property, $value, $schema);
-            if (count($subConstraints) > 0) {
-                $constraints = array_merge($constraints, $subConstraints);
-            }
+            $constraints = array_merge(
+                $constraints,
+                $this->createConstraints($property, $value, $schema)
+            );
         }
 
         return new Schema($constraints);
@@ -59,6 +61,8 @@ class SchemaFactory implements SchemaFactoryInterface
             case 'properties':
                 return $this->createPropertyConstraints($value);
         }
+
+        return array();
     }
 
     // generic constraints
@@ -70,18 +74,46 @@ class SchemaFactory implements SchemaFactoryInterface
      */
     protected function createTypeConstraint(ValueInterface $value)
     {
-        return new TypeConstraint(ValueType::instanceByValue($value->value()));
+        if ($value instanceof StringValue) {
+            return new TypeConstraint(
+                array(ValueType::instanceByValue($value->value()))
+            );
+        } elseif ($value instanceof ArrayValue) {
+            $types = array();
+            foreach ($value as $type) {
+                if (!$type instanceof StringValue) {
+                    throw new UnexpectedValueException(
+                        $type->type(),
+                        array(ValueType::STRING_TYPE())
+                    );
+                }
+            }
+
+            return new TypeConstraint($types);
+        }
+
+        throw new UnexpectedValueException(
+            $value,
+            array(ValueType::STRING_TYPE(), ValueType::ARRAY_TYPE())
+        );
     }
 
     // object constraints
 
     /**
-     * @param ObjectValue $value
+     * @param ValueInterface $value
      *
      * @return array<PropertyConstraint>
      */
-    protected function createPropertyConstraints(ObjectValue $value)
+    protected function createPropertyConstraints(ValueInterface $value)
     {
+        if (!$value instanceof ObjectValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::OBJECT_TYPE())
+            );
+        }
+
         $constraints = array();
         foreach ($value as $property => $subValue) {
             $constraints[] = $this->createPropertyConstraint(
@@ -94,13 +126,20 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     /**
-     * @param string      $property
-     * @param ObjectValue $value
+     * @param string         $property
+     * @param ValueInterface $value
      *
      * @return PropertyConstraint
      */
-    protected function createPropertyConstraint($property, ObjectValue $value)
+    protected function createPropertyConstraint($property, ValueInterface $value)
     {
+        if (!$value instanceof ObjectValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::OBJECT_TYPE())
+            );
+        }
+
         return new PropertyConstraint($property, $this->create($value));
     }
 }
