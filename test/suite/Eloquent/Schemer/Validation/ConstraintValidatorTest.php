@@ -11,12 +11,10 @@
 
 namespace Eloquent\Schemer\Validation;
 
-use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Constraint\Reader\SchemaReader;
 use Eloquent\Schemer\Constraint\Schema;
-use Eloquent\Schemer\Pointer\Pointer;
 use Eloquent\Schemer\Reader\Reader;
-use Eloquent\Schemer\Value\ValueInterface;
+use Eloquent\Schemer\Validation\Result\IssueRenderer;
 use PHPUnit_Framework_TestCase;
 
 class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
@@ -27,49 +25,43 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
 
         $this->validator = new ConstraintValidator;
 
-        $this->comparator = new Comparator;
+        $this->schemaReader = new SchemaReader;
+        $this->reader = new Reader;
+        $this->renderer = new IssueRenderer;
     }
 
     public function validateSchemaData()
     {
-        $data = array();
+        return array(
+            'Successful validation' => array(
+                '{"type": "string"}',
+                '"foo"',
+                array(),
+            ),
 
-        $schemaReader = new SchemaReader;
-        $reader = new Reader;
-
-        $schema = $schemaReader->readString('{"type": "string"}');
-        $constraints = $schema->constraints();
-
-        $value = $reader->readString('"foo"');
-        $expected = new Result\ValidationResult;
-        $data['Successful validation'] = array($schema, $value, $expected);
-
-        $value = $reader->readString('null');
-        $expected = new Result\ValidationResult(
-            array(
-                new Result\ValidationIssue(
-                    $constraints[0],
-                    $value,
-                    new Pointer
-                )
-            )
+            'Failed validation' => array(
+                '{"type": "string"}',
+                'null',
+                array(
+                    "Validation failed for value at '#': The value must be of type 'string'.",
+                ),
+            ),
         );
-        $data['Failed validation'] = array($schema, $value, $expected);
-
-        return $data;
     }
 
     /**
      * @dataProvider validateSchemaData
      */
-    public function testValidateSchema(
-        Schema $schema,
-        ValueInterface $value,
-        Result\ValidationResult $expected
-    ) {
+    public function testValidateSchema($schema, $value, array $expected)
+    {
+        $schema = $this->schemaReader->readString('{"type": "string"}');
+        $value = $this->reader->readString($value);
         $result = $this->validator->validate($schema, $value);
+        $actual = array();
+        foreach ($result->issues() as $issue) {
+            $actual[] = $this->renderer->render($issue);
+        }
 
-        $this->assertEquals($expected, $result);
-        $this->assertTrue($this->comparator->equals($expected, $result));
+        $this->assertSame($expected, $actual);
     }
 }

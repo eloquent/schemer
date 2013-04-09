@@ -28,6 +28,8 @@ class ValidationIssue
         PointerInterface $pointer
     ) {
         $this->constraint = $constraint;
+        $this->value = $value;
+        $this->pointer = $pointer;
     }
 
     /**
