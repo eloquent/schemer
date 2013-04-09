@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Value\Transform;
+namespace Eloquent\Schemer\Value\Factory;
 
 use DateTime;
 use Eloquent\Schemer\Pointer\PointerFactory;
@@ -29,7 +29,7 @@ use InvalidArgumentException;
 use stdClass;
 use Zend\Uri\Uri;
 
-class ValueTransform implements ValueTransformInterface
+class ValueFactory implements ValueFactoryInterface
 {
     /**
      * @param UriFactoryInterface|null     $uriFactory
@@ -71,7 +71,7 @@ class ValueTransform implements ValueTransformInterface
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    public function apply($value)
+    public function create($value)
     {
         $type = gettype($value);
         switch ($type) {
@@ -86,13 +86,13 @@ class ValueTransform implements ValueTransformInterface
             case 'string':
                 return new StringValue($value);
             case 'array':
-                return $this->transformArray($value);
+                return $this->createArray($value);
             case 'object':
                 if ($value instanceof DateTime) {
                     return new DateTimeValue($value);
                 }
 
-                return $this->transformObject($value);
+                return $this->createObject($value);
         }
 
         throw new InvalidArgumentException(
@@ -105,12 +105,12 @@ class ValueTransform implements ValueTransformInterface
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    protected function transformArray(array $value)
+    protected function createArray(array $value)
     {
         $isObject = false;
         $expectedIndex = 0;
         foreach ($value as $index => $subValue) {
-            $value[$index] = $this->apply($subValue);
+            $value[$index] = $this->create($subValue);
             $isObject = $isObject || $index !== $expectedIndex++;
         }
 
@@ -120,7 +120,7 @@ class ValueTransform implements ValueTransformInterface
                 $object->$key = $subValue;
             }
 
-            return $this->transformReference($object);
+            return $this->createReference($object);
         }
 
         return new ArrayValue($value);
@@ -131,7 +131,7 @@ class ValueTransform implements ValueTransformInterface
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    protected function transformObject(stdClass $value)
+    protected function createObject(stdClass $value)
     {
         $value = clone $value;
 
@@ -139,10 +139,10 @@ class ValueTransform implements ValueTransformInterface
             if ('' === $key) {
                 $key = '_empty_';
             }
-            $value->$key = $this->apply($subValue);
+            $value->$key = $this->create($subValue);
         }
 
-        return $this->transformReference($value);
+        return $this->createReference($value);
     }
 
     /**
@@ -150,7 +150,7 @@ class ValueTransform implements ValueTransformInterface
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    protected function transformReference(stdClass $value)
+    protected function createReference(stdClass $value)
     {
         if (
             property_exists($value, '$ref') &&

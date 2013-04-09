@@ -17,22 +17,22 @@ use Eloquent\Schemer\Loader\LoaderInterface;
 use Eloquent\Schemer\Serialization\ProtocolMap;
 use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
-use Eloquent\Schemer\Value\Transform\ValueTransform;
-use Eloquent\Schemer\Value\Transform\ValueTransformInterface;
+use Eloquent\Schemer\Value\Factory\ValueFactory;
+use Eloquent\Schemer\Value\Factory\ValueFactoryInterface;
 use Zend\Uri\UriInterface;
 
 class Reader implements ReaderInterface
 {
     /**
-     * @param LoaderInterface|null         $loader
-     * @param ProtocolMap|null             $protocolMap
-     * @param ValueTransformInterface|null $transform
-     * @param UriFactoryInterface|null     $uriFactory
+     * @param LoaderInterface|null       $loader
+     * @param ProtocolMap|null           $protocolMap
+     * @param ValueFactoryInterface|null $valueFactory
+     * @param UriFactoryInterface|null   $uriFactory
      */
     public function __construct(
         LoaderInterface $loader = null,
         ProtocolMap $protocolMap = null,
-        ValueTransformInterface $transform = null,
+        ValueFactoryInterface $valueFactory = null,
         UriFactoryInterface $uriFactory = null
     ) {
         if (null === $loader) {
@@ -44,13 +44,13 @@ class Reader implements ReaderInterface
         if (null === $uriFactory) {
             $uriFactory = new UriFactory;
         }
-        if (null === $transform) {
-            $transform = new ValueTransform($uriFactory);
+        if (null === $valueFactory) {
+            $valueFactory = new ValueFactory($uriFactory);
         }
 
         $this->loader = $loader;
         $this->protocolMap = $protocolMap;
-        $this->transform = $transform;
+        $this->valueFactory = $valueFactory;
         $this->uriFactory = $uriFactory;
     }
 
@@ -71,11 +71,11 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @return ValueTransformInterface
+     * @return ValueFactoryInterface
      */
-    public function transform()
+    public function valueFactory()
     {
-        return $this->transform;
+        return $this->valueFactory;
     }
 
     /**
@@ -103,7 +103,7 @@ class Reader implements ReaderInterface
             $type = $content->type();
         }
 
-        return $this->transform()->apply(
+        return $this->valueFactory()->create(
             $this->protocolMap()->get($type)->thaw($content->data())
         );
     }
@@ -136,6 +136,6 @@ class Reader implements ReaderInterface
 
     private $loader;
     private $protocolMap;
-    private $transform;
+    private $valueFactory;
     private $uriFactory;
 }

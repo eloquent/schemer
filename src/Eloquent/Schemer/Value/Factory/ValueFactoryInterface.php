@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Value\Transform;
+namespace Eloquent\Schemer\Value\Factory;
 
-interface ValueTransformInterface
+interface ValueFactoryInterface
 {
     /**
      * @param mixed $value
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    public function apply($value);
+    public function create($value);
 }
