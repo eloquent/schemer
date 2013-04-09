@@ -18,7 +18,7 @@ class BoundConstraintValidator implements BoundConstraintValidatorInterface
 {
     /**
      * @param ConstraintValidatorInterface $validator
-     * @param ConstraintInterface $constraint
+     * @param ConstraintInterface          $constraint
      */
     public function __construct(
         ConstraintValidatorInterface $validator,

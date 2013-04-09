@@ -17,6 +17,14 @@ use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Pointer\Pointer;
 use Eloquent\Schemer\Pointer\PointerInterface;
+use Eloquent\Schemer\Value\ArrayValue;
+use Eloquent\Schemer\Value\BooleanValue;
+use Eloquent\Schemer\Value\DateTimeValue;
+use Eloquent\Schemer\Value\IntegerValue;
+use Eloquent\Schemer\Value\NullValue;
+use Eloquent\Schemer\Value\NumberValue;
+use Eloquent\Schemer\Value\ObjectValue;
+use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ValueInterface;
 use Eloquent\Schemer\Value\ValueType;
 use LogicException;
@@ -43,7 +51,7 @@ class ConstraintValidator implements
 
         $this->clear();
 
-        $this->pushContext($value, $entryPoint);
+        $this->pushContext(array($value, $entryPoint));
         $constraint->accept($this);
         $result = new Result\ValidationResult($this->issues);
 

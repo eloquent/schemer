@@ -39,7 +39,7 @@ class PointerResolver implements PointerResolverInterface
     /**
      * @param PointerInterface $pointer
      * @param array<string>    &$atoms
-     * @param ValueInterface   $value
+     * @param ValueInterface $value
      *
      * @return ValueInterface
      * @throws Exception\UndefinedValueException

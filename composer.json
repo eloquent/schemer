@@ -18,14 +18,14 @@
         "eloquent/enumeration": "~3",
         "icecave/isolator": "~2",
         "kriswallsmith/buzz": "~0.9",
-        "zendframework/zend-uri": "~2"
+        "zendframework/zend-uri": "~2,!=2.1.4"
     },
     "suggest": {
         "jamesmoss/toml": "~0.1",
         "symfony/yaml": "~2"
     },
     "require-dev": {
-        "icecave/archer": "~0.2",
+        "icecave/archer": "~0.3",
         "jamesmoss/toml": "~0.1",
         "symfony/yaml": "~2"
     },
