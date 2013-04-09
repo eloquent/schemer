@@ -11,9 +11,12 @@
 
 namespace Eloquent\Schemer\Value;
 
+use ArrayIterator;
+use Countable;
 use InvalidArgumentException;
+use IteratorAggregate;
 
-class ArrayValue extends AbstractValue
+class ArrayValue extends AbstractValue implements Countable, IteratorAggregate
 {
     /**
      * @param array<integer,mixed> $value
@@ -38,6 +41,55 @@ class ArrayValue extends AbstractValue
     }
 
     /**
+     * @return integer
+     */
+    public function count()
+    {
+        return count($this->value());
+    }
+
+    /**
+     * @param integer $index
+     *
+     * @return boolean
+     */
+    public function has($index)
+    {
+        return array_key_exists($index, $this->value());
+    }
+
+    /**
+     * @param integer $index
+     *
+     * @return ValueInterface
+     */
+    public function get($index)
+    {
+        if (!$this->has($index)) {
+            throw new Exception\UndefinedIndexException($index);
+        }
+        $value = $this->value();
+
+        return $value[$index];
+    }
+
+    /**
+     * @param integer             $index
+     * @param ValueInterface|null $default
+     *
+     * @return ValueInterface|null
+     */
+    public function getDefault($index, ValueInterface $default = null)
+    {
+        if (!$this->has($index)) {
+            return $default;
+        }
+        $value = $this->value();
+
+        return $value[$index];
+    }
+
+    /**
      * @param ValueVisitorInterface $visitor
      *
      * @return mixed
@@ -45,5 +97,13 @@ class ArrayValue extends AbstractValue
     public function accept(ValueVisitorInterface $visitor)
     {
         return $visitor->visitArrayValue($this);
+    }
+
+    /**
+     * @return ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->value());
     }
 }

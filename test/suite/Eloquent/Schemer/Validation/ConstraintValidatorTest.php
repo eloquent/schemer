@@ -12,11 +12,11 @@
 namespace Eloquent\Schemer\Validation;
 
 use Eloquent\Equality\Comparator;
-use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
+use Eloquent\Schemer\Constraint\Reader\SchemaReader;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Pointer\Pointer;
 use Eloquent\Schemer\Reader\Reader;
-use Eloquent\Schemer\Value\ValueType;
+use Eloquent\Schemer\Value\ValueInterface;
 use PHPUnit_Framework_TestCase;
 
 class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
@@ -26,43 +26,50 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->validator = new ConstraintValidator;
-        $this->reader = new Reader;
-        $this->schema = new Schema(
-            array(
-                new TypeConstraint(ValueType::STRING_TYPE()),
-            )
-        );
 
         $this->comparator = new Comparator;
     }
 
-    public function testValidateSchema()
+    public function validateSchemaData()
     {
-        $value = $this->reader->readString('"foo"');
-        $result = $this->validator->validate($this->schema, $value);
+        $data = array();
+
+        $schemaReader = new SchemaReader;
+        $reader = new Reader;
+
+        $schema = $schemaReader->readString('{"type": "string"}');
+        $constraints = $schema->constraints();
+
+        $value = $reader->readString('"foo"');
         $expected = new Result\ValidationResult;
+        $data['Successful validation'] = array($schema, $value, $expected);
 
-        $this->assertEquals($expected, $result);
-        $this->assertTrue($this->comparator->equals($expected, $result));
-        $this->assertTrue($result->isValid());
-    }
-
-    public function testValidateSchemaFailure()
-    {
-        $value = $this->reader->readString('null');
-        $result = $this->validator->validate($this->schema, $value);
+        $value = $reader->readString('null');
         $expected = new Result\ValidationResult(
             array(
                 new Result\ValidationIssue(
-                    $this->schema->constraints()[0],
+                    $constraints[0],
                     $value,
                     new Pointer
                 )
             )
         );
+        $data['Failed validation'] = array($schema, $value, $expected);
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider validateSchemaData
+     */
+    public function testValidateSchema(
+        Schema $schema,
+        ValueInterface $value,
+        Result\ValidationResult $expected
+    ) {
+        $result = $this->validator->validate($schema, $value);
 
         $this->assertEquals($expected, $result);
         $this->assertTrue($this->comparator->equals($expected, $result));
-        $this->assertFalse($result->isValid());
     }
 }

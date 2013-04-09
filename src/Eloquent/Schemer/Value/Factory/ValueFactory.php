@@ -135,11 +135,11 @@ class ValueFactory implements ValueFactoryInterface
     {
         $value = clone $value;
 
-        foreach (get_object_vars($value) as $key => $subValue) {
-            if ('' === $key) {
-                $key = '_empty_';
+        foreach (get_object_vars($value) as $property => $subValue) {
+            if ('' === $property) {
+                $property = '_empty_';
             }
-            $value->$key = $this->create($subValue);
+            $value->$property = $this->create($subValue);
         }
 
         return $this->createReference($value);
