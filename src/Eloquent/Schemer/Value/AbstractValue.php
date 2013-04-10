@@ -29,5 +29,13 @@ abstract class AbstractValue implements ValueInterface
         return $this->value;
     }
 
+    /**
+     * @return mixed
+     */
+    public function rawValue()
+    {
+        return $this->value();
+    }
+
     private $value;
 }

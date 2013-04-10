@@ -19,4 +19,11 @@ interface IssueRendererInterface
      * @return string
      */
     public function render(ValidationIssue $issue);
+
+    /**
+     * @param array<ValidationIssue> $issues
+     *
+     * @return array<string>
+     */
+    public function renderMany(array $issues);
 }

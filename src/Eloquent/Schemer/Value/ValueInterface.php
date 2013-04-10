@@ -14,6 +14,11 @@ namespace Eloquent\Schemer\Value;
 interface ValueInterface
 {
     /**
+     * @return mixed
+     */
+    public function rawValue();
+
+    /**
      * @param ValueVisitorInterface $visitor
      *
      * @return mixed

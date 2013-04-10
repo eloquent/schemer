@@ -41,6 +41,16 @@ class ArrayValue extends AbstractValue implements Countable, IteratorAggregate
     }
 
     /**
+     * @return mixed
+     */
+    public function rawValue()
+    {
+        return array_map(function ($value) {
+            return $value->rawValue();
+        }, $this->value());
+    }
+
+    /**
      * @return integer
      */
     public function count()

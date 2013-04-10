@@ -1,0 +1,24 @@
+{
+    "schema": {
+        "type": ["string", "object"]
+    },
+
+    "tests": {
+        "valid string": {
+            "value": "foo",
+            "expected": []
+        },
+
+        "valid object": {
+            "value": {"foo": "bar"},
+            "expected": []
+        },
+
+        "invalid": {
+            "value": null,
+            "expected": [
+                "Validation failed for value at document root: The value must be of type 'string|object'."
+            ]
+        }
+    }
+}

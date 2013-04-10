@@ -58,5 +58,19 @@ class IssueRenderer implements IssueRendererInterface
         );
     }
 
+    /**
+     * @param array<ValidationIssue> $issues
+     *
+     * @return array<string>
+     */
+    public function renderMany(array $issues)
+    {
+        $self = $this;
+
+        return array_map(function (ValidationIssue $issue) use ($self) {
+            return $self->render($issue);
+        }, $issues);
+    }
+
     private $constraintRenderer;
 }

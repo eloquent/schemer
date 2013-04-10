@@ -11,8 +11,13 @@
 
 namespace Eloquent\Schemer\Value;
 
-class NullValue implements ValueInterface
+class NullValue extends AbstractValue
 {
+    public function __construct()
+    {
+        parent::__construct(null);
+    }
+
     /**
      * @param ValueVisitorInterface $visitor
      *

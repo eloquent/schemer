@@ -1,0 +1,19 @@
+{
+    "schema": {
+        "type": "string"
+    },
+
+    "tests": {
+        "valid": {
+            "value": "foo",
+            "expected": []
+        },
+
+        "invalid": {
+            "value": null,
+            "expected": [
+                "Validation failed for value at document root: The value must be of type 'string'."
+            ]
+        }
+    }
+}

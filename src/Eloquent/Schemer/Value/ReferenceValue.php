@@ -12,10 +12,11 @@
 namespace Eloquent\Schemer\Value;
 
 use Eloquent\Schemer\Pointer\PointerInterface;
+use Eloquent\Schemer\Value\StringValue;
 use stdClass;
 use Zend\Uri\UriInterface;
 
-class ReferenceValue implements ValueInterface
+class ReferenceValue extends AbstractObjectValue
 {
     /**
      * @param UriInterface          $reference
@@ -37,6 +38,20 @@ class ReferenceValue implements ValueInterface
         $this->pointer = $pointer;
         $this->type = $type;
         $this->additionalProperties = $additionalProperties;
+    }
+
+    /**
+     * @return stdClass
+     */
+    public function value()
+    {
+        $value = clone $this->additionalProperties();
+        $value->{'$ref'} = new StringValue($this->uri()->toString());
+        if (null !== $this->type()) {
+            $value->{'$type'} =  new StringValue($this->type());
+        }
+
+        return $value;
     }
 
     /**

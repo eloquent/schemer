@@ -87,6 +87,8 @@ class SchemaFactory implements SchemaFactoryInterface
                         array(ValueType::STRING_TYPE())
                     );
                 }
+
+                $types[] = ValueType::instanceByValue($type->value());
             }
 
             return new TypeConstraint($types);

@@ -11,66 +11,79 @@
 
 namespace Eloquent\Schemer\Validation;
 
-use Eloquent\Schemer\Constraint\Reader\SchemaReader;
-use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Constraint\Factory\SchemaFactory;
 use Eloquent\Schemer\Reader\Reader;
 use Eloquent\Schemer\Validation\Result\IssueRenderer;
+use FilesystemIterator;
 use PHPUnit_Framework_TestCase;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
 {
+    public function __construct($name = null, array $data = array(), $dataName = '')
+    {
+        $this->reader = new Reader;
+        $this->fixturePath = sprintf(
+            '%s/../../../../fixture/constraint',
+            __DIR__
+        );
+
+        parent::__construct($name, $data, $dataName);
+    }
+
     protected function setUp()
     {
         parent::setUp();
 
         $this->validator = new ConstraintValidator;
 
-        $this->schemaReader = new SchemaReader;
-        $this->reader = new Reader;
+        $this->schemaFactory = new SchemaFactory;
         $this->renderer = new IssueRenderer;
     }
 
     public function validateSchemaData()
     {
-        return array(
-            'Successful validation' => array(
-                '{"type": "object", "properties": {"foo": {"type": "string"}, "bar": {"type": "object"}}}',
-                '{"foo": "bar"}',
-                array(),
-            ),
-
-            'Failed validation' => array(
-                '{"type": "object", "properties": {"foo": {"type": "string"}, "bar": {"type": "object"}}}',
-                '{"foo": null, "bar": "baz"}',
-                array(
-                    "Validation failed for value at '/foo': The value must be of type 'string'.",
-                    "Validation failed for value at '/bar': The value must be of type 'object'.",
-                ),
-            ),
-
-            'Failed validation at document root' => array(
-                '{"type": "string"}',
-                'null',
-                array(
-                    "Validation failed for value at document root: The value must be of type 'string'.",
-                ),
-            ),
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(
+                $this->fixturePath,
+                FilesystemIterator::SKIP_DOTS
+            )
         );
+
+        $data = array();
+        foreach ($iterator as $file) {
+            $fixture = $this->reader->readPath(strval($file));
+            $constraint = $file->getPathInfo()->getFilename();
+            $category = $file->getBaseName('.json');
+
+            foreach ($fixture->get('tests') as $testName => $test) {
+                $data[sprintf('%s / %s / %s', $constraint, $category, $testName)] =
+                    array($constraint, $category, $testName);
+            }
+
+        }
+
+        return $data;
     }
 
     /**
      * @dataProvider validateSchemaData
      */
-    public function testValidateSchema($schema, $value, array $expected)
+    public function testValidateSchema($constraint, $category, $test)
     {
-        $schema = $this->schemaReader->readString($schema);
-        $value = $this->reader->readString($value);
-        $result = $this->validator->validate($schema, $value);
-        $actual = array();
-        foreach ($result->issues() as $issue) {
-            $actual[] = $this->renderer->render($issue);
-        }
+        $fixture = $this->reader->readPath(
+            sprintf('%s/%s/%s.json', $this->fixturePath, $constraint, $category)
+        );
+        $test = $fixture->get('tests')->get($test);
+        $result = $this->validator->validate(
+            $this->schemaFactory->create($fixture->get('schema')),
+            $test->get('value')
+        );
 
-        $this->assertSame($expected, $actual);
+        $this->assertSame(
+            $test->get('expected')->rawValue(),
+            $this->renderer->renderMany($result->issues())
+        );
     }
 }

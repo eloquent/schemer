@@ -38,6 +38,27 @@ abstract class AbstractObjectValue extends AbstractValue implements
     }
 
     /**
+     * @return stdClass
+     */
+    public function value()
+    {
+        return clone parent::value();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function rawValue()
+    {
+        $value = $this->value();
+        foreach ($this->properties() as $property) {
+            $value->$property = $value->$property->rawValue();
+        }
+
+        return $value;
+    }
+
+    /**
      * @return array<integer,string>
      */
     public function properties()
