@@ -13,7 +13,7 @@ namespace Eloquent\Schemer\Value;
 
 use InvalidArgumentException;
 
-class NumberValue extends AbstractValue implements NumericValueInterface
+class FloatingPointValue extends AbstractValue implements NumberValueInterface
 {
     /**
      * @param float $value
@@ -36,6 +36,6 @@ class NumberValue extends AbstractValue implements NumericValueInterface
      */
     public function accept(ValueVisitorInterface $visitor)
     {
-        return $visitor->visitNumberValue($this);
+        return $visitor->visitFloatingPointValue($this);
     }
 }

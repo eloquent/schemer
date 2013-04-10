@@ -14,9 +14,9 @@ namespace Eloquent\Schemer\Reference;
 use Eloquent\Schemer\Value\ArrayValue;
 use Eloquent\Schemer\Value\BooleanValue;
 use Eloquent\Schemer\Value\DateTimeValue;
+use Eloquent\Schemer\Value\FloatingPointValue;
 use Eloquent\Schemer\Value\IntegerValue;
 use Eloquent\Schemer\Value\NullValue;
-use Eloquent\Schemer\Value\NumberValue;
 use Eloquent\Schemer\Value\ObjectValue;
 use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ValueInterface;
@@ -62,21 +62,21 @@ abstract class AbstractReferenceResolver implements ReferenceResolverInterface, 
     }
 
     /**
-     * @param IntegerValue $value
+     * @param FloatingPointValue $value
      *
-     * @return IntegerValue
+     * @return FloatingPointValue
      */
-    public function visitIntegerValue(IntegerValue $value)
+    public function visitFloatingPointValue(FloatingPointValue $value)
     {
         return $value;
     }
 
     /**
-     * @param NumberValue $value
+     * @param IntegerValue $value
      *
-     * @return NumberValue
+     * @return IntegerValue
      */
-    public function visitNumberValue(NumberValue $value)
+    public function visitIntegerValue(IntegerValue $value)
     {
         return $value;
     }

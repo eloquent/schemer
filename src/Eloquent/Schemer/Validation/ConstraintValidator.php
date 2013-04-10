@@ -26,7 +26,7 @@ use Eloquent\Schemer\Value\BooleanValue;
 use Eloquent\Schemer\Value\DateTimeValue;
 use Eloquent\Schemer\Value\IntegerValue;
 use Eloquent\Schemer\Value\NullValue;
-use Eloquent\Schemer\Value\NumericValueInterface;
+use Eloquent\Schemer\Value\NumberValueInterface;
 use Eloquent\Schemer\Value\ObjectValue;
 use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ValueInterface;
@@ -104,7 +104,7 @@ class ConstraintValidator implements
             } elseif ($type === ValueType::NULL_TYPE()) {
                 $isValid = $value instanceof NullValue;
             } elseif ($type === ValueType::NUMBER_TYPE()) {
-                $isValid = $value instanceof NumericValueInterface;
+                $isValid = $value instanceof NumberValueInterface;
             } elseif ($type === ValueType::OBJECT_TYPE()) {
                 $isValid = $value instanceof ObjectValue;
             } elseif ($type === ValueType::STRING_TYPE()) {

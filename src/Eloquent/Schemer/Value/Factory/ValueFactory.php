@@ -18,10 +18,10 @@ use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Value\ArrayValue;
 use Eloquent\Schemer\Value\BooleanValue;
+use Eloquent\Schemer\Value\FloatingPointValue;
 use Eloquent\Schemer\Value\DateTimeValue;
 use Eloquent\Schemer\Value\IntegerValue;
 use Eloquent\Schemer\Value\NullValue;
-use Eloquent\Schemer\Value\NumberValue;
 use Eloquent\Schemer\Value\ObjectValue;
 use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ReferenceValue;
@@ -80,7 +80,7 @@ class ValueFactory implements ValueFactoryInterface
             case 'integer':
                 return new IntegerValue($value);
             case 'double':
-                return new NumberValue($value);
+                return new FloatingPointValue($value);
             case 'NULL':
                 return new NullValue;
             case 'string':

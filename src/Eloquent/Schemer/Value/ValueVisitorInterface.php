@@ -28,18 +28,18 @@ interface ValueVisitorInterface
     public function visitBooleanValue(BooleanValue $value);
 
     /**
+     * @param FloatingPointValue $value
+     *
+     * @return mixed
+     */
+    public function visitFloatingPointValue(FloatingPointValue $value);
+
+    /**
      * @param IntegerValue $value
      *
      * @return mixed
      */
     public function visitIntegerValue(IntegerValue $value);
-
-    /**
-     * @param NumberValue $value
-     *
-     * @return mixed
-     */
-    public function visitNumberValue(NumberValue $value);
 
     /**
      * @param NullValue $value

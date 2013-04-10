@@ -11,6 +11,6 @@
 
 namespace Eloquent\Schemer\Value;
 
-interface NumericValueInterface extends ValueInterface
+interface NumberValueInterface extends ValueInterface
 {
 }
