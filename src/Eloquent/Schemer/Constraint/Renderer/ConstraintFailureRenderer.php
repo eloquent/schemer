@@ -14,6 +14,7 @@ namespace Eloquent\Schemer\Constraint\Renderer;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
+use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
@@ -78,6 +79,16 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitOneOfConstraint(OneOfConstraint $constraint)
     {
         return 'The value did not match any, or matched more than one of the defined schemas.';
+    }
+
+    /**
+     * @param NotConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitNotConstraint(NotConstraint $constraint)
+    {
+        return 'The value matched the defined schema.';
     }
 
     // object constraints ======================================================

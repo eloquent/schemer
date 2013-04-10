@@ -13,6 +13,7 @@ namespace Eloquent\Schemer\Constraint\Factory;
 
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
+use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
@@ -65,6 +66,8 @@ class SchemaFactory implements SchemaFactoryInterface
                 return array($this->createAnyOfConstraint($value));
             case 'oneOf':
                 return array($this->createOneOfConstraint($value));
+            case 'not':
+                return array($this->createNotConstraint($value));
 
             // object constraints
             case 'properties':
@@ -173,6 +176,16 @@ class SchemaFactory implements SchemaFactoryInterface
         }
 
         return new OneOfConstraint($schemas);
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return NotConstraint
+     */
+    protected function createNotConstraint(ValueInterface $value)
+    {
+        return new NotConstraint($this->create($value));
     }
 
     // object constraints ======================================================

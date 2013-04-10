@@ -15,6 +15,7 @@ use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
+use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
@@ -210,6 +211,20 @@ class ConstraintValidator implements
         }
 
         if (1 !== $matchingSchemas) {
+            return array($this->createIssue($constraint));
+        }
+
+        return array();
+    }
+
+    /**
+     * @param NotConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitNotConstraint(NotConstraint $constraint)
+    {
+        if (count($constraint->schema()->accept($this)) < 1) {
             return array($this->createIssue($constraint));
         }
 

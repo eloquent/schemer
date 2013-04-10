@@ -50,6 +50,13 @@ interface ConstraintVisitorInterface
      */
     public function visitOneOfConstraint(Generic\OneOfConstraint $constraint);
 
+    /**
+     * @param Generic\NotConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitNotConstraint(Generic\NotConstraint $constraint);
+
     // object constraints ======================================================
 
     /**
