@@ -14,71 +14,71 @@ namespace Eloquent\Schemer\Pointer\Resolver;
 use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Reader\Reader;
+use FilesystemIterator;
 use PHPUnit_Framework_TestCase;
 
 class PointerResolverTest extends PHPUnit_Framework_TestCase
 {
+    public function __construct($name = null, array $data = array(), $dataName = '')
+    {
+        $this->reader = new Reader;
+        $this->fixturePath = sprintf(
+            '%s/../../../../../fixture/pointer',
+            __DIR__
+        );
+
+        parent::__construct($name, $data, $dataName);
+    }
+
     protected function setUp()
     {
         parent::setUp();
 
         $this->resolver = new PointerResolver;
-        $this->reader = new Reader;
         $this->pointerFactory = new PointerFactory;
         $this->comparator = new Comparator;
     }
 
     public function resolverData()
     {
-        $documentA = <<<'EOD'
-{
-  "foo": ["bar", "baz"],
-  "": 0,
-  "a/b": 1,
-  "c%d": 2,
-  "e^f": 3,
-  "g|h": 4,
-  "i\\j": 5,
-  "k\"l": 6,
-  " ": 7,
-  "m~n": 8
-}
-EOD;
-
-        return array(
-            'Spec example 1'  => array($documentA, '',       $documentA),
-            'Spec example 2'  => array($documentA, '/foo',   '["bar", "baz"]'),
-            'Spec example 3'  => array($documentA, '/foo/0', '"bar"'),
-            'Spec example 4'  => array($documentA, '/',      '0'),
-            'Spec example 5'  => array($documentA, '/a~1b',  '1'),
-            'Spec example 6'  => array($documentA, '/c%d',   '2'),
-            'Spec example 7'  => array($documentA, '/e^f',   '3'),
-            'Spec example 8'  => array($documentA, '/g|h',   '4'),
-            'Spec example 9'  => array($documentA, '/i\\j',  '5'),
-            'Spec example 10' => array($documentA, '/k"l',   '6'),
-            'Spec example 11' => array($documentA, '/ ',     '7'),
-            'Spec example 12' => array($documentA, '/m~0n',  '8'),
+        $iterator = new FilesystemIterator(
+            $this->fixturePath,
+            FilesystemIterator::SKIP_DOTS
         );
+
+        $data = array();
+        foreach ($iterator as $file) {
+            $fixture = $this->reader->readPath(strval($file));
+            $category = $file->getBaseName('.json');
+
+            foreach ($fixture->get('tests') as $testName => $test) {
+                $data[sprintf('%s / %s ', $category, $testName)] =
+                    array($category, $testName);
+            }
+
+        }
+
+        return $data;
     }
 
     /**
      * @dataProvider resolverData
      */
-    public function testResolver($document, $pointer, $expected)
+    public function testResolver($category, $testName)
     {
-        $document = $this->reader->readString($document);
-        $pointer = $this->pointerFactory->create($pointer);
-        $expected = $this->reader->readString($expected);
+        $fixture = $this->reader->readPath(
+            sprintf('%s/%s.json', $this->fixturePath, $category)
+        );
+        $test = $fixture->get('tests')->get($testName);
+        $actual = $this->resolver->resolve(
+            $this->pointerFactory->create(
+                $test->get('pointer')->value()
+            ),
+            $fixture->get('document')
+        );
+        $expected = $test->get('expected');
 
-        $this->assertEquals(
-            $expected,
-            $this->resolver->resolve($pointer, $document)
-        );
-        $this->assertTrue(
-            $this->comparator->equals(
-                $expected,
-                $this->resolver->resolve($pointer, $document)
-            )
-        );
+        $this->assertEquals($expected, $actual);
+        $this->assertTrue($this->comparator->equals($expected, $actual));
     }
 }

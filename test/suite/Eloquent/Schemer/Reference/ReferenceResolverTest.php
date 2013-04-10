@@ -18,14 +18,20 @@ use Zend\Uri\File as FileUri;
 
 class ReferenceResolverTest extends PHPUnit_Framework_TestCase
 {
-    protected function setUp()
+    public function __construct($name = null, array $data = array(), $dataName = '')
     {
-        parent::setUp();
-
         $this->fixturePath = sprintf(
             '%s/../../../../fixture/reference',
             __DIR__
         );
+
+        parent::__construct($name, $data, $dataName);
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+
         $this->factory = new ReferenceResolverFactory;
         $this->reader = new Reader;
         $this->comparator = new Comparator;
@@ -44,18 +50,22 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
 
     public function resolverData()
     {
-        return array(
-            'Complete document' => array('complete-document'),
-            'Partial document' =>  array('partial-document'),
-            'Explicit type' =>  array('explicit-type'),
-            'Implicit type' =>  array('implicit-type'),
-        );
+        $data = array();
+        foreach (scandir($this->fixturePath) as $item) {
+            if ('.' === $item || '..' === $item) {
+                continue;
+            }
+
+            $data[] = array($item);
+        }
+
+        return $data;
     }
 
     /**
      * @dataProvider resolverData
      */
-    public function testResolveCompleteDocument($testName)
+    public function testResolver($testName)
     {
         $path = sprintf('%s/%s/document.json', $this->fixturePath, $testName);
         $resolver = $this->factory->create($this->pathUriFixture($path));

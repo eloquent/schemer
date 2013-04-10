@@ -1,0 +1,86 @@
+{
+    "document": {
+        "foo": ["bar", "baz"],
+        "": 0,
+        "a/b": 1,
+        "c%d": 2,
+        "e^f": 3,
+        "g|h": 4,
+        "i\\j": 5,
+        "k\"l": 6,
+        " ": 7,
+        "m~n": 8
+    },
+    "tests": {
+        "example 1": {
+            "pointer": "",
+            "expected": {
+                "foo": ["bar", "baz"],
+                "": 0,
+                "a/b": 1,
+                "c%d": 2,
+                "e^f": 3,
+                "g|h": 4,
+                "i\\j": 5,
+                "k\"l": 6,
+                " ": 7,
+                "m~n": 8
+            }
+        },
+
+        "example 2": {
+            "pointer": "/foo",
+            "expected": ["bar", "baz"]
+        },
+
+        "example 3": {
+            "pointer": "/foo/0",
+            "expected": "bar"
+        },
+
+        "example 4": {
+            "pointer": "/",
+            "expected": 0
+        },
+
+        "example 5": {
+            "pointer": "/a~1b",
+            "expected": 1
+        },
+
+        "example 6": {
+            "pointer": "/c%d",
+            "expected": 2
+        },
+
+        "example 7": {
+            "pointer": "/e^f",
+            "expected": 3
+        },
+
+        "example 8": {
+            "pointer": "/g|h",
+            "expected": 4
+        },
+
+        "example 9": {
+            "pointer": "/i\\j",
+            "expected": 5
+        },
+
+        "example 10": {
+            "pointer": "/k\"l",
+            "expected": 6
+        },
+
+        "example 11": {
+            "pointer": "/ ",
+            "expected": 7
+        },
+
+        "example 12": {
+            "pointer": "/m~0n",
+            "expected": 8
+        }
+    }
+}

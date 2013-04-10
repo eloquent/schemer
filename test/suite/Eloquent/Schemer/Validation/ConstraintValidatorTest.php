@@ -70,12 +70,12 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider validateSchemaData
      */
-    public function testValidateSchema($constraint, $category, $test)
+    public function testValidateSchema($constraint, $category, $testName)
     {
         $fixture = $this->reader->readPath(
             sprintf('%s/%s/%s.json', $this->fixturePath, $constraint, $category)
         );
-        $test = $fixture->get('tests')->get($test);
+        $test = $fixture->get('tests')->get($testName);
         $result = $this->validator->validate(
             $this->schemaFactory->create($fixture->get('schema')),
             $test->get('value')
