@@ -12,6 +12,7 @@
 namespace Eloquent\Schemer\Constraint\Renderer;
 
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
@@ -32,7 +33,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
         return static::UNMATCHED_SCHEMA;
     }
 
-    // generic constraints
+    // generic constraints =====================================================
 
     /**
      * @param TypeConstraint $constraint
@@ -49,6 +50,16 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
+     * @param AllOfConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitAllOfConstraint(AllOfConstraint $constraint)
+    {
+        return 'The value did not match all of the defined schemas.';
+    }
+
+    /**
      * @param AnyOfConstraint $constraint
      *
      * @return string
@@ -58,7 +69,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
         return 'The value did not match any of the defined schemas.';
     }
 
-    // object constraints
+    // object constraints ======================================================
 
     /**
      * @param PropertyConstraint $constraint

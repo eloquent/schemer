@@ -1,0 +1,51 @@
+{
+    "schema": {
+        "allOf": [
+            {
+                "properties": {
+                    "foo": {
+                        "type": "string"
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "bar": {
+                        "type": "integer"
+                    }
+                }
+            }
+        ]
+    },
+
+    "tests": {
+        "valid": {
+            "value": {
+                "foo": "baz",
+                "bar": 111
+            },
+            "expected": []
+        },
+
+        "one invalid": {
+            "value": {
+                "foo": "baz",
+                "bar": null
+            },
+            "expected": [
+                "Validation failed for value at '/bar': The value must be of type 'integer'."
+            ]
+        },
+
+        "all invalid": {
+            "value": {
+                "foo": null,
+                "bar": null
+            },
+            "expected": [
+                "Validation failed for value at '/foo': The value must be of type 'string'.",
+                "Validation failed for value at '/bar': The value must be of type 'integer'."
+            ]
+        }
+    }
+}

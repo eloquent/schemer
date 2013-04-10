@@ -11,6 +11,7 @@
 
 namespace Eloquent\Schemer\Constraint\Factory;
 
+use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
@@ -57,6 +58,8 @@ class SchemaFactory implements SchemaFactoryInterface
             // generic constraints
             case 'type':
                 return array($this->createTypeConstraint($value));
+            case 'allOf':
+                return array($this->createAllOfConstraint($value));
             case 'anyOf':
                 return array($this->createAnyOfConstraint($value));
 
@@ -68,7 +71,7 @@ class SchemaFactory implements SchemaFactoryInterface
         return array();
     }
 
-    // generic constraints
+    // generic constraints =====================================================
 
     /**
      * @param ValueInterface $value
@@ -106,6 +109,28 @@ class SchemaFactory implements SchemaFactoryInterface
     /**
      * @param ValueInterface $value
      *
+     * @return AllOfConstraint
+     */
+    protected function createAllOfConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof ArrayValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::ARRAY_TYPE())
+            );
+        }
+
+        $schemas = array();
+        foreach ($value as $subValue) {
+            $schemas[] = $this->create($subValue);
+        }
+
+        return new AllOfConstraint($schemas);
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
      * @return AnyOfConstraint
      */
     protected function createAnyOfConstraint(ValueInterface $value)
@@ -125,7 +150,7 @@ class SchemaFactory implements SchemaFactoryInterface
         return new AnyOfConstraint($schemas);
     }
 
-    // object constraints
+    // object constraints ======================================================
 
     /**
      * @param ValueInterface $value

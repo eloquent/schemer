@@ -13,6 +13,7 @@ namespace Eloquent\Schemer\Validation;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
@@ -79,7 +80,7 @@ class ConstraintValidator implements
         return $issues;
     }
 
-    // generic constraints
+    // generic constraints =====================================================
 
     /**
      * @param TypeConstraint $constraint
@@ -119,7 +120,7 @@ class ConstraintValidator implements
         return array($this->createIssue($constraint));
     }
 
-    // object constraints
+    // object constraints ======================================================
 
     /**
      * @param PropertyConstraint $constraint
@@ -147,6 +148,21 @@ class ConstraintValidator implements
     }
 
     /**
+     * @param AllOfConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitAllOfConstraint(AllOfConstraint $constraint)
+    {
+        $issues = array();
+        foreach ($constraint->schemas() as $schema) {
+            $issues = array_merge($issues, $schema->accept($this));
+        }
+
+        return $issues;
+    }
+
+    /**
      * @param AnyOfConstraint $constraint
      *
      * @return array<Result\ValidationIssue>
@@ -162,7 +178,7 @@ class ConstraintValidator implements
         return array($this->createIssue($constraint));
     }
 
-    // implementation details
+    // implementation details ==================================================
 
     /**
      * @param tuple<ValueInterface,PointerInterface> $context
