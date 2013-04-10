@@ -1,0 +1,31 @@
+{
+    "schema": {
+        "anyOf": [
+            {
+                "type": "string"
+            },
+            {
+                "type": "object"
+            }
+        ]
+    },
+
+    "tests": {
+        "valid string": {
+            "value": "foo",
+            "expected": []
+        },
+
+        "valid object": {
+            "value": {"foo": "bar"},
+            "expected": []
+        },
+
+        "invalid": {
+            "value": null,
+            "expected": [
+                "Validation failed for value at document root: The value did not match any of the defined schemas."
+            ]
+        }
+    }
+}

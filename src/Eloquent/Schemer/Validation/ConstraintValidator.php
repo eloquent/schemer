@@ -102,7 +102,9 @@ class ConstraintValidator implements
             } elseif ($type === ValueType::NULL_TYPE()) {
                 $isValid = $value instanceof NullValue;
             } elseif ($type === ValueType::NUMBER_TYPE()) {
-                $isValid = $value instanceof NumberValue;
+                $isValid =
+                    $value instanceof NumberValue ||
+                    $value instanceof IntegerValue;
             } elseif ($type === ValueType::OBJECT_TYPE()) {
                 $isValid = $value instanceof ObjectValue;
             } elseif ($type === ValueType::STRING_TYPE()) {

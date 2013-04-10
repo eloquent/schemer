@@ -22,16 +22,7 @@ class AnyOfConstraint implements ConstraintInterface
      */
     public function __construct(array $schemas)
     {
-        $this->property = $property;
         $this->schemas = $schemas;
-    }
-
-    /**
-     * @return string
-     */
-    public function property()
-    {
-        return $this->property;
     }
 
     /**
@@ -52,6 +43,5 @@ class AnyOfConstraint implements ConstraintInterface
         return $visitor->visitAnyOfConstraint($this);
     }
 
-    private $property;
     private $schemas;
 }

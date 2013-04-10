@@ -55,7 +55,7 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
         foreach ($iterator as $file) {
             $fixture = $this->reader->readPath(strval($file));
             $constraint = $file->getPathInfo()->getFilename();
-            $category = $file->getBaseName('.json');
+            $category = $file->getFilename();
 
             foreach ($fixture->get('tests') as $testName => $test) {
                 $data[sprintf('%s / %s / %s', $constraint, $category, $testName)] =
@@ -73,7 +73,7 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
     public function testValidateSchema($constraint, $category, $testName)
     {
         $fixture = $this->reader->readPath(
-            sprintf('%s/%s/%s.json', $this->fixturePath, $constraint, $category)
+            sprintf('%s/%s/%s', $this->fixturePath, $constraint, $category)
         );
         $test = $fixture->get('tests')->get($testName);
         $result = $this->validator->validate(

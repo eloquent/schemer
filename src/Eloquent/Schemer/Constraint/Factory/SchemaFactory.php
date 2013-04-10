@@ -11,6 +11,7 @@
 
 namespace Eloquent\Schemer\Constraint\Factory;
 
+use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
 use Eloquent\Schemer\Constraint\Schema;
@@ -56,6 +57,8 @@ class SchemaFactory implements SchemaFactoryInterface
             // generic constraints
             case 'type':
                 return array($this->createTypeConstraint($value));
+            case 'anyOf':
+                return array($this->createAnyOfConstraint($value));
 
             // object constraints
             case 'properties':
@@ -98,6 +101,28 @@ class SchemaFactory implements SchemaFactoryInterface
             $value,
             array(ValueType::STRING_TYPE(), ValueType::ARRAY_TYPE())
         );
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return AnyOfConstraint
+     */
+    protected function createAnyOfConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof ArrayValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::ARRAY_TYPE())
+            );
+        }
+
+        $schemas = array();
+        foreach ($value as $subValue) {
+            $schemas[] = $this->create($subValue);
+        }
+
+        return new AnyOfConstraint($schemas);
     }
 
     // object constraints

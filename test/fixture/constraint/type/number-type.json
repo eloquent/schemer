@@ -1,0 +1,24 @@
+{
+    "schema": {
+        "type": "number"
+    },
+
+    "tests": {
+        "valid floating point value": {
+            "value": 1.11,
+            "expected": []
+        },
+
+        "valid integer": {
+            "value": 111,
+            "expected": []
+        },
+
+        "invalid": {
+            "value": null,
+            "expected": [
+                "Validation failed for value at document root: The value must be of type 'number'."
+            ]
+        }
+    }
+}
