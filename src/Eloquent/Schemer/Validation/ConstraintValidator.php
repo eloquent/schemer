@@ -15,6 +15,7 @@ use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
+use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
 use Eloquent\Schemer\Constraint\Schema;
@@ -25,7 +26,7 @@ use Eloquent\Schemer\Value\BooleanValue;
 use Eloquent\Schemer\Value\DateTimeValue;
 use Eloquent\Schemer\Value\IntegerValue;
 use Eloquent\Schemer\Value\NullValue;
-use Eloquent\Schemer\Value\NumberValue;
+use Eloquent\Schemer\Value\NumericValueInterface;
 use Eloquent\Schemer\Value\ObjectValue;
 use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ValueInterface;
@@ -103,9 +104,7 @@ class ConstraintValidator implements
             } elseif ($type === ValueType::NULL_TYPE()) {
                 $isValid = $value instanceof NullValue;
             } elseif ($type === ValueType::NUMBER_TYPE()) {
-                $isValid =
-                    $value instanceof NumberValue ||
-                    $value instanceof IntegerValue;
+                $isValid = $value instanceof NumericValueInterface;
             } elseif ($type === ValueType::OBJECT_TYPE()) {
                 $isValid = $value instanceof ObjectValue;
             } elseif ($type === ValueType::STRING_TYPE()) {
@@ -154,6 +153,12 @@ class ConstraintValidator implements
      */
     public function visitAllOfConstraint(AllOfConstraint $constraint)
     {
+        if (1 === count($constraint->schemas())) {
+            $schemas = $constraint->schemas();
+
+            return $schemas[0]->accept($this);
+        }
+
         $issues = array();
         foreach ($constraint->schemas() as $schema) {
             $issues = array_merge($issues, $schema->accept($this));
@@ -169,6 +174,12 @@ class ConstraintValidator implements
      */
     public function visitAnyOfConstraint(AnyOfConstraint $constraint)
     {
+        if (1 === count($constraint->schemas())) {
+            $schemas = $constraint->schemas();
+
+            return $schemas[0]->accept($this);
+        }
+
         foreach ($constraint->schemas() as $schema) {
             if (count($schema->accept($this)) < 1) {
                 return array();
@@ -176,6 +187,33 @@ class ConstraintValidator implements
         }
 
         return array($this->createIssue($constraint));
+    }
+
+    /**
+     * @param OneOfConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitOneOfConstraint(OneOfConstraint $constraint)
+    {
+        if (1 === count($constraint->schemas())) {
+            $schemas = $constraint->schemas();
+
+            return $schemas[0]->accept($this);
+        }
+
+        $matchingSchemas = 0;
+        foreach ($constraint->schemas() as $schema) {
+            if (count($schema->accept($this)) < 1) {
+                $matchingSchemas += 1;
+            }
+        }
+
+        if (1 !== $matchingSchemas) {
+            return array($this->createIssue($constraint));
+        }
+
+        return array();
     }
 
     // implementation details ==================================================

@@ -13,7 +13,7 @@ namespace Eloquent\Schemer\Constraint\Generic;
 
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 
-class AnyOfConstraint extends AbstractSchemaSetConstraint
+class OneOfConstraint extends AbstractSchemaSetConstraint
 {
     /**
      * @param ConstraintVisitorInterface $visitor
@@ -22,6 +22,6 @@ class AnyOfConstraint extends AbstractSchemaSetConstraint
      */
     public function accept(ConstraintVisitorInterface $visitor)
     {
-        return $visitor->visitAnyOfConstraint($this);
+        return $visitor->visitOneOfConstraint($this);
     }
 }

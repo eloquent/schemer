@@ -15,19 +15,12 @@
 
     "tests": {
         "valid": {
-            "value": {
-                "foo": "qux",
-                "bar": {}
-            },
+            "value": {"foo": "qux", "bar": {}},
             "expected": []
         },
 
         "invalid": {
-            "value": {
-                "foo": null,
-                "bar": "doom",
-                "baz": null
-            },
+            "value": {"foo": null, "bar": "doom", "baz": null},
             "expected": [
                 "Validation failed for value at '/foo': The value must be of type 'string'.",
                 "Validation failed for value at '/bar': The value must be of type 'object'."

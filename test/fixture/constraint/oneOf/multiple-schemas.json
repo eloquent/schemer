@@ -1,6 +1,6 @@
 {
     "schema": {
-        "allOf": [
+        "oneOf": [
             {
                 "properties": {
                     "foo": {
@@ -20,22 +20,21 @@
 
     "tests": {
         "valid": {
-            "value": {"foo": "baz", "bar": 111},
+            "value": {"foo": "baz", "bar": null},
             "expected": []
         },
 
-        "one invalid": {
-            "value": {"foo": "baz", "bar": null},
+        "invalid - none matching": {
+            "value": {"foo": null, "bar": null},
             "expected": [
-                "Validation failed for value at '/bar': The value must be of type 'integer'."
+                "Validation failed for value at document root: The value did not match any, or matched more than one of the defined schemas."
             ]
         },
 
-        "all invalid": {
-            "value": {"foo": null, "bar": null},
+        "invalid - more than one matching": {
+            "value": {"foo": "baz", "bar": 111},
             "expected": [
-                "Validation failed for value at '/foo': The value must be of type 'string'.",
-                "Validation failed for value at '/bar': The value must be of type 'integer'."
+                "Validation failed for value at document root: The value did not match any, or matched more than one of the defined schemas."
             ]
         }
     }

@@ -13,7 +13,7 @@ namespace Eloquent\Schemer\Value;
 
 use InvalidArgumentException;
 
-class NumberValue extends AbstractValue
+class NumberValue extends AbstractValue implements NumericValueInterface
 {
     /**
      * @param float $value
