@@ -29,6 +29,13 @@ interface ConstraintVisitorInterface
      */
     public function visitTypeConstraint(Generic\TypeConstraint $constraint);
 
+    /**
+     * @param Generic\AnyOfConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitAnyOfConstraint(Generic\AnyOfConstraint $constraint);
+
     // object constraints
 
     /**

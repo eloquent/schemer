@@ -12,6 +12,7 @@
 namespace Eloquent\Schemer\Constraint\Renderer;
 
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
 use Eloquent\Schemer\Constraint\Schema;
@@ -45,6 +46,16 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
         }, $constraint->types());
 
         return sprintf("The value must be of type '%s'.", implode('|', $types));
+    }
+
+    /**
+     * @param AnyOfConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitAnyOfConstraint(AnyOfConstraint $constraint)
+    {
+        return 'The value did not match any of the defined schemas.';
     }
 
     // object constraints

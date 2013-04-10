@@ -13,6 +13,7 @@ namespace Eloquent\Schemer\Validation;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
 use Eloquent\Schemer\Constraint\Schema;
@@ -53,8 +54,7 @@ class ConstraintValidator implements
         $this->clear();
 
         $this->pushContext(array($value, $entryPoint));
-        $constraint->accept($this);
-        $result = new Result\ValidationResult($this->issues);
+        $result = new Result\ValidationResult($constraint->accept($this));
 
         $this->clear();
 
@@ -63,18 +63,28 @@ class ConstraintValidator implements
 
     /**
      * @param Schema $constraint
+     *
+     * @return array<Result\ValidationIssue>
      */
     public function visitSchema(Schema $constraint)
     {
+        $issues = array();
         foreach ($constraint->constraints() as $subConstraint) {
-            $subConstraint->accept($this);
+            $issues = array_merge(
+                $issues,
+                $subConstraint->accept($this)
+            );
         }
+
+        return $issues;
     }
 
     // generic constraints
 
     /**
      * @param TypeConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
      */
     public function visitTypeConstraint(TypeConstraint $constraint)
     {
@@ -100,19 +110,19 @@ class ConstraintValidator implements
             }
 
             if ($isValid) {
-                break;
+                return array();
             }
         }
 
-        if (!$isValid) {
-            $this->addIssue($constraint);
-        }
+        return array($this->createIssue($constraint));
     }
 
     // object constraints
 
     /**
      * @param PropertyConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
      */
     public function visitPropertyConstraint(PropertyConstraint $constraint)
     {
@@ -121,15 +131,33 @@ class ConstraintValidator implements
             !$value instanceof ObjectValue ||
             !$value->has($constraint->property())
         ) {
-            return;
+            return array();
         }
 
         $this->pushContext(array(
             $value->get($constraint->property()),
             $this->currentPointer()->joinAtom($constraint->property())
         ));
-        $constraint->schema()->accept($this);
+        $issues = $constraint->schema()->accept($this);
         $this->popContext();
+
+        return $issues;
+    }
+
+    /**
+     * @param AnyOfConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitAnyOfConstraint(AnyOfConstraint $constraint)
+    {
+        foreach ($constraint->schemas() as $schema) {
+            if (count($schema->accept($this)) < 1) {
+                return array();
+            }
+        }
+
+        return array($this->createIssue($constraint));
     }
 
     // implementation details
@@ -197,10 +225,11 @@ class ConstraintValidator implements
     /**
      * @param ConstraintInterface $constraint
      */
-    protected function addIssue(ConstraintInterface $constraint)
+    protected function createIssue(ConstraintInterface $constraint)
     {
         list($value, $pointer) = $this->currentContext();
-        $this->issues[] = new Result\ValidationIssue(
+
+        return new Result\ValidationIssue(
             $constraint,
             $value,
             $pointer
@@ -208,5 +237,4 @@ class ConstraintValidator implements
     }
 
     private $contextStack;
-    private $issues;
 }
