@@ -13,6 +13,7 @@ namespace Eloquent\Schemer\Constraint\Factory;
 
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
+use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
@@ -58,6 +59,8 @@ class SchemaFactory implements SchemaFactoryInterface
     ) {
         switch ($property) {
             // generic constraints
+            case 'enum':
+                return array($this->createEnumConstraint($value));
             case 'type':
                 return array($this->createTypeConstraint($value));
             case 'allOf':
@@ -78,6 +81,23 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     // generic constraints =====================================================
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return EnumConstraint
+     */
+    protected function createEnumConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof ArrayValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::ARRAY_TYPE())
+            );
+        }
+
+        return new EnumConstraint($value);
+    }
 
     /**
      * @param ValueInterface $value

@@ -12,6 +12,7 @@
 namespace Eloquent\Schemer\Serialization\Exception;
 
 use Exception;
+use Icecave\Repr\Repr;
 use LogicException;
 
 final class UndefinedProtocolException extends LogicException
@@ -25,7 +26,10 @@ final class UndefinedProtocolException extends LogicException
         $this->mimeType = $mimeType;
 
         parent::__construct(
-            sprintf("No serialization protocol defined for MIME type '%s'.", $mimeType),
+            sprintf(
+                "No serialization protocol defined for MIME type %s.",
+                Repr::repr($mimeType)
+            ),
             0,
             $previous
         );

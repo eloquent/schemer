@@ -13,6 +13,7 @@ namespace Eloquent\Schemer\Pointer\Resolver\Exception;
 
 use Eloquent\Schemer\Pointer\PointerInterface;
 use Exception;
+use Icecave\Repr\Repr;
 
 final class UndefinedValueException extends Exception
 {
@@ -25,7 +26,10 @@ final class UndefinedValueException extends Exception
         $this->pointer = $pointer;
 
         parent::__construct(
-            sprintf("No value defined for pointer '%s'.", $pointer->string()),
+            sprintf(
+                "No value defined for pointer %s.",
+                Repr::repr($pointer->string())
+            ),
             0,
             $previous
         );

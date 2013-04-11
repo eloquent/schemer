@@ -14,12 +14,14 @@ namespace Eloquent\Schemer\Constraint\Renderer;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
+use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ValueType;
+use Icecave\Repr\Repr;
 
 class ConstraintFailureRenderer implements ConstraintVisitorInterface
 {
@@ -38,6 +40,31 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     // generic constraints =====================================================
 
     /**
+     * @param EnumConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitEnumConstraint(EnumConstraint $constraint)
+    {
+        $enumValues = array();
+        foreach ($constraint->values() as $enumValue) {
+            $enumValues[] = Repr::repr($enumValue->value());
+        }
+
+        if (count($enumValues) < 2) {
+            return sprintf(
+                "The value must be equal to %s.",
+                array_pop($enumValues)
+            );
+        }
+
+        return sprintf(
+            "The value must be equal to one of the following: %s.",
+            implode(', ', $enumValues)
+        );
+    }
+
+    /**
      * @param TypeConstraint $constraint
      *
      * @return string
@@ -45,12 +72,19 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitTypeConstraint(TypeConstraint $constraint)
     {
         $valueTypes = array_map(function (ValueType $valueType) {
-            return $valueType->value();
+            return Repr::repr($valueType->value());
         }, $constraint->valueTypes());
 
+        if (count($valueTypes) < 2) {
+            return sprintf(
+                "The value must be of type %s.",
+                array_pop($valueTypes)
+            );
+        }
+
         return sprintf(
-            "The value must be of type '%s'.",
-            implode('|', $valueTypes)
+            "The value must be one of the following types: %s.",
+            implode(', ', $valueTypes)
         );
     }
 

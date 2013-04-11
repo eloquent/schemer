@@ -1,0 +1,29 @@
+{
+    "schema": {
+        "enum": ["foo", "bar", "baz"]
+    },
+
+    "tests": {
+        "valid - first element": {
+            "value": "foo",
+            "expected": []
+        },
+
+        "valid - middle element": {
+            "value": "bar",
+            "expected": []
+        },
+
+        "valid - middle element": {
+            "value": "baz",
+            "expected": []
+        },
+
+        "invalid": {
+            "value": "qux",
+            "expected": [
+                "Validation failed for value at document root: The value must be equal to one of the following: \"foo\", \"bar\", \"baz\"."
+            ]
+        }
+    }
+}

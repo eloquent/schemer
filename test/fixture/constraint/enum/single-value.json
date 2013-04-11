@@ -1,6 +1,6 @@
 {
     "schema": {
-        "type": "string"
+        "enum": ["foo"]
     },
 
     "tests": {
@@ -10,9 +10,9 @@
         },
 
         "invalid": {
-            "value": null,
+            "value": "bar",
             "expected": [
-                "Validation failed for value at document root: The value must be of type \"string\"."
+                "Validation failed for value at document root: The value must be equal to \"foo\"."
             ]
         }
     }

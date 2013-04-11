@@ -11,10 +11,12 @@
 
 namespace Eloquent\Schemer\Validation;
 
+use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
+use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
@@ -38,6 +40,26 @@ class ConstraintValidator implements
     ConstraintValidatorInterface,
     ConstraintVisitorInterface
 {
+    /**
+     * @param Comparator|null $comparator
+     */
+    public function __construct(Comparator $comparator = null)
+    {
+        if (null === $comparator) {
+            $comparator = new Comparator;
+        }
+
+        $this->comparator = $comparator;
+    }
+
+    /**
+     * @return Comparator
+     */
+    public function comparator()
+    {
+        return $this->comparator;
+    }
+
     /**
      * @param ConstraintInterface   $constraint
      * @param ValueInterface        $value
@@ -85,6 +107,23 @@ class ConstraintValidator implements
     // generic constraints =====================================================
 
     /**
+     * @param EnumConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitEnumConstraint(EnumConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        foreach ($constraint->values() as $enumValue) {
+            if ($this->comparator()->equals($value, $enumValue)) {
+                return array();
+            }
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
+    /**
      * @param TypeConstraint $constraint
      *
      * @return array<Result\ValidationIssue>
@@ -118,33 +157,6 @@ class ConstraintValidator implements
         }
 
         return array($this->createIssue($constraint));
-    }
-
-    // object constraints ======================================================
-
-    /**
-     * @param PropertyConstraint $constraint
-     *
-     * @return array<Result\ValidationIssue>
-     */
-    public function visitPropertyConstraint(PropertyConstraint $constraint)
-    {
-        $value = $this->currentValue();
-        if (
-            !$value instanceof ObjectValue ||
-            !$value->has($constraint->property())
-        ) {
-            return array();
-        }
-
-        $this->pushContext(array(
-            $value->get($constraint->property()),
-            $this->currentPointer()->joinAtom($constraint->property())
-        ));
-        $issues = $constraint->schema()->accept($this);
-        $this->popContext();
-
-        return $issues;
     }
 
     /**
@@ -231,6 +243,33 @@ class ConstraintValidator implements
         return array();
     }
 
+    // object constraints ======================================================
+
+    /**
+     * @param PropertyConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitPropertyConstraint(PropertyConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (
+            !$value instanceof ObjectValue ||
+            !$value->has($constraint->property())
+        ) {
+            return array();
+        }
+
+        $this->pushContext(array(
+            $value->get($constraint->property()),
+            $this->currentPointer()->joinAtom($constraint->property())
+        ));
+        $issues = $constraint->schema()->accept($this);
+        $this->popContext();
+
+        return $issues;
+    }
+
     // implementation details ==================================================
 
     /**
@@ -307,5 +346,6 @@ class ConstraintValidator implements
         );
     }
 
+    private $comparator;
     private $contextStack;
 }

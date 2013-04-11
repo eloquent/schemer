@@ -25,6 +25,7 @@ use Eloquent\Schemer\Value\NullValue;
 use Eloquent\Schemer\Value\ObjectValue;
 use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ReferenceValue;
+use Icecave\Repr\Repr;
 use InvalidArgumentException;
 use stdClass;
 use Zend\Uri\Uri;
@@ -96,7 +97,7 @@ class ValueFactory implements ValueFactoryInterface
         }
 
         throw new InvalidArgumentException(
-            sprintf("Unsupported value type '%s'.", $variableType)
+            sprintf("Unsupported value type %s.", Repr::repr($variableType))
         );
     }
 

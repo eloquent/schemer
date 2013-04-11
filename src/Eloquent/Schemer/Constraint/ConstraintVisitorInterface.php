@@ -23,6 +23,13 @@ interface ConstraintVisitorInterface
     // generic constraints =====================================================
 
     /**
+     * @param Generic\EnumConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitEnumConstraint(Generic\EnumConstraint $constraint);
+
+    /**
      * @param Generic\TypeConstraint $constraint
      *
      * @return mixed

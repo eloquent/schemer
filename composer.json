@@ -17,6 +17,7 @@
         "eloquent/equality": "~2",
         "eloquent/enumeration": "~3",
         "icecave/isolator": "~2",
+        "icecave/repr": "~1",
         "kriswallsmith/buzz": "~0.9",
         "zendframework/zend-uri": "~2,!=2.1.4"
     },
