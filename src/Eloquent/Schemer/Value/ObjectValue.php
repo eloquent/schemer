@@ -11,8 +11,22 @@
 
 namespace Eloquent\Schemer\Value;
 
+use stdClass;
+
 class ObjectValue extends AbstractObjectValue
 {
+    /**
+     * @param stdClass|null $value
+     */
+    public function __construct(stdClass $value = null)
+    {
+        if (null === $value) {
+            $value = new stdClass;
+        }
+
+        parent::__construct($value);
+    }
+
     /**
      * @param ValueVisitorInterface $visitor
      *

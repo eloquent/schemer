@@ -73,8 +73,8 @@ class ValueFactory implements ValueFactoryInterface
      */
     public function create($value)
     {
-        $type = gettype($value);
-        switch ($type) {
+        $variableType = gettype($value);
+        switch ($variableType) {
             case 'boolean':
                 return new BooleanValue($value);
             case 'integer':
@@ -96,7 +96,7 @@ class ValueFactory implements ValueFactoryInterface
         }
 
         throw new InvalidArgumentException(
-            sprintf("Unsupported value type '%s'.", $type)
+            sprintf("Unsupported value type '%s'.", $variableType)
         );
     }
 
@@ -166,16 +166,21 @@ class ValueFactory implements ValueFactoryInterface
             }
             $reference = $this->uriFactory()->create($uri->toString());
 
-            $type = null;
+            $mimeType = null;
             if (
                 property_exists($value, '$type') &&
                 $value->{'$type'} instanceof StringValue
             ) {
-                $type = $value->{'$type'}->value();
+                $mimeType = $value->{'$type'}->value();
                 unset($value->{'$type'});
             }
 
-            return new ReferenceValue($reference, $pointer, $type, $value);
+            return new ReferenceValue(
+                $reference,
+                $pointer,
+                $mimeType,
+                new ObjectValue($value)
+            );
         }
 
         return new ObjectValue($value);

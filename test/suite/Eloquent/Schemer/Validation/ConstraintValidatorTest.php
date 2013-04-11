@@ -57,7 +57,7 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
             $constraint = $file->getPathInfo()->getFilename();
             $category = $file->getFilename();
 
-            foreach ($fixture->get('tests') as $testName => $test) {
+            foreach ($fixture->tests as $testName => $test) {
                 $data[sprintf('%s / %s / %s', $constraint, $category, $testName)] =
                     array($constraint, $category, $testName);
             }
@@ -75,14 +75,14 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
         $fixture = $this->reader->readPath(
             sprintf('%s/%s/%s', $this->fixturePath, $constraint, $category)
         );
-        $test = $fixture->get('tests')->get($testName);
+        $test = $fixture->tests->$testName;
         $result = $this->validator->validate(
-            $this->schemaFactory->create($fixture->get('schema')),
-            $test->get('value')
+            $this->schemaFactory->create($fixture->schema),
+            $test->value
         );
 
         $this->assertSame(
-            $test->get('expected')->rawValue(),
+            $test->expected->value(),
             $this->renderer->renderMany($result->issues())
         );
     }

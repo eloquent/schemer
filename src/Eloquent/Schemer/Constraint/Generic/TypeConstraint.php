@@ -18,19 +18,19 @@ use Eloquent\Schemer\Value\ValueType;
 class TypeConstraint implements ConstraintInterface
 {
     /**
-     * @param array<ValueType> $types
+     * @param array<ValueType> $valueTypes
      */
-    public function __construct(array $types)
+    public function __construct(array $valueTypes)
     {
-        $this->types = $types;
+        $this->valueTypes = $valueTypes;
     }
 
     /**
      * @return array<ValueType>
      */
-    public function types()
+    public function valueTypes()
     {
-        return $this->types;
+        return $this->valueTypes;
     }
 
     /**
@@ -43,5 +43,5 @@ class TypeConstraint implements ConstraintInterface
         return $visitor->visitTypeConstraint($this);
     }
 
-    private $types;
+    private $valueTypes;
 }

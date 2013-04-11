@@ -93,22 +93,22 @@ class ConstraintValidator implements
     {
         $value = $this->currentValue();
         $isValid = false;
-        foreach ($constraint->types() as $type) {
-            if ($type === ValueType::ARRAY_TYPE()) {
+        foreach ($constraint->valueTypes() as $valueType) {
+            if ($valueType === ValueType::ARRAY_TYPE()) {
                 $isValid = $value instanceof ArrayValue;
-            } elseif ($type === ValueType::BOOLEAN_TYPE()) {
+            } elseif ($valueType === ValueType::BOOLEAN_TYPE()) {
                 $isValid = $value instanceof BooleanValue;
-            } elseif ($type === ValueType::DATETIME_TYPE()) {
+            } elseif ($valueType === ValueType::DATETIME_TYPE()) {
                 $isValid = $value instanceof DateTimeValue;
-            } elseif ($type === ValueType::INTEGER_TYPE()) {
+            } elseif ($valueType === ValueType::INTEGER_TYPE()) {
                 $isValid = $value instanceof IntegerValue;
-            } elseif ($type === ValueType::NULL_TYPE()) {
+            } elseif ($valueType === ValueType::NULL_TYPE()) {
                 $isValid = $value instanceof NullValue;
-            } elseif ($type === ValueType::NUMBER_TYPE()) {
+            } elseif ($valueType === ValueType::NUMBER_TYPE()) {
                 $isValid = $value instanceof NumberValueInterface;
-            } elseif ($type === ValueType::OBJECT_TYPE()) {
+            } elseif ($valueType === ValueType::OBJECT_TYPE()) {
                 $isValid = $value instanceof ObjectValue;
-            } elseif ($type === ValueType::STRING_TYPE()) {
+            } elseif ($valueType === ValueType::STRING_TYPE()) {
                 $isValid = $value instanceof StringValue;
             }
 

@@ -51,7 +51,7 @@ class PointerResolverTest extends PHPUnit_Framework_TestCase
             $fixture = $this->reader->readPath(strval($file));
             $category = $file->getBaseName('.json');
 
-            foreach ($fixture->get('tests') as $testName => $test) {
+            foreach ($fixture->tests as $testName => $test) {
                 $data[sprintf('%s / %s ', $category, $testName)] =
                     array($category, $testName);
             }
@@ -69,14 +69,14 @@ class PointerResolverTest extends PHPUnit_Framework_TestCase
         $fixture = $this->reader->readPath(
             sprintf('%s/%s.json', $this->fixturePath, $category)
         );
-        $test = $fixture->get('tests')->get($testName);
+        $test = $fixture->tests->$testName;
         $actual = $this->resolver->resolve(
             $this->pointerFactory->create(
-                $test->get('pointer')->value()
+                $test->pointer->value()
             ),
-            $fixture->get('document')
+            $fixture->document
         );
-        $expected = $test->get('expected');
+        $expected = $test->expected;
 
         $this->assertEquals($expected, $actual);
         $this->assertTrue($this->comparator->equals($expected, $actual));

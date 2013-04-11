@@ -18,6 +18,7 @@ final class ValueType extends Enumeration
     const ARRAY_TYPE = 'array';
     const BOOLEAN_TYPE = 'boolean';
     const DATETIME_TYPE = 'datetime';
+    const FLOATING_POINT_TYPE = 'float';
     const INTEGER_TYPE = 'integer';
     const NULL_TYPE = 'null';
     const NUMBER_TYPE = 'number';

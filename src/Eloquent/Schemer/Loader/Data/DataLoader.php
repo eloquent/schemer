@@ -21,31 +21,31 @@ use Zend\Uri\UriInterface;
 class DataLoader implements LoaderInterface
 {
     /**
-     * @param string|null $defaultType
+     * @param string|null $defaultMimeType
      */
-    public function __construct($defaultType = null)
+    public function __construct($defaultMimeType = null)
     {
-        if (null === $defaultType) {
-            $defaultType = ContentType::JSON()->primaryType();
+        if (null === $defaultMimeType) {
+            $defaultMimeType = ContentType::JSON()->primaryMimeType();
         }
 
-        $this->defaultType = $defaultType;
+        $this->defaultMimeType = $defaultMimeType;
     }
 
     /**
-     * @param string $defaultType
+     * @param string $defaultMimeType
      */
-    public function setDefaultType($defaultType)
+    public function setDefaultMimeType($mimeType)
     {
-        $this->defaultType = $defaultType;
+        $this->defaultMimeType = $mimeType;
     }
 
     /**
      * @return string
      */
-    public function defaultType()
+    public function defaultMimeType()
     {
-        return $this->defaultType;
+        return $this->defaultMimeType;
     }
 
     /**
@@ -63,22 +63,22 @@ class DataLoader implements LoaderInterface
 
         return new Content(
             $uri->getData(),
-            $this->stripTypeParameters($uri->getMimeType())
+            $this->stripMimeTypeParameters($uri->getMimeType())
         );
     }
 
     /**
-     * @param string $type
+     * @param string $mimeType
      *
      * @return string
      */
-    protected function stripTypeParameters($type)
+    protected function stripMimeTypeParameters($mimeType)
     {
-        $type = explode(';', $type);
-        $type = trim(array_shift($type));
+        $mimeType = explode(';', $mimeType);
+        $mimeType = trim(array_shift($mimeType));
 
-        return $type;
+        return $mimeType;
     }
 
-    private $defaultType;
+    private $defaultMimeType;
 }

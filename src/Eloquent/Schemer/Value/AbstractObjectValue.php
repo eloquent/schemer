@@ -42,20 +42,20 @@ abstract class AbstractObjectValue extends AbstractValue implements
      */
     public function value()
     {
-        return clone parent::value();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function rawValue()
-    {
-        $value = $this->value();
+        $value = clone $this->wrappedValue();
         foreach ($this->properties() as $property) {
-            $value->$property = $value->$property->rawValue();
+            $value->$property = $value->$property->value();
         }
 
         return $value;
+    }
+
+    /**
+     * @return ValueType
+     */
+    public function valueType()
+    {
+        return ValueType::OBJECT_TYPE();
     }
 
     /**
@@ -63,7 +63,7 @@ abstract class AbstractObjectValue extends AbstractValue implements
      */
     public function properties()
     {
-        return array_keys(get_object_vars($this->value()));
+        return array_keys(get_object_vars($this->wrappedValue()));
     }
 
     /**
@@ -71,7 +71,7 @@ abstract class AbstractObjectValue extends AbstractValue implements
      */
     public function count()
     {
-        return count(get_object_vars($this->value()));
+        return count(get_object_vars($this->wrappedValue()));
     }
 
     /**
@@ -81,7 +81,7 @@ abstract class AbstractObjectValue extends AbstractValue implements
      */
     public function has($property)
     {
-        return property_exists($this->value(), $property);
+        return property_exists($this->wrappedValue(), $property);
     }
 
     /**
@@ -95,7 +95,7 @@ abstract class AbstractObjectValue extends AbstractValue implements
             throw new Exception\UndefinedPropertyException($property);
         }
 
-        return $this->value()->$property;
+        return $this->wrappedValue()->$property;
     }
 
     /**
@@ -110,7 +110,17 @@ abstract class AbstractObjectValue extends AbstractValue implements
             return $default;
         }
 
-        return $this->value()->$property;
+        return $this->wrappedValue()->$property;
+    }
+
+    /**
+     * @param string $property
+     *
+     * @return ValueInterface
+     */
+    public function __get($property)
+    {
+        return $this->get($property);
     }
 
     /**
@@ -118,6 +128,6 @@ abstract class AbstractObjectValue extends AbstractValue implements
      */
     public function getIterator()
     {
-        return new ArrayIterator(get_object_vars($this->value()));
+        return new ArrayIterator(get_object_vars($this->wrappedValue()));
     }
 }

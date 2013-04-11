@@ -91,19 +91,19 @@ class SchemaFactory implements SchemaFactoryInterface
                 array(ValueType::instanceByValue($value->value()))
             );
         } elseif ($value instanceof ArrayValue) {
-            $types = array();
-            foreach ($value as $type) {
-                if (!$type instanceof StringValue) {
+            $valueTypes = array();
+            foreach ($value as $typeValue) {
+                if (!$typeValue instanceof StringValue) {
                     throw new UnexpectedValueException(
-                        $type->type(),
+                        $typeValue->valueType(),
                         array(ValueType::STRING_TYPE())
                     );
                 }
 
-                $types[] = ValueType::instanceByValue($type->value());
+                $valueTypes[] = ValueType::instanceByValue($typeValue->value());
             }
 
-            return new TypeConstraint($types);
+            return new TypeConstraint($valueTypes);
         }
 
         throw new UnexpectedValueException(

@@ -24,36 +24,36 @@ use Zend\Uri\UriInterface;
 class HttpLoader implements LoaderInterface
 {
     /**
-     * @param string|null  $defaultType
+     * @param string|null  $defaultMimeType
      * @param Browser|null $browser
      */
-    public function __construct($defaultType = null, Browser $browser = null)
+    public function __construct($defaultMimeType = null, Browser $browser = null)
     {
-        if (null === $defaultType) {
-            $defaultType = ContentType::JSON()->primaryType();
+        if (null === $defaultMimeType) {
+            $defaultMimeType = ContentType::JSON()->primaryMimeType();
         }
         if (null === $browser) {
             $browser = new Browser;
         }
 
-        $this->defaultType = $defaultType;
+        $this->defaultMimeType = $defaultMimeType;
         $this->browser = $browser;
     }
 
     /**
-     * @param string $defaultType
+     * @param string $mimeType
      */
-    public function setDefaultType($defaultType)
+    public function setDefaultMimeType($mimeType)
     {
-        $this->defaultType = $defaultType;
+        $this->defaultMimeType = $mimeType;
     }
 
     /**
      * @return string
      */
-    public function defaultType()
+    public function defaultMimeType()
     {
-        return $this->defaultType;
+        return $this->defaultMimeType;
     }
 
     /**
@@ -85,7 +85,7 @@ class HttpLoader implements LoaderInterface
 
         return new Content(
             $response->getContent(),
-            $this->typeByResponse($response)
+            $this->mimeTypeByResponse($response)
         );
     }
 
@@ -94,20 +94,20 @@ class HttpLoader implements LoaderInterface
      *
      * @return string
      */
-    protected function typeByResponse(Response $response)
+    protected function mimeTypeByResponse(Response $response)
     {
-        $type = $response->getHeader('Content-Type');
-        if (count($type) > 0) {
-            $type = array_pop($type);
-            $type = explode(';', $type);
-            $type = trim(array_shift($type));
+        $mimeType = $response->getHeader('Content-Type');
+        if (count($mimeType) > 0) {
+            $mimeType = array_pop($mimeType);
+            $mimeType = explode(';', $mimeType);
+            $mimeType = trim(array_shift($mimeType));
 
-            return $type;
+            return $mimeType;
         }
 
-        return $this->defaultType();
+        return $this->defaultMimeType();
     }
 
-    private $defaultType;
+    private $defaultMimeType;
     private $browser;
 }

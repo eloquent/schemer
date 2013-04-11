@@ -16,14 +16,14 @@ use Zend\Uri\UriInterface;
 interface LoaderInterface
 {
     /**
-     * @param string $defaultType
+     * @param string $mimeType
      */
-    public function setDefaultType($defaultType);
+    public function setDefaultMimeType($mimeType);
 
     /**
      * @return string
      */
-    public function defaultType();
+    public function defaultMimeType();
 
     /**
      * @param UriInterface $uri

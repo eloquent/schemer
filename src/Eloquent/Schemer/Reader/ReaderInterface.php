@@ -15,25 +15,25 @@ interface ReaderInterface
 {
     /**
      * @param \Zend\Uri\UriInterface|string $uri
-     * @param string|null                   $type
+     * @param string|null                   $mimeType
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    public function read($uri, $type = null);
+    public function read($uri, $mimeType = null);
 
     /**
      * @param string      $path
-     * @param string|null $type
+     * @param string|null $mimeType
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    public function readPath($path, $type = null);
+    public function readPath($path, $mimeType = null);
 
     /**
      * @param string      $data
-     * @param string|null $type
+     * @param string|null $mimeType
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    public function readString($data, $type = null);
+    public function readString($data, $mimeType = null);
 }

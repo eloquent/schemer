@@ -24,6 +24,22 @@ class DateTimeValue extends AbstractValue
     }
 
     /**
+     * @return DateTime
+     */
+    public function value()
+    {
+        return clone $this->wrappedValue();
+    }
+
+    /**
+     * @return ValueType
+     */
+    public function valueType()
+    {
+        return ValueType::DATETIME_TYPE();
+    }
+
+    /**
      * @param ValueVisitorInterface $visitor
      *
      * @return mixed

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the typer package.
+ * This file is part of the Schemer package.
  *
  * Copyright © 2013 Erin Millard
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\typer\Serialization\Exception;
+namespace Eloquent\Schemer\Serialization\Exception;
 
 use Exception;
 use LogicException;
@@ -17,15 +17,15 @@ use LogicException;
 final class UndefinedProtocolException extends LogicException
 {
     /**
-     * @param string         $type
+     * @param string         $mimeType
      * @param Exception|null $previous
      */
-    public function __construct($type, Exception $previous = null)
+    public function __construct($mimeType, Exception $previous = null)
     {
-        $this->type = $type;
+        $this->mimeType = $mimeType;
 
         parent::__construct(
-            sprintf("No serialization protocol defined for type '%s'.", $type),
+            sprintf("No serialization protocol defined for MIME type '%s'.", $mimeType),
             0,
             $previous
         );
@@ -34,10 +34,10 @@ final class UndefinedProtocolException extends LogicException
     /**
      * @return string
      */
-    public function type()
+    public function mimeType()
     {
-        return $this->type;
+        return $this->mimeType;
     }
 
-    private $type;
+    private $mimeType;
 }

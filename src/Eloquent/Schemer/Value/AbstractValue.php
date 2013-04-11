@@ -26,15 +26,15 @@ abstract class AbstractValue implements ValueInterface
      */
     public function value()
     {
-        return $this->value;
+        return $this->wrappedValue();
     }
 
     /**
      * @return mixed
      */
-    public function rawValue()
+    protected function wrappedValue()
     {
-        return $this->value();
+        return $this->value;
     }
 
     private $value;

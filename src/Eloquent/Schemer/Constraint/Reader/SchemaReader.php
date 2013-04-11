@@ -55,40 +55,40 @@ class SchemaReader implements SchemaReaderInterface
 
     /**
      * @param \Zend\Uri\UriInterface|string $uri
-     * @param string|null                   $type
+     * @param string|null                   $mimeType
      *
      * @return \Eloquent\Schemer\Constraint\Schema
      */
-    public function read($uri, $type = null)
+    public function read($uri, $mimeType = null)
     {
         return $this->schemaFactory()->create(
-            $this->reader()->read($uri, $type)
+            $this->reader()->read($uri, $mimeType)
         );
     }
 
     /**
      * @param string      $path
-     * @param string|null $type
+     * @param string|null $mimeType
      *
      * @return \Eloquent\Schemer\Constraint\Schema
      */
-    public function readPath($path, $type = null)
+    public function readPath($path, $mimeType = null)
     {
         return $this->schemaFactory()->create(
-            $this->reader()->readPath($path, $type)
+            $this->reader()->readPath($path, $mimeType)
         );
     }
 
     /**
      * @param string      $data
-     * @param string|null $type
+     * @param string|null $mimeType
      *
      * @return \Eloquent\Schemer\Constraint\Schema
      */
-    public function readString($data, $type = null)
+    public function readString($data, $mimeType = null)
     {
         return $this->schemaFactory()->create(
-            $this->reader()->readString($data, $type)
+            $this->reader()->readString($data, $mimeType)
         );
     }
 

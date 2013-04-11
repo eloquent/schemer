@@ -22,9 +22,9 @@ class ProtocolMap
     {
         if (null === $map) {
             $map = array(
-                ContentType::JSON()->primaryType() => new Json\JsonProtocol,
-                ContentType::TOML()->primaryType() => new Toml\TomlProtocol,
-                ContentType::YAML()->primaryType() => new Yaml\YamlProtocol,
+                ContentType::JSON()->primaryMimeType() => new Json\JsonProtocol,
+                ContentType::TOML()->primaryMimeType() => new Toml\TomlProtocol,
+                ContentType::YAML()->primaryMimeType() => new Yaml\YamlProtocol,
             );
         }
 
@@ -40,27 +40,27 @@ class ProtocolMap
     }
 
     /**
-     * @param string                         $type
+     * @param string                         $mimeType
      * @param SerializationProtocolInterface $protocol
      */
-    public function set($type, SerializationProtocolInterface $protocol)
+    public function set($mimeType, SerializationProtocolInterface $protocol)
     {
-        $this->map[$type] = $protocol;
+        $this->map[$mimeType] = $protocol;
     }
 
     /**
-     * @param string $type
+     * @param string $mimeType
      *
      * @return SerializationProtocolInterface
      * @throws Exception\UndefinedProtocolException
      */
-    public function get($type)
+    public function get($mimeType)
     {
-        if (!array_key_exists($type, $this->map)) {
-            throw new Exception\UndefinedProtocolException($type);
+        if (!array_key_exists($mimeType, $this->map)) {
+            throw new Exception\UndefinedProtocolException($mimeType);
         }
 
-        return $this->map[$type];
+        return $this->map[$mimeType];
     }
 
     private $map;

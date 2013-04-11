@@ -11,18 +11,27 @@
 
 namespace Eloquent\Schemer\Value;
 
+use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use InvalidArgumentException;
 use IteratorAggregate;
+use LogicException;
 
-class ArrayValue extends AbstractValue implements Countable, IteratorAggregate
+class ArrayValue extends AbstractValue implements
+    ArrayAccess,
+    Countable,
+    IteratorAggregate
 {
     /**
-     * @param array<integer,mixed> $value
+     * @param array<integer,mixed>|null $value
      */
-    public function __construct(array $value)
+    public function __construct(array $value = null)
     {
+        if (null === $value) {
+            $value = array();
+        }
+
         $expectedIndex = 0;
         foreach ($value as $index => $subValue) {
             if ($index !== $expectedIndex++) {
@@ -41,13 +50,21 @@ class ArrayValue extends AbstractValue implements Countable, IteratorAggregate
     }
 
     /**
-     * @return mixed
+     * @return array<integer,mixed>
      */
-    public function rawValue()
+    public function value()
     {
         return array_map(function ($value) {
-            return $value->rawValue();
-        }, $this->value());
+            return $value->value();
+        }, $this->wrappedValue());
+    }
+
+    /**
+     * @return ValueType
+     */
+    public function valueType()
+    {
+        return ValueType::ARRAY_TYPE();
     }
 
     /**
@@ -55,7 +72,7 @@ class ArrayValue extends AbstractValue implements Countable, IteratorAggregate
      */
     public function count()
     {
-        return count($this->value());
+        return count($this->wrappedValue());
     }
 
     /**
@@ -65,7 +82,7 @@ class ArrayValue extends AbstractValue implements Countable, IteratorAggregate
      */
     public function has($index)
     {
-        return array_key_exists($index, $this->value());
+        return array_key_exists($index, $this->wrappedValue());
     }
 
     /**
@@ -78,7 +95,7 @@ class ArrayValue extends AbstractValue implements Countable, IteratorAggregate
         if (!$this->has($index)) {
             throw new Exception\UndefinedIndexException($index);
         }
-        $value = $this->value();
+        $value = $this->wrappedValue();
 
         return $value[$index];
     }
@@ -94,7 +111,7 @@ class ArrayValue extends AbstractValue implements Countable, IteratorAggregate
         if (!$this->has($index)) {
             return $default;
         }
-        $value = $this->value();
+        $value = $this->wrappedValue();
 
         return $value[$index];
     }
@@ -110,10 +127,51 @@ class ArrayValue extends AbstractValue implements Countable, IteratorAggregate
     }
 
     /**
+     * @param integer $index
+     *
+     * @return boolean
+     */
+    public function offsetExists($index)
+    {
+        return $this->has($index);
+    }
+
+    /**
+     * @param integer $index
+     *
+     * @return ValueInterface
+     */
+    public function offsetGet($index)
+    {
+        return $this->get($index);
+    }
+
+    /**
+     * @param integer $index
+     * @param mixed   $value
+     *
+     * @throws LogicException
+     */
+    public function offsetSet($index, $value)
+    {
+        throw new LogicException('Not supported.');
+    }
+
+    /**
+     * @param integer $index
+     *
+     * @throws LogicException
+     */
+    public function offsetUnset($index)
+    {
+        throw new LogicException('Not supported.');
+    }
+
+    /**
      * @return ArrayIterator
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->value());
+        return new ArrayIterator($this->wrappedValue());
     }
 }

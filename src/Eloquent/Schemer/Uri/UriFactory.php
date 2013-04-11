@@ -132,16 +132,16 @@ class UriFactory implements UriFactoryInterface
 
     /**
      * @param string      $data
-     * @param string|null $type
+     * @param string|null $mimeType
      *
      * @return DataUri
      */
-    public function fromData($data, $type = null)
+    public function fromData($data, $mimeType = null)
     {
         $uri = new DataUri;
         $uri->setData($data);
-        if (null !== $type) {
-            $uri->setMimeType($type);
+        if (null !== $mimeType) {
+            $uri->setMimeType($mimeType);
         }
 
         return $uri;

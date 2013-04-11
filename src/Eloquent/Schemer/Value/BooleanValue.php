@@ -28,6 +28,14 @@ class BooleanValue extends AbstractValue
     }
 
     /**
+     * @return ValueType
+     */
+    public function valueType()
+    {
+        return ValueType::BOOLEAN_TYPE();
+    }
+
+    /**
      * @param ValueVisitorInterface $visitor
      *
      * @return mixed

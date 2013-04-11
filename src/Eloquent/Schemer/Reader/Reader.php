@@ -88,50 +88,50 @@ class Reader implements ReaderInterface
 
     /**
      * @param \Zend\Uri\UriInterface|string $uri
-     * @param string|null                   $type
+     * @param string|null                   $mimeType
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    public function read($uri, $type = null)
+    public function read($uri, $mimeType = null)
     {
         if (!$uri instanceof UriInterface) {
             $uri = $this->uriFactory()->create($uri);
         }
 
         $content = $this->loader()->load($uri);
-        if (null === $type) {
-            $type = $content->type();
+        if (null === $mimeType) {
+            $mimeType = $content->mimeType();
         }
 
         return $this->valueFactory()->create(
-            $this->protocolMap()->get($type)->thaw($content->data())
+            $this->protocolMap()->get($mimeType)->thaw($content->data())
         );
     }
 
     /**
      * @param string      $path
-     * @param string|null $type
+     * @param string|null $mimeType
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    public function readPath($path, $type = null)
+    public function readPath($path, $mimeType = null)
     {
-        return $this->read($this->uriFactory()->fromPath($path), $type);
+        return $this->read($this->uriFactory()->fromPath($path), $mimeType);
     }
 
     /**
      * @param string      $data
-     * @param string|null $type
+     * @param string|null $mimeType
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    public function readString($data, $type = null)
+    public function readString($data, $mimeType = null)
     {
-        if (null === $type) {
-            $type = ContentType::JSON()->primaryType();
+        if (null === $mimeType) {
+            $mimeType = ContentType::JSON()->primaryMimeType();
         }
 
-        return $this->read($this->uriFactory()->fromData($data, $type), $type);
+        return $this->read($this->uriFactory()->fromData($data, $mimeType), $mimeType);
     }
 
     private $loader;

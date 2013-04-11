@@ -17,14 +17,14 @@ class ExtensionTypeMap
 {
     /**
      * @param array<string,string>|null $map
-     * @param string|null               $defaultType
+     * @param string|null               $defaultMimeType
      */
-    public function __construct(array $map = null, $defaultType = null)
+    public function __construct(array $map = null, $defaultMimeType = null)
     {
         if (null === $map) {
-            $jsonType = ContentType::JSON()->primaryType();
-            $tomlType = ContentType::TOML()->primaryType();
-            $yamlType = ContentType::YAML()->primaryType();
+            $jsonType = ContentType::JSON()->primaryMimeType();
+            $tomlType = ContentType::TOML()->primaryMimeType();
+            $yamlType = ContentType::YAML()->primaryMimeType();
             $map = array(
                 'js' => $jsonType,
                 'json' => $jsonType,
@@ -34,12 +34,12 @@ class ExtensionTypeMap
                 'yml' => $yamlType,
             );
         }
-        if (null === $defaultType) {
-            $defaultType = ContentType::JSON()->primaryType();
+        if (null === $defaultMimeType) {
+            $defaultMimeType = ContentType::JSON()->primaryMimeType();
         }
 
         $this->map = $map;
-        $this->defaultType = $defaultType;
+        $this->defaultMimeType = $defaultMimeType;
     }
 
     /**
@@ -52,19 +52,27 @@ class ExtensionTypeMap
 
     /**
      * @param string $extension
-     * @param string $type
+     * @param string $mimeType
      */
-    public function set($extension, $type)
+    public function set($extension, $mimeType)
     {
-        $this->map[$extension] = $type;
+        $this->map[$extension] = $mimeType;
     }
 
     /**
-     * @param string $type
+     * @param string $mimeType
      */
-    public function setDefaultType($defaultType)
+    public function setDefaultMimeType($mimeType)
     {
-        $this->defaultType = $defaultType;
+        $this->defaultMimeType = $mimeType;
+    }
+
+    /**
+     * @return string
+     */
+    public function defaultMimeType()
+    {
+        return $this->defaultMimeType;
     }
 
     /**
@@ -78,7 +86,7 @@ class ExtensionTypeMap
             return $this->map[$extension];
         }
 
-        return $this->defaultType();
+        return $this->defaultMimeType();
     }
 
     /**
@@ -96,14 +104,6 @@ class ExtensionTypeMap
         return $this->get($extension);
     }
 
-    /**
-     * @return string
-     */
-    public function defaultType()
-    {
-        return $this->defaultType;
-    }
-
     private $map;
-    private $defaultType;
+    private $defaultMimeType;
 }

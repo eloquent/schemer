@@ -83,12 +83,11 @@ class PointerResolver implements PointerResolverInterface
             $atom = '_empty_';
         }
 
-        $value = $value->value();
-        if (!property_exists($value, $atom)) {
+        if (!$value->has($atom)) {
             throw new Exception\UndefinedValueException($pointer);
         }
 
-        return $value->$atom;
+        return $value->get($atom);
     }
 
     /**
@@ -108,11 +107,11 @@ class PointerResolver implements PointerResolverInterface
             throw new Exception\UndefinedValueException($pointer);
         }
         $atom = intval($atom);
-        $value = $value->value();
-        if (!array_key_exists($atom, $value)) {
+
+        if (!$value->has($atom)) {
             throw new Exception\UndefinedValueException($pointer);
         }
 
-        return $value[$atom];
+        return $value->get($atom);
     }
 }

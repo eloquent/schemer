@@ -44,7 +44,7 @@ abstract class AbstractReferenceResolver implements ReferenceResolverInterface, 
     public function visitArrayValue(ArrayValue $value)
     {
         $innerValue = array();
-        foreach ($value->value() as $index => $subValue) {
+        foreach ($value as $index => $subValue) {
             $innerValue[$index] = $subValue->accept($this);
         }
 
@@ -99,8 +99,8 @@ abstract class AbstractReferenceResolver implements ReferenceResolverInterface, 
     public function visitObjectValue(ObjectValue $value)
     {
         $innerValue = new stdClass;
-        foreach (get_object_vars($value->value()) as $key => $subValue) {
-            $innerValue->$key = $subValue->accept($this);
+        foreach ($value as $property => $subValue) {
+            $innerValue->$property = $subValue->accept($this);
         }
 
         return new ObjectValue($innerValue);

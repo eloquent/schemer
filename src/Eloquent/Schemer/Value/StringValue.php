@@ -28,6 +28,14 @@ class StringValue extends AbstractValue
     }
 
     /**
+     * @return ValueType
+     */
+    public function valueType()
+    {
+        return ValueType::STRING_TYPE();
+    }
+
+    /**
      * @param ValueVisitorInterface $visitor
      *
      * @return mixed

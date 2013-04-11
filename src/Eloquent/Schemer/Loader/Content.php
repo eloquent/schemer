@@ -15,12 +15,12 @@ class Content
 {
     /**
      * @param string $data
-     * @param string $type
+     * @param string $mimeType
      */
-    public function __construct($data, $type)
+    public function __construct($data, $mimeType)
     {
         $this->data = $data;
-        $this->type = $type;
+        $this->mimeType = $mimeType;
     }
 
     /**
@@ -34,11 +34,11 @@ class Content
     /**
      * @return string
      */
-    public function type()
+    public function mimeType()
     {
-        return $this->type;
+        return $this->mimeType;
     }
 
     private $data;
-    private $type;
+    private $mimeType;
 }

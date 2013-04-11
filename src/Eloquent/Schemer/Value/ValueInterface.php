@@ -16,7 +16,12 @@ interface ValueInterface
     /**
      * @return mixed
      */
-    public function rawValue();
+    public function value();
+
+    /**
+     * @return ValueType
+     */
+    public function valueType();
 
     /**
      * @param ValueVisitorInterface $visitor

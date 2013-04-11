@@ -81,7 +81,7 @@ class ReferenceResolver extends AbstractReferenceResolver
         $pointer = $value->pointer();
 
         try {
-            $value = $this->reader()->read($uri, $value->type());
+            $value = $this->reader()->read($uri, $value->mimeType());
         } catch (ReadException $e) {
             throw new Exception\UndefinedReferenceException(
                 $value,

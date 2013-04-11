@@ -30,6 +30,14 @@ class FloatingPointValue extends AbstractValue implements NumberValueInterface
     }
 
     /**
+     * @return ValueType
+     */
+    public function valueType()
+    {
+        return ValueType::FLOATING_POINT_TYPE();
+    }
+
+    /**
      * @param ValueVisitorInterface $visitor
      *
      * @return mixed

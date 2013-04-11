@@ -19,6 +19,14 @@ class NullValue extends AbstractValue
     }
 
     /**
+     * @return ValueType
+     */
+    public function valueType()
+    {
+        return ValueType::NULL_TYPE();
+    }
+
+    /**
      * @param ValueVisitorInterface $visitor
      *
      * @return mixed

@@ -12,46 +12,37 @@
 namespace Eloquent\Schemer\Value;
 
 use Eloquent\Schemer\Pointer\PointerInterface;
-use Eloquent\Schemer\Value\StringValue;
 use stdClass;
 use Zend\Uri\UriInterface;
 
 class ReferenceValue extends AbstractObjectValue
 {
     /**
-     * @param UriInterface          $reference
-     * @param PointerInterface|null $pointer
-     * @param string|null           $type
-     * @param stdClass|null         $additionalProperties
+     * @param UriInterface              $reference
+     * @param PointerInterface|null     $pointer
+     * @param string|null               $mimeType
+     * @param ObjectValue|null          $additionalProperties
+     * @param Factory\ValueFactory|null $factory
      */
     public function __construct(
         UriInterface $reference,
         PointerInterface $pointer = null,
-        $type = null,
-        stdClass $additionalProperties = null
+        $mimeType = null,
+        ObjectValue $additionalProperties = null,
+        Factory\ValueFactory $factory = null
     ) {
         if (null === $additionalProperties) {
-            $additionalProperties = new stdClass;
+            $additionalProperties = new ObjectValue;
+        }
+        if (null === $factory) {
+            $factory = new Factory\ValueFactory;
         }
 
         $this->reference = $reference;
         $this->pointer = $pointer;
-        $this->type = $type;
+        $this->mimeType = $mimeType;
         $this->additionalProperties = $additionalProperties;
-    }
-
-    /**
-     * @return stdClass
-     */
-    public function value()
-    {
-        $value = clone $this->additionalProperties();
-        $value->{'$ref'} = new StringValue($this->uri()->toString());
-        if (null !== $this->type()) {
-            $value->{'$type'} =  new StringValue($this->type());
-        }
-
-        return $value;
+        $this->factory = $factory;
     }
 
     /**
@@ -73,17 +64,39 @@ class ReferenceValue extends AbstractObjectValue
     /**
      * @return string|null
      */
-    public function type()
+    public function mimeType()
     {
-        return $this->type;
+        return $this->mimeType;
+    }
+
+    /**
+     * @return ObjectValue
+     */
+    public function additionalProperties()
+    {
+        return $this->additionalProperties;
+    }
+
+    /**
+     * @return Factory\ValueFactory
+     */
+    public function factory()
+    {
+        return $this->factory;
     }
 
     /**
      * @return stdClass
      */
-    public function additionalProperties()
+    public function value()
     {
-        return $this->additionalProperties;
+        $value = $this->additionalProperties()->value();
+        $value->{'$ref'} = $this->uri()->toString();
+        if (null !== $this->mimeType()) {
+            $value->{'$type'} =  $this->mimeType();
+        }
+
+        return $value;
     }
 
     /**
@@ -107,8 +120,22 @@ class ReferenceValue extends AbstractObjectValue
         return $visitor->visitReferenceValue($this);
     }
 
+    /**
+     * @return stdClass
+     */
+    protected function wrappedValue()
+    {
+        $value = $this->value();
+        foreach (get_object_vars($value) as $property => $value) {
+            $value->$property = $this->factory()->create($value);
+        }
+
+        return $value;
+    }
+
     private $reference;
     private $pointer;
-    private $type;
+    private $mimeType;
     private $additionalProperties;
+    private $factory;
 }

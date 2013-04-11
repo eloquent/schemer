@@ -18,19 +18,19 @@ final class ContentType extends Multiton
     /**
      * @return array<string>
      */
-    public function types()
+    public function mimeTypes()
     {
-        return $this->types;
+        return $this->mimeTypes;
     }
 
     /**
      * @return string
      */
-    public function primaryType()
+    public function primaryMimeType()
     {
-        $types = $this->types();
+        $mimeTypes = $this->mimeTypes();
 
-        return $types[0];
+        return $mimeTypes[0];
     }
 
     protected static function initializeMultiton()
@@ -42,12 +42,12 @@ final class ContentType extends Multiton
         new static('YAML', array('application/x-yaml'));
     }
 
-    protected function __construct($key, array $types)
+    protected function __construct($key, array $mimeTypes)
     {
         parent::__construct($key);
 
-        $this->types = $types;
+        $this->mimeTypes = $mimeTypes;
     }
 
-    private $types;
+    private $mimeTypes;
 }

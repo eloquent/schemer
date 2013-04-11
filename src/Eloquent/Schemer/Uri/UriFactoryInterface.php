@@ -30,9 +30,9 @@ interface UriFactoryInterface
 
     /**
      * @param string      $data
-     * @param string|null $type
+     * @param string|null $mimeType
      *
      * @return DataUri
      */
-    public function fromData($data, $type = null);
+    public function fromData($data, $mimeType = null);
 }

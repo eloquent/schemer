@@ -90,25 +90,25 @@ class Loader implements LoaderInterface
     }
 
     /**
-     * @param string $defaultType
+     * @param string $defaultMimeType
      */
-    public function setDefaultType($defaultType)
+    public function setDefaultMimeType($mimeType)
     {
         foreach ($this->loaders() as $loader) {
-            $loader->setDefaultType($defaultType);
+            $loader->setDefaultMimeType($mimeType);
         }
     }
 
     /**
      * @return string
      */
-    public function defaultType()
+    public function defaultMimeType()
     {
         foreach ($this->loaders() as $loader) {
-            return $loader->defaultType();
+            return $loader->defaultMimeType();
         }
 
-        return ContentType::JSON()->primaryType();
+        return ContentType::JSON()->primaryMimeType();
     }
 
     /**

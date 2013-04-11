@@ -44,11 +44,14 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
      */
     public function visitTypeConstraint(TypeConstraint $constraint)
     {
-        $types = array_map(function (ValueType $type) {
-            return $type->value();
-        }, $constraint->types());
+        $valueTypes = array_map(function (ValueType $valueType) {
+            return $valueType->value();
+        }, $constraint->valueTypes());
 
-        return sprintf("The value must be of type '%s'.", implode('|', $types));
+        return sprintf(
+            "The value must be of type '%s'.",
+            implode('|', $valueTypes)
+        );
     }
 
     /**

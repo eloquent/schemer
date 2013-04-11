@@ -178,12 +178,12 @@ class DataUri extends Uri
         $parts = explode(',', $uri, 2);
 
         if (count($parts) > 1) {
-            $type = array_shift($parts);
-            if (';base64' === substr($type, -7)) {
+            $mimeType = array_shift($parts);
+            if (';base64' === substr($mimeType, -7)) {
                 $this->encoding = 'base64';
-                $type = substr($type, 0, -7);
+                $mimeType = substr($mimeType, 0, -7);
             }
-            $this->setMimeType($type);
+            $this->setMimeType($mimeType);
         }
 
         $this->rawData = array_shift($parts);

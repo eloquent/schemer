@@ -47,19 +47,19 @@ class FileSystemLoader implements LoaderInterface
     }
 
     /**
-     * @param string $defaultType
+     * @param string $mimeType
      */
-    public function setDefaultType($defaultType)
+    public function setDefaultMimeType($mimeType)
     {
-        $this->extensionMap()->setDefaultType($defaultType);
+        $this->extensionMap()->setDefaultMimeType($mimeType);
     }
 
     /**
      * @return string
      */
-    public function defaultType()
+    public function defaultMimeType()
     {
-        return $this->extensionMap()->defaultType();
+        return $this->extensionMap()->defaultMimeType();
     }
 
     /**

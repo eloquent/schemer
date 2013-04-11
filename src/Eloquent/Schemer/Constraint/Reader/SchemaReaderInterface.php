@@ -15,25 +15,25 @@ interface SchemaReaderInterface
 {
     /**
      * @param \Zend\Uri\UriInterface|string $uri
-     * @param string|null                   $type
+     * @param string|null                   $mimeType
      *
      * @return \Eloquent\Schemer\Constraint\Schema
      */
-    public function read($uri, $type = null);
+    public function read($uri, $mimeType = null);
 
     /**
      * @param string      $path
-     * @param string|null $type
+     * @param string|null $mimeType
      *
      * @return \Eloquent\Schemer\Constraint\Schema
      */
-    public function readPath($path, $type = null);
+    public function readPath($path, $mimeType = null);
 
     /**
      * @param string      $data
-     * @param string|null $type
+     * @param string|null $mimeType
      *
      * @return \Eloquent\Schemer\Constraint\Schema
      */
-    public function readString($data, $type = null);
+    public function readString($data, $mimeType = null);
 }

@@ -28,6 +28,14 @@ class IntegerValue extends AbstractValue implements NumberValueInterface
     }
 
     /**
+     * @return ValueType
+     */
+    public function valueType()
+    {
+        return ValueType::INTEGER_TYPE();
+    }
+
+    /**
      * @param ValueVisitorInterface $visitor
      *
      * @return mixed
