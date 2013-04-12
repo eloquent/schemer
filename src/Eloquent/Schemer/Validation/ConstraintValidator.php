@@ -497,7 +497,7 @@ class ConstraintValidator implements
             !$constraint->value() ||
             $this->comparator->equals(
                 $value->value(),
-                array_values(array_unique($value->value()))
+                $this->unique($value->value())
             )
         ) {
             return array();
@@ -618,6 +618,23 @@ class ConstraintValidator implements
             $value,
             $pointer
         );
+    }
+
+    /**
+     * @param array<integer,mixed> $array
+     *
+     * @return array<integer,mixed>
+     */
+    protected function unique(array $array)
+    {
+        $unique = array();
+        foreach ($array as $value) {
+            if (!in_array($value, $unique, true)) {
+                $unique[] = $value;
+            }
+        }
+
+        return $unique;
     }
 
     private $comparator;

@@ -5,7 +5,7 @@
 
     "tests": {
         "valid array": {
-            "value": ["foo", "bar"],
+            "value": ["foo", "bar", null, 0, ""],
             "expected": []
         },
 
