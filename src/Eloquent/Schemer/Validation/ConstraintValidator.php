@@ -14,6 +14,8 @@ namespace Eloquent\Schemer\Validation;
 use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\MaximumItemsConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\MinimumItemsConstraint;
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
@@ -447,6 +449,44 @@ class ConstraintValidator implements
     public function visitAdditionalItemConstraint(AdditionalItemConstraint $constraint)
     {
         return array($this->createIssue($constraint));
+    }
+
+    /**
+     * @param MaximumItemsConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitMaximumItemsConstraint(MaximumItemsConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (!$value instanceof ArrayValue) {
+            return array();
+        }
+
+        if ($value->count() > $constraint->maximum()) {
+            return array($this->createIssue($constraint));
+        }
+
+        return array();
+    }
+
+    /**
+     * @param MinimumItemsConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitMinimumItemsConstraint(MinimumItemsConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (!$value instanceof ArrayValue) {
+            return array();
+        }
+
+        if ($value->count() < $constraint->minimum()) {
+            return array($this->createIssue($constraint));
+        }
+
+        return array();
     }
 
     // implementation details ==================================================

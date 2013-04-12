@@ -123,4 +123,18 @@ interface ConstraintVisitorInterface
      * @return mixed
      */
     public function visitAdditionalItemConstraint(ArrayValue\AdditionalItemConstraint $constraint);
+
+    /**
+     * @param ArrayValue\MaximumItemsConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitMaximumItemsConstraint(ArrayValue\MaximumItemsConstraint $constraint);
+
+    /**
+     * @param ArrayValue\MinimumItemsConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitMinimumItemsConstraint(ArrayValue\MinimumItemsConstraint $constraint);
 }

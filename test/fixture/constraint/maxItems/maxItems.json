@@ -1,0 +1,24 @@
+{
+    "schema": {
+        "maxItems": 2
+    },
+
+    "tests": {
+        "valid array": {
+            "value": ["foo", "bar"],
+            "expected": []
+        },
+
+        "valid non-array": {
+            "value": "foo",
+            "expected": []
+        },
+
+        "invalid": {
+            "value": ["foo", "bar", "baz"],
+            "expected": [
+                "Validation failed for value at document root: The array must not have more than 2 items."
+            ]
+        }
+    }
+}

@@ -13,6 +13,8 @@ namespace Eloquent\Schemer\Constraint\Factory;
 
 use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\MaximumItemsConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\MinimumItemsConstraint;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
@@ -102,6 +104,12 @@ class SchemaFactory implements SchemaFactoryInterface
                 return $this->createRequiredConstraints($value);
             case 'dependencies':
                 return $this->createDependencyConstraints($value);
+
+            // array constraints
+            case 'maxItems':
+                return array($this->createMaximumItemsConstraint($value));
+            case 'minItems':
+                return array($this->createMinimumItemsConstraint($value));
         }
 
         return array();
@@ -491,5 +499,39 @@ class SchemaFactory implements SchemaFactoryInterface
         }
 
         return new ItemsConstraint($schemas, $additionalSchema);
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return MaximumItemsConstraint
+     */
+    protected function createMaximumItemsConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof IntegerValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::INTEGER_TYPE())
+            );
+        }
+
+        return new MaximumItemsConstraint($value->value());
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return MinimumItemsConstraint
+     */
+    protected function createMinimumItemsConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof IntegerValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::INTEGER_TYPE())
+            );
+        }
+
+        return new MinimumItemsConstraint($value->value());
     }
 }

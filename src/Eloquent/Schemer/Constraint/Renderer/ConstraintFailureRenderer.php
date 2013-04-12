@@ -13,6 +13,8 @@ namespace Eloquent\Schemer\Constraint\Renderer;
 
 use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\MaximumItemsConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\MinimumItemsConstraint;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
@@ -226,5 +228,31 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitAdditionalItemConstraint(AdditionalItemConstraint $constraint)
     {
         return 'Unexpected index.';
+    }
+
+    /**
+     * @param MaximumItemsConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitMaximumItemsConstraint(MaximumItemsConstraint $constraint)
+    {
+        return sprintf(
+            'The array must not have more than %s items.',
+            Repr::repr($constraint->maximum())
+        );
+    }
+
+    /**
+     * @param MinimumItemsConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitMinimumItemsConstraint(MinimumItemsConstraint $constraint)
+    {
+        return sprintf(
+            'The array must not have less than %s items.',
+            Repr::repr($constraint->minimum())
+        );
     }
 }
