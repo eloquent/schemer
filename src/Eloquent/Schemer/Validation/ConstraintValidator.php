@@ -25,6 +25,7 @@ use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
+use Eloquent\Schemer\Constraint\NumberValue\MultipleOfConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\DependencyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
@@ -40,6 +41,7 @@ use Eloquent\Schemer\Pointer\PointerInterface;
 use Eloquent\Schemer\Value\ArrayValue;
 use Eloquent\Schemer\Value\BooleanValue;
 use Eloquent\Schemer\Value\DateTimeValue;
+use Eloquent\Schemer\Value\FloatingPointValue;
 use Eloquent\Schemer\Value\IntegerValue;
 use Eloquent\Schemer\Value\NullValue;
 use Eloquent\Schemer\Value\NumberValueInterface;
@@ -563,6 +565,36 @@ class ConstraintValidator implements
             )
         ) {
             return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
+    // number constraints ======================================================
+
+    /**
+     * @param MultipleOfConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitMultipleOfConstraint(MultipleOfConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (!$value instanceof NumberValueInterface) {
+            return array();
+        }
+
+        if (
+            $value instanceof FloatingPointValue ||
+            is_float($constraint->quantity())
+        ) {
+            if (0 == fmod($value->value(), $constraint->quantity())) {
+                return array();
+            }
+        } else {
+            if (0 === $value->value() % $constraint->quantity()) {
+                return array();
+            }
         }
 
         return array($this->createIssue($constraint));

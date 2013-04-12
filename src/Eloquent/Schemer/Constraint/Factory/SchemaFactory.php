@@ -22,6 +22,7 @@ use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
+use Eloquent\Schemer\Constraint\NumberValue\MultipleOfConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\DependencyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
@@ -35,6 +36,7 @@ use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ArrayValue;
 use Eloquent\Schemer\Value\BooleanValue;
 use Eloquent\Schemer\Value\IntegerValue;
+use Eloquent\Schemer\Value\NumberValueInterface;
 use Eloquent\Schemer\Value\ObjectValue;
 use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ValueInterface;
@@ -124,6 +126,10 @@ class SchemaFactory implements SchemaFactoryInterface
                 return array($this->createMinimumLengthConstraint($value));
             case 'pattern':
                 return array($this->createPatternConstraint($value));
+
+            // number constraints
+            case 'multipleOf':
+                return array($this->createMultipleOfConstraint($value));
         }
 
         return array();
@@ -617,5 +623,24 @@ class SchemaFactory implements SchemaFactoryInterface
         }
 
         return new PatternConstraint($value->value());
+    }
+
+    // number constraints ======================================================
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return MultipleOfConstraint
+     */
+    protected function createMultipleOfConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof NumberValueInterface) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::NUMBER_TYPE())
+            );
+        }
+
+        return new MultipleOfConstraint($value->value());
     }
 }

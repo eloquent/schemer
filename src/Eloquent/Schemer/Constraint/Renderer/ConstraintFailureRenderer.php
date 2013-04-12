@@ -23,6 +23,7 @@ use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
+use Eloquent\Schemer\Constraint\NumberValue\MultipleOfConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\DependencyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
@@ -308,6 +309,21 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
         return sprintf(
             'The string must match the pattern %s.',
             Repr::repr($constraint->pattern())
+        );
+    }
+
+    // number constraints ======================================================
+
+    /**
+     * @param MultipleOfConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitMultipleOfConstraint(MultipleOfConstraint $constraint)
+    {
+        return sprintf(
+            'The number must be a multiple of %s.',
+            Repr::repr($constraint->quantity())
         );
     }
 }

@@ -1,0 +1,33 @@
+{
+    "schema": {
+        "items": {
+            "multipleOf": 5
+        }
+    },
+
+    "tests": {
+        "valid integers": {
+            "value": [0, 5, 10, 15],
+            "expected": []
+        },
+
+        "valid floating point values": {
+            "value": [0.0, 5.0, 10.0, 15.0],
+            "expected": []
+        },
+
+        "valid non-number": {
+            "value": ["foo"],
+            "expected": []
+        },
+
+        "invalid": {
+            "value": [111 ,222 ,3.33],
+            "expected": [
+                "Validation failed for value at \"/0\": The number must be a multiple of 5.",
+                "Validation failed for value at \"/1\": The number must be a multiple of 5.",
+                "Validation failed for value at \"/2\": The number must be a multiple of 5."
+            ]
+        }
+    }
+}

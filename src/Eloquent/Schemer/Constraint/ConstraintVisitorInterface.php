@@ -167,4 +167,13 @@ interface ConstraintVisitorInterface
      * @return mixed
      */
     public function visitMinimumLengthConstraint(StringValue\MinimumLengthConstraint $constraint);
+
+    // number constraints ======================================================
+
+    /**
+     * @param NumberValue\MultipleOfConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitMultipleOfConstraint(NumberValue\MultipleOfConstraint $constraint);
 }
