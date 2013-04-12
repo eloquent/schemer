@@ -153,4 +153,18 @@ interface ConstraintVisitorInterface
      * @return mixed
      */
     public function visitPatternConstraint(StringValue\PatternConstraint $constraint);
+
+    /**
+     * @param StringValue\MaximumLengthConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitMaximumLengthConstraint(StringValue\MaximumLengthConstraint $constraint);
+
+    /**
+     * @param StringValue\MinimumLengthConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitMinimumLengthConstraint(StringValue\MinimumLengthConstraint $constraint);
 }

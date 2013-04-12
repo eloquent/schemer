@@ -1,0 +1,24 @@
+{
+    "schema": {
+        "maxLength": 3
+    },
+
+    "tests": {
+        "valid string": {
+            "value": "f\u00F6\u00F6",
+            "expected": []
+        },
+
+        "valid non-string": {
+            "value": 111,
+            "expected": []
+        },
+
+        "invalid": {
+            "value": "f\u00F6\u00F6\u00F6",
+            "expected": [
+                "Validation failed for value at document root: The string must not have more than 3 characters."
+            ]
+        }
+    }
+}

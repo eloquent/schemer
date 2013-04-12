@@ -28,6 +28,8 @@ use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
+use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
+use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ArrayValue;
@@ -116,6 +118,10 @@ class SchemaFactory implements SchemaFactoryInterface
                 return array($this->createUniqueItemsConstraint($value));
 
             // string constraints
+            case 'maxLength':
+                return array($this->createMaximumLengthConstraint($value));
+            case 'minLength':
+                return array($this->createMinimumLengthConstraint($value));
             case 'pattern':
                 return array($this->createPatternConstraint($value));
         }
@@ -561,6 +567,40 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     // string constraints ======================================================
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return MaximumLengthConstraint
+     */
+    protected function createMaximumLengthConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof IntegerValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::INTEGER_TYPE())
+            );
+        }
+
+        return new MaximumLengthConstraint($value->value());
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return MinimumLengthConstraint
+     */
+    protected function createMinimumLengthConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof IntegerValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::INTEGER_TYPE())
+            );
+        }
+
+        return new MinimumLengthConstraint($value->value());
+    }
 
     /**
      * @param ValueInterface $value

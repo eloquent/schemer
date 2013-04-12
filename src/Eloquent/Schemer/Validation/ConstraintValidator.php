@@ -31,6 +31,8 @@ use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
+use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
+use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Pointer\Pointer;
@@ -508,6 +510,42 @@ class ConstraintValidator implements
     }
 
     // string constraints ======================================================
+
+    /**
+     * @param MaximumLengthConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitMaximumLengthConstraint(MaximumLengthConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (
+            !$value instanceof StringValue ||
+            mb_strlen($value->value(), 'UTF-8') <= $constraint->maximum()
+        ) {
+            return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
+    /**
+     * @param MinimumLengthConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitMinimumLengthConstraint(MinimumLengthConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (
+            !$value instanceof StringValue ||
+            mb_strlen($value->value(), 'UTF-8') >= $constraint->minimum()
+        ) {
+            return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
 
     /**
      * @param PatternConstraint $constraint

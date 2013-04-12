@@ -29,6 +29,8 @@ use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
+use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
+use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ValueType;
@@ -269,6 +271,32 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     // string constraints ======================================================
+
+    /**
+     * @param MaximumLengthConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitMaximumLengthConstraint(MaximumLengthConstraint $constraint)
+    {
+        return sprintf(
+            'The string must not have more than %s characters.',
+            Repr::repr($constraint->maximum())
+        );
+    }
+
+    /**
+     * @param MinimumLengthConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitMinimumLengthConstraint(MinimumLengthConstraint $constraint)
+    {
+        return sprintf(
+            'The string must not have less than %s characters.',
+            Repr::repr($constraint->minimum())
+        );
+    }
 
     /**
      * @param PatternConstraint $constraint
