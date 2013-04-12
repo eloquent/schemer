@@ -81,6 +81,13 @@ interface ConstraintVisitorInterface
     public function visitMinimumPropertiesConstraint(ObjectValue\MinimumPropertiesConstraint $constraint);
 
     /**
+     * @param ObjectValue\RequiredConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitRequiredConstraint(ObjectValue\RequiredConstraint $constraint);
+
+    /**
      * @param ObjectValue\PropertiesConstraint $constraint
      *
      * @return mixed

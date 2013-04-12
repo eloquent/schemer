@@ -24,6 +24,7 @@ use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Pointer\Pointer;
 use Eloquent\Schemer\Pointer\PointerInterface;
@@ -284,6 +285,25 @@ class ConstraintValidator implements
         }
 
         return array();
+    }
+
+    /**
+     * @param RequiredConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitRequiredConstraint(RequiredConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (!$value instanceof ObjectValue) {
+            return array();
+        }
+
+        if ($value->has($constraint->property())) {
+            return array();
+        }
+
+        return array($this->createIssue($constraint));
     }
 
     /**

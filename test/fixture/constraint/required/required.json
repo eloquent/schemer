@@ -1,0 +1,20 @@
+{
+    "schema": {
+        "required": ["foo", "bar", "baz"]
+    },
+
+    "tests": {
+        "valid": {
+            "value": {"foo": "qux", "bar": "doom", "baz": "splat"},
+            "expected": []
+        },
+
+        "invalid": {
+            "value": {"foo": "qux"},
+            "expected": [
+                "Validation failed for value at document root: The property \"bar\" is required.",
+                "Validation failed for value at document root: The property \"baz\" is required."
+            ]
+        }
+    }
+}

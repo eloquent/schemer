@@ -22,6 +22,7 @@ use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ValueType;
 use Icecave\Repr\Repr;
@@ -56,13 +57,13 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
 
         if (count($enumValues) < 2) {
             return sprintf(
-                "The value must be equal to %s.",
+                'The value must be equal to %s.',
                 array_pop($enumValues)
             );
         }
 
         return sprintf(
-            "The value must be equal to one of the following: %s.",
+            'The value must be equal to one of the following: %s.',
             implode(', ', $enumValues)
         );
     }
@@ -80,13 +81,13 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
 
         if (count($valueTypes) < 2) {
             return sprintf(
-                "The value must be of type %s.",
+                'The value must be of type %s.',
                 array_pop($valueTypes)
             );
         }
 
         return sprintf(
-            "The value must be one of the following types: %s.",
+            'The value must be one of the following types: %s.',
             implode(', ', $valueTypes)
         );
     }
@@ -142,7 +143,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The object must not have more than %s properties.',
-            $constraint->maximum()
+            Repr::repr($constraint->maximum())
         );
     }
 
@@ -155,7 +156,20 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The object must not have less than %s properties.',
-            $constraint->minimum()
+            Repr::repr($constraint->minimum())
+        );
+    }
+
+    /**
+     * @param RequiredConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitRequiredConstraint(RequiredConstraint $constraint)
+    {
+        return sprintf(
+            'The property %s is required.',
+            Repr::repr($constraint->property())
         );
     }
 

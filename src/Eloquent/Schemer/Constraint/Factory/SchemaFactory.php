@@ -21,6 +21,7 @@ use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ArrayValue;
 use Eloquent\Schemer\Value\BooleanValue;
@@ -48,9 +49,10 @@ class SchemaFactory implements SchemaFactoryInterface
 
         $constraints = array();
         foreach ($value as $property => $subValue) {
-            if ($constraint = $this->createConstraint($property, $subValue)) {
-                $constraints[] = $constraint;
-            }
+            $constraints = array_merge(
+                $constraints,
+                $this->createConstraints($property, $subValue)
+            );
         }
 
         if ($constraint = $this->createPropertiesConstraint($value)) {
@@ -64,35 +66,37 @@ class SchemaFactory implements SchemaFactoryInterface
      * @param string         $property
      * @param ValueInterface $value
      *
-     * @return \Eloquent\Schemer\Constraint\ConstraintInterface|null
+     * @return array<\Eloquent\Schemer\Constraint\ConstraintInterface>
      */
-    protected function createConstraint(
+    protected function createConstraints(
         $property,
         ValueInterface $value
     ) {
         switch ($property) {
             // generic constraints
             case 'enum':
-                return $this->createEnumConstraint($value);
+                return array($this->createEnumConstraint($value));
             case 'type':
-                return $this->createTypeConstraint($value);
+                return array($this->createTypeConstraint($value));
             case 'allOf':
-                return $this->createAllOfConstraint($value);
+                return array($this->createAllOfConstraint($value));
             case 'anyOf':
-                return $this->createAnyOfConstraint($value);
+                return array($this->createAnyOfConstraint($value));
             case 'oneOf':
-                return $this->createOneOfConstraint($value);
+                return array($this->createOneOfConstraint($value));
             case 'not':
-                return $this->createNotConstraint($value);
+                return array($this->createNotConstraint($value));
 
             // object constraints
             case 'maxProperties':
-                return $this->createMaximumPropertiesConstraint($value);
+                return array($this->createMaximumPropertiesConstraint($value));
             case 'minProperties':
-                return $this->createMinimumPropertiesConstraint($value);
+                return array($this->createMinimumPropertiesConstraint($value));
+            case 'required':
+                return $this->createRequiredConstraints($value);
         }
 
-        return null;
+        return array();
     }
 
     // generic constraints =====================================================
@@ -257,6 +261,35 @@ class SchemaFactory implements SchemaFactoryInterface
         }
 
         return new MinimumPropertiesConstraint($value->value());
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return array<RequiredConstraint>
+     */
+    protected function createRequiredConstraints(ValueInterface $value)
+    {
+        if (!$value instanceof ArrayValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::ARRAY_TYPE())
+            );
+        }
+
+        $constraints = array();
+        foreach ($value as $subValue) {
+            if (!$subValue instanceof StringValue) {
+                throw new UnexpectedValueException(
+                    $subValue,
+                    array(ValueType::STRING_TYPE())
+                );
+            }
+
+            $constraints[] = new RequiredConstraint($subValue->value());
+        }
+
+        return $constraints;
     }
 
     /**
