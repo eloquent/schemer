@@ -67,6 +67,20 @@ interface ConstraintVisitorInterface
     // object constraints ======================================================
 
     /**
+     * @param ObjectValue\MaximumPropertiesConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitMaximumPropertiesConstraint(ObjectValue\MaximumPropertiesConstraint $constraint);
+
+    /**
+     * @param ObjectValue\MinimumPropertiesConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitMinimumPropertiesConstraint(ObjectValue\MinimumPropertiesConstraint $constraint);
+
+    /**
      * @param ObjectValue\PropertiesConstraint $constraint
      *
      * @return mixed

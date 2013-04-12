@@ -1,0 +1,19 @@
+{
+    "schema": {
+        "maxProperties": 2
+    },
+
+    "tests": {
+        "valid": {
+            "value": {"foo": "bar", "baz": "qux"},
+            "expected": []
+        },
+
+        "invalid": {
+            "value": {"foo": "bar", "baz": "qux", "doom": "splat"},
+            "expected": [
+                "Validation failed for value at document root: The object must not have more than 2 properties."
+            ]
+        }
+    }
+}

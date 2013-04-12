@@ -19,6 +19,8 @@ use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ValueType;
@@ -130,6 +132,32 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     // object constraints ======================================================
+
+    /**
+     * @param MaximumPropertiesConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitMaximumPropertiesConstraint(MaximumPropertiesConstraint $constraint)
+    {
+        return sprintf(
+            'The object must not have more than %s properties.',
+            $constraint->maximum()
+        );
+    }
+
+    /**
+     * @param MinimumPropertiesConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitMinimumPropertiesConstraint(MinimumPropertiesConstraint $constraint)
+    {
+        return sprintf(
+            'The object must not have less than %s properties.',
+            $constraint->minimum()
+        );
+    }
 
     /**
      * @param PropertiesConstraint $constraint

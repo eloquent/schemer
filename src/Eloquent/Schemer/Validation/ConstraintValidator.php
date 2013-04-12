@@ -21,6 +21,8 @@ use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Pointer\Pointer;
@@ -245,6 +247,44 @@ class ConstraintValidator implements
     }
 
     // object constraints ======================================================
+
+    /**
+     * @param MaximumPropertiesConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitMaximumPropertiesConstraint(MaximumPropertiesConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (!$value instanceof ObjectValue) {
+            return array();
+        }
+
+        if ($value->count() > $constraint->maximum()) {
+            return array($this->createIssue($constraint));
+        }
+
+        return array();
+    }
+
+    /**
+     * @param MinimumPropertiesConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitMinimumPropertiesConstraint(MinimumPropertiesConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (!$value instanceof ObjectValue) {
+            return array();
+        }
+
+        if ($value->count() < $constraint->minimum()) {
+            return array($this->createIssue($constraint));
+        }
+
+        return array();
+    }
 
     /**
      * @param PropertiesConstraint $constraint

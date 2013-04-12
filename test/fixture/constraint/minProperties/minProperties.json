@@ -1,0 +1,19 @@
+{
+    "schema": {
+        "minProperties": 2
+    },
+
+    "tests": {
+        "valid": {
+            "value": {"foo": "bar", "baz": "qux"},
+            "expected": []
+        },
+
+        "invalid": {
+            "value": {"foo": "bar"},
+            "expected": [
+                "Validation failed for value at document root: The object must not have less than 2 properties."
+            ]
+        }
+    }
+}

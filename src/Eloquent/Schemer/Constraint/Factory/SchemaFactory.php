@@ -18,10 +18,13 @@ use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ArrayValue;
 use Eloquent\Schemer\Value\BooleanValue;
+use Eloquent\Schemer\Value\IntegerValue;
 use Eloquent\Schemer\Value\ObjectValue;
 use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ValueInterface;
@@ -81,6 +84,12 @@ class SchemaFactory implements SchemaFactoryInterface
                 return $this->createOneOfConstraint($value);
             case 'not':
                 return $this->createNotConstraint($value);
+
+            // object constraints
+            case 'maxProperties':
+                return $this->createMaximumPropertiesConstraint($value);
+            case 'minProperties':
+                return $this->createMinimumPropertiesConstraint($value);
         }
 
         return null;
@@ -217,11 +226,45 @@ class SchemaFactory implements SchemaFactoryInterface
     // object constraints ======================================================
 
     /**
-     * @param ObjectValue $value
+     * @param ValueInterface $value
+     *
+     * @return MaximumPropertiesConstraint
+     */
+    protected function createMaximumPropertiesConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof IntegerValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::INTEGER_TYPE())
+            );
+        }
+
+        return new MaximumPropertiesConstraint($value->value());
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return MinimumPropertiesConstraint
+     */
+    protected function createMinimumPropertiesConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof IntegerValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::INTEGER_TYPE())
+            );
+        }
+
+        return new MinimumPropertiesConstraint($value->value());
+    }
+
+    /**
+     * @param ValueInterface $value
      *
      * @return PropertiesConstraint|null
      */
-    protected function createPropertiesConstraint(ObjectValue $value)
+    protected function createPropertiesConstraint(ValueInterface $value)
     {
         if (!$value instanceof ObjectValue) {
             throw new UnexpectedValueException(
