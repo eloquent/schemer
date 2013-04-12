@@ -19,6 +19,8 @@ use Eloquent\Schemer\Constraint\ArrayValue\MinimumItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\UniqueItemsConstraint;
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\DateTimeValue\MaximumDateTimeConstraint;
+use Eloquent\Schemer\Constraint\DateTimeValue\MinimumDateTimeConstraint;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
@@ -630,6 +632,44 @@ class ConstraintValidator implements
         $value = $this->currentValue();
         if (
             !$value instanceof NumberValueInterface ||
+            $value->value() >= $constraint->minimum()
+        ) {
+            return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
+    // date-time constraints ===================================================
+
+    /**
+     * @param MaximumDateTimeConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitMaximumDateTimeConstraint(MaximumDateTimeConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (
+            !$value instanceof DateTimeValue ||
+            $value->value() <= $constraint->maximum()
+        ) {
+            return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
+    /**
+     * @param MinimumDateTimeConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitMinimumDateTimeConstraint(MinimumDateTimeConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (
+            !$value instanceof DateTimeValue ||
             $value->value() >= $constraint->minimum()
         ) {
             return array();

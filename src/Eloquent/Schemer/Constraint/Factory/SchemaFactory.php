@@ -16,6 +16,8 @@ use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\MaximumItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\MinimumItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\UniqueItemsConstraint;
+use Eloquent\Schemer\Constraint\DateTimeValue\MaximumDateTimeConstraint;
+use Eloquent\Schemer\Constraint\DateTimeValue\MinimumDateTimeConstraint;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
@@ -37,6 +39,7 @@ use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ArrayValue;
 use Eloquent\Schemer\Value\BooleanValue;
+use Eloquent\Schemer\Value\DateTimeValue;
 use Eloquent\Schemer\Value\IntegerValue;
 use Eloquent\Schemer\Value\NumberValueInterface;
 use Eloquent\Schemer\Value\ObjectValue;
@@ -130,6 +133,12 @@ class SchemaFactory implements SchemaFactoryInterface
             // number constraints
             case 'multipleOf':
                 return array($this->createMultipleOfConstraint($value));
+
+            // date-time constraints
+            case 'maxDateTime':
+                return array($this->createMaximumDateTimeConstraint($value));
+            case 'minDateTime':
+                return array($this->createMinimumDateTimeConstraint($value));
         }
 
         return array();
@@ -727,5 +736,41 @@ class SchemaFactory implements SchemaFactoryInterface
             $value->get('minimum')->value(),
             $exclusive
         );
+    }
+
+    // date-time constraints ===================================================
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return MaximumDateTimeConstraint
+     */
+    protected function createMaximumDateTimeConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof DateTimeValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::DATETIME_TYPE())
+            );
+        }
+
+        return new MaximumDateTimeConstraint($value->value());
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return MinimumDateTimeConstraint
+     */
+    protected function createMinimumDateTimeConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof DateTimeValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::DATETIME_TYPE())
+            );
+        }
+
+        return new MinimumDateTimeConstraint($value->value());
     }
 }

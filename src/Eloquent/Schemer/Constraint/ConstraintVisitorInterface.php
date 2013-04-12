@@ -176,4 +176,34 @@ interface ConstraintVisitorInterface
      * @return mixed
      */
     public function visitMultipleOfConstraint(NumberValue\MultipleOfConstraint $constraint);
+
+    /**
+     * @param NumberValue\MaximumConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitMaximumConstraint(NumberValue\MaximumConstraint $constraint);
+
+    /**
+     * @param NumberValue\MinimumConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitMinimumConstraint(NumberValue\MinimumConstraint $constraint);
+
+    // date-time constraints ===================================================
+
+    /**
+     * @param DateTimeValue\MaximumDateTimeConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitMaximumDateTimeConstraint(DateTimeValue\MaximumDateTimeConstraint $constraint);
+
+    /**
+     * @param DateTimeValue\MinimumDateTimeConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitMinimumDateTimeConstraint(DateTimeValue\MinimumDateTimeConstraint $constraint);
 }

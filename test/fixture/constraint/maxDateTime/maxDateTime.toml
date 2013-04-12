@@ -1,0 +1,23 @@
+[schema.items]
+    maxDateTime = 2001-01-01T01:01:01Z
+
+[tests.valid date/time]
+    value = [
+        1979-05-27T07:32:00Z,
+        2001-01-01T01:01:01Z
+    ]
+    expected = []
+
+[tests.valid non-date/time]
+    value = ["foo"]
+    expected = []
+
+[tests.invalid]
+    value = [
+        2001-01-01T01:01:02Z,
+        2015-10-21T16:29:00Z
+    ]
+    expected = [
+        "Validation failed for value at \"/0\": The date-time value must not be after \"2001-01-01T01:01:01+00:00\".",
+        "Validation failed for value at \"/1\": The date-time value must not be after \"2001-01-01T01:01:01+00:00\"."
+    ]

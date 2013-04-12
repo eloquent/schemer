@@ -17,6 +17,8 @@ use Eloquent\Schemer\Constraint\ArrayValue\MaximumItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\MinimumItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\UniqueItemsConstraint;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\DateTimeValue\MaximumDateTimeConstraint;
+use Eloquent\Schemer\Constraint\DateTimeValue\MinimumDateTimeConstraint;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
@@ -352,6 +354,34 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
         return sprintf(
             'The number must not be less than %s.',
             Repr::repr($constraint->minimum())
+        );
+    }
+
+    // date-time constraints ===================================================
+
+    /**
+     * @param MaximumDateTimeConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitMaximumDateTimeConstraint(MaximumDateTimeConstraint $constraint)
+    {
+        return sprintf(
+            'The date-time value must not be after %s.',
+            Repr::repr($constraint->maximum()->format('c'))
+        );
+    }
+
+    /**
+     * @param MinimumDateTimeConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitMinimumDateTimeConstraint(MinimumDateTimeConstraint $constraint)
+    {
+        return sprintf(
+            'The date-time value must not be before %s.',
+            Repr::repr($constraint->minimum()->format('c'))
         );
     }
 }

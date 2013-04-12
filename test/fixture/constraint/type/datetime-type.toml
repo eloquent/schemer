@@ -1,12 +1,12 @@
 [schema]
-type = "datetime"
+    type = "date-time"
 
-    [tests.valid]
+[tests.valid]
     value = 1979-05-27T07:32:00Z
     expected = []
 
-    [tests.invalid]
+[tests.invalid]
     value = "foo"
     expected = [
-        "Validation failed for value at document root: The value must be of type \"datetime\"."
+        "Validation failed for value at document root: The value must be of type \"date-time\"."
     ]
