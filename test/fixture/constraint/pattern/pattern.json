@@ -1,0 +1,29 @@
+{
+    "schema": {
+        "pattern": "ba[rz]"
+    },
+
+    "tests": {
+        "valid string a": {
+            "value": "bar",
+            "expected": []
+        },
+
+        "valid string b": {
+            "value": "baz",
+            "expected": []
+        },
+
+        "valid non-string": {
+            "value": {},
+            "expected": []
+        },
+
+        "invalid": {
+            "value": "foo",
+            "expected": [
+                "Validation failed for value at document root: The string must match the pattern \"ba[rz]\"."
+            ]
+        }
+    }
+}

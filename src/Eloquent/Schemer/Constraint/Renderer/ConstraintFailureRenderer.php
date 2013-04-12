@@ -29,6 +29,7 @@ use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
+use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ValueType;
 use Icecave\Repr\Repr;
@@ -265,5 +266,20 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitUniqueItemsConstraint(UniqueItemsConstraint $constraint)
     {
         return 'The array items must be unique.';
+    }
+
+    // string constraints ======================================================
+
+    /**
+     * @param PatternConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitPatternConstraint(PatternConstraint $constraint)
+    {
+        return sprintf(
+            'The string must match the pattern %s.',
+            Repr::repr($constraint->pattern())
+        );
     }
 }

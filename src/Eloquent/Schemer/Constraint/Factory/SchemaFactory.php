@@ -28,6 +28,7 @@ use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
+use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ArrayValue;
 use Eloquent\Schemer\Value\BooleanValue;
@@ -113,6 +114,10 @@ class SchemaFactory implements SchemaFactoryInterface
                 return array($this->createMinimumItemsConstraint($value));
             case 'uniqueItems':
                 return array($this->createUniqueItemsConstraint($value));
+
+            // string constraints
+            case 'pattern':
+                return array($this->createPatternConstraint($value));
         }
 
         return array();
@@ -553,5 +558,24 @@ class SchemaFactory implements SchemaFactoryInterface
         }
 
         return new UniqueItemsConstraint($value->value());
+    }
+
+    // string constraints ======================================================
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return PatternConstraint
+     */
+    protected function createPatternConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof StringValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::STRING_TYPE())
+            );
+        }
+
+        return new PatternConstraint($value->value());
     }
 }

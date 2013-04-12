@@ -31,6 +31,7 @@ use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
+use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Pointer\Pointer;
 use Eloquent\Schemer\Pointer\PointerInterface;
@@ -337,7 +338,7 @@ class ConstraintValidator implements
 
         // pattern properties
         foreach ($constraint->patternSchemas() as $pattern => $schema) {
-            $pattern = sprintf('/%s/', str_replace('/', '\\/', $pattern));
+            $pattern = $this->wrapPattern($pattern);
 
             foreach ($value->properties() as $property) {
                 if (preg_match($pattern, $property)) {
@@ -506,6 +507,29 @@ class ConstraintValidator implements
         return array($this->createIssue($constraint));
     }
 
+    // string constraints ======================================================
+
+    /**
+     * @param PatternConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitPatternConstraint(PatternConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (
+            !$value instanceof StringValue ||
+            preg_match(
+                $this->wrapPattern($constraint->pattern()),
+                $value->value()
+            )
+        ) {
+            return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
     // implementation details ==================================================
 
     /**
@@ -635,6 +659,16 @@ class ConstraintValidator implements
         }
 
         return $unique;
+    }
+
+    /**
+     * @param string $pattern
+     *
+     * @return string
+     */
+    protected function wrapPattern($pattern)
+    {
+        return sprintf('/%s/', str_replace('/', '\\/', $pattern));
     }
 
     private $comparator;

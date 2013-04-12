@@ -144,4 +144,13 @@ interface ConstraintVisitorInterface
      * @return mixed
      */
     public function visitUniqueItemsConstraint(ArrayValue\UniqueItemsConstraint $constraint);
+
+    // string constraints ======================================================
+
+    /**
+     * @param StringValue\PatternConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitPatternConstraint(StringValue\PatternConstraint $constraint);
 }
