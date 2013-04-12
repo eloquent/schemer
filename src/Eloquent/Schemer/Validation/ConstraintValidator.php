@@ -20,7 +20,8 @@ use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Pointer\Pointer;
 use Eloquent\Schemer\Pointer\PointerInterface;
@@ -246,31 +247,92 @@ class ConstraintValidator implements
     // object constraints ======================================================
 
     /**
-     * @param PropertyConstraint $constraint
+     * @param PropertiesConstraint $constraint
      *
      * @return array<Result\ValidationIssue>
      */
-    public function visitPropertyConstraint(PropertyConstraint $constraint)
+    public function visitPropertiesConstraint(PropertiesConstraint $constraint)
     {
         $value = $this->currentValue();
-        if (
-            !$value instanceof ObjectValue ||
-            !$value->has($constraint->property())
-        ) {
+        if (!$value instanceof ObjectValue) {
             return array();
         }
 
-        $this->pushContext(array(
-            $value->get($constraint->property()),
-            $this->currentPointer()->joinAtom($constraint->property())
-        ));
-        $issues = $constraint->schema()->accept($this);
-        $this->popContext();
+        $issues = array();
+        $matchedProperties = array();
+
+        // properties
+        foreach ($constraint->schemas() as $property => $schema) {
+            if ($value->has($property)) {
+                $matchedProperties[$property] = true;
+                $issues = array_merge(
+                    $issues,
+                    $this->validateObjectProperty($property, $schema)
+                );
+            }
+        }
+
+        // pattern properties
+        foreach ($constraint->patternSchemas() as $pattern => $schema) {
+            $pattern = sprintf('/%s/', str_replace('/', '\\/', $pattern));
+
+            foreach ($value->properties() as $property) {
+                if (preg_match($pattern, $property)) {
+                    $matchedProperties[$property] = true;
+                    $issues = array_merge(
+                        $issues,
+                        $this->validateObjectProperty($property, $schema)
+                    );
+                }
+            }
+        }
+
+        // additional properties
+        foreach ($value->properties() as $property) {
+            if (!array_key_exists($property, $matchedProperties)) {
+                $issues = array_merge(
+                    $issues,
+                    $this->validateObjectProperty(
+                        $property,
+                        $constraint->additionalSchema()
+                    )
+                );
+            }
+        }
 
         return $issues;
     }
 
+    /**
+     * @param AdditionalPropertyConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitAdditionalPropertyConstraint(AdditionalPropertyConstraint $constraint)
+    {
+        return array($this->createIssue($constraint));
+    }
+
     // implementation details ==================================================
+
+    /**
+     * @param string $property
+     * @param Schema $schema
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    protected function validateObjectProperty($property, Schema $schema)
+    {
+        list($value, $pointer) = $this->currentContext();
+        $this->pushContext(array(
+            $value->get($property),
+            $pointer->joinAtom($property)
+        ));
+        $issues = $schema->accept($this);
+        $this->popContext();
+
+        return $issues;
+    }
 
     /**
      * @param tuple<ValueInterface,PointerInterface> $context

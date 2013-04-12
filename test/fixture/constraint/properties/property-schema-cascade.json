@@ -1,0 +1,76 @@
+{
+    "schema": {
+        "properties": {
+            "foo": {
+                "type": "string"
+            },
+            "bar": {
+                "type": "object",
+                "properties": {
+                    "qux": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "patternProperties": {
+            "ba[rz]": {
+                "type": "object",
+                "properties": {
+                    "doom": {
+                        "type": "null"
+                    }
+                }
+            }
+        },
+        "additionalProperties": {
+            "type": "integer"
+        }
+    },
+
+    "tests": {
+        "valid object": {
+            "value": {
+                "foo": "splat",
+                "bar": {
+                    "qux": "ping",
+                    "doom": null
+                },
+                "baz": {
+                    "doom": null
+                },
+                "pong": 111,
+                "pang": 222
+            },
+            "expected": []
+        },
+
+        "valid non-object": {
+            "value": "foo",
+            "expected": []
+        },
+
+        "invalid": {
+            "value": {
+                "foo": null,
+                "bar": {
+                    "qux": 111,
+                    "doom": 222
+                },
+                "baz": {
+                    "doom": 333
+                },
+                "pong": "peng",
+                "pang": "pung"
+            },
+            "expected": [
+                "Validation failed for value at \"/foo\": The value must be of type \"string\".",
+                "Validation failed for value at \"/bar/qux\": The value must be of type \"string\".",
+                "Validation failed for value at \"/bar/doom\": The value must be of type \"null\".",
+                "Validation failed for value at \"/baz/doom\": The value must be of type \"null\".",
+                "Validation failed for value at \"/pong\": The value must be of type \"integer\".",
+                "Validation failed for value at \"/pang\": The value must be of type \"integer\"."
+            ]
+        }
+    }
+}

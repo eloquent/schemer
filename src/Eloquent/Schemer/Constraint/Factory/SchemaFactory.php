@@ -17,9 +17,11 @@ use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ArrayValue;
+use Eloquent\Schemer\Value\BooleanValue;
 use Eloquent\Schemer\Value\ObjectValue;
 use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ValueInterface;
@@ -28,18 +30,28 @@ use Eloquent\Schemer\Value\ValueType;
 class SchemaFactory implements SchemaFactoryInterface
 {
     /**
-     * @param ObjectValue $schema
+     * @param ValueInterface $value
      *
      * @return \Eloquent\Schemer\Constraint\Schema
      */
-    public function create(ObjectValue $schema)
+    public function create(ValueInterface $value)
     {
-        $constraints = array();
-        foreach ($schema as $property => $value) {
-            $constraints = array_merge(
-                $constraints,
-                $this->createConstraints($property, $value, $schema)
+        if (!$value instanceof ObjectValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::OBJECT_TYPE())
             );
+        }
+
+        $constraints = array();
+        foreach ($value as $property => $subValue) {
+            if ($constraint = $this->createConstraint($property, $subValue)) {
+                $constraints[] = $constraint;
+            }
+        }
+
+        if ($constraint = $this->createPropertiesConstraint($value)) {
+            $constraints[] = $constraint;
         }
 
         return new Schema($constraints);
@@ -48,36 +60,30 @@ class SchemaFactory implements SchemaFactoryInterface
     /**
      * @param string         $property
      * @param ValueInterface $value
-     * @param ObjectValue    $schema
      *
-     * @return array<\Eloquent\Schemer\Constraint\ConstraintInterface>
+     * @return \Eloquent\Schemer\Constraint\ConstraintInterface|null
      */
-    protected function createConstraints(
+    protected function createConstraint(
         $property,
-        ValueInterface $value,
-        ObjectValue $schema
+        ValueInterface $value
     ) {
         switch ($property) {
             // generic constraints
             case 'enum':
-                return array($this->createEnumConstraint($value));
+                return $this->createEnumConstraint($value);
             case 'type':
-                return array($this->createTypeConstraint($value));
+                return $this->createTypeConstraint($value);
             case 'allOf':
-                return array($this->createAllOfConstraint($value));
+                return $this->createAllOfConstraint($value);
             case 'anyOf':
-                return array($this->createAnyOfConstraint($value));
+                return $this->createAnyOfConstraint($value);
             case 'oneOf':
-                return array($this->createOneOfConstraint($value));
+                return $this->createOneOfConstraint($value);
             case 'not':
-                return array($this->createNotConstraint($value));
-
-            // object constraints
-            case 'properties':
-                return $this->createPropertyConstraints($value);
+                return $this->createNotConstraint($value);
         }
 
-        return array();
+        return null;
     }
 
     // generic constraints =====================================================
@@ -211,11 +217,11 @@ class SchemaFactory implements SchemaFactoryInterface
     // object constraints ======================================================
 
     /**
-     * @param ValueInterface $value
+     * @param ObjectValue $value
      *
-     * @return array<PropertyConstraint>
+     * @return PropertiesConstraint|null
      */
-    protected function createPropertyConstraints(ValueInterface $value)
+    protected function createPropertiesConstraint(ObjectValue $value)
     {
         if (!$value instanceof ObjectValue) {
             throw new UnexpectedValueException(
@@ -224,32 +230,67 @@ class SchemaFactory implements SchemaFactoryInterface
             );
         }
 
-        $constraints = array();
-        foreach ($value as $property => $subValue) {
-            $constraints[] = $this->createPropertyConstraint(
-                $property,
-                $subValue
-            );
+        if (
+            !$value->has('properties') &&
+            !$value->has('patternProperties') &&
+            !$value->has('additionalProperties')
+        ) {
+            return null;
         }
 
-        return $constraints;
-    }
+        $schemas = array();
+        if ($value->has('properties')) {
+            if (!$value->get('properties') instanceof ObjectValue) {
+                throw new UnexpectedValueException(
+                    $value->get('properties'),
+                    array(ValueType::OBJECT_TYPE())
+                );
+            }
 
-    /**
-     * @param string         $property
-     * @param ValueInterface $value
-     *
-     * @return PropertyConstraint
-     */
-    protected function createPropertyConstraint($property, ValueInterface $value)
-    {
-        if (!$value instanceof ObjectValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(ValueType::OBJECT_TYPE())
-            );
+            foreach ($value->get('properties') as $property => $subValue) {
+                $schemas[$property] = $this->create($subValue);
+            }
         }
 
-        return new PropertyConstraint($property, $this->create($value));
+        $patternSchemas = array();
+        if ($value->has('patternProperties')) {
+            if (!$value->get('patternProperties') instanceof ObjectValue) {
+                throw new UnexpectedValueException(
+                    $value->get('patternProperties'),
+                    array(ValueType::OBJECT_TYPE())
+                );
+            }
+
+            foreach ($value->get('patternProperties') as $pattern => $subValue) {
+                $patternSchemas[$pattern] = $this->create($subValue);
+            }
+        }
+
+        if ($value->has('additionalProperties')) {
+            if ($value->get('additionalProperties') instanceof ObjectValue) {
+                $additionalSchema = $this->create($value->get('additionalProperties'));
+            } elseif ($value->get('additionalProperties') instanceof BooleanValue) {
+                if ($value->get('additionalProperties')->value()) {
+                    $additionalSchema = new Schema;
+                } else {
+                    $additionalSchema = new Schema(
+                        array(new AdditionalPropertyConstraint)
+                    );
+                }
+            } else {
+                throw new UnexpectedValueException(
+                    $value->get('additionalProperties'),
+                    array(ValueType::OBJECT_TYPE(), ValueType::BOOLEAN_TYPE())
+                );
+            }
+        } else {
+            $additionalSchema = new Schema;
+        }
+
+        return new PropertiesConstraint(
+            $schemas,
+            $patternSchemas,
+            $additionalSchema
+        );
     }
 }

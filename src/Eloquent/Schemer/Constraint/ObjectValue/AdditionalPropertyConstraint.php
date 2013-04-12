@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Constraint\Generic;
+namespace Eloquent\Schemer\Constraint\ObjectValue;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 
-class FailConstraint implements ConstraintInterface
+class AdditionalPropertyConstraint implements ConstraintInterface
 {
     /**
      * @param ConstraintVisitorInterface $visitor
@@ -23,6 +23,6 @@ class FailConstraint implements ConstraintInterface
      */
     public function accept(ConstraintVisitorInterface $visitor)
     {
-        return $visitor->visitFailConstraint($this);
+        return $visitor->visitAdditionalPropertyConstraint($this);
     }
 }

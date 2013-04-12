@@ -17,4 +17,9 @@ interface ConstraintContainerInterface extends ConstraintInterface
      * @return array<ConstraintInterface>
      */
     public function constraints();
+
+    /**
+     * @return boolean
+     */
+    public function isEmpty();
 }

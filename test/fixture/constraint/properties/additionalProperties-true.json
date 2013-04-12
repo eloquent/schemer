@@ -1,0 +1,17 @@
+{
+    "schema": {
+        "properties": {
+            "foo": {
+                "type": "string"
+            }
+        },
+        "additionalProperties": true
+    },
+
+    "tests": {
+        "valid": {
+            "value": {"foo": "bar", "baz": 111, "qux": null},
+            "expected": []
+        }
+    }
+}

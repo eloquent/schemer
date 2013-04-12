@@ -1,0 +1,32 @@
+{
+    "schema": {
+        "patternProperties": {
+            "fo+": {
+                "type": "string"
+            },
+            "ba[rz]": {
+                "type": "integer"
+            },
+            "q.x": {
+                "type": "null"
+            }
+        }
+    },
+
+    "tests": {
+        "valid": {
+            "value": {"foo": "doom", "bar": 111, "baz": 222, "qux": null},
+            "expected": []
+        },
+
+        "invalid": {
+            "value": {"foo": 111, "bar": "doom", "baz": null, "qux": 222},
+            "expected": [
+                "Validation failed for value at \"/foo\": The value must be of type \"string\".",
+                "Validation failed for value at \"/bar\": The value must be of type \"integer\".",
+                "Validation failed for value at \"/baz\": The value must be of type \"integer\".",
+                "Validation failed for value at \"/qux\": The value must be of type \"null\"."
+            ]
+        }
+    }
+}

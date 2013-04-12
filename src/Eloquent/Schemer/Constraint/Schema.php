@@ -11,23 +11,23 @@
 
 namespace Eloquent\Schemer\Constraint;
 
-use stdClass;
+use Eloquent\Schemer\Value\ObjectValue;
 
 class Schema implements ConstraintContainerInterface
 {
     /**
      * @param array<ConstraintInterface>|null $constraints
-     * @param stdClass|null                   $additionalProperties
+     * @param ObjectValue|null                $additionalProperties
      */
     public function __construct(
         array $constraints = null,
-        stdClass $additionalProperties = null
+        ObjectValue $additionalProperties = null
     ) {
         if (null === $constraints) {
             $constraints = array();
         }
         if (null === $additionalProperties) {
-            $additionalProperties = new stdClass;
+            $additionalProperties = new ObjectValue;
         }
 
         $this->constraints = $constraints;
@@ -43,7 +43,15 @@ class Schema implements ConstraintContainerInterface
     }
 
     /**
-     * @return stdClass
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return count($this->constraints()) < 1;
+    }
+
+    /**
+     * @return ObjectValue
      */
     public function additionalProperties()
     {

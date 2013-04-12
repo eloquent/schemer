@@ -18,7 +18,8 @@ use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\PropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ValueType;
 use Icecave\Repr\Repr;
@@ -131,12 +132,22 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     // object constraints ======================================================
 
     /**
-     * @param PropertyConstraint $constraint
+     * @param PropertiesConstraint $constraint
      *
      * @return string
      */
-    public function visitPropertyConstraint(PropertyConstraint $constraint)
+    public function visitPropertiesConstraint(PropertiesConstraint $constraint)
     {
         return static::UNMATCHED_SCHEMA;
+    }
+
+    /**
+     * @param AdditionalPropertyConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitAdditionalPropertyConstraint(AdditionalPropertyConstraint $constraint)
+    {
+        return 'Unexpected property.';
     }
 }

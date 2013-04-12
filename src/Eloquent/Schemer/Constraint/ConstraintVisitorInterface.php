@@ -67,9 +67,16 @@ interface ConstraintVisitorInterface
     // object constraints ======================================================
 
     /**
-     * @param ObjectValue\PropertyConstraint $constraint
+     * @param ObjectValue\PropertiesConstraint $constraint
      *
      * @return mixed
      */
-    public function visitPropertyConstraint(ObjectValue\PropertyConstraint $constraint);
+    public function visitPropertiesConstraint(ObjectValue\PropertiesConstraint $constraint);
+
+    /**
+     * @param ObjectValue\AdditionalPropertyConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitAdditionalPropertyConstraint(ObjectValue\AdditionalPropertyConstraint $constraint);
 }
