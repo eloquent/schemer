@@ -1,0 +1,33 @@
+{
+    "schema": {
+        "items": {
+            "maximum": 3
+        }
+    },
+
+    "tests": {
+        "valid integers": {
+            "value": [0, 1, 2, 3],
+            "expected": []
+        },
+
+        "valid floating-point values": {
+            "value": [0, 1.11, 2.22],
+            "expected": []
+        },
+
+        "valid non-number": {
+            "value": "foo",
+            "expected": []
+        },
+
+        "invalid": {
+            "value": [3.33, 5, 100],
+            "expected": [
+                "Validation failed for value at \"/0\": The number must not be more than 3.",
+                "Validation failed for value at \"/1\": The number must not be more than 3.",
+                "Validation failed for value at \"/2\": The number must not be more than 3."
+            ]
+        }
+    }
+}

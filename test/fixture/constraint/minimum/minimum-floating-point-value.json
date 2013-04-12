@@ -1,0 +1,33 @@
+{
+    "schema": {
+        "items": {
+            "minimum": 3.33
+        }
+    },
+
+    "tests": {
+        "valid floating-point values": {
+            "value": [4.44, 10.1, 100.1],
+            "expected": []
+        },
+
+        "valid integers": {
+            "value": [4, 5, 10, 100],
+            "expected": []
+        },
+
+        "valid non-number": {
+            "value": "foo",
+            "expected": []
+        },
+
+        "invalid": {
+            "value": [0.0, 1.11, 2],
+            "expected": [
+                "Validation failed for value at \"/0\": The number must not be less than 3.33.",
+                "Validation failed for value at \"/1\": The number must not be less than 3.33.",
+                "Validation failed for value at \"/2\": The number must not be less than 3.33."
+            ]
+        }
+    }
+}

@@ -25,6 +25,8 @@ use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
+use Eloquent\Schemer\Constraint\NumberValue\MaximumConstraint;
+use Eloquent\Schemer\Constraint\NumberValue\MinimumConstraint;
 use Eloquent\Schemer\Constraint\NumberValue\MultipleOfConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\DependencyConstraint;
@@ -595,6 +597,42 @@ class ConstraintValidator implements
             if (0 === $value->value() % $constraint->quantity()) {
                 return array();
             }
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
+    /**
+     * @param MaximumConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitMaximumConstraint(MaximumConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (
+            !$value instanceof NumberValueInterface ||
+            $value->value() <= $constraint->maximum()
+        ) {
+            return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
+    /**
+     * @param MinimumConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitMinimumConstraint(MinimumConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (
+            !$value instanceof NumberValueInterface ||
+            $value->value() >= $constraint->minimum()
+        ) {
+            return array();
         }
 
         return array($this->createIssue($constraint));

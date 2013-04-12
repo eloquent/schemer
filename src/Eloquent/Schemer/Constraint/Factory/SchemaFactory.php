@@ -22,6 +22,8 @@ use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
+use Eloquent\Schemer\Constraint\NumberValue\MaximumConstraint;
+use Eloquent\Schemer\Constraint\NumberValue\MinimumConstraint;
 use Eloquent\Schemer\Constraint\NumberValue\MultipleOfConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\DependencyConstraint;
@@ -66,14 +68,12 @@ class SchemaFactory implements SchemaFactoryInterface
             );
         }
 
-        if ($constraint = $this->createPropertiesConstraint($value)) {
-            $constraints[] = $constraint;
-        }
-        if ($constraint = $this->createItemsConstraint($value)) {
-            $constraints[] = $constraint;
-        }
-
-        return new Schema($constraints);
+        return new Schema(
+            array_merge(
+                $constraints,
+                $this->createCompositeConstraints($value)
+            )
+        );
     }
 
     /**
@@ -133,6 +133,31 @@ class SchemaFactory implements SchemaFactoryInterface
         }
 
         return array();
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return array<\Eloquent\Schemer\Constraint\ConstraintInterface>
+     */
+    protected function createCompositeConstraints(ValueInterface $value)
+    {
+        $constraints = array();
+
+        if ($constraint = $this->createPropertiesConstraint($value)) {
+            $constraints[] = $constraint;
+        }
+        if ($constraint = $this->createItemsConstraint($value)) {
+            $constraints[] = $constraint;
+        }
+        if ($constraint = $this->createMaximumConstraint($value)) {
+            $constraints[] = $constraint;
+        }
+        if ($constraint = $this->createMinimumConstraint($value)) {
+            $constraints[] = $constraint;
+        }
+
+        return $constraints;
     }
 
     // generic constraints =====================================================
@@ -642,5 +667,65 @@ class SchemaFactory implements SchemaFactoryInterface
         }
 
         return new MultipleOfConstraint($value->value());
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return MaximumConstraint|null
+     */
+    protected function createMaximumConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof ObjectValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::OBJECT_TYPE())
+            );
+        }
+
+        if (!$value->has('maximum')) {
+            return null;
+        }
+
+        if ($value->has('exclusiveMaximum')) {
+            $exclusive = $value->get('exclusiveMaximum')->value();
+        } else {
+            $exclusive = null;
+        }
+
+        return new MaximumConstraint(
+            $value->get('maximum')->value(),
+            $exclusive
+        );
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return MinimumConstraint|null
+     */
+    protected function createMinimumConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof ObjectValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::OBJECT_TYPE())
+            );
+        }
+
+        if (!$value->has('minimum')) {
+            return null;
+        }
+
+        if ($value->has('exclusiveMinimum')) {
+            $exclusive = $value->get('exclusiveMinimum')->value();
+        } else {
+            $exclusive = null;
+        }
+
+        return new MinimumConstraint(
+            $value->get('minimum')->value(),
+            $exclusive
+        );
     }
 }

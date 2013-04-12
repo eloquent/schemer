@@ -23,6 +23,8 @@ use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
 use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
+use Eloquent\Schemer\Constraint\NumberValue\MaximumConstraint;
+use Eloquent\Schemer\Constraint\NumberValue\MinimumConstraint;
 use Eloquent\Schemer\Constraint\NumberValue\MultipleOfConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\DependencyConstraint;
@@ -324,6 +326,32 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
         return sprintf(
             'The number must be a multiple of %s.',
             Repr::repr($constraint->quantity())
+        );
+    }
+
+    /**
+     * @param MaximumConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitMaximumConstraint(MaximumConstraint $constraint)
+    {
+        return sprintf(
+            'The number must not be more than %s.',
+            Repr::repr($constraint->maximum())
+        );
+    }
+
+    /**
+     * @param MinimumConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitMinimumConstraint(MinimumConstraint $constraint)
+    {
+        return sprintf(
+            'The number must not be less than %s.',
+            Repr::repr($constraint->minimum())
         );
     }
 }
