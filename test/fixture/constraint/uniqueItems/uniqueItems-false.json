@@ -1,0 +1,22 @@
+{
+    "schema": {
+        "uniqueItems": false
+    },
+
+    "tests": {
+        "valid unique": {
+            "value": ["foo", "bar"],
+            "expected": []
+        },
+
+        "valid non-unique": {
+            "value": ["foo", "bar", "foo"],
+            "expected": []
+        },
+
+        "valid non-array": {
+            "value": "foo",
+            "expected": []
+        }
+    }
+}

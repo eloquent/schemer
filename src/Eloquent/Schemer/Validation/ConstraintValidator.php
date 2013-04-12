@@ -16,6 +16,7 @@ use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\MaximumItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\MinimumItemsConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\UniqueItemsConstraint;
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
@@ -231,11 +232,11 @@ class ConstraintValidator implements
             }
         }
 
-        if (1 !== $matchingSchemas) {
-            return array($this->createIssue($constraint));
+        if (1 === $matchingSchemas) {
+            return array();
         }
 
-        return array();
+        return array($this->createIssue($constraint));
     }
 
     /**
@@ -245,11 +246,11 @@ class ConstraintValidator implements
      */
     public function visitNotConstraint(NotConstraint $constraint)
     {
-        if (count($constraint->schema()->accept($this)) < 1) {
-            return array($this->createIssue($constraint));
+        if (count($constraint->schema()->accept($this)) > 0) {
+            return array();
         }
 
-        return array();
+        return array($this->createIssue($constraint));
     }
 
     // object constraints ======================================================
@@ -262,15 +263,14 @@ class ConstraintValidator implements
     public function visitMaximumPropertiesConstraint(MaximumPropertiesConstraint $constraint)
     {
         $value = $this->currentValue();
-        if (!$value instanceof ObjectValue) {
+        if (
+            !$value instanceof ObjectValue ||
+            $value->count() <= $constraint->maximum()
+        ) {
             return array();
         }
 
-        if ($value->count() > $constraint->maximum()) {
-            return array($this->createIssue($constraint));
-        }
-
-        return array();
+        return array($this->createIssue($constraint));
     }
 
     /**
@@ -281,15 +281,14 @@ class ConstraintValidator implements
     public function visitMinimumPropertiesConstraint(MinimumPropertiesConstraint $constraint)
     {
         $value = $this->currentValue();
-        if (!$value instanceof ObjectValue) {
+        if (
+            !$value instanceof ObjectValue ||
+            $value->count() >= $constraint->minimum()
+        ) {
             return array();
         }
 
-        if ($value->count() < $constraint->minimum()) {
-            return array($this->createIssue($constraint));
-        }
-
-        return array();
+        return array($this->createIssue($constraint));
     }
 
     /**
@@ -300,11 +299,10 @@ class ConstraintValidator implements
     public function visitRequiredConstraint(RequiredConstraint $constraint)
     {
         $value = $this->currentValue();
-        if (!$value instanceof ObjectValue) {
-            return array();
-        }
-
-        if ($value->has($constraint->property())) {
+        if (
+            !$value instanceof ObjectValue ||
+            $value->has($constraint->property())
+        ) {
             return array();
         }
 
@@ -386,11 +384,10 @@ class ConstraintValidator implements
     public function visitDependencyConstraint(DependencyConstraint $constraint)
     {
         $value = $this->currentValue();
-        if (!$value instanceof ObjectValue) {
-            return array();
-        }
-
-        if (!$value->has($constraint->property())) {
+        if (
+            !$value instanceof ObjectValue ||
+            !$value->has($constraint->property())
+        ) {
             return array();
         }
 
@@ -459,15 +456,14 @@ class ConstraintValidator implements
     public function visitMaximumItemsConstraint(MaximumItemsConstraint $constraint)
     {
         $value = $this->currentValue();
-        if (!$value instanceof ArrayValue) {
+        if (
+            !$value instanceof ArrayValue ||
+            $value->count() <= $constraint->maximum()
+        ) {
             return array();
         }
 
-        if ($value->count() > $constraint->maximum()) {
-            return array($this->createIssue($constraint));
-        }
-
-        return array();
+        return array($this->createIssue($constraint));
     }
 
     /**
@@ -478,15 +474,36 @@ class ConstraintValidator implements
     public function visitMinimumItemsConstraint(MinimumItemsConstraint $constraint)
     {
         $value = $this->currentValue();
-        if (!$value instanceof ArrayValue) {
+        if (
+            !$value instanceof ArrayValue ||
+            $value->count() >= $constraint->minimum()
+        ) {
             return array();
         }
 
-        if ($value->count() < $constraint->minimum()) {
-            return array($this->createIssue($constraint));
+        return array($this->createIssue($constraint));
+    }
+
+    /**
+     * @param UniqueItemsConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitUniqueItemsConstraint(UniqueItemsConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (
+            !$value instanceof ArrayValue ||
+            !$constraint->value() ||
+            $this->comparator->equals(
+                $value->value(),
+                array_values(array_unique($value->value()))
+            )
+        ) {
+            return array();
         }
 
-        return array();
+        return array($this->createIssue($constraint));
     }
 
     // implementation details ==================================================

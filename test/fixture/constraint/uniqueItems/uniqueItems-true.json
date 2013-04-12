@@ -1,0 +1,24 @@
+{
+    "schema": {
+        "uniqueItems": true
+    },
+
+    "tests": {
+        "valid array": {
+            "value": ["foo", "bar"],
+            "expected": []
+        },
+
+        "valid non-array": {
+            "value": "foo",
+            "expected": []
+        },
+
+        "invalid": {
+            "value": ["foo", "bar", "foo"],
+            "expected": [
+                "Validation failed for value at document root: The array items must be unique."
+            ]
+        }
+    }
+}

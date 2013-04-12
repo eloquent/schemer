@@ -15,6 +15,7 @@ use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\MaximumItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\MinimumItemsConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\UniqueItemsConstraint;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
@@ -254,5 +255,15 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
             'The array must not have less than %s items.',
             Repr::repr($constraint->minimum())
         );
+    }
+
+    /**
+     * @param UniqueItemsConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitUniqueItemsConstraint(UniqueItemsConstraint $constraint)
+    {
+        return 'The array items must be unique.';
     }
 }

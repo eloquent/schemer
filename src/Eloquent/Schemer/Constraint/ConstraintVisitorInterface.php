@@ -137,4 +137,11 @@ interface ConstraintVisitorInterface
      * @return mixed
      */
     public function visitMinimumItemsConstraint(ArrayValue\MinimumItemsConstraint $constraint);
+
+    /**
+     * @param ArrayValue\UniqueItemsConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitUniqueItemsConstraint(ArrayValue\UniqueItemsConstraint $constraint);
 }

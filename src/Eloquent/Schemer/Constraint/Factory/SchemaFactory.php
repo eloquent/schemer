@@ -15,6 +15,7 @@ use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\MaximumItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\MinimumItemsConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\UniqueItemsConstraint;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
@@ -110,6 +111,8 @@ class SchemaFactory implements SchemaFactoryInterface
                 return array($this->createMaximumItemsConstraint($value));
             case 'minItems':
                 return array($this->createMinimumItemsConstraint($value));
+            case 'uniqueItems':
+                return array($this->createUniqueItemsConstraint($value));
         }
 
         return array();
@@ -533,5 +536,22 @@ class SchemaFactory implements SchemaFactoryInterface
         }
 
         return new MinimumItemsConstraint($value->value());
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return UniqueItemsConstraint
+     */
+    protected function createUniqueItemsConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof BooleanValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::BOOLEAN_TYPE())
+            );
+        }
+
+        return new UniqueItemsConstraint($value->value());
     }
 }
