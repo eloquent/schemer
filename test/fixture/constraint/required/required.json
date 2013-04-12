@@ -4,8 +4,13 @@
     },
 
     "tests": {
-        "valid": {
+        "valid object": {
             "value": {"foo": "qux", "bar": "doom", "baz": "splat"},
+            "expected": []
+        },
+
+        "valid non-object": {
+            "value": "foo",
             "expected": []
         },
 

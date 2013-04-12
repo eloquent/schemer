@@ -16,6 +16,11 @@
             "expected": []
         },
 
+        "valid non-object": {
+            "value": "foo",
+            "expected": []
+        },
+
         "invalid": {
             "value": {"foo": "baz", "bar": null},
             "expected": [

@@ -1,0 +1,30 @@
+{
+    "schema": {
+        "items": [
+            {
+                "type": "string"
+            },
+            {
+                "type": "object"
+            },
+            {
+                "type": "null"
+            }
+        ]
+    },
+
+    "tests": {
+        "valid": {
+            "value": ["foo", {}, null, 111],
+            "expected": []
+        },
+
+        "invalid": {
+            "value": [null, "foo", null],
+            "expected": [
+                "Validation failed for value at \"/0\": The value must be of type \"string\".",
+                "Validation failed for value at \"/1\": The value must be of type \"object\"."
+            ]
+        }
+    }
+}

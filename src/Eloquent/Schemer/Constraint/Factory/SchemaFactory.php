@@ -11,6 +11,8 @@
 
 namespace Eloquent\Schemer\Constraint\Factory;
 
+use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
@@ -57,6 +59,9 @@ class SchemaFactory implements SchemaFactoryInterface
         }
 
         if ($constraint = $this->createPropertiesConstraint($value)) {
+            $constraints[] = $constraint;
+        }
+        if ($constraint = $this->createItemsConstraint($value)) {
             $constraints[] = $constraint;
         }
 
@@ -422,5 +427,69 @@ class SchemaFactory implements SchemaFactoryInterface
         }
 
         return $constraints;
+    }
+
+    // array constraints =======================================================
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return ItemsConstraint|null
+     */
+    protected function createItemsConstraint(ValueInterface $value)
+    {
+        if (!$value instanceof ObjectValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::OBJECT_TYPE())
+            );
+        }
+
+        if (
+            !$value->has('items') &&
+            !$value->has('additionalItems')
+        ) {
+            return null;
+        }
+
+        $schemas = array();
+        $additionalSchema = null;
+        if ($value->has('items')) {
+            if ($value->get('items') instanceof ObjectValue) {
+                $additionalSchema = $this->create($value->get('items'));
+            } elseif ($value->get('items') instanceof ArrayValue) {
+                foreach ($value->get('items') as $subValue) {
+                    $schemas[] = $this->create($subValue);
+                }
+            } else {
+                throw new UnexpectedValueException(
+                    $value->get('items'),
+                    array(ValueType::OBJECT_TYPE(), ValueType::ARRAY_TYPE())
+                );
+            }
+        }
+
+        if (null === $additionalSchema && $value->has('additionalItems')) {
+            if ($value->get('additionalItems') instanceof ObjectValue) {
+                $additionalSchema = $this->create($value->get('additionalItems'));
+            } elseif ($value->get('additionalItems') instanceof BooleanValue) {
+                if (!$value->get('additionalItems')->value()) {
+                    $additionalSchema = new Schema(
+                        array(new AdditionalItemConstraint)
+                    );
+                }
+            } else {
+                throw new UnexpectedValueException(
+                    $value->get('additionalItems'),
+                    array(ValueType::OBJECT_TYPE(), ValueType::BOOLEAN_TYPE())
+                );
+            }
+        }
+
+        if (null === $additionalSchema) {
+            $additionalSchema = new Schema;
+        }
+
+        return new ItemsConstraint($schemas, $additionalSchema);
     }
 }

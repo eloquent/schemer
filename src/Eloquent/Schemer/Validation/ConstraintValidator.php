@@ -12,6 +12,8 @@
 namespace Eloquent\Schemer\Validation;
 
 use Eloquent\Equality\Comparator;
+use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
@@ -393,6 +395,60 @@ class ConstraintValidator implements
         return $constraint->schema()->accept($this);
     }
 
+    // array constraints =======================================================
+
+    /**
+     * @param ItemsConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitItemsConstraint(ItemsConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (!$value instanceof ArrayValue) {
+            return array();
+        }
+
+        $issues = array();
+        $matchedIndices = array();
+
+        // items
+        foreach ($constraint->schemas() as $index => $schema) {
+            if ($value->has($index)) {
+                $matchedIndices[$index] = true;
+                $issues = array_merge(
+                    $issues,
+                    $this->validateArrayIndex($index, $schema)
+                );
+            }
+        }
+
+        // additional items
+        foreach ($value->indices() as $index) {
+            if (!array_key_exists($index, $matchedIndices)) {
+                $issues = array_merge(
+                    $issues,
+                    $this->validateArrayIndex(
+                        $index,
+                        $constraint->additionalSchema()
+                    )
+                );
+            }
+        }
+
+        return $issues;
+    }
+
+    /**
+     * @param AdditionalItemConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitAdditionalItemConstraint(AdditionalItemConstraint $constraint)
+    {
+        return array($this->createIssue($constraint));
+    }
+
     // implementation details ==================================================
 
     /**
@@ -407,6 +463,25 @@ class ConstraintValidator implements
         $this->pushContext(array(
             $value->get($property),
             $pointer->joinAtom($property)
+        ));
+        $issues = $schema->accept($this);
+        $this->popContext();
+
+        return $issues;
+    }
+
+    /**
+     * @param integer $index
+     * @param Schema  $schema
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    protected function validateArrayIndex($index, Schema $schema)
+    {
+        list($value, $pointer) = $this->currentContext();
+        $this->pushContext(array(
+            $value->get($index),
+            $pointer->joinAtom(strval($index))
         ));
         $issues = $schema->accept($this);
         $this->popContext();

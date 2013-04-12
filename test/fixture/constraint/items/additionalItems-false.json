@@ -1,0 +1,28 @@
+{
+    "schema": {
+        "items": [
+            {
+                "type": "string"
+            },
+            {
+                "type": "null"
+            }
+        ],
+        "additionalItems": false
+    },
+
+    "tests": {
+        "valid": {
+            "value": ["foo", null],
+            "expected": []
+        },
+
+        "invalid": {
+            "value": ["foo", null, 111, null],
+            "expected": [
+                "Validation failed for value at \"/2\": Unexpected index.",
+                "Validation failed for value at \"/3\": Unexpected index."
+            ]
+        }
+    }
+}

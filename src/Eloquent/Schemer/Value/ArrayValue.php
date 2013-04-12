@@ -68,6 +68,14 @@ class ArrayValue extends AbstractValue implements
     }
 
     /**
+     * @return array<integer,integer>
+     */
+    public function indices()
+    {
+        return array_keys($this->wrappedValue());
+    }
+
+    /**
      * @return integer
      */
     public function count()

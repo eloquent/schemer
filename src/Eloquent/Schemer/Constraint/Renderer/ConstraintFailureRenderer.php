@@ -11,6 +11,8 @@
 
 namespace Eloquent\Schemer\Constraint\Renderer;
 
+use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
@@ -202,5 +204,27 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitDependencyConstraint(DependencyConstraint $constraint)
     {
         return static::UNMATCHED_SCHEMA;
+    }
+
+    // array constraints =======================================================
+
+    /**
+     * @param ItemsConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitItemsConstraint(ItemsConstraint $constraint)
+    {
+        return static::UNMATCHED_SCHEMA;
+    }
+
+    /**
+     * @param AdditionalItemConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitAdditionalItemConstraint(AdditionalItemConstraint $constraint)
+    {
+        return 'Unexpected index.';
     }
 }

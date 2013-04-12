@@ -107,4 +107,20 @@ interface ConstraintVisitorInterface
      * @return mixed
      */
     public function visitDependencyConstraint(ObjectValue\DependencyConstraint $constraint);
+
+    // array constraints =======================================================
+
+    /**
+     * @param ArrayValue\ItemsConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitItemsConstraint(ArrayValue\ItemsConstraint $constraint);
+
+    /**
+     * @param ArrayValue\AdditionalItemConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitAdditionalItemConstraint(ArrayValue\AdditionalItemConstraint $constraint);
 }
