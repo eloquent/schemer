@@ -21,6 +21,7 @@ use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\DependencyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
@@ -371,6 +372,25 @@ class ConstraintValidator implements
     public function visitAdditionalPropertyConstraint(AdditionalPropertyConstraint $constraint)
     {
         return array($this->createIssue($constraint));
+    }
+
+    /**
+     * @param DependencyConstraint $constraint
+     *
+     * @return array<Result\ValidationIssue>
+     */
+    public function visitDependencyConstraint(DependencyConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (!$value instanceof ObjectValue) {
+            return array();
+        }
+
+        if (!$value->has($constraint->property())) {
+            return array();
+        }
+
+        return $constraint->schema()->accept($this);
     }
 
     // implementation details ==================================================

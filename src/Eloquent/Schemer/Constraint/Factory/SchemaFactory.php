@@ -18,6 +18,7 @@ use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\DependencyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
@@ -94,6 +95,8 @@ class SchemaFactory implements SchemaFactoryInterface
                 return array($this->createMinimumPropertiesConstraint($value));
             case 'required':
                 return $this->createRequiredConstraints($value);
+            case 'dependencies':
+                return $this->createDependencyConstraints($value);
         }
 
         return array();
@@ -368,5 +371,56 @@ class SchemaFactory implements SchemaFactoryInterface
             $patternSchemas,
             $additionalSchema
         );
+    }
+
+    /**
+     * @param ValueInterface $value
+     *
+     * @return array<DependencyConstraint>
+     */
+    protected function createDependencyConstraints(ValueInterface $value)
+    {
+        if (!$value instanceof ObjectValue) {
+            throw new UnexpectedValueException(
+                $value,
+                array(ValueType::OBJECT_TYPE())
+            );
+        }
+
+        $constraints = array();
+        foreach ($value as $property => $subValue) {
+            if ($subValue instanceof ObjectValue) {
+                $constraints[] = new DependencyConstraint(
+                    $property,
+                    $this->create($subValue)
+                );
+            } elseif ($subValue instanceof ArrayValue) {
+                $subConstraints = array();
+                foreach ($subValue as $subSubValue) {
+                    if (!$subSubValue instanceof StringValue) {
+                        throw new UnexpectedValueException(
+                            $subSubValue,
+                            array(ValueType::STRING_TYPE())
+                        );
+                    }
+
+                    $subConstraints[] = new RequiredConstraint(
+                        $subSubValue->value()
+                    );
+                }
+
+                $constraints[] = new DependencyConstraint(
+                    $property,
+                    new Schema($subConstraints)
+                );
+            } else {
+                throw new UnexpectedValueException(
+                    $subValue,
+                    array(ValueType::OBJECT_TYPE(), ValueType::ARRAY_TYPE())
+                );
+            }
+        }
+
+        return $constraints;
     }
 }

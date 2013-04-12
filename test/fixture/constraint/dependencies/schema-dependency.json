@@ -1,0 +1,32 @@
+{
+    "schema": {
+        "dependencies": {
+            "foo": {
+                "properties": {
+                    "bar": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+
+    "tests": {
+        "valid - dependant": {
+            "value": {"foo": "baz", "bar": "qux"},
+            "expected": []
+        },
+
+        "valid - not dependant": {
+            "value": {"bar": 111},
+            "expected": []
+        },
+
+        "invalid": {
+            "value": {"foo": "baz", "bar": 111},
+            "expected": [
+                "Validation failed for value at \"/bar\": The value must be of type \"string\"."
+            ]
+        }
+    }
+}

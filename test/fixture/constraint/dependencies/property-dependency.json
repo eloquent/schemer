@@ -1,0 +1,26 @@
+{
+    "schema": {
+        "dependencies": {
+            "foo": ["bar", "baz"]
+        }
+    },
+
+    "tests": {
+        "valid - dependant": {
+            "value": {"foo": "baz", "bar": null, "baz": null},
+            "expected": []
+        },
+
+        "valid - not dependant": {
+            "value": {"qux": 111},
+            "expected": []
+        },
+
+        "invalid": {
+            "value": {"foo": "baz", "bar": null},
+            "expected": [
+                "Validation failed for value at document root: The property \"baz\" is required."
+            ]
+        }
+    }
+}

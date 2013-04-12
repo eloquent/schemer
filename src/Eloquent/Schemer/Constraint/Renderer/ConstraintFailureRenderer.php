@@ -19,6 +19,7 @@ use Eloquent\Schemer\Constraint\Generic\NotConstraint;
 use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
 use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\DependencyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
@@ -191,5 +192,15 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitAdditionalPropertyConstraint(AdditionalPropertyConstraint $constraint)
     {
         return 'Unexpected property.';
+    }
+
+    /**
+     * @param DependencyConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitDependencyConstraint(DependencyConstraint $constraint)
+    {
+        return static::UNMATCHED_SCHEMA;
     }
 }

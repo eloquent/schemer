@@ -100,4 +100,11 @@ interface ConstraintVisitorInterface
      * @return mixed
      */
     public function visitAdditionalPropertyConstraint(ObjectValue\AdditionalPropertyConstraint $constraint);
+
+    /**
+     * @param ObjectValue\DependencyConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitDependencyConstraint(ObjectValue\DependencyConstraint $constraint);
 }
