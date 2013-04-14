@@ -38,6 +38,7 @@ use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
 use Eloquent\Schemer\Constraint\StringValue\DateTimeFormatConstraint;
+use Eloquent\Schemer\Constraint\StringValue\EmailFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
@@ -56,21 +57,30 @@ use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ValueInterface;
 use Eloquent\Schemer\Value\ValueType;
 use LogicException;
+use Zend\Validator\EmailAddress;
+use Zend\Validator\ValidatorInterface;
 
 class ConstraintValidator implements
     ConstraintValidatorInterface,
     ConstraintVisitorInterface
 {
     /**
-     * @param Comparator|null $comparator
+     * @param Comparator|null         $comparator
+     * @param ValidatorInterface|null $emailValidator
      */
-    public function __construct(Comparator $comparator = null)
-    {
+    public function __construct(
+        Comparator $comparator = null,
+        ValidatorInterface $emailValidator = null
+    ) {
         if (null === $comparator) {
             $comparator = new Comparator;
         }
+        if (null === $emailValidator) {
+            $emailValidator = new EmailAddress;
+        }
 
         $this->comparator = $comparator;
+        $this->emailValidator = $emailValidator;
     }
 
     /**
@@ -79,6 +89,14 @@ class ConstraintValidator implements
     public function comparator()
     {
         return $this->comparator;
+    }
+
+    /**
+     * @return ValidatorInterface
+     */
+    public function emailValidator()
+    {
+        return $this->emailValidator;
     }
 
     /**
@@ -602,6 +620,24 @@ class ConstraintValidator implements
         return array($this->createIssue($constraint));
     }
 
+    /**
+     * @param EmailFormatConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitEmailFormatConstraint(EmailFormatConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (
+            !$value instanceof StringValue ||
+            $this->emailValidator()->isValid($value->value())
+        ) {
+            return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
     // number constraints ======================================================
 
     /**
@@ -848,5 +884,6 @@ class ConstraintValidator implements
     }
 
     private $comparator;
+    private $emailValidator;
     private $contextStack;
 }

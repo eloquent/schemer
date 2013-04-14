@@ -13,8 +13,4 @@ namespace Eloquent\Schemer\Constraint;
 
 interface FormatConstraintInterface extends ConstraintInterface
 {
-    /**
-     * @return string
-     */
-    public function key();
 }

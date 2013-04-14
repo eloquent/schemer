@@ -175,6 +175,13 @@ interface ConstraintVisitorInterface
      */
     public function visitDateTimeFormatConstraint(StringValue\DateTimeFormatConstraint $constraint);
 
+    /**
+     * @param StringValue\EmailFormatConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitEmailFormatConstraint(StringValue\EmailFormatConstraint $constraint);
+
     // number constraints ======================================================
 
     /**

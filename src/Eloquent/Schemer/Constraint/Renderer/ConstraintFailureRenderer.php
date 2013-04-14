@@ -35,6 +35,7 @@ use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
 use Eloquent\Schemer\Constraint\StringValue\DateTimeFormatConstraint;
+use Eloquent\Schemer\Constraint\StringValue\EmailFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
@@ -325,6 +326,16 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitDateTimeFormatConstraint(DateTimeFormatConstraint $constraint)
     {
         return 'The string must be a valid ISO 8601 date/time.';
+    }
+
+    /**
+     * @param EmailFormatConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitEmailFormatConstraint(EmailFormatConstraint $constraint)
+    {
+        return 'The string must be a valid email address.';
     }
 
     // number constraints ======================================================

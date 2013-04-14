@@ -14,7 +14,7 @@ namespace Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\FormatConstraintInterface;
 
-class DateTimeFormatConstraint implements FormatConstraintInterface
+class EmailFormatConstraint implements FormatConstraintInterface
 {
     /**
      * @param ConstraintVisitorInterface $visitor
@@ -23,6 +23,6 @@ class DateTimeFormatConstraint implements FormatConstraintInterface
      */
     public function accept(ConstraintVisitorInterface $visitor)
     {
-        return $visitor->visitDateTimeFormatConstraint($this);
+        return $visitor->visitEmailFormatConstraint($this);
     }
 }

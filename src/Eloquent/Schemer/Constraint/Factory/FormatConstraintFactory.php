@@ -45,6 +45,10 @@ class FormatConstraintFactory implements FormatConstraintFactoryInterface
                 '%s\StringValue\DateTimeFormatConstraint',
                 $constraintNamespace
             ),
+            'email' => sprintf(
+                '%s\StringValue\EmailFormatConstraint',
+                $constraintNamespace
+            ),
         );
     }
 

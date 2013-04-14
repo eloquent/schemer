@@ -1,0 +1,24 @@
+{
+    "schema": {
+        "format": "email"
+    },
+
+    "tests": {
+        "valid email": {
+            "value": "foo-bar+baz@example.org",
+            "expected": []
+        },
+
+        "valid non-email": {
+            "value": null,
+            "expected": []
+        },
+
+        "invalid": {
+            "value": "foo",
+            "expected": [
+                "Validation failed for value at document root: The string must be a valid email address."
+            ]
+        }
+    }
+}
