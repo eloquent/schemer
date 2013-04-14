@@ -124,10 +124,6 @@ class SchemaFactory implements SchemaFactoryInterface
                 return array($this->createOneOfConstraint($value));
             case 'not':
                 return array($this->createNotConstraint($value));
-            case 'format':
-                return array(
-                    $this->formatConstraintFactory()->create($value->value())
-                );
 
             // object constraints
             case 'maxProperties':
@@ -164,6 +160,15 @@ class SchemaFactory implements SchemaFactoryInterface
                 return array($this->createMaximumDateTimeConstraint($value));
             case 'minDateTime':
                 return array($this->createMinimumDateTimeConstraint($value));
+
+            // format constraints
+            case 'format':
+                $constraint = $this->formatConstraintFactory()->create($value->value());
+                if (null === $constraint) {
+                    return array();
+                }
+
+                return array($constraint);
         }
 
         return array();

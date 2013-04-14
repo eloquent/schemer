@@ -182,6 +182,13 @@ interface ConstraintVisitorInterface
      */
     public function visitEmailFormatConstraint(StringValue\EmailFormatConstraint $constraint);
 
+    /**
+     * @param StringValue\HostnameFormatConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitHostnameFormatConstraint(StringValue\HostnameFormatConstraint $constraint);
+
     // number constraints ======================================================
 
     /**

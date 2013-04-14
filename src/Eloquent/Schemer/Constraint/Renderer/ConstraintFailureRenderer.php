@@ -36,6 +36,7 @@ use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
 use Eloquent\Schemer\Constraint\StringValue\DateTimeFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\EmailFormatConstraint;
+use Eloquent\Schemer\Constraint\StringValue\HostnameFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
@@ -336,6 +337,16 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitEmailFormatConstraint(EmailFormatConstraint $constraint)
     {
         return 'The string must be a valid email address.';
+    }
+
+    /**
+     * @param HostnameFormatConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitHostnameFormatConstraint(HostnameFormatConstraint $constraint)
+    {
+        return 'The string must be a valid hostname.';
     }
 
     // number constraints ======================================================

@@ -39,6 +39,7 @@ use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
 use Eloquent\Schemer\Constraint\StringValue\DateTimeFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\EmailFormatConstraint;
+use Eloquent\Schemer\Constraint\StringValue\HostnameFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
@@ -58,6 +59,7 @@ use Eloquent\Schemer\Value\ValueInterface;
 use Eloquent\Schemer\Value\ValueType;
 use LogicException;
 use Zend\Validator\EmailAddress;
+use Zend\Validator\Hostname;
 use Zend\Validator\ValidatorInterface;
 
 class ConstraintValidator implements
@@ -68,11 +70,13 @@ class ConstraintValidator implements
      * @param boolean|null            $formatValidationEnabled
      * @param Comparator|null         $comparator
      * @param ValidatorInterface|null $emailValidator
+     * @param ValidatorInterface|null $hostnameValidator
      */
     public function __construct(
         $formatValidationEnabled = null,
         Comparator $comparator = null,
-        ValidatorInterface $emailValidator = null
+        ValidatorInterface $emailValidator = null,
+        ValidatorInterface $hostnameValidator = null
     ) {
         if (null === $formatValidationEnabled) {
             $formatValidationEnabled = true;
@@ -83,10 +87,14 @@ class ConstraintValidator implements
         if (null === $emailValidator) {
             $emailValidator = new EmailAddress;
         }
+        if (null === $hostnameValidator) {
+            $hostnameValidator = new Hostname;
+        }
 
         $this->formatValidationEnabled = $formatValidationEnabled;
         $this->comparator = $comparator;
         $this->emailValidator = $emailValidator;
+        $this->hostnameValidator = $hostnameValidator;
     }
 
     /**
@@ -119,6 +127,14 @@ class ConstraintValidator implements
     public function emailValidator()
     {
         return $this->emailValidator;
+    }
+
+    /**
+     * @return ValidatorInterface
+     */
+    public function hostnameValidator()
+    {
+        return $this->hostnameValidator;
     }
 
     /**
@@ -668,6 +684,28 @@ class ConstraintValidator implements
         return array($this->createIssue($constraint));
     }
 
+    /**
+     * @param HostnameFormatConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitHostnameFormatConstraint(HostnameFormatConstraint $constraint)
+    {
+        if (!$this->formatValidationEnabled()) {
+            return array();
+        }
+
+        $value = $this->currentValue();
+        if (
+            !$value instanceof StringValue ||
+            $this->hostnameValidator()->isValid($value->value())
+        ) {
+            return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
     // number constraints ======================================================
 
     /**
@@ -916,5 +954,6 @@ class ConstraintValidator implements
     private $formatValidationEnabled;
     private $comparator;
     private $emailValidator;
+    private $hostnameValidator;
     private $contextStack;
 }

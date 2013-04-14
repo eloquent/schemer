@@ -9,7 +9,7 @@
             "expected": []
         },
 
-        "valid non-email": {
+        "valid non-string": {
             "value": null,
             "expected": []
         },

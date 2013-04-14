@@ -1,0 +1,31 @@
+{
+    "schema": {
+        "format": "hostname"
+    },
+
+    "tests": {
+        "valid hostname": {
+            "value": "foo-bar.example.org",
+            "expected": []
+        },
+
+        "valid non-string": {
+            "value": null,
+            "expected": []
+        },
+
+        "invalid string": {
+            "value": "foo",
+            "expected": [
+                "Validation failed for value at document root: The string must be a valid hostname."
+            ]
+        },
+
+        "invalid IP address": {
+            "value": "127.0.0.1",
+            "expected": [
+                "Validation failed for value at document root: The string must be a valid hostname."
+            ]
+        }
+    }
+}
