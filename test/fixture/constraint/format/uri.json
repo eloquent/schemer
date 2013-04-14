@@ -1,0 +1,24 @@
+{
+    "schema": {
+        "format": "uri"
+    },
+
+    "tests": {
+        "valid URI": {
+            "value": "some-scheme://foo:bar@baz-qux.example.org/path/to/doom?splat=ping&pong#pang",
+            "expected": []
+        },
+
+        "valid non-string": {
+            "value": null,
+            "expected": []
+        },
+
+        "invalid": {
+            "value": "foo://",
+            "expected": [
+                "Validation failed for value at document root: The string must be a valid URI."
+            ]
+        }
+    }
+}

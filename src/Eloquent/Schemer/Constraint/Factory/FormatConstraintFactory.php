@@ -38,29 +38,13 @@ class FormatConstraintFactory implements FormatConstraintFactoryInterface
      */
     public function defaultClassMap()
     {
-        $constraintNamespace = 'Eloquent\Schemer\Constraint';
-
         return array(
-            'date-time' => sprintf(
-                '%s\StringValue\DateTimeFormatConstraint',
-                $constraintNamespace
-            ),
-            'email' => sprintf(
-                '%s\StringValue\EmailFormatConstraint',
-                $constraintNamespace
-            ),
-            'hostname' => sprintf(
-                '%s\StringValue\HostnameFormatConstraint',
-                $constraintNamespace
-            ),
-            'ipv4' => sprintf(
-                '%s\StringValue\Ipv4AddressFormatConstraint',
-                $constraintNamespace
-            ),
-            'ipv6' => sprintf(
-                '%s\StringValue\Ipv6AddressFormatConstraint',
-                $constraintNamespace
-            ),
+            'date-time' => 'Eloquent\Schemer\Constraint\StringValue\DateTimeFormatConstraint',
+            'email'     => 'Eloquent\Schemer\Constraint\StringValue\EmailFormatConstraint',
+            'hostname'  => 'Eloquent\Schemer\Constraint\StringValue\HostnameFormatConstraint',
+            'ipv4'      => 'Eloquent\Schemer\Constraint\StringValue\Ipv4AddressFormatConstraint',
+            'ipv6'      => 'Eloquent\Schemer\Constraint\StringValue\Ipv6AddressFormatConstraint',
+            'uri'       => 'Eloquent\Schemer\Constraint\StringValue\UriFormatConstraint',
         );
     }
 

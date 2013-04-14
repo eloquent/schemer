@@ -42,6 +42,7 @@ use Eloquent\Schemer\Constraint\StringValue\Ipv6AddressFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
+use Eloquent\Schemer\Constraint\StringValue\UriFormatConstraint;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ValueType;
 use Icecave\Repr\Repr;
@@ -369,6 +370,16 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitIpv6AddressFormatConstraint(Ipv6AddressFormatConstraint $constraint)
     {
         return 'The string must be a valid IPv6 address.';
+    }
+
+    /**
+     * @param UriFormatConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitUriFormatConstraint(UriFormatConstraint $constraint)
+    {
+        return 'The string must be a valid URI.';
     }
 
     // number constraints ======================================================
