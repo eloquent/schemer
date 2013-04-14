@@ -1,0 +1,31 @@
+{
+    "schema": {
+        "format": "ipv4"
+    },
+
+    "tests": {
+        "valid IP address": {
+            "value": "192.168.1.100",
+            "expected": []
+        },
+
+        "valid non-string": {
+            "value": null,
+            "expected": []
+        },
+
+        "invalid string": {
+            "value": "foo",
+            "expected": [
+                "Validation failed for value at document root: The string must be a valid IPv4 address."
+            ]
+        },
+
+        "invalid IPv6 address": {
+            "value": "2001:0db8:85a3:0042:1000:8a2e:0370:7334",
+            "expected": [
+                "Validation failed for value at document root: The string must be a valid IPv4 address."
+            ]
+        }
+    }
+}

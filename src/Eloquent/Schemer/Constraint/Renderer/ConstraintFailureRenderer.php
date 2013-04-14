@@ -37,6 +37,8 @@ use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
 use Eloquent\Schemer\Constraint\StringValue\DateTimeFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\EmailFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\HostnameFormatConstraint;
+use Eloquent\Schemer\Constraint\StringValue\Ipv4AddressFormatConstraint;
+use Eloquent\Schemer\Constraint\StringValue\Ipv6AddressFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
@@ -347,6 +349,26 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitHostnameFormatConstraint(HostnameFormatConstraint $constraint)
     {
         return 'The string must be a valid hostname.';
+    }
+
+    /**
+     * @param Ipv4AddressFormatConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitIpv4AddressFormatConstraint(Ipv4AddressFormatConstraint $constraint)
+    {
+        return 'The string must be a valid IPv4 address.';
+    }
+
+    /**
+     * @param Ipv6AddressFormatConstraint $constraint
+     *
+     * @return string
+     */
+    public function visitIpv6AddressFormatConstraint(Ipv6AddressFormatConstraint $constraint)
+    {
+        return 'The string must be a valid IPv6 address.';
     }
 
     // number constraints ======================================================

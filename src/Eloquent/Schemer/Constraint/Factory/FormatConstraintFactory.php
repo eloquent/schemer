@@ -53,6 +53,14 @@ class FormatConstraintFactory implements FormatConstraintFactoryInterface
                 '%s\StringValue\HostnameFormatConstraint',
                 $constraintNamespace
             ),
+            'ipv4' => sprintf(
+                '%s\StringValue\Ipv4AddressFormatConstraint',
+                $constraintNamespace
+            ),
+            'ipv6' => sprintf(
+                '%s\StringValue\Ipv6AddressFormatConstraint',
+                $constraintNamespace
+            ),
         );
     }
 

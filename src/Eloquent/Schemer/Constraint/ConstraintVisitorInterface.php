@@ -189,6 +189,20 @@ interface ConstraintVisitorInterface
      */
     public function visitHostnameFormatConstraint(StringValue\HostnameFormatConstraint $constraint);
 
+    /**
+     * @param StringValue\Ipv4AddressFormatConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitIpv4AddressFormatConstraint(StringValue\Ipv4AddressFormatConstraint $constraint);
+
+    /**
+     * @param StringValue\Ipv6AddressFormatConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitIpv6AddressFormatConstraint(StringValue\Ipv6AddressFormatConstraint $constraint);
+
     // number constraints ======================================================
 
     /**

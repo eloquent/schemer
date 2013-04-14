@@ -40,6 +40,8 @@ use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
 use Eloquent\Schemer\Constraint\StringValue\DateTimeFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\EmailFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\HostnameFormatConstraint;
+use Eloquent\Schemer\Constraint\StringValue\Ipv4AddressFormatConstraint;
+use Eloquent\Schemer\Constraint\StringValue\Ipv6AddressFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
@@ -60,6 +62,7 @@ use Eloquent\Schemer\Value\ValueType;
 use LogicException;
 use Zend\Validator\EmailAddress;
 use Zend\Validator\Hostname;
+use Zend\Validator\Ip;
 use Zend\Validator\ValidatorInterface;
 
 class ConstraintValidator implements
@@ -71,12 +74,16 @@ class ConstraintValidator implements
      * @param Comparator|null         $comparator
      * @param ValidatorInterface|null $emailValidator
      * @param ValidatorInterface|null $hostnameValidator
+     * @param ValidatorInterface|null $ipv4AddressValidator
+     * @param ValidatorInterface|null $ipv6AddressValidator
      */
     public function __construct(
         $formatValidationEnabled = null,
         Comparator $comparator = null,
         ValidatorInterface $emailValidator = null,
-        ValidatorInterface $hostnameValidator = null
+        ValidatorInterface $hostnameValidator = null,
+        ValidatorInterface $ipv4AddressValidator = null,
+        ValidatorInterface $ipv6AddressValidator = null
     ) {
         if (null === $formatValidationEnabled) {
             $formatValidationEnabled = true;
@@ -90,11 +97,29 @@ class ConstraintValidator implements
         if (null === $hostnameValidator) {
             $hostnameValidator = new Hostname;
         }
+        if (null === $ipv4AddressValidator) {
+            $ipv4AddressValidator = new Ip(array(
+                'allowipv4' => true,
+                'allowipv6' => false,
+                'allowipvfuture' => false,
+                'allowliteral' => false,
+            ));
+        }
+        if (null === $ipv6AddressValidator) {
+            $ipv6AddressValidator = new Ip(array(
+                'allowipv4' => false,
+                'allowipv6' => true,
+                'allowipvfuture' => false,
+                'allowliteral' => false,
+            ));
+        }
 
         $this->formatValidationEnabled = $formatValidationEnabled;
         $this->comparator = $comparator;
         $this->emailValidator = $emailValidator;
         $this->hostnameValidator = $hostnameValidator;
+        $this->ipv4AddressValidator = $ipv4AddressValidator;
+        $this->ipv6AddressValidator = $ipv6AddressValidator;
     }
 
     /**
@@ -135,6 +160,22 @@ class ConstraintValidator implements
     public function hostnameValidator()
     {
         return $this->hostnameValidator;
+    }
+
+    /**
+     * @return ValidatorInterface
+     */
+    public function ipv4AddressValidator()
+    {
+        return $this->ipv4AddressValidator;
+    }
+
+    /**
+     * @return ValidatorInterface
+     */
+    public function ipv6AddressValidator()
+    {
+        return $this->ipv6AddressValidator;
     }
 
     /**
@@ -706,6 +747,50 @@ class ConstraintValidator implements
         return array($this->createIssue($constraint));
     }
 
+    /**
+     * @param Ipv4AddressFormatConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitIpv4AddressFormatConstraint(Ipv4AddressFormatConstraint $constraint)
+    {
+        if (!$this->formatValidationEnabled()) {
+            return array();
+        }
+
+        $value = $this->currentValue();
+        if (
+            !$value instanceof StringValue ||
+            $this->ipv4AddressValidator()->isValid($value->value())
+        ) {
+            return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
+    /**
+     * @param Ipv6AddressFormatConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitIpv6AddressFormatConstraint(Ipv6AddressFormatConstraint $constraint)
+    {
+        if (!$this->formatValidationEnabled()) {
+            return array();
+        }
+
+        $value = $this->currentValue();
+        if (
+            !$value instanceof StringValue ||
+            $this->ipv6AddressValidator()->isValid($value->value())
+        ) {
+            return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
     // number constraints ======================================================
 
     /**
@@ -955,5 +1040,7 @@ class ConstraintValidator implements
     private $comparator;
     private $emailValidator;
     private $hostnameValidator;
+    private $ipv4AddressValidator;
+    private $ipv6AddressValidator;
     private $contextStack;
 }
