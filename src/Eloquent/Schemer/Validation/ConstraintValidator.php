@@ -65,13 +65,18 @@ class ConstraintValidator implements
     ConstraintVisitorInterface
 {
     /**
+     * @param boolean|null            $formatValidationEnabled
      * @param Comparator|null         $comparator
      * @param ValidatorInterface|null $emailValidator
      */
     public function __construct(
+        $formatValidationEnabled = null,
         Comparator $comparator = null,
         ValidatorInterface $emailValidator = null
     ) {
+        if (null === $formatValidationEnabled) {
+            $formatValidationEnabled = true;
+        }
         if (null === $comparator) {
             $comparator = new Comparator;
         }
@@ -79,8 +84,25 @@ class ConstraintValidator implements
             $emailValidator = new EmailAddress;
         }
 
+        $this->formatValidationEnabled = $formatValidationEnabled;
         $this->comparator = $comparator;
         $this->emailValidator = $emailValidator;
+    }
+
+    /**
+     * @param boolean $formatValidationEnabled
+     */
+    public function setFormatValidationEnabled($formatValidationEnabled)
+    {
+        $this->formatValidationEnabled = $formatValidationEnabled;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function formatValidationEnabled()
+    {
+        return $this->formatValidationEnabled;
     }
 
     /**
@@ -601,6 +623,10 @@ class ConstraintValidator implements
      */
     public function visitDateTimeFormatConstraint(DateTimeFormatConstraint $constraint)
     {
+        if (!$this->formatValidationEnabled()) {
+            return array();
+        }
+
         $value = $this->currentValue();
         if (!$value instanceof StringValue) {
             return array();
@@ -627,6 +653,10 @@ class ConstraintValidator implements
      */
     public function visitEmailFormatConstraint(EmailFormatConstraint $constraint)
     {
+        if (!$this->formatValidationEnabled()) {
+            return array();
+        }
+
         $value = $this->currentValue();
         if (
             !$value instanceof StringValue ||
@@ -883,6 +913,7 @@ class ConstraintValidator implements
         return sprintf('/%s/', str_replace('/', '\\/', $pattern));
     }
 
+    private $formatValidationEnabled;
     private $comparator;
     private $emailValidator;
     private $contextStack;
