@@ -92,25 +92,15 @@ class SchemaFactory implements SchemaFactoryInterface
             );
         }
 
-        if ($value->has('title')) {
-            $title = $value->get('title')->value();
-        } else {
-            $title = null;
-        }
-
-        if ($value->has('description')) {
-            $description = $value->get('description')->value();
-        } else {
-            $description = null;
-        }
-
         return new Schema(
             array_merge(
                 $constraints,
                 $this->createCompositeConstraints($value)
             ),
-            $title,
-            $description
+            $value->has('default'),
+            $value->getRawDefault('default'),
+            $value->getRawDefault('title'),
+            $value->getRawDefault('description')
         );
     }
 
@@ -460,7 +450,7 @@ class SchemaFactory implements SchemaFactoryInterface
             if ($value->get('additionalProperties') instanceof ObjectValue) {
                 $additionalSchema = $this->create($value->get('additionalProperties'));
             } elseif ($value->get('additionalProperties') instanceof BooleanValue) {
-                if ($value->get('additionalProperties')->value()) {
+                if ($value->getRaw('additionalProperties')) {
                     $additionalSchema = new Schema;
                 } else {
                     $additionalSchema = new Schema(
@@ -579,7 +569,7 @@ class SchemaFactory implements SchemaFactoryInterface
             if ($value->get('additionalItems') instanceof ObjectValue) {
                 $additionalSchema = $this->create($value->get('additionalItems'));
             } elseif ($value->get('additionalItems') instanceof BooleanValue) {
-                if (!$value->get('additionalItems')->value()) {
+                if (!$value->getRaw('additionalItems')) {
                     $additionalSchema = new Schema(
                         array(new AdditionalItemConstraint)
                     );
@@ -740,15 +730,9 @@ class SchemaFactory implements SchemaFactoryInterface
             return null;
         }
 
-        if ($value->has('exclusiveMaximum')) {
-            $exclusive = $value->get('exclusiveMaximum')->value();
-        } else {
-            $exclusive = null;
-        }
-
         return new MaximumConstraint(
-            $value->get('maximum')->value(),
-            $exclusive
+            $value->getRaw('maximum'),
+            $value->getRawDefault('exclusiveMaximum')
         );
     }
 
@@ -770,15 +754,9 @@ class SchemaFactory implements SchemaFactoryInterface
             return null;
         }
 
-        if ($value->has('exclusiveMinimum')) {
-            $exclusive = $value->get('exclusiveMinimum')->value();
-        } else {
-            $exclusive = null;
-        }
-
         return new MinimumConstraint(
-            $value->get('minimum')->value(),
-            $exclusive
+            $value->getRaw('minimum'),
+            $value->getRawDefault('exclusiveMinimum')
         );
     }
 

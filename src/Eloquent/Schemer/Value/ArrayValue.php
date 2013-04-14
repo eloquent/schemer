@@ -109,6 +109,16 @@ class ArrayValue extends AbstractValue implements
     }
 
     /**
+     * @param integer $index
+     *
+     * @return mixed
+     */
+    public function getRaw($index)
+    {
+        return $this->get($index)->value();
+    }
+
+    /**
      * @param integer             $index
      * @param ValueInterface|null $default
      *
@@ -122,6 +132,21 @@ class ArrayValue extends AbstractValue implements
         $value = $this->wrappedValue();
 
         return $value[$index];
+    }
+
+    /**
+     * @param integer $index
+     * @param mixed   $default
+     *
+     * @return mixed
+     */
+    public function getRawDefault($index, $default = null)
+    {
+        if (!$this->has($index)) {
+            return $default;
+        }
+
+        return $this->getRaw($index);
     }
 
     /**
