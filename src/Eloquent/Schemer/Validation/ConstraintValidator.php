@@ -199,7 +199,7 @@ class ConstraintValidator implements
      * @param ValueInterface        $value
      * @param PointerInterface|null $entryPoint
      *
-     * @return ValidationResult
+     * @return Result\ValidationResult
      */
     public function validate(
         ConstraintInterface $constraint,
@@ -213,7 +213,7 @@ class ConstraintValidator implements
         $this->clear();
 
         $this->pushContext(array($value, $entryPoint));
-        $result = new Result\ValidationResult($constraint->accept($this));
+        $result = $constraint->accept($this);
 
         $this->clear();
 
@@ -223,19 +223,16 @@ class ConstraintValidator implements
     /**
      * @param Schema $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitSchema(Schema $constraint)
     {
-        $issues = array();
+        $result = new Result\ValidationResult;
         foreach ($constraint->constraints() as $subConstraint) {
-            $issues = array_merge(
-                $issues,
-                $subConstraint->accept($this)
-            );
+            $result = $result->merge($subConstraint->accept($this));
         }
 
-        return $issues;
+        return $result;
     }
 
     // generic constraints =====================================================
@@ -243,24 +240,26 @@ class ConstraintValidator implements
     /**
      * @param EnumConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitEnumConstraint(EnumConstraint $constraint)
     {
         $value = $this->currentValue();
         foreach ($constraint->values() as $enumValue) {
             if ($this->comparator()->equals($value, $enumValue)) {
-                return array();
+                return new Result\ValidationResult;
             }
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param TypeConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitTypeConstraint(TypeConstraint $constraint)
     {
@@ -286,17 +285,19 @@ class ConstraintValidator implements
             }
 
             if ($isValid) {
-                return array();
+                return new Result\ValidationResult;
             }
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param AllOfConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitAllOfConstraint(AllOfConstraint $constraint)
     {
@@ -306,18 +307,18 @@ class ConstraintValidator implements
             return $schemas[0]->accept($this);
         }
 
-        $issues = array();
+        $result = new Result\ValidationResult;
         foreach ($constraint->schemas() as $schema) {
-            $issues = array_merge($issues, $schema->accept($this));
+            $result = $result->merge($schema->accept($this));
         }
 
-        return $issues;
+        return $result;
     }
 
     /**
      * @param AnyOfConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitAnyOfConstraint(AnyOfConstraint $constraint)
     {
@@ -328,18 +329,20 @@ class ConstraintValidator implements
         }
 
         foreach ($constraint->schemas() as $schema) {
-            if (count($schema->accept($this)) < 1) {
-                return array();
+            if ($schema->accept($this)->isValid()) {
+                return new Result\ValidationResult;
             }
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param OneOfConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitOneOfConstraint(OneOfConstraint $constraint)
     {
@@ -351,30 +354,34 @@ class ConstraintValidator implements
 
         $matchingSchemas = 0;
         foreach ($constraint->schemas() as $schema) {
-            if (count($schema->accept($this)) < 1) {
+            if ($schema->accept($this)->isValid()) {
                 $matchingSchemas += 1;
             }
         }
 
         if (1 === $matchingSchemas) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param NotConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitNotConstraint(NotConstraint $constraint)
     {
-        if (count($constraint->schema()->accept($this)) > 0) {
-            return array();
+        if (!$constraint->schema()->accept($this)->isValid()) {
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     // object constraints ======================================================
@@ -382,7 +389,7 @@ class ConstraintValidator implements
     /**
      * @param MaximumPropertiesConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitMaximumPropertiesConstraint(MaximumPropertiesConstraint $constraint)
     {
@@ -391,16 +398,18 @@ class ConstraintValidator implements
             !$value instanceof ObjectValue ||
             $value->count() <= $constraint->maximum()
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param MinimumPropertiesConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitMinimumPropertiesConstraint(MinimumPropertiesConstraint $constraint)
     {
@@ -409,16 +418,18 @@ class ConstraintValidator implements
             !$value instanceof ObjectValue ||
             $value->count() >= $constraint->minimum()
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param RequiredConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitRequiredConstraint(RequiredConstraint $constraint)
     {
@@ -427,33 +438,34 @@ class ConstraintValidator implements
             !$value instanceof ObjectValue ||
             $value->has($constraint->property())
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param PropertiesConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitPropertiesConstraint(PropertiesConstraint $constraint)
     {
         $value = $this->currentValue();
         if (!$value instanceof ObjectValue) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        $issues = array();
+        $result = new Result\ValidationResult;
         $matchedProperties = array();
 
         // properties
         foreach ($constraint->schemas() as $property => $schema) {
             if ($value->has($property)) {
                 $matchedProperties[$property] = true;
-                $issues = array_merge(
-                    $issues,
+                $result = $result->merge(
                     $this->validateObjectProperty($property, $schema)
                 );
             }
@@ -466,8 +478,7 @@ class ConstraintValidator implements
             foreach ($value->properties() as $property) {
                 if (preg_match($pattern, $property)) {
                     $matchedProperties[$property] = true;
-                    $issues = array_merge(
-                        $issues,
+                    $result = $result->merge(
                         $this->validateObjectProperty($property, $schema)
                     );
                 }
@@ -477,8 +488,7 @@ class ConstraintValidator implements
         // additional properties
         foreach ($value->properties() as $property) {
             if (!array_key_exists($property, $matchedProperties)) {
-                $issues = array_merge(
-                    $issues,
+                $result = $result->merge(
                     $this->validateObjectProperty(
                         $property,
                         $constraint->additionalSchema()
@@ -487,23 +497,25 @@ class ConstraintValidator implements
             }
         }
 
-        return $issues;
+        return $result;
     }
 
     /**
      * @param AdditionalPropertyConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitAdditionalPropertyConstraint(AdditionalPropertyConstraint $constraint)
     {
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param DependencyConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitDependencyConstraint(DependencyConstraint $constraint)
     {
@@ -512,7 +524,7 @@ class ConstraintValidator implements
             !$value instanceof ObjectValue ||
             !$value->has($constraint->property())
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
         return $constraint->schema()->accept($this);
@@ -523,24 +535,23 @@ class ConstraintValidator implements
     /**
      * @param ItemsConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitItemsConstraint(ItemsConstraint $constraint)
     {
         $value = $this->currentValue();
         if (!$value instanceof ArrayValue) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        $issues = array();
+        $result = new Result\ValidationResult;
         $matchedIndices = array();
 
         // items
         foreach ($constraint->schemas() as $index => $schema) {
             if ($value->has($index)) {
                 $matchedIndices[$index] = true;
-                $issues = array_merge(
-                    $issues,
+                $result = $result->merge(
                     $this->validateArrayIndex($index, $schema)
                 );
             }
@@ -549,8 +560,7 @@ class ConstraintValidator implements
         // additional items
         foreach ($value->indices() as $index) {
             if (!array_key_exists($index, $matchedIndices)) {
-                $issues = array_merge(
-                    $issues,
+                $result = $result->merge(
                     $this->validateArrayIndex(
                         $index,
                         $constraint->additionalSchema()
@@ -559,23 +569,25 @@ class ConstraintValidator implements
             }
         }
 
-        return $issues;
+        return $result;
     }
 
     /**
      * @param AdditionalItemConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitAdditionalItemConstraint(AdditionalItemConstraint $constraint)
     {
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param MaximumItemsConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitMaximumItemsConstraint(MaximumItemsConstraint $constraint)
     {
@@ -584,16 +596,18 @@ class ConstraintValidator implements
             !$value instanceof ArrayValue ||
             $value->count() <= $constraint->maximum()
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param MinimumItemsConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitMinimumItemsConstraint(MinimumItemsConstraint $constraint)
     {
@@ -602,16 +616,18 @@ class ConstraintValidator implements
             !$value instanceof ArrayValue ||
             $value->count() >= $constraint->minimum()
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param UniqueItemsConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitUniqueItemsConstraint(UniqueItemsConstraint $constraint)
     {
@@ -624,10 +640,12 @@ class ConstraintValidator implements
                 $this->unique($value->value())
             )
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     // string constraints ======================================================
@@ -635,7 +653,7 @@ class ConstraintValidator implements
     /**
      * @param MaximumLengthConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitMaximumLengthConstraint(MaximumLengthConstraint $constraint)
     {
@@ -644,16 +662,18 @@ class ConstraintValidator implements
             !$value instanceof StringValue ||
             mb_strlen($value->value(), 'UTF-8') <= $constraint->maximum()
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param MinimumLengthConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitMinimumLengthConstraint(MinimumLengthConstraint $constraint)
     {
@@ -662,16 +682,18 @@ class ConstraintValidator implements
             !$value instanceof StringValue ||
             mb_strlen($value->value(), 'UTF-8') >= $constraint->minimum()
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param PatternConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitPatternConstraint(PatternConstraint $constraint)
     {
@@ -683,10 +705,12 @@ class ConstraintValidator implements
                 $value->value()
             )
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
@@ -697,12 +721,12 @@ class ConstraintValidator implements
     public function visitDateTimeFormatConstraint(DateTimeFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
-            return array();
+            return new Result\ValidationResult;
         }
 
         $value = $this->currentValue();
         if (!$value instanceof StringValue) {
-            return array();
+            return new Result\ValidationResult;
         }
 
         $formats = array(
@@ -712,11 +736,13 @@ class ConstraintValidator implements
         );
         foreach ($formats as $format) {
             if (false !== DateTime::createFromFormat($format, $value->value())) {
-                return array();
+                return new Result\ValidationResult;
             }
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
@@ -727,7 +753,7 @@ class ConstraintValidator implements
     public function visitEmailFormatConstraint(EmailFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
-            return array();
+            return new Result\ValidationResult;
         }
 
         $value = $this->currentValue();
@@ -735,10 +761,12 @@ class ConstraintValidator implements
             !$value instanceof StringValue ||
             $this->emailValidator()->isValid($value->value())
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
@@ -749,7 +777,7 @@ class ConstraintValidator implements
     public function visitHostnameFormatConstraint(HostnameFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
-            return array();
+            return new Result\ValidationResult;
         }
 
         $value = $this->currentValue();
@@ -757,10 +785,12 @@ class ConstraintValidator implements
             !$value instanceof StringValue ||
             $this->hostnameValidator()->isValid($value->value())
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
@@ -771,7 +801,7 @@ class ConstraintValidator implements
     public function visitIpv4AddressFormatConstraint(Ipv4AddressFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
-            return array();
+            return new Result\ValidationResult;
         }
 
         $value = $this->currentValue();
@@ -779,10 +809,12 @@ class ConstraintValidator implements
             !$value instanceof StringValue ||
             $this->ipv4AddressValidator()->isValid($value->value())
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
@@ -793,7 +825,7 @@ class ConstraintValidator implements
     public function visitIpv6AddressFormatConstraint(Ipv6AddressFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
-            return array();
+            return new Result\ValidationResult;
         }
 
         $value = $this->currentValue();
@@ -801,10 +833,12 @@ class ConstraintValidator implements
             !$value instanceof StringValue ||
             $this->ipv6AddressValidator()->isValid($value->value())
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
@@ -815,7 +849,7 @@ class ConstraintValidator implements
     public function visitUriFormatConstraint(UriFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
-            return array();
+            return new Result\ValidationResult;
         }
 
         $value = $this->currentValue();
@@ -823,10 +857,12 @@ class ConstraintValidator implements
             !$value instanceof StringValue ||
             $this->uriValidator()->isValid($value->value())
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     // number constraints ======================================================
@@ -834,13 +870,13 @@ class ConstraintValidator implements
     /**
      * @param MultipleOfConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitMultipleOfConstraint(MultipleOfConstraint $constraint)
     {
         $value = $this->currentValue();
         if (!$value instanceof NumberValueInterface) {
-            return array();
+            return new Result\ValidationResult;
         }
 
         if (
@@ -848,21 +884,23 @@ class ConstraintValidator implements
             is_float($constraint->quantity())
         ) {
             if (0 == fmod($value->value(), $constraint->quantity())) {
-                return array();
+                return new Result\ValidationResult;
             }
         } else {
             if (0 === $value->value() % $constraint->quantity()) {
-                return array();
+                return new Result\ValidationResult;
             }
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param MaximumConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitMaximumConstraint(MaximumConstraint $constraint)
     {
@@ -871,16 +909,18 @@ class ConstraintValidator implements
             !$value instanceof NumberValueInterface ||
             $value->value() <= $constraint->maximum()
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param MinimumConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitMinimumConstraint(MinimumConstraint $constraint)
     {
@@ -889,10 +929,12 @@ class ConstraintValidator implements
             !$value instanceof NumberValueInterface ||
             $value->value() >= $constraint->minimum()
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     // date-time constraints ===================================================
@@ -900,7 +942,7 @@ class ConstraintValidator implements
     /**
      * @param MaximumDateTimeConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitMaximumDateTimeConstraint(MaximumDateTimeConstraint $constraint)
     {
@@ -909,16 +951,18 @@ class ConstraintValidator implements
             !$value instanceof DateTimeValue ||
             $value->value() <= $constraint->maximum()
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     /**
      * @param MinimumDateTimeConstraint $constraint
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     public function visitMinimumDateTimeConstraint(MinimumDateTimeConstraint $constraint)
     {
@@ -927,10 +971,12 @@ class ConstraintValidator implements
             !$value instanceof DateTimeValue ||
             $value->value() >= $constraint->minimum()
         ) {
-            return array();
+            return new Result\ValidationResult;
         }
 
-        return array($this->createIssue($constraint));
+        return new Result\ValidationResult(
+            array($this->createIssue($constraint))
+        );
     }
 
     // implementation details ==================================================
@@ -939,7 +985,7 @@ class ConstraintValidator implements
      * @param string $property
      * @param Schema $schema
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     protected function validateObjectProperty($property, Schema $schema)
     {
@@ -948,17 +994,17 @@ class ConstraintValidator implements
             $value->get($property),
             $pointer->joinAtom($property)
         ));
-        $issues = $schema->accept($this);
+        $result = $schema->accept($this);
         $this->popContext();
 
-        return $issues;
+        return $result;
     }
 
     /**
      * @param integer $index
      * @param Schema  $schema
      *
-     * @return array<Result\ValidationIssue>
+     * @return Result\ValidationResult
      */
     protected function validateArrayIndex($index, Schema $schema)
     {
@@ -967,10 +1013,10 @@ class ConstraintValidator implements
             $value->get($index),
             $pointer->joinAtom(strval($index))
         ));
-        $issues = $schema->accept($this);
+        $result = $schema->accept($this);
         $this->popContext();
 
-        return $issues;
+        return $result;
     }
 
     /**
@@ -994,7 +1040,6 @@ class ConstraintValidator implements
     protected function clear()
     {
         $this->contextStack = array();
-        $this->issues = array();
     }
 
     /**
