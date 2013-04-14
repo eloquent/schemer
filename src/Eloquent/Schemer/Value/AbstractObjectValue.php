@@ -99,6 +99,16 @@ abstract class AbstractObjectValue extends AbstractValue implements
     }
 
     /**
+     * @param string $property
+     *
+     * @return mixed
+     */
+    public function getRaw($property)
+    {
+        return $this->get($property)->value();
+    }
+
+    /**
      * @param string              $property
      * @param ValueInterface|null $default
      *
@@ -111,6 +121,21 @@ abstract class AbstractObjectValue extends AbstractValue implements
         }
 
         return $this->wrappedValue()->$property;
+    }
+
+    /**
+     * @param string $property
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    public function getRawDefault($property, $default = null)
+    {
+        if (!$this->has($property)) {
+            return $default;
+        }
+
+        return $this->getRaw($property);
     }
 
     /**

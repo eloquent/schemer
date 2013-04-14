@@ -92,11 +92,25 @@ class SchemaFactory implements SchemaFactoryInterface
             );
         }
 
+        if ($value->has('title')) {
+            $title = $value->get('title')->value();
+        } else {
+            $title = null;
+        }
+
+        if ($value->has('description')) {
+            $description = $value->get('description')->value();
+        } else {
+            $description = null;
+        }
+
         return new Schema(
             array_merge(
                 $constraints,
                 $this->createCompositeConstraints($value)
-            )
+            ),
+            $title,
+            $description
         );
     }
 

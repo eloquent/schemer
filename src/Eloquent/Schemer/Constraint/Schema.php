@@ -11,27 +11,25 @@
 
 namespace Eloquent\Schemer\Constraint;
 
-use Eloquent\Schemer\Value\ObjectValue;
-
 class Schema implements ConstraintContainerInterface
 {
     /**
      * @param array<ConstraintInterface>|null $constraints
-     * @param ObjectValue|null                $additionalProperties
+     * @param string|null                     $title
+     * @param string|null                     $description
      */
     public function __construct(
         array $constraints = null,
-        ObjectValue $additionalProperties = null
+        $title = null,
+        $description = null
     ) {
         if (null === $constraints) {
             $constraints = array();
         }
-        if (null === $additionalProperties) {
-            $additionalProperties = new ObjectValue;
-        }
 
         $this->constraints = $constraints;
-        $this->additionalProperties = $additionalProperties;
+        $this->title = $title;
+        $this->description = $description;
     }
 
     /**
@@ -43,19 +41,27 @@ class Schema implements ConstraintContainerInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function title()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function description()
+    {
+        return $this->description;
+    }
+
+    /**
      * @return boolean
      */
     public function isEmpty()
     {
         return count($this->constraints()) < 1;
-    }
-
-    /**
-     * @return ObjectValue
-     */
-    public function additionalProperties()
-    {
-        return $this->additionalProperties;
     }
 
     /**
@@ -69,5 +75,6 @@ class Schema implements ConstraintContainerInterface
     }
 
     private $constraints;
-    private $additionalProperties;
+    private $title;
+    private $description;
 }
