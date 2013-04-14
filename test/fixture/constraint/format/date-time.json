@@ -1,0 +1,34 @@
+{
+    "schema": {
+        "format": "date-time"
+    },
+
+    "tests": {
+        "valid date/time (zulu)": {
+            "value": "2015-10-21T16:29:00Z",
+            "expected": []
+        },
+
+        "valid date/time (offset with colon)": {
+            "value": "2015-10-21T16:29:00+00:00",
+            "expected": []
+        },
+
+        "valid date/time (offset without colon)": {
+            "value": "2015-10-21T16:29:00+0000",
+            "expected": []
+        },
+
+        "valid non-string": {
+            "value": null,
+            "expected": []
+        },
+
+        "invalid": {
+            "value": "foo",
+            "expected": [
+                "Validation failed for value at document root: The string must be a valid ISO 8601 date/time."
+            ]
+        }
+    }
+}

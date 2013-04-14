@@ -50,6 +50,27 @@ use Eloquent\Schemer\Value\ValueType;
 class SchemaFactory implements SchemaFactoryInterface
 {
     /**
+     * @param FormatConstraintFactoryInterface|null $formatConstraintFactory
+     */
+    public function __construct(
+        FormatConstraintFactoryInterface $formatConstraintFactory = null
+    ) {
+        if (null === $formatConstraintFactory) {
+            $formatConstraintFactory = new FormatConstraintFactory;
+        }
+
+        $this->formatConstraintFactory = $formatConstraintFactory;
+    }
+
+    /**
+     * @return FormatConstraintFactoryInterface
+     */
+    public function formatConstraintFactory()
+    {
+        return $this->formatConstraintFactory;
+    }
+
+    /**
      * @param ValueInterface $value
      *
      * @return \Eloquent\Schemer\Constraint\Schema
@@ -103,6 +124,10 @@ class SchemaFactory implements SchemaFactoryInterface
                 return array($this->createOneOfConstraint($value));
             case 'not':
                 return array($this->createNotConstraint($value));
+            case 'format':
+                return array(
+                    $this->formatConstraintFactory()->create($value->value())
+                );
 
             // object constraints
             case 'maxProperties':
@@ -773,4 +798,6 @@ class SchemaFactory implements SchemaFactoryInterface
 
         return new MinimumDateTimeConstraint($value->value());
     }
+
+    private $formatConstraintFactory;
 }

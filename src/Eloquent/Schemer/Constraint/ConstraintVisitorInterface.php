@@ -168,6 +168,13 @@ interface ConstraintVisitorInterface
      */
     public function visitMinimumLengthConstraint(StringValue\MinimumLengthConstraint $constraint);
 
+    /**
+     * @param StringValue\DateTimeFormatConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitDateTimeFormatConstraint(StringValue\DateTimeFormatConstraint $constraint);
+
     // number constraints ======================================================
 
     /**

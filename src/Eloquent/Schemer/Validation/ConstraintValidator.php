@@ -11,6 +11,7 @@
 
 namespace Eloquent\Schemer\Validation;
 
+use DateTime;
 use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
@@ -36,6 +37,7 @@ use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
+use Eloquent\Schemer\Constraint\StringValue\DateTimeFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
 use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
@@ -569,6 +571,32 @@ class ConstraintValidator implements
             )
         ) {
             return array();
+        }
+
+        return array($this->createIssue($constraint));
+    }
+
+    /**
+     * @param DateTimeFormatConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitDateTimeFormatConstraint(DateTimeFormatConstraint $constraint)
+    {
+        $value = $this->currentValue();
+        if (!$value instanceof StringValue) {
+            return array();
+        }
+
+        $formats = array(
+            DateTime::ISO8601,
+            'Y-m-d\TH:i:s\Z',
+            'Y-m-d\TH:i:sP',
+        );
+        foreach ($formats as $format) {
+            if (false !== DateTime::createFromFormat($format, $value->value())) {
+                return array();
+            }
         }
 
         return array($this->createIssue($constraint));
