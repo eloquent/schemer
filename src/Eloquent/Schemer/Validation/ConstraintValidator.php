@@ -221,16 +221,26 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param Schema $constraint
+     * @param Schema $schema
      *
      * @return Result\ValidationResult
      */
-    public function visitSchema(Schema $constraint)
+    public function visitSchema(Schema $schema)
     {
-        $result = new Result\ValidationResult;
-        foreach ($constraint->constraints() as $subConstraint) {
-            $result = $result->merge($subConstraint->accept($this));
+        $subResult = new Result\ValidationResult;
+        foreach ($schema->constraints() as $constraint) {
+            $subResult = $subResult->merge($constraint->accept($this));
         }
+
+        if (!$subResult->isValid()) {
+            return $subResult;
+        }
+
+        $result = new Result\ValidationResult(
+            null,
+            array($this->createMatch($schema))
+        );
+        $result = $result->merge($subResult);
 
         return $result;
     }
@@ -329,8 +339,9 @@ class ConstraintValidator implements
         }
 
         foreach ($constraint->schemas() as $schema) {
-            if ($schema->accept($this)->isValid()) {
-                return new Result\ValidationResult;
+            $result = $schema->accept($this);
+            if ($result->isValid()) {
+                return $result;
             }
         }
 
@@ -352,15 +363,16 @@ class ConstraintValidator implements
             return $schemas[0]->accept($this);
         }
 
-        $matchingSchemas = 0;
+        $validResults = array();
         foreach ($constraint->schemas() as $schema) {
-            if ($schema->accept($this)->isValid()) {
-                $matchingSchemas += 1;
+            $result = $schema->accept($this);
+            if ($result->isValid()) {
+                $validResults[] = $result;
             }
         }
 
-        if (1 === $matchingSchemas) {
-            return new Result\ValidationResult;
+        if (1 === count($validResults)) {
+            return array_shift($validResults);
         }
 
         return new Result\ValidationResult(
@@ -1080,6 +1092,8 @@ class ConstraintValidator implements
 
     /**
      * @param ConstraintInterface $constraint
+     *
+     * @return Result\ValidationIssue
      */
     protected function createIssue(ConstraintInterface $constraint)
     {
@@ -1088,6 +1102,21 @@ class ConstraintValidator implements
         return new Result\ValidationIssue(
             $constraint,
             $value,
+            $pointer
+        );
+    }
+
+    /**
+     * @param Schema $schema
+     *
+     * @return Result\ValidationMatch
+     */
+    protected function createMatch(Schema $schema)
+    {
+        list(, $pointer) = $this->currentContext();
+
+        return new Result\ValidationMatch(
+            $schema,
             $pointer
         );
     }
