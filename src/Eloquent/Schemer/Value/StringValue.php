@@ -36,11 +36,11 @@ class StringValue extends AbstractValue
     }
 
     /**
-     * @param ValueVisitorInterface $visitor
+     * @param Visitor\ValueVisitorInterface $visitor
      *
      * @return mixed
      */
-    public function accept(ValueVisitorInterface $visitor)
+    public function accept(Visitor\ValueVisitorInterface $visitor)
     {
         return $visitor->visitStringValue($this);
     }

@@ -12,7 +12,6 @@
 namespace Eloquent\Schemer\Validation\Result;
 
 use Eloquent\Equality\Comparator;
-use Eloquent\Schemer\Pointer\PointerInterface;
 
 class ValidationResult
 {
@@ -71,23 +70,6 @@ class ValidationResult
     public function comparator()
     {
         return $this->comparator;
-    }
-
-    /**
-     * @param PointerInterface $pointer
-     *
-     * @return array<ValidationMatch>
-     */
-    public function matchesByPointer(PointerInterface $pointer)
-    {
-        $matches = array();
-        foreach ($this->matches() as $match) {
-            if ($this->comparator->equals($match->pointer(), $pointer)) {
-                $matches[] = $match;
-            }
-        }
-
-        return $matches;
     }
 
     /**

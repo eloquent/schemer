@@ -24,6 +24,18 @@ interface PointerInterface
     public function hasAtoms();
 
     /**
+     * @param string $atom
+     *
+     * @return PointerInterface
+     */
+    public function joinAtom($atom);
+
+    /**
+     * @return PointerInterface
+     */
+    public function parent($atom);
+
+    /**
      * @return string
      */
     public function string();

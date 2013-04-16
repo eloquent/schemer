@@ -22,8 +22,7 @@ class PointerResolver implements PointerResolverInterface
      * @param PointerInterface $pointer
      * @param ValueInterface   $value
      *
-     * @return ValueInterface
-     * @throws Exception\UndefinedValueException
+     * @return ValueInterface|null
      */
     public function resolve(PointerInterface $pointer, ValueInterface $value)
     {
@@ -41,8 +40,7 @@ class PointerResolver implements PointerResolverInterface
      * @param array<string>    &$atoms
      * @param ValueInterface $value
      *
-     * @return ValueInterface
-     * @throws Exception\UndefinedValueException
+     * @return ValueInterface|null
      */
     protected function resolveAtoms(
         PointerInterface $pointer,
@@ -56,7 +54,7 @@ class PointerResolver implements PointerResolverInterface
         } elseif ($value instanceof ArrayValue) {
             $value = $this->resolveArray($pointer, $atom, $value);
         } else {
-            throw new Exception\UndefinedValueException($pointer);
+            return null;
         }
 
         if (count($atoms) > 0) {
@@ -71,8 +69,7 @@ class PointerResolver implements PointerResolverInterface
      * @param string           $atom
      * @param ObjectValue      $value
      *
-     * @return ValueInterface
-     * @throws Exception\UndefinedValueException
+     * @return ValueInterface|null
      */
     protected function resolveObject(
         PointerInterface $pointer,
@@ -84,7 +81,7 @@ class PointerResolver implements PointerResolverInterface
         }
 
         if (!$value->has($atom)) {
-            throw new Exception\UndefinedValueException($pointer);
+            return null;
         }
 
         return $value->get($atom);
@@ -95,8 +92,7 @@ class PointerResolver implements PointerResolverInterface
      * @param string           $atom
      * @param ArrayValue       $value
      *
-     * @return ValueInterface
-     * @throws Exception\UndefinedValueException
+     * @return ValueInterface|null
      */
     protected function resolveArray(
         PointerInterface $pointer,
@@ -104,12 +100,12 @@ class PointerResolver implements PointerResolverInterface
         ArrayValue $value
     ) {
         if (!ctype_digit($atom)) {
-            throw new Exception\UndefinedValueException($pointer);
+            return null;
         }
         $atom = intval($atom);
 
         if (!$value->has($atom)) {
-            throw new Exception\UndefinedValueException($pointer);
+            return null;
         }
 
         return $value->get($atom);

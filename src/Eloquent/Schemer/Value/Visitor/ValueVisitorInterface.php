@@ -9,7 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Value;
+namespace Eloquent\Schemer\Value\Visitor;
+
+use Eloquent\Schemer\Value\ArrayValue;
+use Eloquent\Schemer\Value\BooleanValue;
+use Eloquent\Schemer\Value\DateTimeValue;
+use Eloquent\Schemer\Value\FloatingPointValue;
+use Eloquent\Schemer\Value\IntegerValue;
+use Eloquent\Schemer\Value\NullValue;
+use Eloquent\Schemer\Value\ObjectValue;
+use Eloquent\Schemer\Value\ReferenceValue;
+use Eloquent\Schemer\Value\StringValue;
 
 interface ValueVisitorInterface
 {

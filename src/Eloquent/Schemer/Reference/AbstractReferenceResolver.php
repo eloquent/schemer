@@ -20,7 +20,7 @@ use Eloquent\Schemer\Value\NullValue;
 use Eloquent\Schemer\Value\ObjectValue;
 use Eloquent\Schemer\Value\StringValue;
 use Eloquent\Schemer\Value\ValueInterface;
-use Eloquent\Schemer\Value\ValueVisitorInterface;
+use Eloquent\Schemer\Value\Visitor\ValueVisitorInterface;
 use stdClass;
 
 abstract class AbstractReferenceResolver implements ReferenceResolverInterface, ValueVisitorInterface

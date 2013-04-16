@@ -20,8 +20,7 @@ interface PointerResolverInterface
      * @param PointerInterface $pointer
      * @param ValueInterface   $value
      *
-     * @return ValueInterface
-     * @throws Exception\UndefinedValueException
+     * @return ValueInterface|null
      */
     public function resolve(PointerInterface $pointer, ValueInterface $value);
 }

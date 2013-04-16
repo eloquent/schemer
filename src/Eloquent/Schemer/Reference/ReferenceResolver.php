@@ -92,6 +92,12 @@ class ReferenceResolver extends AbstractReferenceResolver
 
         if (null !== $pointer) {
             $value = $this->pointerResolver()->resolve($pointer, $value);
+            if (null === $value) {
+                throw new Exception\UndefinedReferenceException(
+                    $value,
+                    $this->uriResolver()->baseUri()
+                );
+            }
         }
 
         return $value;
