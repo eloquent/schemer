@@ -18,7 +18,12 @@ abstract class AbstractContextualValueVisitor implements ValueVisitorInterface
 {
     public function __construct()
     {
-        $this->resetContext();
+        $this->clear();
+    }
+
+    protected function clear()
+    {
+        $this->setContext(new Pointer);
     }
 
     /**
@@ -27,11 +32,6 @@ abstract class AbstractContextualValueVisitor implements ValueVisitorInterface
     protected function setContext(PointerInterface $context)
     {
         $this->context = $context;
-    }
-
-    protected function resetContext()
-    {
-        $this->setContext(new Pointer);
     }
 
     /**

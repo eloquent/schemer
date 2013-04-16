@@ -11,33 +11,23 @@
 
 namespace Eloquent\Schemer\Validation\Result;
 
-use Eloquent\Equality\Comparator;
-
 class ValidationResult
 {
     /**
      * @param array<ValidationIssue>|null $issues
      * @param array<MatchInterface>|null  $matches
-     * @param Comparator|null             $comparator
      */
-    public function __construct(
-        array $issues = null,
-        array $matches = null,
-        Comparator $comparator = null
-    ) {
+    public function __construct(array $issues = null, array $matches = null)
+    {
         if (null === $issues) {
             $issues = array();
         }
         if (null === $matches) {
             $matches = array();
         }
-        if ($comparator) {
-            $comparator = new Comparator;
-        }
 
         $this->issues = $issues;
         $this->matches = $matches;
-        $this->comparator = $comparator;
     }
 
     /**
@@ -65,11 +55,33 @@ class ValidationResult
     }
 
     /**
-     * @return Comparator
+     * @return array<ValidationMatch>
      */
-    public function comparator()
+    public function validationMatches()
     {
-        return $this->comparator;
+        $matches = array();
+        foreach ($this->matches() as $match) {
+            if ($match instanceof ValidationMatch) {
+                $matches[] = $match;
+            }
+        }
+
+        return $matches;
+    }
+
+    /**
+     * @return array<DefaultValueMatch>
+     */
+    public function defaultValueMatches()
+    {
+        $matches = array();
+        foreach ($this->matches() as $match) {
+            if ($match instanceof DefaultValueMatch) {
+                $matches[] = $match;
+            }
+        }
+
+        return $matches;
     }
 
     /**
@@ -87,5 +99,4 @@ class ValidationResult
 
     private $issues;
     private $matches;
-    private $comparator;
 }

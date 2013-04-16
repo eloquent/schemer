@@ -1,0 +1,37 @@
+{
+    "schema": {
+        "properties": {
+            "foo": {
+                "default": "bar"
+            },
+            "baz": {
+                "default": "qux"
+            }
+        }
+    },
+    "tests": {
+        "object missing defaults": {
+            "value": {},
+            "expected": {
+                "foo": "bar",
+                "baz": "qux"
+            }
+        },
+
+        "object not missing defaults": {
+            "value": {
+                "foo": "doom",
+                "baz": "splat"
+            },
+            "expected": {
+                "foo": "doom",
+                "baz": "splat"
+            }
+        },
+
+        "array unchanged": {
+            "value": [],
+            "expected": []
+        }
+    }
+}

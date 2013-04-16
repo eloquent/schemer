@@ -449,7 +449,7 @@ class ConstraintValidator implements
                 $result = $result->merge(
                     new Result\ValidationResult(
                         array(),
-                        array($this->createDefaultValueMatch($schema))
+                        array($this->createDefaultValueMatch($schema, $property))
                     )
                 );
             }
@@ -542,7 +542,7 @@ class ConstraintValidator implements
                 $result = $result->merge(
                     new Result\ValidationResult(
                         array(),
-                        array($this->createDefaultValueMatch($schema))
+                        array($this->createDefaultValueMatch($schema, $index))
                     )
                 );
             }
@@ -1101,17 +1101,18 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param Schema $schema
+     * @param Schema         $schema
+     * @param integer|string $atom
      *
      * @return Result\ValidationMatch
      */
-    protected function createDefaultValueMatch(Schema $schema)
+    protected function createDefaultValueMatch(Schema $schema, $atom)
     {
         list(, $pointer) = $this->currentContext();
 
         return new Result\DefaultValueMatch(
             $schema,
-            $pointer
+            $pointer->joinAtom($atom)
         );
     }
 

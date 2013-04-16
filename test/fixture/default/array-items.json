@@ -1,0 +1,28 @@
+{
+    "schema": {
+        "items": [
+            {
+                "default": "foo"
+            },
+            {
+                "default": "bar"
+            }
+        ]
+    },
+    "tests": {
+        "array missing defaults": {
+            "value": [],
+            "expected": ["foo", "bar"]
+        },
+
+        "array not missing defaults": {
+            "value": ["baz", "qux"],
+            "expected": ["baz", "qux"]
+        },
+
+        "object unchanged": {
+            "value": {},
+            "expected": {}
+        }
+    }
+}

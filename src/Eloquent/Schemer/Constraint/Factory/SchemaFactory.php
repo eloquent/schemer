@@ -65,13 +65,18 @@ class SchemaFactory implements SchemaFactoryInterface
             );
         }
 
+        if ($value->has('default')) {
+            $defaultValue = $value->get('default');
+        } else {
+            $defaultValue = null;
+        }
+
         return new Schema(
             array_merge(
                 $constraints,
                 $this->createCompositeConstraints($value)
             ),
-            $value->has('default'),
-            $value->getRawDefault('default'),
+            $defaultValue,
             $value->getRawDefault('title'),
             $value->getRawDefault('description')
         );

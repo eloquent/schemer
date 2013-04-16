@@ -9,21 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Pointer\Resolver;
+namespace Eloquent\Schemer\Validation;
 
 use Eloquent\Equality\Comparator;
-use Eloquent\Schemer\Pointer\PointerFactory;
+use Eloquent\Schemer\Constraint\Factory\SchemaFactory;
 use Eloquent\Schemer\Reader\Reader;
 use FilesystemIterator;
 use PHPUnit_Framework_TestCase;
 
-class PointerResolverTest extends PHPUnit_Framework_TestCase
+class DefaultValueTransformTest extends PHPUnit_Framework_TestCase
 {
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
         $this->reader = new Reader;
         $this->fixturePath = sprintf(
-            '%s/../../../../../fixture/pointer',
+            '%s/../../../../fixture/default',
             __DIR__
         );
 
@@ -34,12 +34,12 @@ class PointerResolverTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->resolver = new PointerResolver;
-        $this->pointerFactory = new PointerFactory;
+        $this->schemaFactory = new SchemaFactory;
+        $this->validator = new ConstraintValidator;
         $this->comparator = new Comparator;
     }
 
-    public function resolverData()
+    public function transformData()
     {
         $iterator = new FilesystemIterator(
             $this->fixturePath,
@@ -62,20 +62,21 @@ class PointerResolverTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider resolverData
+     * @dataProvider transformData
      */
-    public function testResolver($category, $testName)
+    public function testTransform($category, $testName)
     {
         $fixture = $this->reader->readPath(
             sprintf('%s/%s', $this->fixturePath, $category)
         );
         $test = $fixture->tests->$testName;
-        $actual = $this->resolver->resolve(
-            $this->pointerFactory->create(
-                $test->pointer->value()
-            ),
-            $fixture->document
+        $transform = new DefaultValueTransform(
+            $this->validator->validate(
+                $this->schemaFactory->create($fixture->schema),
+                $test->value
+            )
         );
+        $actual = $transform->transform($test->value);
         $expected = $test->expected;
 
         $this->assertEquals($expected, $actual);

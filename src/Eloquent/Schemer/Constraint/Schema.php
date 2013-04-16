@@ -11,31 +11,27 @@
 
 namespace Eloquent\Schemer\Constraint;
 
+use Eloquent\Schemer\Value\ValueInterface;
+
 class Schema implements ConstraintContainerInterface
 {
     /**
      * @param array<ConstraintInterface>|null $constraints
-     * @param boolean|null                    $hasDefaultValue
-     * @param mixed                           $defaultValue
+     * @param ValueInterface|null             $defaultValue
      * @param string|null                     $title
      * @param string|null                     $description
      */
     public function __construct(
         array $constraints = null,
-        $hasDefaultValue = null,
-        $defaultValue = null,
+        ValueInterface $defaultValue = null,
         $title = null,
         $description = null
     ) {
-        if (null === $hasDefaultValue) {
-            $hasDefaultValue = false;
-        }
         if (null === $constraints) {
             $constraints = array();
         }
 
         $this->constraints = $constraints;
-        $this->hasDefaultValue = $hasDefaultValue;
         $this->defaultValue = $defaultValue;
         $this->title = $title;
         $this->description = $description;
@@ -50,15 +46,7 @@ class Schema implements ConstraintContainerInterface
     }
 
     /**
-     * @return boolean
-     */
-    public function hasDefaultValue()
-    {
-        return $this->hasDefaultValue;
-    }
-
-    /**
-     * @return mixed
+     * @return ValueInterface|null
      */
     public function defaultValue()
     {
@@ -100,7 +88,6 @@ class Schema implements ConstraintContainerInterface
     }
 
     private $constraints;
-    private $hasDefaultValue;
     private $defaultValue;
     private $title;
     private $description;
