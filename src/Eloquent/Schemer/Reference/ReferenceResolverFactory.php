@@ -19,7 +19,7 @@ class ReferenceResolverFactory implements ReferenceResolverFactoryInterface
     /**
      * @param UriInterface $baseUri
      *
-     * @return ReferenceResolverInterface
+     * @return ReferenceResolver
      */
     public function create(UriInterface $baseUri)
     {

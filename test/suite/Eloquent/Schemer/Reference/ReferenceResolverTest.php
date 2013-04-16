@@ -69,7 +69,7 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
     {
         $path = sprintf('%s/%s/document.json', $this->fixturePath, $testName);
         $resolver = $this->factory->create($this->pathUriFixture($path));
-        $actual = $resolver->resolve($this->reader->readPath($path));
+        $actual = $resolver->transform($this->reader->readPath($path));
         $expected = $this->reader->readPath(
             sprintf('%s/%s/expected.json', $this->fixturePath, $testName)
         );

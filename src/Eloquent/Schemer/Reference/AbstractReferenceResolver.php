@@ -15,7 +15,7 @@ use Eloquent\Schemer\Value;
 use stdClass;
 
 abstract class AbstractReferenceResolver implements
-    ReferenceResolverInterface,
+    Value\Transform\ValueTransformInterface,
     Value\Visitor\ValueVisitorInterface
 {
     /**
@@ -24,7 +24,7 @@ abstract class AbstractReferenceResolver implements
      * @return Value\ValueInterface
      * @throws Exception\UndefinedReferenceException
      */
-    public function resolve(Value\ValueInterface $value)
+    public function transform(Value\ValueInterface $value)
     {
         return $value->accept($this);
     }

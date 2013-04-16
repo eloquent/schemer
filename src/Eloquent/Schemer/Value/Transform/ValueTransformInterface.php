@@ -9,17 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Reference;
+namespace Eloquent\Schemer\Value\Transform;
 
 use Eloquent\Schemer\Value\ValueInterface;
 
-interface ReferenceResolverInterface
+interface ValueTransformInterface
 {
     /**
      * @param ValueInterface $value
      *
      * @return ValueInterface
-     * @throws Exception\UndefinedReferenceException
      */
-    public function resolve(ValueInterface $value);
+    public function transform(ValueInterface $value);
 }

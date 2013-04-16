@@ -18,7 +18,7 @@ interface ReferenceResolverFactoryInterface
     /**
      * @param UriInterface $baseUri
      *
-     * @return ReferenceResolverInterface
+     * @return \Eloquent\Schemer\Value\Transform\ValueTransformInterface
      */
     public function create(UriInterface $baseUri);
 }
