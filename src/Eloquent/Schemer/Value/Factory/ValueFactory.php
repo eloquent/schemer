@@ -16,15 +16,7 @@ use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Pointer\PointerFactoryInterface;
 use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
-use Eloquent\Schemer\Value\ArrayValue;
-use Eloquent\Schemer\Value\BooleanValue;
-use Eloquent\Schemer\Value\FloatingPointValue;
-use Eloquent\Schemer\Value\DateTimeValue;
-use Eloquent\Schemer\Value\IntegerValue;
-use Eloquent\Schemer\Value\NullValue;
-use Eloquent\Schemer\Value\ObjectValue;
-use Eloquent\Schemer\Value\StringValue;
-use Eloquent\Schemer\Value\ReferenceValue;
+use Eloquent\Schemer\Value;
 use Icecave\Repr\Repr;
 use InvalidArgumentException;
 use stdClass;
@@ -70,27 +62,27 @@ class ValueFactory implements ValueFactoryInterface
     /**
      * @param mixed $value
      *
-     * @return \Eloquent\Schemer\Value\ValueInterface
+     * @return Value\ValueInterface
      */
     public function create($value)
     {
         $variableType = gettype($value);
         switch ($variableType) {
             case 'boolean':
-                return new BooleanValue($value);
+                return new Value\BooleanValue($value);
             case 'integer':
-                return new IntegerValue($value);
+                return new Value\IntegerValue($value);
             case 'double':
-                return new FloatingPointValue($value);
+                return new Value\FloatingPointValue($value);
             case 'NULL':
-                return new NullValue;
+                return new Value\NullValue;
             case 'string':
-                return new StringValue($value);
+                return new Value\StringValue($value);
             case 'array':
                 return $this->createArray($value);
             case 'object':
                 if ($value instanceof DateTime) {
-                    return new DateTimeValue($value);
+                    return new Value\DateTimeValue($value);
                 }
 
                 return $this->createObject($value);
@@ -104,7 +96,7 @@ class ValueFactory implements ValueFactoryInterface
     /**
      * @param array<integer,mixed> $value
      *
-     * @return \Eloquent\Schemer\Value\ValueInterface
+     * @return Value\ValueInterface
      */
     protected function createArray(array $value)
     {
@@ -124,13 +116,13 @@ class ValueFactory implements ValueFactoryInterface
             return $this->createReference($object);
         }
 
-        return new ArrayValue($value);
+        return new Value\ArrayValue($value);
     }
 
     /**
      * @param stdClass $value
      *
-     * @return \Eloquent\Schemer\Value\ValueInterface
+     * @return Value\ValueInterface
      */
     protected function createObject(stdClass $value)
     {
@@ -149,13 +141,13 @@ class ValueFactory implements ValueFactoryInterface
     /**
      * @param stdClass $value
      *
-     * @return \Eloquent\Schemer\Value\ValueInterface
+     * @return Value\ValueInterface
      */
     protected function createReference(stdClass $value)
     {
         if (
             property_exists($value, '$ref') &&
-            $value->{'$ref'} instanceof StringValue
+            $value->{'$ref'} instanceof Value\StringValue
         ) {
             $uri = new Uri($value->{'$ref'}->value());
             unset($value->{'$ref'});
@@ -170,21 +162,21 @@ class ValueFactory implements ValueFactoryInterface
             $mimeType = null;
             if (
                 property_exists($value, '$type') &&
-                $value->{'$type'} instanceof StringValue
+                $value->{'$type'} instanceof Value\StringValue
             ) {
                 $mimeType = $value->{'$type'}->value();
                 unset($value->{'$type'});
             }
 
-            return new ReferenceValue(
+            return new Value\ReferenceValue(
                 $reference,
                 $pointer,
                 $mimeType,
-                new ObjectValue($value)
+                new Value\ObjectValue($value)
             );
         }
 
-        return new ObjectValue($value);
+        return new Value\ObjectValue($value);
     }
 
     private $uriFactory;

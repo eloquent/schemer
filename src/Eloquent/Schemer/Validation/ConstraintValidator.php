@@ -13,53 +13,18 @@ namespace Eloquent\Schemer\Validation;
 
 use DateTime;
 use Eloquent\Equality\Comparator;
-use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
-use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
-use Eloquent\Schemer\Constraint\ArrayValue\MaximumItemsConstraint;
-use Eloquent\Schemer\Constraint\ArrayValue\MinimumItemsConstraint;
-use Eloquent\Schemer\Constraint\ArrayValue\UniqueItemsConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue;
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
-use Eloquent\Schemer\Constraint\DateTimeValue\MaximumDateTimeConstraint;
-use Eloquent\Schemer\Constraint\DateTimeValue\MinimumDateTimeConstraint;
-use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
-use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
-use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
-use Eloquent\Schemer\Constraint\Generic\NotConstraint;
-use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
-use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
-use Eloquent\Schemer\Constraint\NumberValue\MaximumConstraint;
-use Eloquent\Schemer\Constraint\NumberValue\MinimumConstraint;
-use Eloquent\Schemer\Constraint\NumberValue\MultipleOfConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\DependencyConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
-use Eloquent\Schemer\Constraint\StringValue\DateTimeFormatConstraint;
-use Eloquent\Schemer\Constraint\StringValue\EmailFormatConstraint;
-use Eloquent\Schemer\Constraint\StringValue\HostnameFormatConstraint;
-use Eloquent\Schemer\Constraint\StringValue\Ipv4AddressFormatConstraint;
-use Eloquent\Schemer\Constraint\StringValue\Ipv6AddressFormatConstraint;
-use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
-use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
-use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
-use Eloquent\Schemer\Constraint\StringValue\UriFormatConstraint;
+use Eloquent\Schemer\Constraint\DateTimeValue;
+use Eloquent\Schemer\Constraint\Generic;
+use Eloquent\Schemer\Constraint\NumberValue;
+use Eloquent\Schemer\Constraint\ObjectValue;
+use Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Pointer\Pointer;
 use Eloquent\Schemer\Pointer\PointerInterface;
-use Eloquent\Schemer\Value\ArrayValue;
-use Eloquent\Schemer\Value\BooleanValue;
-use Eloquent\Schemer\Value\DateTimeValue;
-use Eloquent\Schemer\Value\FloatingPointValue;
-use Eloquent\Schemer\Value\IntegerValue;
-use Eloquent\Schemer\Value\NullValue;
-use Eloquent\Schemer\Value\NumberValueInterface;
-use Eloquent\Schemer\Value\ObjectValue;
-use Eloquent\Schemer\Value\StringValue;
-use Eloquent\Schemer\Value\ValueInterface;
-use Eloquent\Schemer\Value\ValueType;
+use Eloquent\Schemer\Value;
 use LogicException;
 use Zend\Validator\EmailAddress;
 use Zend\Validator\Hostname;
@@ -196,14 +161,14 @@ class ConstraintValidator implements
 
     /**
      * @param ConstraintInterface   $constraint
-     * @param ValueInterface        $value
+     * @param Value\ValueInterface  $value
      * @param PointerInterface|null $entryPoint
      *
      * @return Result\ValidationResult
      */
     public function validate(
         ConstraintInterface $constraint,
-        ValueInterface $value,
+        Value\ValueInterface $value,
         PointerInterface $entryPoint = null
     ) {
         if (null === $entryPoint) {
@@ -248,11 +213,11 @@ class ConstraintValidator implements
     // generic constraints =====================================================
 
     /**
-     * @param EnumConstraint $constraint
+     * @param Generic\EnumConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitEnumConstraint(EnumConstraint $constraint)
+    public function visitEnumConstraint(Generic\EnumConstraint $constraint)
     {
         $value = $this->currentValue();
         foreach ($constraint->values() as $enumValue) {
@@ -267,31 +232,31 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param TypeConstraint $constraint
+     * @param Generic\TypeConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitTypeConstraint(TypeConstraint $constraint)
+    public function visitTypeConstraint(Generic\TypeConstraint $constraint)
     {
         $value = $this->currentValue();
         $isValid = false;
         foreach ($constraint->valueTypes() as $valueType) {
-            if ($valueType === ValueType::ARRAY_TYPE()) {
-                $isValid = $value instanceof ArrayValue;
-            } elseif ($valueType === ValueType::BOOLEAN_TYPE()) {
-                $isValid = $value instanceof BooleanValue;
-            } elseif ($valueType === ValueType::DATETIME_TYPE()) {
-                $isValid = $value instanceof DateTimeValue;
-            } elseif ($valueType === ValueType::INTEGER_TYPE()) {
-                $isValid = $value instanceof IntegerValue;
-            } elseif ($valueType === ValueType::NULL_TYPE()) {
-                $isValid = $value instanceof NullValue;
-            } elseif ($valueType === ValueType::NUMBER_TYPE()) {
-                $isValid = $value instanceof NumberValueInterface;
-            } elseif ($valueType === ValueType::OBJECT_TYPE()) {
-                $isValid = $value instanceof ObjectValue;
-            } elseif ($valueType === ValueType::STRING_TYPE()) {
-                $isValid = $value instanceof StringValue;
+            if ($valueType === Value\ValueType::ARRAY_TYPE()) {
+                $isValid = $value instanceof Value\ArrayValue;
+            } elseif ($valueType === Value\ValueType::BOOLEAN_TYPE()) {
+                $isValid = $value instanceof Value\BooleanValue;
+            } elseif ($valueType === Value\ValueType::DATETIME_TYPE()) {
+                $isValid = $value instanceof Value\DateTimeValue;
+            } elseif ($valueType === Value\ValueType::INTEGER_TYPE()) {
+                $isValid = $value instanceof Value\IntegerValue;
+            } elseif ($valueType === Value\ValueType::NULL_TYPE()) {
+                $isValid = $value instanceof Value\NullValue;
+            } elseif ($valueType === Value\ValueType::NUMBER_TYPE()) {
+                $isValid = $value instanceof Value\NumberValueInterface;
+            } elseif ($valueType === Value\ValueType::OBJECT_TYPE()) {
+                $isValid = $value instanceof Value\ObjectValue;
+            } elseif ($valueType === Value\ValueType::STRING_TYPE()) {
+                $isValid = $value instanceof Value\StringValue;
             }
 
             if ($isValid) {
@@ -305,11 +270,11 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param AllOfConstraint $constraint
+     * @param Generic\AllOfConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitAllOfConstraint(AllOfConstraint $constraint)
+    public function visitAllOfConstraint(Generic\AllOfConstraint $constraint)
     {
         if (1 === count($constraint->schemas())) {
             $schemas = $constraint->schemas();
@@ -326,11 +291,11 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param AnyOfConstraint $constraint
+     * @param Generic\AnyOfConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitAnyOfConstraint(AnyOfConstraint $constraint)
+    public function visitAnyOfConstraint(Generic\AnyOfConstraint $constraint)
     {
         if (1 === count($constraint->schemas())) {
             $schemas = $constraint->schemas();
@@ -351,11 +316,11 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param OneOfConstraint $constraint
+     * @param Generic\OneOfConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitOneOfConstraint(OneOfConstraint $constraint)
+    public function visitOneOfConstraint(Generic\OneOfConstraint $constraint)
     {
         if (1 === count($constraint->schemas())) {
             $schemas = $constraint->schemas();
@@ -381,11 +346,11 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param NotConstraint $constraint
+     * @param Generic\NotConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitNotConstraint(NotConstraint $constraint)
+    public function visitNotConstraint(Generic\NotConstraint $constraint)
     {
         if (!$constraint->schema()->accept($this)->isValid()) {
             return new Result\ValidationResult;
@@ -399,15 +364,15 @@ class ConstraintValidator implements
     // object constraints ======================================================
 
     /**
-     * @param MaximumPropertiesConstraint $constraint
+     * @param ObjectValue\MaximumPropertiesConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitMaximumPropertiesConstraint(MaximumPropertiesConstraint $constraint)
+    public function visitMaximumPropertiesConstraint(ObjectValue\MaximumPropertiesConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof ObjectValue ||
+            !$value instanceof Value\ObjectValue ||
             $value->count() <= $constraint->maximum()
         ) {
             return new Result\ValidationResult;
@@ -419,15 +384,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param MinimumPropertiesConstraint $constraint
+     * @param ObjectValue\MinimumPropertiesConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitMinimumPropertiesConstraint(MinimumPropertiesConstraint $constraint)
+    public function visitMinimumPropertiesConstraint(ObjectValue\MinimumPropertiesConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof ObjectValue ||
+            !$value instanceof Value\ObjectValue ||
             $value->count() >= $constraint->minimum()
         ) {
             return new Result\ValidationResult;
@@ -439,15 +404,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param RequiredConstraint $constraint
+     * @param ObjectValue\RequiredConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitRequiredConstraint(RequiredConstraint $constraint)
+    public function visitRequiredConstraint(ObjectValue\RequiredConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof ObjectValue ||
+            !$value instanceof Value\ObjectValue ||
             $value->has($constraint->property())
         ) {
             return new Result\ValidationResult;
@@ -459,14 +424,14 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param PropertiesConstraint $constraint
+     * @param ObjectValue\PropertiesConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitPropertiesConstraint(PropertiesConstraint $constraint)
+    public function visitPropertiesConstraint(ObjectValue\PropertiesConstraint $constraint)
     {
         $value = $this->currentValue();
-        if (!$value instanceof ObjectValue) {
+        if (!$value instanceof Value\ObjectValue) {
             return new Result\ValidationResult;
         }
 
@@ -520,11 +485,11 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param AdditionalPropertyConstraint $constraint
+     * @param ObjectValue\AdditionalPropertyConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitAdditionalPropertyConstraint(AdditionalPropertyConstraint $constraint)
+    public function visitAdditionalPropertyConstraint(ObjectValue\AdditionalPropertyConstraint $constraint)
     {
         return new Result\ValidationResult(
             array($this->createIssue($constraint))
@@ -532,15 +497,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param DependencyConstraint $constraint
+     * @param ObjectValue\DependencyConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitDependencyConstraint(DependencyConstraint $constraint)
+    public function visitDependencyConstraint(ObjectValue\DependencyConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof ObjectValue ||
+            !$value instanceof Value\ObjectValue ||
             !$value->has($constraint->property())
         ) {
             return new Result\ValidationResult;
@@ -552,14 +517,14 @@ class ConstraintValidator implements
     // array constraints =======================================================
 
     /**
-     * @param ItemsConstraint $constraint
+     * @param ArrayValue\ItemsConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitItemsConstraint(ItemsConstraint $constraint)
+    public function visitItemsConstraint(ArrayValue\ItemsConstraint $constraint)
     {
         $value = $this->currentValue();
-        if (!$value instanceof ArrayValue) {
+        if (!$value instanceof Value\ArrayValue) {
             return new Result\ValidationResult;
         }
 
@@ -599,11 +564,11 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param AdditionalItemConstraint $constraint
+     * @param ArrayValue\AdditionalItemConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitAdditionalItemConstraint(AdditionalItemConstraint $constraint)
+    public function visitAdditionalItemConstraint(ArrayValue\AdditionalItemConstraint $constraint)
     {
         return new Result\ValidationResult(
             array($this->createIssue($constraint))
@@ -611,15 +576,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param MaximumItemsConstraint $constraint
+     * @param ArrayValue\MaximumItemsConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitMaximumItemsConstraint(MaximumItemsConstraint $constraint)
+    public function visitMaximumItemsConstraint(ArrayValue\MaximumItemsConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof ArrayValue ||
+            !$value instanceof Value\ArrayValue ||
             $value->count() <= $constraint->maximum()
         ) {
             return new Result\ValidationResult;
@@ -631,15 +596,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param MinimumItemsConstraint $constraint
+     * @param ArrayValue\MinimumItemsConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitMinimumItemsConstraint(MinimumItemsConstraint $constraint)
+    public function visitMinimumItemsConstraint(ArrayValue\MinimumItemsConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof ArrayValue ||
+            !$value instanceof Value\ArrayValue ||
             $value->count() >= $constraint->minimum()
         ) {
             return new Result\ValidationResult;
@@ -651,15 +616,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param UniqueItemsConstraint $constraint
+     * @param ArrayValue\UniqueItemsConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitUniqueItemsConstraint(UniqueItemsConstraint $constraint)
+    public function visitUniqueItemsConstraint(ArrayValue\UniqueItemsConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof ArrayValue ||
+            !$value instanceof Value\ArrayValue ||
             !$constraint->value() ||
             $this->comparator->equals(
                 $value->value(),
@@ -677,15 +642,15 @@ class ConstraintValidator implements
     // string constraints ======================================================
 
     /**
-     * @param MaximumLengthConstraint $constraint
+     * @param StringValue\MaximumLengthConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitMaximumLengthConstraint(MaximumLengthConstraint $constraint)
+    public function visitMaximumLengthConstraint(StringValue\MaximumLengthConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof StringValue ||
+            !$value instanceof Value\StringValue ||
             mb_strlen($value->value(), 'UTF-8') <= $constraint->maximum()
         ) {
             return new Result\ValidationResult;
@@ -697,15 +662,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param MinimumLengthConstraint $constraint
+     * @param StringValue\MinimumLengthConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitMinimumLengthConstraint(MinimumLengthConstraint $constraint)
+    public function visitMinimumLengthConstraint(StringValue\MinimumLengthConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof StringValue ||
+            !$value instanceof Value\StringValue ||
             mb_strlen($value->value(), 'UTF-8') >= $constraint->minimum()
         ) {
             return new Result\ValidationResult;
@@ -717,15 +682,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param PatternConstraint $constraint
+     * @param StringValue\PatternConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitPatternConstraint(PatternConstraint $constraint)
+    public function visitPatternConstraint(StringValue\PatternConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof StringValue ||
+            !$value instanceof Value\StringValue ||
             preg_match(
                 $this->wrapPattern($constraint->pattern()),
                 $value->value()
@@ -740,18 +705,18 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param DateTimeFormatConstraint $constraint
+     * @param StringValue\DateTimeFormatConstraint $constraint
      *
      * @return mixed
      */
-    public function visitDateTimeFormatConstraint(DateTimeFormatConstraint $constraint)
+    public function visitDateTimeFormatConstraint(StringValue\DateTimeFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
             return new Result\ValidationResult;
         }
 
         $value = $this->currentValue();
-        if (!$value instanceof StringValue) {
+        if (!$value instanceof Value\StringValue) {
             return new Result\ValidationResult;
         }
 
@@ -772,11 +737,11 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param EmailFormatConstraint $constraint
+     * @param StringValue\EmailFormatConstraint $constraint
      *
      * @return mixed
      */
-    public function visitEmailFormatConstraint(EmailFormatConstraint $constraint)
+    public function visitEmailFormatConstraint(StringValue\EmailFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
             return new Result\ValidationResult;
@@ -784,7 +749,7 @@ class ConstraintValidator implements
 
         $value = $this->currentValue();
         if (
-            !$value instanceof StringValue ||
+            !$value instanceof Value\StringValue ||
             $this->emailValidator()->isValid($value->value())
         ) {
             return new Result\ValidationResult;
@@ -796,11 +761,11 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param HostnameFormatConstraint $constraint
+     * @param StringValue\HostnameFormatConstraint $constraint
      *
      * @return mixed
      */
-    public function visitHostnameFormatConstraint(HostnameFormatConstraint $constraint)
+    public function visitHostnameFormatConstraint(StringValue\HostnameFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
             return new Result\ValidationResult;
@@ -808,7 +773,7 @@ class ConstraintValidator implements
 
         $value = $this->currentValue();
         if (
-            !$value instanceof StringValue ||
+            !$value instanceof Value\StringValue ||
             $this->hostnameValidator()->isValid($value->value())
         ) {
             return new Result\ValidationResult;
@@ -820,11 +785,11 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param Ipv4AddressFormatConstraint $constraint
+     * @param StringValue\Ipv4AddressFormatConstraint $constraint
      *
      * @return mixed
      */
-    public function visitIpv4AddressFormatConstraint(Ipv4AddressFormatConstraint $constraint)
+    public function visitIpv4AddressFormatConstraint(StringValue\Ipv4AddressFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
             return new Result\ValidationResult;
@@ -832,7 +797,7 @@ class ConstraintValidator implements
 
         $value = $this->currentValue();
         if (
-            !$value instanceof StringValue ||
+            !$value instanceof Value\StringValue ||
             $this->ipv4AddressValidator()->isValid($value->value())
         ) {
             return new Result\ValidationResult;
@@ -844,11 +809,11 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param Ipv6AddressFormatConstraint $constraint
+     * @param StringValue\Ipv6AddressFormatConstraint $constraint
      *
      * @return mixed
      */
-    public function visitIpv6AddressFormatConstraint(Ipv6AddressFormatConstraint $constraint)
+    public function visitIpv6AddressFormatConstraint(StringValue\Ipv6AddressFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
             return new Result\ValidationResult;
@@ -856,7 +821,7 @@ class ConstraintValidator implements
 
         $value = $this->currentValue();
         if (
-            !$value instanceof StringValue ||
+            !$value instanceof Value\StringValue ||
             $this->ipv6AddressValidator()->isValid($value->value())
         ) {
             return new Result\ValidationResult;
@@ -868,11 +833,11 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param UriFormatConstraint $constraint
+     * @param StringValue\UriFormatConstraint $constraint
      *
      * @return mixed
      */
-    public function visitUriFormatConstraint(UriFormatConstraint $constraint)
+    public function visitUriFormatConstraint(StringValue\UriFormatConstraint $constraint)
     {
         if (!$this->formatValidationEnabled()) {
             return new Result\ValidationResult;
@@ -880,7 +845,7 @@ class ConstraintValidator implements
 
         $value = $this->currentValue();
         if (
-            !$value instanceof StringValue ||
+            !$value instanceof Value\StringValue ||
             $this->uriValidator()->isValid($value->value())
         ) {
             return new Result\ValidationResult;
@@ -894,19 +859,19 @@ class ConstraintValidator implements
     // number constraints ======================================================
 
     /**
-     * @param MultipleOfConstraint $constraint
+     * @param NumberValue\MultipleOfConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitMultipleOfConstraint(MultipleOfConstraint $constraint)
+    public function visitMultipleOfConstraint(NumberValue\MultipleOfConstraint $constraint)
     {
         $value = $this->currentValue();
-        if (!$value instanceof NumberValueInterface) {
+        if (!$value instanceof Value\NumberValueInterface) {
             return new Result\ValidationResult;
         }
 
         if (
-            $value instanceof FloatingPointValue ||
+            $value instanceof Value\FloatingPointValue ||
             is_float($constraint->quantity())
         ) {
             if (0 == fmod($value->value(), $constraint->quantity())) {
@@ -924,15 +889,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param MaximumConstraint $constraint
+     * @param NumberValue\MaximumConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitMaximumConstraint(MaximumConstraint $constraint)
+    public function visitMaximumConstraint(NumberValue\MaximumConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof NumberValueInterface ||
+            !$value instanceof Value\NumberValueInterface ||
             $value->value() <= $constraint->maximum()
         ) {
             return new Result\ValidationResult;
@@ -944,15 +909,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param MinimumConstraint $constraint
+     * @param NumberValue\MinimumConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitMinimumConstraint(MinimumConstraint $constraint)
+    public function visitMinimumConstraint(NumberValue\MinimumConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof NumberValueInterface ||
+            !$value instanceof Value\NumberValueInterface ||
             $value->value() >= $constraint->minimum()
         ) {
             return new Result\ValidationResult;
@@ -966,15 +931,15 @@ class ConstraintValidator implements
     // date-time constraints ===================================================
 
     /**
-     * @param MaximumDateTimeConstraint $constraint
+     * @param DateTimeValue\MaximumDateTimeConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitMaximumDateTimeConstraint(MaximumDateTimeConstraint $constraint)
+    public function visitMaximumDateTimeConstraint(DateTimeValue\MaximumDateTimeConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof DateTimeValue ||
+            !$value instanceof Value\DateTimeValue ||
             $value->value() <= $constraint->maximum()
         ) {
             return new Result\ValidationResult;
@@ -986,15 +951,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param MinimumDateTimeConstraint $constraint
+     * @param DateTimeValue\MinimumDateTimeConstraint $constraint
      *
      * @return Result\ValidationResult
      */
-    public function visitMinimumDateTimeConstraint(MinimumDateTimeConstraint $constraint)
+    public function visitMinimumDateTimeConstraint(DateTimeValue\MinimumDateTimeConstraint $constraint)
     {
         $value = $this->currentValue();
         if (
-            !$value instanceof DateTimeValue ||
+            !$value instanceof Value\DateTimeValue ||
             $value->value() >= $constraint->minimum()
         ) {
             return new Result\ValidationResult;

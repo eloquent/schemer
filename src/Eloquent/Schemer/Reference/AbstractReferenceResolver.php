@@ -11,117 +11,110 @@
 
 namespace Eloquent\Schemer\Reference;
 
-use Eloquent\Schemer\Value\ArrayValue;
-use Eloquent\Schemer\Value\BooleanValue;
-use Eloquent\Schemer\Value\DateTimeValue;
-use Eloquent\Schemer\Value\FloatingPointValue;
-use Eloquent\Schemer\Value\IntegerValue;
-use Eloquent\Schemer\Value\NullValue;
-use Eloquent\Schemer\Value\ObjectValue;
-use Eloquent\Schemer\Value\StringValue;
-use Eloquent\Schemer\Value\ValueInterface;
-use Eloquent\Schemer\Value\Visitor\ValueVisitorInterface;
+use Eloquent\Schemer\Value;
 use stdClass;
 
-abstract class AbstractReferenceResolver implements ReferenceResolverInterface, ValueVisitorInterface
+abstract class AbstractReferenceResolver implements
+    ReferenceResolverInterface,
+    Value\Visitor\ValueVisitorInterface
 {
     /**
-     * @param ValueInterface $value
+     * @param Value\ValueInterface $value
      *
-     * @return ValueInterface
+     * @return Value\ValueInterface
      * @throws Exception\UndefinedReferenceException
      */
-    public function resolve(ValueInterface $value)
+    public function resolve(Value\ValueInterface $value)
     {
         return $value->accept($this);
     }
 
     /**
-     * @param ArrayValue $value
+     * @param Value\ArrayValue $value
      *
-     * @return ArrayValue
+     * @return Value\ArrayValue
      */
-    public function visitArrayValue(ArrayValue $value)
+    public function visitArrayValue(Value\ArrayValue $value)
     {
         $innerValue = array();
         foreach ($value as $index => $subValue) {
             $innerValue[$index] = $subValue->accept($this);
         }
 
-        return new ArrayValue($innerValue);
+        return new Value\ArrayValue($innerValue);
     }
 
     /**
-     * @param BooleanValue $value
+     * @param Value\BooleanValue $value
      *
-     * @return BooleanValue
+     * @return Value\BooleanValue
      */
-    public function visitBooleanValue(BooleanValue $value)
+    public function visitBooleanValue(Value\BooleanValue $value)
     {
         return $value;
     }
 
     /**
-     * @param FloatingPointValue $value
+     * @param Value\FloatingPointValue $value
      *
-     * @return FloatingPointValue
+     * @return Value\FloatingPointValue
      */
-    public function visitFloatingPointValue(FloatingPointValue $value)
+    public function visitFloatingPointValue(Value\FloatingPointValue $value)
     {
         return $value;
     }
 
     /**
-     * @param IntegerValue $value
+     * @param Value\IntegerValue $value
      *
-     * @return IntegerValue
+     * @return Value\IntegerValue
      */
-    public function visitIntegerValue(IntegerValue $value)
+    public function visitIntegerValue(Value\IntegerValue $value)
     {
         return $value;
     }
 
     /**
-     * @param NullValue $value
+     * @param Value\NullValue $value
      *
-     * @return NullValue
+     * @return Value\NullValue
      */
-    public function visitNullValue(NullValue $value)
+    public function visitNullValue(Value\NullValue $value)
     {
         return $value;
     }
 
     /**
-     * @param ObjectValue $value
+     * @param Value\ObjectValue $value
      *
-     * @return ObjectValue
+     * @return Value\ObjectValue
      */
-    public function visitObjectValue(ObjectValue $value)
+    public function visitObjectValue(Value\ObjectValue $value)
     {
         $innerValue = new stdClass;
         foreach ($value as $property => $subValue) {
             $innerValue->$property = $subValue->accept($this);
         }
 
-        return new ObjectValue($innerValue);
+        return new Value\ObjectValue($innerValue);
     }
 
     /**
-     * @param StringValue $value
+     * @param Value\StringValue $value
      *
-     * @return StringValue
+     * @return Value\StringValue
      */
-    public function visitStringValue(StringValue $value)
+    public function visitStringValue(Value\StringValue $value)
     {
         return $value;
     }
 
     /**
-     * @param DateTimeValue $value
+     * @param Value\DateTimeValue $value
      *
-     * @return DateTimeValue
+     * @return Value\DateTimeValue
      */
-    public function visitDateTimeValue(DateTimeValue $value)
+    public function visitDateTimeValue(Value\DateTimeValue $value)
     {
         return $value;
     }

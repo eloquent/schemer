@@ -11,78 +11,70 @@
 
 namespace Eloquent\Schemer\Value\Visitor;
 
-use Eloquent\Schemer\Value\ArrayValue;
-use Eloquent\Schemer\Value\BooleanValue;
-use Eloquent\Schemer\Value\DateTimeValue;
-use Eloquent\Schemer\Value\FloatingPointValue;
-use Eloquent\Schemer\Value\IntegerValue;
-use Eloquent\Schemer\Value\NullValue;
-use Eloquent\Schemer\Value\ObjectValue;
-use Eloquent\Schemer\Value\ReferenceValue;
-use Eloquent\Schemer\Value\StringValue;
+use Eloquent\Schemer\Value;
 
 interface ValueVisitorInterface
 {
     /**
-     * @param ArrayValue $value
+     * @param Value\ArrayValue $value
      *
      * @return mixed
      */
-    public function visitArrayValue(ArrayValue $value);
+    public function visitArrayValue(Value\ArrayValue $value);
 
     /**
-     * @param BooleanValue $value
+     * @param Value\BooleanValue $value
      *
      * @return mixed
      */
-    public function visitBooleanValue(BooleanValue $value);
+    public function visitBooleanValue(Value\BooleanValue $value);
 
     /**
-     * @param FloatingPointValue $value
+     * @param Value\FloatingPointValue $value
      *
      * @return mixed
      */
-    public function visitFloatingPointValue(FloatingPointValue $value);
+    public function visitFloatingPointValue(Value\FloatingPointValue $value);
 
     /**
-     * @param IntegerValue $value
+     * @param Value\IntegerValue $value
      *
      * @return mixed
      */
-    public function visitIntegerValue(IntegerValue $value);
+    public function visitIntegerValue(Value\IntegerValue $value);
 
     /**
-     * @param NullValue $value
+     * @param Value\NullValue $value
      *
      * @return mixed
      */
-    public function visitNullValue(NullValue $value);
+    public function visitNullValue(Value\NullValue $value);
 
     /**
-     * @param ObjectValue $value
+     * @param Value\ObjectValue $value
      *
      * @return mixed
      */
-    public function visitObjectValue(ObjectValue $value);
+    public function visitObjectValue(Value\ObjectValue $value);
 
     /**
-     * @param StringValue $value
+     * @param Value\StringValue $value
      *
      * @return mixed
      */
-    public function visitStringValue(StringValue $value);
+    public function visitStringValue(Value\StringValue $value);
 
     /**
-     * @param DateTimeValue $value
+     * @param Value\DateTimeValue $value
      *
      * @return mixed
      */
-    public function visitDateTimeValue(DateTimeValue $value);
+    public function visitDateTimeValue(Value\DateTimeValue $value);
 
     /**
-     * @param ReferenceValue $value
+     * @param Value\ReferenceValue $value
      *
      * @return mixed
      */
-    public function visitReferenceValue(ReferenceValue $value);
+    public function visitReferenceValue(Value\ReferenceValue $value);
 }

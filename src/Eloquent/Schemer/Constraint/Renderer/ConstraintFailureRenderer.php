@@ -11,38 +11,13 @@
 
 namespace Eloquent\Schemer\Constraint\Renderer;
 
-use Eloquent\Schemer\Constraint\ArrayValue\AdditionalItemConstraint;
-use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
-use Eloquent\Schemer\Constraint\ArrayValue\MaximumItemsConstraint;
-use Eloquent\Schemer\Constraint\ArrayValue\MinimumItemsConstraint;
-use Eloquent\Schemer\Constraint\ArrayValue\UniqueItemsConstraint;
+use Eloquent\Schemer\Constraint\ArrayValue;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
-use Eloquent\Schemer\Constraint\DateTimeValue\MaximumDateTimeConstraint;
-use Eloquent\Schemer\Constraint\DateTimeValue\MinimumDateTimeConstraint;
-use Eloquent\Schemer\Constraint\Generic\AllOfConstraint;
-use Eloquent\Schemer\Constraint\Generic\AnyOfConstraint;
-use Eloquent\Schemer\Constraint\Generic\EnumConstraint;
-use Eloquent\Schemer\Constraint\Generic\NotConstraint;
-use Eloquent\Schemer\Constraint\Generic\OneOfConstraint;
-use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
-use Eloquent\Schemer\Constraint\NumberValue\MaximumConstraint;
-use Eloquent\Schemer\Constraint\NumberValue\MinimumConstraint;
-use Eloquent\Schemer\Constraint\NumberValue\MultipleOfConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\AdditionalPropertyConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\DependencyConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
-use Eloquent\Schemer\Constraint\StringValue\DateTimeFormatConstraint;
-use Eloquent\Schemer\Constraint\StringValue\EmailFormatConstraint;
-use Eloquent\Schemer\Constraint\StringValue\HostnameFormatConstraint;
-use Eloquent\Schemer\Constraint\StringValue\Ipv4AddressFormatConstraint;
-use Eloquent\Schemer\Constraint\StringValue\Ipv6AddressFormatConstraint;
-use Eloquent\Schemer\Constraint\StringValue\MaximumLengthConstraint;
-use Eloquent\Schemer\Constraint\StringValue\MinimumLengthConstraint;
-use Eloquent\Schemer\Constraint\StringValue\PatternConstraint;
-use Eloquent\Schemer\Constraint\StringValue\UriFormatConstraint;
+use Eloquent\Schemer\Constraint\DateTimeValue;
+use Eloquent\Schemer\Constraint\Generic;
+use Eloquent\Schemer\Constraint\NumberValue;
+use Eloquent\Schemer\Constraint\ObjectValue;
+use Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Value\ValueType;
 use Icecave\Repr\Repr;
@@ -64,11 +39,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     // generic constraints =====================================================
 
     /**
-     * @param EnumConstraint $constraint
+     * @param Generic\EnumConstraint $constraint
      *
      * @return string
      */
-    public function visitEnumConstraint(EnumConstraint $constraint)
+    public function visitEnumConstraint(Generic\EnumConstraint $constraint)
     {
         $enumValues = array();
         foreach ($constraint->values() as $enumValue) {
@@ -89,11 +64,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param TypeConstraint $constraint
+     * @param Generic\TypeConstraint $constraint
      *
      * @return string
      */
-    public function visitTypeConstraint(TypeConstraint $constraint)
+    public function visitTypeConstraint(Generic\TypeConstraint $constraint)
     {
         $valueTypes = array_map(function (ValueType $valueType) {
             return Repr::repr($valueType->value());
@@ -113,41 +88,41 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param AllOfConstraint $constraint
+     * @param Generic\AllOfConstraint $constraint
      *
      * @return string
      */
-    public function visitAllOfConstraint(AllOfConstraint $constraint)
+    public function visitAllOfConstraint(Generic\AllOfConstraint $constraint)
     {
         return 'The value did not match all of the defined schemas.';
     }
 
     /**
-     * @param AnyOfConstraint $constraint
+     * @param Generic\AnyOfConstraint $constraint
      *
      * @return string
      */
-    public function visitAnyOfConstraint(AnyOfConstraint $constraint)
+    public function visitAnyOfConstraint(Generic\AnyOfConstraint $constraint)
     {
         return 'The value did not match any of the defined schemas.';
     }
 
     /**
-     * @param OneOfConstraint $constraint
+     * @param Generic\OneOfConstraint $constraint
      *
      * @return string
      */
-    public function visitOneOfConstraint(OneOfConstraint $constraint)
+    public function visitOneOfConstraint(Generic\OneOfConstraint $constraint)
     {
         return 'The value did not match any, or matched more than one of the defined schemas.';
     }
 
     /**
-     * @param NotConstraint $constraint
+     * @param Generic\NotConstraint $constraint
      *
      * @return string
      */
-    public function visitNotConstraint(NotConstraint $constraint)
+    public function visitNotConstraint(Generic\NotConstraint $constraint)
     {
         return 'The value matched the defined schema.';
     }
@@ -155,11 +130,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     // object constraints ======================================================
 
     /**
-     * @param MaximumPropertiesConstraint $constraint
+     * @param ObjectValue\MaximumPropertiesConstraint $constraint
      *
      * @return string
      */
-    public function visitMaximumPropertiesConstraint(MaximumPropertiesConstraint $constraint)
+    public function visitMaximumPropertiesConstraint(ObjectValue\MaximumPropertiesConstraint $constraint)
     {
         return sprintf(
             'The object must not have more than %s properties.',
@@ -168,11 +143,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param MinimumPropertiesConstraint $constraint
+     * @param ObjectValue\MinimumPropertiesConstraint $constraint
      *
      * @return string
      */
-    public function visitMinimumPropertiesConstraint(MinimumPropertiesConstraint $constraint)
+    public function visitMinimumPropertiesConstraint(ObjectValue\MinimumPropertiesConstraint $constraint)
     {
         return sprintf(
             'The object must not have less than %s properties.',
@@ -181,11 +156,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param RequiredConstraint $constraint
+     * @param ObjectValue\RequiredConstraint $constraint
      *
      * @return string
      */
-    public function visitRequiredConstraint(RequiredConstraint $constraint)
+    public function visitRequiredConstraint(ObjectValue\RequiredConstraint $constraint)
     {
         return sprintf(
             'The property %s is required.',
@@ -194,31 +169,31 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param PropertiesConstraint $constraint
+     * @param ObjectValue\PropertiesConstraint $constraint
      *
      * @return string
      */
-    public function visitPropertiesConstraint(PropertiesConstraint $constraint)
+    public function visitPropertiesConstraint(ObjectValue\PropertiesConstraint $constraint)
     {
         return static::UNMATCHED_SCHEMA;
     }
 
     /**
-     * @param AdditionalPropertyConstraint $constraint
+     * @param ObjectValue\AdditionalPropertyConstraint $constraint
      *
      * @return string
      */
-    public function visitAdditionalPropertyConstraint(AdditionalPropertyConstraint $constraint)
+    public function visitAdditionalPropertyConstraint(ObjectValue\AdditionalPropertyConstraint $constraint)
     {
         return 'Unexpected property.';
     }
 
     /**
-     * @param DependencyConstraint $constraint
+     * @param ObjectValue\DependencyConstraint $constraint
      *
      * @return string
      */
-    public function visitDependencyConstraint(DependencyConstraint $constraint)
+    public function visitDependencyConstraint(ObjectValue\DependencyConstraint $constraint)
     {
         return static::UNMATCHED_SCHEMA;
     }
@@ -226,31 +201,31 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     // array constraints =======================================================
 
     /**
-     * @param ItemsConstraint $constraint
+     * @param ArrayValue\ItemsConstraint $constraint
      *
      * @return string
      */
-    public function visitItemsConstraint(ItemsConstraint $constraint)
+    public function visitItemsConstraint(ArrayValue\ItemsConstraint $constraint)
     {
         return static::UNMATCHED_SCHEMA;
     }
 
     /**
-     * @param AdditionalItemConstraint $constraint
+     * @param ArrayValue\AdditionalItemConstraint $constraint
      *
      * @return string
      */
-    public function visitAdditionalItemConstraint(AdditionalItemConstraint $constraint)
+    public function visitAdditionalItemConstraint(ArrayValue\AdditionalItemConstraint $constraint)
     {
         return 'Unexpected index.';
     }
 
     /**
-     * @param MaximumItemsConstraint $constraint
+     * @param ArrayValue\MaximumItemsConstraint $constraint
      *
      * @return string
      */
-    public function visitMaximumItemsConstraint(MaximumItemsConstraint $constraint)
+    public function visitMaximumItemsConstraint(ArrayValue\MaximumItemsConstraint $constraint)
     {
         return sprintf(
             'The array must not have more than %s items.',
@@ -259,11 +234,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param MinimumItemsConstraint $constraint
+     * @param ArrayValue\MinimumItemsConstraint $constraint
      *
      * @return string
      */
-    public function visitMinimumItemsConstraint(MinimumItemsConstraint $constraint)
+    public function visitMinimumItemsConstraint(ArrayValue\MinimumItemsConstraint $constraint)
     {
         return sprintf(
             'The array must not have less than %s items.',
@@ -272,11 +247,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param UniqueItemsConstraint $constraint
+     * @param ArrayValue\UniqueItemsConstraint $constraint
      *
      * @return string
      */
-    public function visitUniqueItemsConstraint(UniqueItemsConstraint $constraint)
+    public function visitUniqueItemsConstraint(ArrayValue\UniqueItemsConstraint $constraint)
     {
         return 'The array items must be unique.';
     }
@@ -284,11 +259,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     // string constraints ======================================================
 
     /**
-     * @param MaximumLengthConstraint $constraint
+     * @param StringValue\MaximumLengthConstraint $constraint
      *
      * @return string
      */
-    public function visitMaximumLengthConstraint(MaximumLengthConstraint $constraint)
+    public function visitMaximumLengthConstraint(StringValue\MaximumLengthConstraint $constraint)
     {
         return sprintf(
             'The string must not have more than %s characters.',
@@ -297,11 +272,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param MinimumLengthConstraint $constraint
+     * @param StringValue\MinimumLengthConstraint $constraint
      *
      * @return string
      */
-    public function visitMinimumLengthConstraint(MinimumLengthConstraint $constraint)
+    public function visitMinimumLengthConstraint(StringValue\MinimumLengthConstraint $constraint)
     {
         return sprintf(
             'The string must not have less than %s characters.',
@@ -310,11 +285,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param PatternConstraint $constraint
+     * @param StringValue\PatternConstraint $constraint
      *
      * @return string
      */
-    public function visitPatternConstraint(PatternConstraint $constraint)
+    public function visitPatternConstraint(StringValue\PatternConstraint $constraint)
     {
         return sprintf(
             'The string must match the pattern %s.',
@@ -323,61 +298,61 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param DateTimeFormatConstraint $constraint
+     * @param StringValue\DateTimeFormatConstraint $constraint
      *
      * @return string
      */
-    public function visitDateTimeFormatConstraint(DateTimeFormatConstraint $constraint)
+    public function visitDateTimeFormatConstraint(StringValue\DateTimeFormatConstraint $constraint)
     {
         return 'The string must be a valid ISO 8601 date/time.';
     }
 
     /**
-     * @param EmailFormatConstraint $constraint
+     * @param StringValue\EmailFormatConstraint $constraint
      *
      * @return string
      */
-    public function visitEmailFormatConstraint(EmailFormatConstraint $constraint)
+    public function visitEmailFormatConstraint(StringValue\EmailFormatConstraint $constraint)
     {
         return 'The string must be a valid email address.';
     }
 
     /**
-     * @param HostnameFormatConstraint $constraint
+     * @param StringValue\HostnameFormatConstraint $constraint
      *
      * @return string
      */
-    public function visitHostnameFormatConstraint(HostnameFormatConstraint $constraint)
+    public function visitHostnameFormatConstraint(StringValue\HostnameFormatConstraint $constraint)
     {
         return 'The string must be a valid hostname.';
     }
 
     /**
-     * @param Ipv4AddressFormatConstraint $constraint
+     * @param StringValue\Ipv4AddressFormatConstraint $constraint
      *
      * @return string
      */
-    public function visitIpv4AddressFormatConstraint(Ipv4AddressFormatConstraint $constraint)
+    public function visitIpv4AddressFormatConstraint(StringValue\Ipv4AddressFormatConstraint $constraint)
     {
         return 'The string must be a valid IPv4 address.';
     }
 
     /**
-     * @param Ipv6AddressFormatConstraint $constraint
+     * @param StringValue\Ipv6AddressFormatConstraint $constraint
      *
      * @return string
      */
-    public function visitIpv6AddressFormatConstraint(Ipv6AddressFormatConstraint $constraint)
+    public function visitIpv6AddressFormatConstraint(StringValue\Ipv6AddressFormatConstraint $constraint)
     {
         return 'The string must be a valid IPv6 address.';
     }
 
     /**
-     * @param UriFormatConstraint $constraint
+     * @param StringValue\UriFormatConstraint $constraint
      *
      * @return string
      */
-    public function visitUriFormatConstraint(UriFormatConstraint $constraint)
+    public function visitUriFormatConstraint(StringValue\UriFormatConstraint $constraint)
     {
         return 'The string must be a valid URI.';
     }
@@ -385,11 +360,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     // number constraints ======================================================
 
     /**
-     * @param MultipleOfConstraint $constraint
+     * @param NumberValue\MultipleOfConstraint $constraint
      *
      * @return string
      */
-    public function visitMultipleOfConstraint(MultipleOfConstraint $constraint)
+    public function visitMultipleOfConstraint(NumberValue\MultipleOfConstraint $constraint)
     {
         return sprintf(
             'The number must be a multiple of %s.',
@@ -398,11 +373,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param MaximumConstraint $constraint
+     * @param NumberValue\MaximumConstraint $constraint
      *
      * @return string
      */
-    public function visitMaximumConstraint(MaximumConstraint $constraint)
+    public function visitMaximumConstraint(NumberValue\MaximumConstraint $constraint)
     {
         return sprintf(
             'The number must not be more than %s.',
@@ -411,11 +386,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param MinimumConstraint $constraint
+     * @param NumberValue\MinimumConstraint $constraint
      *
      * @return string
      */
-    public function visitMinimumConstraint(MinimumConstraint $constraint)
+    public function visitMinimumConstraint(NumberValue\MinimumConstraint $constraint)
     {
         return sprintf(
             'The number must not be less than %s.',
@@ -426,11 +401,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     // date-time constraints ===================================================
 
     /**
-     * @param MaximumDateTimeConstraint $constraint
+     * @param DateTimeValue\MaximumDateTimeConstraint $constraint
      *
      * @return string
      */
-    public function visitMaximumDateTimeConstraint(MaximumDateTimeConstraint $constraint)
+    public function visitMaximumDateTimeConstraint(DateTimeValue\MaximumDateTimeConstraint $constraint)
     {
         return sprintf(
             'The date-time value must not be after %s.',
@@ -439,11 +414,11 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     }
 
     /**
-     * @param MinimumDateTimeConstraint $constraint
+     * @param DateTimeValue\MinimumDateTimeConstraint $constraint
      *
      * @return string
      */
-    public function visitMinimumDateTimeConstraint(MinimumDateTimeConstraint $constraint)
+    public function visitMinimumDateTimeConstraint(DateTimeValue\MinimumDateTimeConstraint $constraint)
     {
         return sprintf(
             'The date-time value must not be before %s.',
