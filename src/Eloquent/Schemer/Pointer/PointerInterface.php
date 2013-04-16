@@ -33,7 +33,7 @@ interface PointerInterface
     /**
      * @return PointerInterface
      */
-    public function parent($atom);
+    public function parent();
 
     /**
      * @return string

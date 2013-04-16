@@ -59,7 +59,7 @@ class Pointer implements PointerInterface
     /**
      * @return PointerInterface
      */
-    public function parent($atom)
+    public function parent()
     {
         if (!$this->hasAtoms()) {
             throw new LogicException('No valid parent pointer exists.');
