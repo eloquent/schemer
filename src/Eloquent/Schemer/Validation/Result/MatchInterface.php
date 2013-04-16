@@ -11,6 +11,15 @@
 
 namespace Eloquent\Schemer\Validation\Result;
 
-class ValidationMatch extends AbstractMatch
+interface MatchInterface
 {
+    /**
+     * @return \Eloquent\Schemer\Constraint\Schema
+     */
+    public function schema();
+
+    /**
+     * @return \Eloquent\Schemer\Pointer\PointerInterface
+     */
+    public function pointer();
 }

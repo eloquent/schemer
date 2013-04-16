@@ -480,6 +480,13 @@ class ConstraintValidator implements
                 $result = $result->merge(
                     $this->validateObjectProperty($property, $schema)
                 );
+            } elseif (null !== $schema->defaultValue()) {
+                $result = $result->merge(
+                    new Result\ValidationResult(
+                        array(),
+                        array($this->createDefaultValueMatch($schema))
+                    )
+                );
             }
         }
 
@@ -565,6 +572,13 @@ class ConstraintValidator implements
                 $matchedIndices[$index] = true;
                 $result = $result->merge(
                     $this->validateArrayIndex($index, $schema)
+                );
+            } elseif (null !== $schema->defaultValue()) {
+                $result = $result->merge(
+                    new Result\ValidationResult(
+                        array(),
+                        array($this->createDefaultValueMatch($schema))
+                    )
                 );
             }
         }
@@ -1116,6 +1130,21 @@ class ConstraintValidator implements
         list(, $pointer) = $this->currentContext();
 
         return new Result\ValidationMatch(
+            $schema,
+            $pointer
+        );
+    }
+
+    /**
+     * @param Schema $schema
+     *
+     * @return Result\ValidationMatch
+     */
+    protected function createDefaultValueMatch(Schema $schema)
+    {
+        list(, $pointer) = $this->currentContext();
+
+        return new Result\DefaultValueMatch(
             $schema,
             $pointer
         );

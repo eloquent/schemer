@@ -17,7 +17,7 @@ class ValidationResult
 {
     /**
      * @param array<ValidationIssue>|null $issues
-     * @param array<ValidationMatch>|null $matches
+     * @param array<MatchInterface>|null  $matches
      * @param Comparator|null             $comparator
      */
     public function __construct(
@@ -57,7 +57,7 @@ class ValidationResult
     }
 
     /**
-     * @return array<ValidationMatch>
+     * @return array<MatchInterface>
      */
     public function matches()
     {

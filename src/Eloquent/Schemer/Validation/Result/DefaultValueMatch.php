@@ -11,6 +11,6 @@
 
 namespace Eloquent\Schemer\Validation\Result;
 
-class ValidationMatch extends AbstractMatch
+class DefaultValueMatch extends AbstractMatch
 {
 }
