@@ -38,7 +38,8 @@ class ReferenceValue extends AbstractObjectValue
             $factory = new Factory\ValueFactory;
         }
 
-        $this->reference = $reference;
+        $this->reference = clone $reference;
+        $this->reference->normalize();
         $this->pointer = $pointer;
         $this->mimeType = $mimeType;
         $this->additionalProperties = $additionalProperties;

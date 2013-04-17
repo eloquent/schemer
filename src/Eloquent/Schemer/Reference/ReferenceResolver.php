@@ -17,6 +17,7 @@ use Eloquent\Schemer\Reader\Reader;
 use Eloquent\Schemer\Reader\ReaderInterface;
 use Eloquent\Schemer\Uri\Resolver\BoundUriResolverInterface;
 use Eloquent\Schemer\Value;
+use Zend\Uri\UriInterface;
 
 class ReferenceResolver extends Value\Transform\AbstractValueTransform
 {
@@ -76,20 +77,17 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
      */
     public function visitReferenceValue(Value\ReferenceValue $value)
     {
-        $uri = $value->reference();
-        if (!$uri->isAbsolute()) {
-            $uri = $this->uriResolver()->resolve($uri);
+        $reference = $value->reference();
+        if (!$reference->isAbsolute()) {
+            $reference = $this->uriResolver()->resolve($reference);
+            $reference->normalize();
         }
         $pointer = $value->pointer();
 
-        try {
-            $value = $this->reader()->read($uri, $value->mimeType());
-        } catch (ReadException $e) {
-            throw new Exception\UndefinedReferenceException(
-                $value,
-                $this->uriResolver()->baseUri(),
-                $e
-            );
+        if ($reference->toString() === $this->uriResolver()->baseUri()->toString()) {
+            $value = $this->value();
+        } else {
+            $value = $this->resolveExternal($value, $reference);
         }
 
         if (null !== $pointer) {
@@ -100,6 +98,30 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
                     $this->uriResolver()->baseUri()
                 );
             }
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param Value\ReferenceValue $value
+     * @param UriInterface         $reference
+     *
+     * @return \Eloquent\Schemer\Value\ValueInterface
+     * @throws Exception\UndefinedReferenceException
+     */
+    protected function resolveExternal(
+        Value\ReferenceValue $value,
+        UriInterface $reference
+    ) {
+        try {
+            $value = $this->reader()->read($reference, $value->mimeType());
+        } catch (ReadException $e) {
+            throw new Exception\UndefinedReferenceException(
+                $value,
+                $this->uriResolver()->baseUri(),
+                $e
+            );
         }
 
         return $value;

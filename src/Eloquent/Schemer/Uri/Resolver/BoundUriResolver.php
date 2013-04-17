@@ -27,7 +27,8 @@ class BoundUriResolver implements BoundUriResolverInterface
             $resolver = new UriResolver;
         }
 
-        $this->baseUri = $baseUri;
+        $this->baseUri = clone $baseUri;
+        $this->baseUri->normalize();
         $this->resolver = $resolver;
     }
 

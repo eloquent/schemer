@@ -33,6 +33,7 @@ abstract class AbstractValueTransform implements
     public function transform(Value\ValueInterface $value)
     {
         $this->clear();
+        $this->setValue($value);
         $value = $value->accept($this);
         $this->clear();
 
@@ -146,6 +147,23 @@ abstract class AbstractValueTransform implements
     protected function clear()
     {
         $this->setContext(new Pointer);
+        $this->setValue(null);
+    }
+
+    /**
+     * @param ValueInterface|null $value
+     */
+    protected function setValue(Value\ValueInterface $value = null)
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * @return ValueInterface|null
+     */
+    public function value()
+    {
+        return $this->value;
     }
 
     /**
@@ -177,5 +195,6 @@ abstract class AbstractValueTransform implements
         return $this->context;
     }
 
+    private $value;
     private $context;
 }
