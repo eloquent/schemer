@@ -1,0 +1,10 @@
+{
+    "foo": "bar",
+    "baz": {
+        "qux": "doom",
+        "splat": {
+            "ping": "pong",
+            "pang": "peng"
+        }
+    }
+}

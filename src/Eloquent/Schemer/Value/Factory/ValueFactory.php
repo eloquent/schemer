@@ -12,10 +12,6 @@
 namespace Eloquent\Schemer\Value\Factory;
 
 use DateTime;
-use Eloquent\Schemer\Pointer\PointerFactory;
-use Eloquent\Schemer\Pointer\PointerFactoryInterface;
-use Eloquent\Schemer\Uri\UriFactory;
-use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Value;
 use Icecave\Repr\Repr;
 use InvalidArgumentException;
@@ -24,41 +20,6 @@ use Zend\Uri\Uri;
 
 class ValueFactory implements ValueFactoryInterface
 {
-    /**
-     * @param UriFactoryInterface|null     $uriFactory
-     * @param PointerFactoryInterface|null $pointerFactory
-     */
-    public function __construct(
-        UriFactoryInterface $uriFactory = null,
-        PointerFactoryInterface $pointerFactory = null
-    ) {
-        if (null === $uriFactory) {
-            $uriFactory = new UriFactory;
-        }
-        if (null === $pointerFactory) {
-            $pointerFactory = new PointerFactory;
-        }
-
-        $this->uriFactory = $uriFactory;
-        $this->pointerFactory = $pointerFactory;
-    }
-
-    /**
-     * @return UriFactoryInterface
-     */
-    public function uriFactory()
-    {
-        return $this->uriFactory;
-    }
-
-    /**
-     * @return PointerFactoryInterface
-     */
-    public function pointerFactory()
-    {
-        return $this->pointerFactory;
-    }
-
     /**
      * @param mixed $value
      *
@@ -152,13 +113,6 @@ class ValueFactory implements ValueFactoryInterface
             $uri = new Uri($value->{'$ref'}->value());
             unset($value->{'$ref'});
 
-            $pointer = null;
-            if (null !== $uri->getFragment()) {
-                $pointer = $this->pointerFactory()->create($uri->getFragment());
-                $uri->setFragment(null);
-            }
-            $reference = $this->uriFactory()->create($uri->toString());
-
             $mimeType = null;
             if (
                 property_exists($value, '$type') &&
@@ -169,8 +123,7 @@ class ValueFactory implements ValueFactoryInterface
             }
 
             return new Value\ReferenceValue(
-                $reference,
-                $pointer,
+                $uri,
                 $mimeType,
                 new Value\ObjectValue($value)
             );
@@ -178,7 +131,4 @@ class ValueFactory implements ValueFactoryInterface
 
         return new Value\ObjectValue($value);
     }
-
-    private $uriFactory;
-    private $pointerFactory;
 }

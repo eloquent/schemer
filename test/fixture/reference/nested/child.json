@@ -1,0 +1,6 @@
+{
+    "qux": "doom",
+    "splat": {
+        "$ref": "grandchild.json"
+    }
+}

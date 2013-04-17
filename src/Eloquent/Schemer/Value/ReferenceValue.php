@@ -11,22 +11,19 @@
 
 namespace Eloquent\Schemer\Value;
 
-use Eloquent\Schemer\Pointer\PointerInterface;
 use stdClass;
 use Zend\Uri\UriInterface;
 
 class ReferenceValue extends AbstractObjectValue
 {
     /**
-     * @param UriInterface              $reference
-     * @param PointerInterface|null     $pointer
+     * @param UriInterface              $uri
      * @param string|null               $mimeType
      * @param ObjectValue|null          $additionalProperties
      * @param Factory\ValueFactory|null $factory
      */
     public function __construct(
-        UriInterface $reference,
-        PointerInterface $pointer = null,
+        UriInterface $uri,
         $mimeType = null,
         ObjectValue $additionalProperties = null,
         Factory\ValueFactory $factory = null
@@ -38,9 +35,7 @@ class ReferenceValue extends AbstractObjectValue
             $factory = new Factory\ValueFactory;
         }
 
-        $this->reference = clone $reference;
-        $this->reference->normalize();
-        $this->pointer = $pointer;
+        $this->uri = $uri;
         $this->mimeType = $mimeType;
         $this->additionalProperties = $additionalProperties;
         $this->factory = $factory;
@@ -49,17 +44,9 @@ class ReferenceValue extends AbstractObjectValue
     /**
      * @return UriInterface
      */
-    public function reference()
+    public function uri()
     {
-        return $this->reference;
-    }
-
-    /**
-     * @return PointerInterface|null
-     */
-    public function pointer()
-    {
-        return $this->pointer;
+        return $this->uri;
     }
 
     /**
@@ -101,17 +88,6 @@ class ReferenceValue extends AbstractObjectValue
     }
 
     /**
-     * @return Uri
-     */
-    public function uri()
-    {
-        $uri = new Uri($this->reference()->toString());
-        $uri->setFragment($this->pointer()->string());
-
-        return $uri;
-    }
-
-    /**
      * @param Visitor\ValueVisitorInterface $visitor
      *
      * @return mixed
@@ -134,8 +110,7 @@ class ReferenceValue extends AbstractObjectValue
         return $value;
     }
 
-    private $reference;
-    private $pointer;
+    private $uri;
     private $mimeType;
     private $additionalProperties;
     private $factory;

@@ -1,0 +1,6 @@
+{
+    "foo": "bar",
+    "baz": {
+        "$ref": "child.json"
+    }
+}
