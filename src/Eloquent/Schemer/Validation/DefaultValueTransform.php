@@ -15,8 +15,7 @@ use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Value;
 use stdClass;
 
-class DefaultValueTransform extends Value\Visitor\AbstractContextualValueVisitor implements
-    Value\Transform\ValueTransformInterface
+class DefaultValueTransform extends Value\Transform\AbstractValueTransform
 {
     /**
      * @param Result\ValidationResult $result
@@ -53,75 +52,18 @@ class DefaultValueTransform extends Value\Visitor\AbstractContextualValueVisitor
     }
 
     /**
-     * @param Value\ValueInterface $value
-     *
-     * @return Value\ValueInterface
-     */
-    public function transform(Value\ValueInterface $value)
-    {
-        $this->clear();
-        $value = $value->accept($this);
-        $this->clear();
-
-        return $value;
-    }
-
-    /**
      * @param Value\ArrayValue $value
      *
      * @return Value\ArrayValue
      */
     public function visitArrayValue(Value\ArrayValue $value)
     {
-        $subValues = array();
-        foreach ($value as $index => $subValue) {
-            $this->pushContextAtom(strval($index));
-            $subValues[$index] = $subValue->accept($this);
-            $this->popContextAtom();
-        }
-        $subValues = array_merge($subValues, $this->defaultItems());
-
-        return new Value\ArrayValue($subValues);
-    }
-
-    /**
-     * @param Value\BooleanValue $value
-     *
-     * @return Value\BooleanValue
-     */
-    public function visitBooleanValue(Value\BooleanValue $value)
-    {
-        return $value;
-    }
-
-    /**
-     * @param Value\FloatingPointValue $value
-     *
-     * @return Value\FloatingPointValue
-     */
-    public function visitFloatingPointValue(Value\FloatingPointValue $value)
-    {
-        return $value;
-    }
-
-    /**
-     * @param Value\IntegerValue $value
-     *
-     * @return Value\IntegerValue
-     */
-    public function visitIntegerValue(Value\IntegerValue $value)
-    {
-        return $value;
-    }
-
-    /**
-     * @param Value\NullValue $value
-     *
-     * @return Value\NullValue
-     */
-    public function visitNullValue(Value\NullValue $value)
-    {
-        return $value;
+        return new Value\ArrayValue(
+            array_merge(
+                iterator_to_array(parent::visitArrayValue($value)),
+                $this->defaultItems()
+            )
+        );
     }
 
     /**
@@ -132,46 +74,14 @@ class DefaultValueTransform extends Value\Visitor\AbstractContextualValueVisitor
     public function visitObjectValue(Value\ObjectValue $value)
     {
         $subValues = new stdClass;
-        foreach ($value as $property => $subValue) {
-            $this->pushContextAtom($property);
-            $subValues->$property = $subValue->accept($this);
-            $this->popContextAtom();
+        foreach (parent::visitObjectValue($value) as $property => $subValue) {
+            $subValues->$property = $subValue;
         }
         foreach ($this->defaultProperties() as $property => $subValue) {
             $subValues->$property = $subValue;
         }
 
         return new Value\ObjectValue($subValues);
-    }
-
-    /**
-     * @param Value\StringValue $value
-     *
-     * @return Value\StringValue
-     */
-    public function visitStringValue(Value\StringValue $value)
-    {
-        return $value;
-    }
-
-    /**
-     * @param Value\DateTimeValue $value
-     *
-     * @return Value\DateTimeValue
-     */
-    public function visitDateTimeValue(Value\DateTimeValue $value)
-    {
-        return $value;
-    }
-
-    /**
-     * @param Value\ReferenceValue $value
-     *
-     * @return Value\ReferenceValue
-     */
-    public function visitReferenceValue(Value\ReferenceValue $value)
-    {
-        return $value;
     }
 
     /**

@@ -9,24 +9,34 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Reference;
+namespace Eloquent\Schemer\Value\Transform;
 
+use Eloquent\Schemer\Pointer\Pointer;
+use Eloquent\Schemer\Pointer\PointerInterface;
 use Eloquent\Schemer\Value;
 use stdClass;
 
-abstract class AbstractReferenceResolver implements
-    Value\Transform\ValueTransformInterface,
+abstract class AbstractValueTransform implements
+    ValueTransformInterface,
     Value\Visitor\ValueVisitorInterface
 {
+    public function __construct()
+    {
+        $this->clear();
+    }
+
     /**
      * @param Value\ValueInterface $value
      *
      * @return Value\ValueInterface
-     * @throws Exception\UndefinedReferenceException
      */
     public function transform(Value\ValueInterface $value)
     {
-        return $value->accept($this);
+        $this->clear();
+        $value = $value->accept($this);
+        $this->clear();
+
+        return $value;
     }
 
     /**
@@ -36,12 +46,14 @@ abstract class AbstractReferenceResolver implements
      */
     public function visitArrayValue(Value\ArrayValue $value)
     {
-        $innerValue = array();
+        $subValues = array();
         foreach ($value as $index => $subValue) {
-            $innerValue[$index] = $subValue->accept($this);
+            $this->pushContextAtom(strval($index));
+            $subValues[$index] = $subValue->accept($this);
+            $this->popContextAtom();
         }
 
-        return new Value\ArrayValue($innerValue);
+        return new Value\ArrayValue($subValues);
     }
 
     /**
@@ -91,12 +103,14 @@ abstract class AbstractReferenceResolver implements
      */
     public function visitObjectValue(Value\ObjectValue $value)
     {
-        $innerValue = new stdClass;
+        $subValues = new stdClass;
         foreach ($value as $property => $subValue) {
-            $innerValue->$property = $subValue->accept($this);
+            $this->pushContextAtom($property);
+            $subValues->$property = $subValue->accept($this);
+            $this->popContextAtom();
         }
 
-        return new Value\ObjectValue($innerValue);
+        return new Value\ObjectValue($subValues);
     }
 
     /**
@@ -118,4 +132,50 @@ abstract class AbstractReferenceResolver implements
     {
         return $value;
     }
+
+    /**
+     * @param Value\ReferenceValue $value
+     *
+     * @return Value\ReferenceValue
+     */
+    public function visitReferenceValue(Value\ReferenceValue $value)
+    {
+        return $value;
+    }
+
+    protected function clear()
+    {
+        $this->setContext(new Pointer);
+    }
+
+    /**
+     * @param PointerInterface $context
+     */
+    protected function setContext(PointerInterface $context)
+    {
+        $this->context = $context;
+    }
+
+    /**
+     * @param string $atom
+     */
+    protected function pushContextAtom($atom)
+    {
+        $this->setContext($this->context()->joinAtom($atom));
+    }
+
+    protected function popContextAtom()
+    {
+        $this->setContext($this->context()->parent());
+    }
+
+    /**
+     * @return PointerInterface
+     */
+    protected function context()
+    {
+        return $this->context;
+    }
+
+    private $context;
 }

@@ -16,9 +16,9 @@ use Eloquent\Schemer\Pointer\Resolver\PointerResolverInterface;
 use Eloquent\Schemer\Reader\Reader;
 use Eloquent\Schemer\Reader\ReaderInterface;
 use Eloquent\Schemer\Uri\Resolver\BoundUriResolverInterface;
-use Eloquent\Schemer\Value\ReferenceValue;
+use Eloquent\Schemer\Value;
 
-class ReferenceResolver extends AbstractReferenceResolver
+class ReferenceResolver extends Value\Transform\AbstractValueTransform
 {
     /**
      * @param BoundUriResolverInterface     $uriResolver
@@ -30,6 +30,8 @@ class ReferenceResolver extends AbstractReferenceResolver
         ReaderInterface $reader = null,
         PointerResolverInterface $pointerResolver = null
     ) {
+        parent::__construct();
+
         if (null === $reader) {
             $reader = new Reader;
         }
@@ -67,12 +69,12 @@ class ReferenceResolver extends AbstractReferenceResolver
     }
 
     /**
-     * @param ReferenceValue $value
+     * @param Value\ReferenceValue $value
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      * @throws Exception\UndefinedReferenceException
      */
-    public function visitReferenceValue(ReferenceValue $value)
+    public function visitReferenceValue(Value\ReferenceValue $value)
     {
         $uri = $value->reference();
         if (!$uri->isAbsolute()) {
