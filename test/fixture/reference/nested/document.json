@@ -1,6 +1,6 @@
 {
     "foo": "bar",
     "baz": {
-        "$ref": "child.json"
+        "$ref": "child-schemas/child.json"
     }
 }

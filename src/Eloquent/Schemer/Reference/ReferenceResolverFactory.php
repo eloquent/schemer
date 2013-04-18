@@ -11,7 +11,6 @@
 
 namespace Eloquent\Schemer\Reference;
 
-use Eloquent\Schemer\Uri\Resolver\BoundUriResolver;
 use Zend\Uri\UriInterface;
 
 class ReferenceResolverFactory implements ReferenceResolverFactoryInterface
@@ -23,6 +22,6 @@ class ReferenceResolverFactory implements ReferenceResolverFactoryInterface
      */
     public function create(UriInterface $baseUri)
     {
-        return new ReferenceResolver(new BoundUriResolver($baseUri));
+        return new ReferenceResolver($baseUri);
     }
 }
