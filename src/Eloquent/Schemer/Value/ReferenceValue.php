@@ -35,7 +35,8 @@ class ReferenceValue extends AbstractObjectValue
             $factory = new Factory\ValueFactory;
         }
 
-        $this->uri = $uri;
+        $this->uri = clone $uri;
+        $this->uri->normalize();
         $this->mimeType = $mimeType;
         $this->additionalProperties = $additionalProperties;
         $this->factory = $factory;
@@ -103,8 +104,8 @@ class ReferenceValue extends AbstractObjectValue
     protected function wrappedValue()
     {
         $value = $this->value();
-        foreach (get_object_vars($value) as $property => $value) {
-            $value->$property = $this->factory()->create($value);
+        foreach (get_object_vars($value) as $property => $subValue) {
+            $value->$property = $this->factory()->create($subValue);
         }
 
         return $value;

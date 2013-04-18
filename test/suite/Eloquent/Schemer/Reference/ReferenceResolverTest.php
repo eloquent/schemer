@@ -52,7 +52,12 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
     {
         $data = array();
         foreach (scandir($this->fixturePath) as $item) {
-            if ('.' === $item || '..' === $item) {
+            if (
+                '.' === $item ||
+                '..' === $item ||
+                !is_dir(sprintf('%s/%s', $this->fixturePath, $item)) ||
+                !is_file(sprintf('%s/%s/expected.json', $this->fixturePath, $item))
+            ) {
                 continue;
             }
 
@@ -76,5 +81,17 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $actual);
         $this->assertTrue($this->comparator->equals($expected, $actual));
+    }
+
+    public function testResolveResolvableRecursive()
+    {
+        $path = sprintf(
+            '%s/recursive/resolvable-inline.json',
+            $this->fixturePath
+        );
+        $resolver = $this->factory->create($this->pathUriFixture($path));
+        $value = $resolver->transform($this->reader->readPath($path));
+
+        $this->assertSame('splat', $value->a->foo->bar->foo->doom->value());
     }
 }

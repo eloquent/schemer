@@ -69,6 +69,7 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         $this->pointerResolver = $pointerResolver;
 
         $this->baseUriStack = array();
+        $this->resolutions = array();
     }
 
     /**
@@ -127,6 +128,16 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
      */
     public function visitReferenceValue(Value\ReferenceValue $reference)
     {
+        if ($this->hasResolution($reference)) {
+            $resolution = $this->resolution($reference);
+            if (null === $resolution) {
+                throw new LogicException('Unresolvable recursive reference.');
+            }
+
+            return $resolution;
+        }
+        $this->startResolution($reference);
+
         // use scheme-specific URI instances
         $referenceUri = $this->uriFactory()->create(
             $reference->uri()->toString()
@@ -140,12 +151,26 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         $referenceUri->normalize();
 
         if ($referenceUri->toString() === $this->currentBaseUri()->toString()) {
-            $value = $this->value();
+            $value = $this->resolveInline($reference);
         } else {
             $value = $this->resolveExternal($reference, $referenceUri);
         }
 
-        return $this->resolvePointer($reference, $value);
+        $value = $this->resolvePointer($reference, $value);
+        $this->completeResolution($reference, $value);
+
+        return $value;
+    }
+
+    /**
+     * @param Value\ReferenceValue $reference
+     *
+     * @return Value\ValueInterface
+     * @throws Exception\UndefinedReferenceException
+     */
+    protected function resolveInline(Value\ReferenceValue $reference)
+    {
+        return $this->value()->accept($this);
     }
 
     /**
@@ -233,6 +258,59 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         return $this->baseUriStack[count($this->baseUriStack) - 1];
     }
 
+    protected function clear()
+    {
+        parent::clear();
+
+        $this->resolutions = array();
+    }
+
+    /**
+     * @param Value\ReferenceValue $reference
+     */
+    protected function startResolution(Value\ReferenceValue $reference)
+    {
+        $this->resolutions[$reference->uri()->toString()] = null;
+    }
+
+    /**
+     * @param Value\ReferenceValue $reference
+     * @param Value\ValueInterface $value
+     */
+    protected function completeResolution(
+        Value\ReferenceValue $reference,
+        Value\ValueInterface $value
+    ) {
+        $this->resolutions[$reference->uri()->toString()] = $value;
+    }
+
+    /**
+     * @param Value\ReferenceValue $reference
+     *
+     * @return boolean
+     */
+    protected function hasResolution(Value\ReferenceValue $reference)
+    {
+        return array_key_exists(
+            $reference->uri()->toString(),
+            $this->resolutions
+        );
+    }
+
+    /**
+     * @param Value\ReferenceValue $reference
+     *
+     * @return Value\ValueInterface|null
+     */
+    protected function resolution(Value\ReferenceValue $reference)
+    {
+        if (!$this->hasResolution($reference)) {
+            throw new LogicException('Undefined resolution.');
+        }
+
+        return $this->resolutions[$reference->uri()->toString()];
+    }
+
     private $baseUri;
     private $uriResolver;
     private $reader;
@@ -240,4 +318,5 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     private $pointerFactory;
     private $pointerResolver;
     private $baseUriStack;
+    private $resolutions;
 }
