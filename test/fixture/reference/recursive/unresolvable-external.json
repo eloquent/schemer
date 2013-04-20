@@ -1,0 +1,3 @@
+{
+    "a": { "$ref": "unresolvable-external-other.json#/b" }
+}

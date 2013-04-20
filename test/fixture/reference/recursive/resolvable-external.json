@@ -1,0 +1,6 @@
+{
+    "a": {
+        "foo": { "$ref": "resolvable-external-other.json#/b" },
+        "baz": "qux"
+    }
+}

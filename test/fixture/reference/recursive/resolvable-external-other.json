@@ -1,0 +1,6 @@
+{
+    "b": {
+        "bar": { "$ref": "resolvable-external.json#/a" },
+        "doom": "splat"
+    }
+}

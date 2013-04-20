@@ -83,12 +83,20 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->comparator->equals($expected, $actual));
     }
 
-    public function testResolveResolvableRecursiveInline()
+    public function resolvableRecursiveData()
     {
-        $path = sprintf(
-            '%s/recursive/resolvable-inline.json',
-            $this->fixturePath
+        return array(
+            array('resolvable-inline.json'),
+            array('resolvable-external.json'),
         );
+    }
+
+    /**
+     * @dataProvider resolvableRecursiveData
+     */
+    public function testResolveResolvableRecursive($test)
+    {
+        $path = sprintf('%s/recursive/%s', $this->fixturePath, $test);
         $resolver = $this->factory->create($this->pathUriFixture($path));
         $value = $resolver->transform($this->reader->readPath($path));
 
@@ -107,5 +115,18 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
         $this->assertNull($value->a->value());
         $this->assertNull($value->b->value());
         $this->assertSame($value->a, $value->b);
+    }
+
+    public function testResolveUnresolvableRecursiveExternal()
+    {
+        $path = sprintf(
+            '%s/recursive/unresolvable-external.json',
+            $this->fixturePath
+        );
+        $resolver = $this->factory->create($this->pathUriFixture($path));
+        $value = $resolver->transform($this->reader->readPath($path));
+
+        $this->assertNull($value->a->value());
+        $this->assertFalse($value->has('b'));
     }
 }
