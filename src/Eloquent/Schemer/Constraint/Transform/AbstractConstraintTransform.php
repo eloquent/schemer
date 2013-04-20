@@ -17,7 +17,6 @@ use Eloquent\Schemer\Constraint\DateTimeValue;
 use Eloquent\Schemer\Constraint\Generic;
 use Eloquent\Schemer\Constraint\NumberValue;
 use Eloquent\Schemer\Constraint\ObjectValue;
-use Eloquent\Schemer\Constraint\PlaceholderSchema;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
@@ -59,16 +58,6 @@ abstract class AbstractConstraintTransform implements
             $schema->title(),
             $schema->description()
         );
-    }
-
-    /**
-     * @param PlaceholderSchema $schema
-     *
-     * @return PlaceholderSchema
-     */
-    public function visitPlaceholderSchema(PlaceholderSchema $schema)
-    {
-        return $schema;
     }
 
     // generic constraints =====================================================

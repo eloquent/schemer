@@ -31,14 +31,22 @@ class Schema implements SchemaInterface
             $constraints = array();
         }
 
-        $this->constraints = $constraints;
+        $this->setConstraints($constraints);
         $this->defaultValue = $defaultValue;
         $this->title = $title;
         $this->description = $description;
     }
 
     /**
-     * @return array<ConstraintInterface>
+     * @param array<ConstraintInterface> $constraints
+     */
+    public function setConstraints(array $constraints)
+    {
+        $this->constraints = $constraints;
+    }
+
+    /**
+     * @return array<integer,ConstraintInterface>
      */
     public function constraints()
     {

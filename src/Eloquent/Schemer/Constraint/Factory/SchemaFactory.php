@@ -17,32 +17,23 @@ use Eloquent\Schemer\Constraint\DateTimeValue;
 use Eloquent\Schemer\Constraint\Generic;
 use Eloquent\Schemer\Constraint\NumberValue;
 use Eloquent\Schemer\Constraint\ObjectValue;
-use Eloquent\Schemer\Constraint\PlaceholderSchema;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Constraint\StringValue;
-use Eloquent\Schemer\Constraint\Transform\ConstraintTransformInterface;
-use Eloquent\Schemer\Constraint\Transform\PlaceholderUnwrapTransform;
 use Eloquent\Schemer\Value;
 
 class SchemaFactory implements SchemaFactoryInterface
 {
     /**
      * @param FormatConstraintFactoryInterface|null $formatConstraintFactory
-     * @param ConstraintTransformInterface|null     $placeholderUnwrap
      */
     public function __construct(
-        FormatConstraintFactoryInterface $formatConstraintFactory = null,
-        ConstraintTransformInterface $placeholderUnwrap = null
+        FormatConstraintFactoryInterface $formatConstraintFactory = null
     ) {
         if (null === $formatConstraintFactory) {
             $formatConstraintFactory = new FormatConstraintFactory;
         }
-        if (null === $placeholderUnwrap) {
-            $placeholderUnwrap = new PlaceholderUnwrapTransform;
-        }
 
         $this->formatConstraintFactory = $formatConstraintFactory;
-        $this->placeholderUnwrap = $placeholderUnwrap;
     }
 
     /**
@@ -51,14 +42,6 @@ class SchemaFactory implements SchemaFactoryInterface
     public function formatConstraintFactory()
     {
         return $this->formatConstraintFactory;
-    }
-
-    /**
-     * @return ConstraintTransformInterface
-     */
-    public function placeholderUnwrap()
-    {
-        return $this->placeholderUnwrap;
     }
 
     /**
@@ -72,7 +55,7 @@ class SchemaFactory implements SchemaFactoryInterface
         $schema = $this->createSchema($value);
         $this->clear();
 
-        return $this->placeholderUnwrap()->transform($schema);
+        return $schema;
     }
 
     /**
@@ -82,23 +65,14 @@ class SchemaFactory implements SchemaFactoryInterface
      */
     public function createSchema(Value\ConcreteValueInterface $value)
     {
-        if ($this->hasSchema($value)) {
-            return $this->schema($value);
+        if ($this->hasRegisteredSchema($value)) {
+            return $this->registeredSchema($value);
         }
-        $this->startSchema($value);
 
         if (!$value instanceof Value\ObjectValue) {
             throw new UnexpectedValueException(
                 $value,
                 array(Value\ValueType::OBJECT_TYPE())
-            );
-        }
-
-        $constraints = array();
-        foreach ($value as $property => $subValue) {
-            $constraints = array_merge(
-                $constraints,
-                $this->createConstraints($property, $subValue)
             );
         }
 
@@ -109,15 +83,25 @@ class SchemaFactory implements SchemaFactoryInterface
         }
 
         $schema = new Schema(
-            array_merge(
-                $constraints,
-                $this->createCompositeConstraints($value)
-            ),
+            null,
             $defaultValue,
             $value->getRawDefault('title'),
             $value->getRawDefault('description')
         );
-        $this->completeSchema($value, $schema);
+        $this->registerSchema($value, $schema);
+
+        $constraints = array();
+        foreach ($value as $property => $subValue) {
+            $constraints = array_merge(
+                $constraints,
+                $this->createConstraints($property, $subValue)
+            );
+        }
+        $constraints = array_merge(
+            $constraints,
+            $this->createCompositeConstraints($value)
+        );
+        $schema->setConstraints($constraints);
 
         return $schema;
     }
@@ -823,21 +807,13 @@ class SchemaFactory implements SchemaFactoryInterface
 
     /**
      * @param Value\ConcreteValueInterface $value
-     */
-    protected function startSchema(Value\ConcreteValueInterface $value)
-    {
-        $this->schemas[spl_object_hash($value)] = new PlaceholderSchema;
-    }
-
-    /**
-     * @param Value\ConcreteValueInterface $value
      * @param Schema                       $schema
      */
-    protected function completeSchema(
+    protected function registerSchema(
         Value\ConcreteValueInterface $value,
         Schema $schema
     ) {
-        $this->schema($value)->setInnerSchema($schema);
+        $this->schemas[spl_object_hash($value)] = $schema;
     }
 
     /**
@@ -845,7 +821,7 @@ class SchemaFactory implements SchemaFactoryInterface
      *
      * @return boolean
      */
-    protected function hasSchema(Value\ConcreteValueInterface $value)
+    protected function hasRegisteredSchema(Value\ConcreteValueInterface $value)
     {
         return array_key_exists(spl_object_hash($value), $this->schemas);
     }
@@ -855,9 +831,9 @@ class SchemaFactory implements SchemaFactoryInterface
      *
      * @return Value\ConcreteValueInterface
      */
-    protected function schema(Value\ConcreteValueInterface $value)
+    protected function registeredSchema(Value\ConcreteValueInterface $value)
     {
-        if (!$this->hasSchema($value)) {
+        if (!$this->hasRegisteredSchema($value)) {
             throw new LogicException('Undefined schema.');
         }
 
@@ -865,6 +841,5 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     private $formatConstraintFactory;
-    private $placeholderUnwrap;
     private $schemas;
 }

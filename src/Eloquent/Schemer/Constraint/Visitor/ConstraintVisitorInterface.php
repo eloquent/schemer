@@ -16,7 +16,6 @@ use Eloquent\Schemer\Constraint\DateTimeValue;
 use Eloquent\Schemer\Constraint\Generic;
 use Eloquent\Schemer\Constraint\NumberValue;
 use Eloquent\Schemer\Constraint\ObjectValue;
-use Eloquent\Schemer\Constraint\PlaceholderSchema;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
@@ -29,13 +28,6 @@ interface ConstraintVisitorInterface
      * @return mixed
      */
     public function visitSchema(Schema $schema);
-
-    /**
-     * @param PlaceholderSchema $schema
-     *
-     * @return mixed
-     */
-    public function visitPlaceholderSchema(PlaceholderSchema $schema);
 
     // generic constraints =====================================================
 

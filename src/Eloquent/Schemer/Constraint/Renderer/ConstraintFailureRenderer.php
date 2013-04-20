@@ -16,7 +16,6 @@ use Eloquent\Schemer\Constraint\DateTimeValue;
 use Eloquent\Schemer\Constraint\Generic;
 use Eloquent\Schemer\Constraint\NumberValue;
 use Eloquent\Schemer\Constraint\ObjectValue;
-use Eloquent\Schemer\Constraint\PlaceholderSchema;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
@@ -35,16 +34,6 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitSchema(Schema $schema)
     {
         return static::UNMATCHED_SCHEMA;
-    }
-
-    /**
-     * @param PlaceholderSchema $schema
-     *
-     * @return string
-     */
-    public function visitPlaceholderSchema(PlaceholderSchema $schema)
-    {
-        return $schema->innerSchema()->accept($this);
     }
 
     // generic constraints =====================================================
