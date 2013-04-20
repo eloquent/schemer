@@ -11,12 +11,15 @@
 
 namespace Eloquent\Schemer\Value;
 
-interface ValueInterface
+interface ConcreteValueInterface extends ValueInterface
 {
     /**
-     * @param Visitor\ValueVisitorInterface $visitor
-     *
      * @return mixed
      */
-    public function accept(Visitor\ValueVisitorInterface $visitor);
+    public function value();
+
+    /**
+     * @return ValueType
+     */
+    public function valueType();
 }

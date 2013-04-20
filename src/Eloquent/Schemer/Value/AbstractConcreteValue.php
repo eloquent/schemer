@@ -11,7 +11,7 @@
 
 namespace Eloquent\Schemer\Value;
 
-abstract class AbstractValue implements ValueInterface
+abstract class AbstractConcreteValue implements ConcreteValueInterface
 {
     /**
      * @param mixed $value
@@ -26,16 +26,8 @@ abstract class AbstractValue implements ValueInterface
      */
     public function value()
     {
-        return $this->wrappedValue();
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function wrappedValue()
-    {
         return $this->value;
     }
 
-    private $value;
+    protected $value;
 }

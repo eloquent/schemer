@@ -13,7 +13,7 @@ namespace Eloquent\Schemer\Value;
 
 use InvalidArgumentException;
 
-class BooleanValue extends AbstractValue
+class BooleanValue extends AbstractConcreteValue
 {
     /**
      * @param boolean $value

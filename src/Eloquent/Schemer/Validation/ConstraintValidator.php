@@ -470,7 +470,7 @@ class ConstraintValidator implements
         foreach ($constraint->patternSchemas() as $pattern => $schema) {
             $pattern = $this->wrapPattern($pattern);
 
-            foreach ($value->properties() as $property) {
+            foreach ($value->keys() as $property) {
                 if (preg_match($pattern, $property)) {
                     $matchedProperties[$property] = true;
                     $result = $result->merge(
@@ -481,7 +481,7 @@ class ConstraintValidator implements
         }
 
         // additional properties
-        foreach ($value->properties() as $property) {
+        foreach ($value->keys() as $property) {
             if (!array_key_exists($property, $matchedProperties)) {
                 $result = $result->merge(
                     $this->validateObjectProperty(
@@ -560,7 +560,7 @@ class ConstraintValidator implements
         }
 
         // additional items
-        foreach ($value->indices() as $index) {
+        foreach ($value->keys() as $index) {
             if (!array_key_exists($index, $matchedIndices)) {
                 $result = $result->merge(
                     $this->validateArrayIndex(

@@ -11,7 +11,7 @@
 
 namespace Eloquent\Schemer\Value;
 
-class NullValue extends AbstractValue
+class NullValue extends AbstractConcreteValue
 {
     public function __construct()
     {

@@ -58,30 +58,6 @@ class PlaceholderValue implements ValueInterface
     }
 
     /**
-     * @return mixed
-     */
-    public function value()
-    {
-        if (null === $this->innerValue()) {
-            return null;
-        }
-
-        return $this->innerValue()->value();
-    }
-
-    /**
-     * @return ValueType
-     */
-    public function valueType()
-    {
-        if (null === $this->innerValue()) {
-            return ValueType::NULL_VALUE();
-        }
-
-        return $this->innerValue()->valueType();
-    }
-
-    /**
      * @param Visitor\ValueVisitorInterface $visitor
      *
      * @return mixed

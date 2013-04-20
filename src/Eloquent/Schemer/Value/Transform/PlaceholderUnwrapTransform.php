@@ -12,19 +12,9 @@
 namespace Eloquent\Schemer\Value\Transform;
 
 use Eloquent\Schemer\Value;
-use ReflectionClass;
 
 class PlaceholderUnwrapTransform extends AbstractValueTransform
 {
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->reflector = new ReflectionClass(
-            'Eloquent\Schemer\Value\AbstractValue'
-        );
-    }
-
     /**
      * @param Value\ArrayValue $value
      *
@@ -32,24 +22,7 @@ class PlaceholderUnwrapTransform extends AbstractValueTransform
      */
     public function visitArrayValue(Value\ArrayValue $value)
     {
-        if ($this->isVisited($value)) {
-            return $value;
-        }
-        $this->setVisited($value);
-
-        $valueProperty = $this->reflector->getProperty('value');
-        $valueProperty->setAccessible(true);
-        $innerValue = $valueProperty->getValue($value);
-        foreach ($innerValue as $index => $subValue) {
-            if ($subValue instanceof Value\PlaceholderValue) {
-                $innerValue[$index] = $innerValue[$index]->accept($this);
-                $valueProperty->setValue($innerValue);
-            }
-            $innerValue[$index] = $innerValue[$index]->accept($this);
-            $valueProperty->setValue($innerValue);
-        }
-
-        return $value;
+        return $this->transformValueContainer($value);
     }
 
     /**
@@ -59,22 +32,7 @@ class PlaceholderUnwrapTransform extends AbstractValueTransform
      */
     public function visitObjectValue(Value\ObjectValue $value)
     {
-        if ($this->isVisited($value)) {
-            return $value;
-        }
-        $this->setVisited($value);
-
-        $valueProperty = $this->reflector->getProperty('value');
-        $valueProperty->setAccessible(true);
-        $innerValue = $valueProperty->getValue($value);
-        foreach (get_object_vars($innerValue) as $property => $subValue) {
-            if ($subValue instanceof Value\PlaceholderValue) {
-                $innerValue->$property = $innerValue->$property->accept($this);
-            }
-            $innerValue->$property = $innerValue->$property->accept($this);
-        }
-
-        return $value;
+        return $this->transformValueContainer($value);
     }
 
     /**
@@ -93,6 +51,28 @@ class PlaceholderUnwrapTransform extends AbstractValueTransform
 
         while ($value instanceof Value\PlaceholderValue) {
             $value = $value->innerValue();
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param Value\ValueContainerInterface $value
+     *
+     * @return Value\ValueContainerInterface
+     */
+    protected function transformValueContainer(Value\ValueContainerInterface $value)
+    {
+        if ($this->isVisited($value)) {
+            return $value;
+        }
+        $this->setVisited($value);
+
+        foreach ($value->keys() as $key) {
+            if ($value->get($key) instanceof Value\PlaceholderValue) {
+                $value->set($key, $value->get($key)->accept($this));
+            }
+            $value->set($key, $value->get($key)->accept($this));
         }
 
         return $value;

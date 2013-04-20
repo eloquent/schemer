@@ -13,14 +13,13 @@ namespace Eloquent\Schemer\Value;
 
 use ArrayAccess;
 use ArrayIterator;
-use Countable;
 use InvalidArgumentException;
 use IteratorAggregate;
 use LogicException;
 
-class ArrayValue extends AbstractValue implements
+class ArrayValue extends AbstractConcreteValue implements
+    ValueContainerInterface,
     ArrayAccess,
-    Countable,
     IteratorAggregate
 {
     /**
@@ -56,7 +55,7 @@ class ArrayValue extends AbstractValue implements
     {
         return array_map(function ($value) {
             return $value->value();
-        }, $this->wrappedValue());
+        }, $this->value);
     }
 
     /**
@@ -70,9 +69,17 @@ class ArrayValue extends AbstractValue implements
     /**
      * @return array<integer,integer>
      */
-    public function indices()
+    public function keys()
     {
-        return array_keys($this->wrappedValue());
+        return array_keys($this->value);
+    }
+
+    /**
+     * @return array<integer,ValueInterface>
+     */
+    public function values()
+    {
+        return array_values($this->value);
     }
 
     /**
@@ -80,7 +87,16 @@ class ArrayValue extends AbstractValue implements
      */
     public function count()
     {
-        return count($this->wrappedValue());
+        return count($this->value);
+    }
+
+    /**
+     * @param integer        $index
+     * @param ValueInterface $value
+     */
+    public function set($index, ValueInterface $value)
+    {
+        $this->value[$index] = $value;
     }
 
     /**
@@ -90,7 +106,7 @@ class ArrayValue extends AbstractValue implements
      */
     public function has($index)
     {
-        return array_key_exists($index, $this->wrappedValue());
+        return array_key_exists($index, $this->value);
     }
 
     /**
@@ -103,9 +119,8 @@ class ArrayValue extends AbstractValue implements
         if (!$this->has($index)) {
             throw new Exception\UndefinedIndexException($index);
         }
-        $value = $this->wrappedValue();
 
-        return $value[$index];
+        return $this->value[$index];
     }
 
     /**
@@ -129,9 +144,8 @@ class ArrayValue extends AbstractValue implements
         if (!$this->has($index)) {
             return $default;
         }
-        $value = $this->wrappedValue();
 
-        return $value[$index];
+        return $this->value[$index];
     }
 
     /**
@@ -205,6 +219,6 @@ class ArrayValue extends AbstractValue implements
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->wrappedValue());
+        return new ArrayIterator($this->value);
     }
 }

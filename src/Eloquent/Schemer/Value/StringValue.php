@@ -13,7 +13,7 @@ namespace Eloquent\Schemer\Value;
 
 use InvalidArgumentException;
 
-class StringValue extends AbstractValue
+class StringValue extends AbstractConcreteValue
 {
     /**
      * @param string $value

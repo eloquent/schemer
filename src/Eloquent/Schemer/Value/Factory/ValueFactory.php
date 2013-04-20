@@ -111,21 +111,17 @@ class ValueFactory implements ValueFactoryInterface
             $value->{'$ref'} instanceof Value\StringValue
         ) {
             $uri = new Uri($value->{'$ref'}->value());
-            unset($value->{'$ref'});
-
             $mimeType = null;
             if (
                 property_exists($value, '$type') &&
                 $value->{'$type'} instanceof Value\StringValue
             ) {
                 $mimeType = $value->{'$type'}->value();
-                unset($value->{'$type'});
             }
 
             return new Value\ReferenceValue(
                 $uri,
-                $mimeType,
-                new Value\ObjectValue($value)
+                $mimeType
             );
         }
 

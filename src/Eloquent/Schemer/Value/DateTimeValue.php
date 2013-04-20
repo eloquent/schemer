@@ -13,7 +13,7 @@ namespace Eloquent\Schemer\Value;
 
 use DateTime;
 
-class DateTimeValue extends AbstractValue
+class DateTimeValue extends AbstractConcreteValue
 {
     /**
      * @param DateTime $value
@@ -28,7 +28,7 @@ class DateTimeValue extends AbstractValue
      */
     public function value()
     {
-        return clone $this->wrappedValue();
+        return clone $this->value;
     }
 
     /**

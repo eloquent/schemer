@@ -13,7 +13,7 @@ namespace Eloquent\Schemer\Value;
 
 use InvalidArgumentException;
 
-class IntegerValue extends AbstractValue implements NumberValueInterface
+class IntegerValue extends AbstractConcreteValue implements NumberValueInterface
 {
     /**
      * @param integer $value
