@@ -36,7 +36,7 @@ class DateTimeValue extends AbstractConcreteValue
      */
     public function valueType()
     {
-        return ValueType::DATETIME_TYPE();
+        return ValueType::DATE_TIME_TYPE();
     }
 
     /**

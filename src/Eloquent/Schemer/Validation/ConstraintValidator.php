@@ -256,7 +256,7 @@ class ConstraintValidator implements
                 $isValid = $value instanceof Value\ArrayValue;
             } elseif ($valueType === Value\ValueType::BOOLEAN_TYPE()) {
                 $isValid = $value instanceof Value\BooleanValue;
-            } elseif ($valueType === Value\ValueType::DATETIME_TYPE()) {
+            } elseif ($valueType === Value\ValueType::DATE_TIME_TYPE()) {
                 $isValid = $value instanceof Value\DateTimeValue;
             } elseif ($valueType === Value\ValueType::INTEGER_TYPE()) {
                 $isValid = $value instanceof Value\IntegerValue;

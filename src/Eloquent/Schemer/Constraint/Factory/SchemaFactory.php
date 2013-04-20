@@ -774,7 +774,7 @@ class SchemaFactory implements SchemaFactoryInterface
         if (!$value instanceof Value\DateTimeValue) {
             throw new UnexpectedValueException(
                 $value,
-                array(Value\ValueType::DATETIME_TYPE())
+                array(Value\ValueType::DATE_TIME_TYPE())
             );
         }
 
@@ -791,7 +791,7 @@ class SchemaFactory implements SchemaFactoryInterface
         if (!$value instanceof Value\DateTimeValue) {
             throw new UnexpectedValueException(
                 $value,
-                array(Value\ValueType::DATETIME_TYPE())
+                array(Value\ValueType::DATE_TIME_TYPE())
             );
         }
 
