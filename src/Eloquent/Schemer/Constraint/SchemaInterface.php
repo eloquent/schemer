@@ -11,15 +11,6 @@
 
 namespace Eloquent\Schemer\Constraint;
 
-interface ConstraintContainerInterface extends ConstraintInterface
+interface SchemaInterface extends ConstraintInterface
 {
-    /**
-     * @return array<ConstraintInterface>
-     */
-    public function constraints();
-
-    /**
-     * @return boolean
-     */
-    public function isEmpty();
 }

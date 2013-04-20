@@ -11,7 +11,7 @@
 
 namespace Eloquent\Schemer\Constraint\Generic;
 
-use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 
 class AllOfConstraint extends AbstractSchemaSetConstraint
 {

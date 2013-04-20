@@ -11,10 +11,9 @@
 
 namespace Eloquent\Schemer\Constraint\Generic;
 
-use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\Schema;
 
-abstract class AbstractSchemaSetConstraint implements ConstraintInterface
+abstract class AbstractSchemaSetConstraint implements SchemaSetConstraintInterface
 {
     /**
      * @param array<Schema> $schemas

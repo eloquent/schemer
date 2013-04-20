@@ -15,13 +15,13 @@ use DateTime;
 use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Constraint\ArrayValue;
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\DateTimeValue;
 use Eloquent\Schemer\Constraint\Generic;
 use Eloquent\Schemer\Constraint\NumberValue;
 use Eloquent\Schemer\Constraint\ObjectValue;
-use Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Constraint\StringValue;
+use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 use Eloquent\Schemer\Pointer\Pointer;
 use Eloquent\Schemer\Pointer\PointerInterface;
 use Eloquent\Schemer\Value;
@@ -359,6 +359,16 @@ class ConstraintValidator implements
         return new Result\ValidationResult(
             array($this->createIssue($constraint))
         );
+    }
+
+    /**
+     * @param Generic\PlaceholderConstraint $constraint
+     *
+     * @return Result\ValidationResult
+     */
+    public function visitPlaceholderConstraint(Generic\PlaceholderConstraint $constraint)
+    {
+        return $constraint->innerConstraint()->accept($this);
     }
 
     // object constraints ======================================================

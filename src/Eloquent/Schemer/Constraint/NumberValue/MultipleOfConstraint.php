@@ -12,7 +12,7 @@
 namespace Eloquent\Schemer\Constraint\NumberValue;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 
 class MultipleOfConstraint implements ConstraintInterface
 {

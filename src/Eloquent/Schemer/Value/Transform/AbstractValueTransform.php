@@ -161,7 +161,7 @@ abstract class AbstractValueTransform implements
     }
 
     /**
-     * @param ValueInterface|null $value
+     * @param Value\ValueInterface|null $value
      */
     protected function setValue(Value\ValueInterface $value = null)
     {
@@ -171,7 +171,7 @@ abstract class AbstractValueTransform implements
     /**
      * @return ValueInterface|null
      */
-    public function value()
+    protected function value()
     {
         return $this->value;
     }

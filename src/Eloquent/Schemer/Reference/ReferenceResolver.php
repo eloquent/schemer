@@ -73,9 +73,6 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         $this->pointerFactory = $pointerFactory;
         $this->pointerResolver = $pointerResolver;
         $this->placeholderUnwrap = $placeholderUnwrap;
-
-        $this->baseUriStack = array();
-        $this->resolutions = array();
     }
 
     /**
@@ -141,28 +138,21 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
      */
     public function transform(Value\ValueInterface $value)
     {
-        $value = parent::transform($value);
-
-        return $this->placeholderUnwrap()->transform($value);
+        return $this->placeholderUnwrap()->transform(parent::transform($value));
     }
 
     /**
      * @param Value\ReferenceValue $reference
      *
-     * @return Value\ValueInterface
+     * @return Value\PlaceholderValue
      * @throws Exception\UndefinedReferenceException
      */
     public function visitReferenceValue(Value\ReferenceValue $reference)
     {
         if ($this->hasResolution($reference)) {
-            $resolution = $this->resolution($reference);
-            if (null === $resolution) {
-                throw new LogicException('Unresolvable recursive reference.');
-            }
-
-            return $resolution;
+            return $this->resolution($reference);
         }
-        $this->startResolution($reference);
+        $resolution = $this->startResolution($reference);
 
         // use scheme-specific URI instances
         $referenceUri = $this->uriFactory()->create(
@@ -185,7 +175,7 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         $value = $this->resolvePointer($reference, $value);
         $this->completeResolution($reference, $value);
 
-        return $value;
+        return $resolution;
     }
 
     /**
@@ -288,15 +278,21 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     {
         parent::clear();
 
+        $this->baseUriStack = array();
         $this->resolutions = array();
     }
 
     /**
      * @param Value\ReferenceValue $reference
+     *
+     * @return Value\PlaceholderValue
      */
     protected function startResolution(Value\ReferenceValue $reference)
     {
-        $this->resolutions[$reference->uri()->toString()] = new Value\PlaceholderValue;
+        $resolution = new Value\PlaceholderValue;
+        $this->resolutions[$reference->uri()->toString()] = $resolution;
+
+        return $resolution;
     }
 
     /**

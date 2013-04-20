@@ -1,0 +1,10 @@
+{
+    "type": "object",
+    "additionalProperties": { "$ref": "#/definitions/foo" },
+    "definitions": {
+        "foo": {
+            "type": "object",
+            "additionalProperties": { "$ref": "#/definitions/foo" }
+        }
+    }
+}

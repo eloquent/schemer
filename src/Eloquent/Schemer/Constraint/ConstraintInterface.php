@@ -14,9 +14,9 @@ namespace Eloquent\Schemer\Constraint;
 interface ConstraintInterface
 {
     /**
-     * @param ConstraintVisitorInterface $visitor
+     * @param Visitor\ConstraintVisitorInterface $visitor
      *
      * @return mixed
      */
-    public function accept(ConstraintVisitorInterface $visitor);
+    public function accept(Visitor\ConstraintVisitorInterface $visitor);
 }

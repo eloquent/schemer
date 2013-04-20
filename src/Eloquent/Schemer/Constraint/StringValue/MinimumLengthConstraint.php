@@ -12,7 +12,7 @@
 namespace Eloquent\Schemer\Constraint\StringValue;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 
 class MinimumLengthConstraint implements ConstraintInterface
 {

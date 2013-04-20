@@ -13,7 +13,7 @@ namespace Eloquent\Schemer\Constraint;
 
 use Eloquent\Schemer\Value\ValueInterface;
 
-class Schema implements ConstraintContainerInterface
+class Schema implements SchemaInterface
 {
     /**
      * @param array<ConstraintInterface>|null $constraints
@@ -78,11 +78,11 @@ class Schema implements ConstraintContainerInterface
     }
 
     /**
-     * @param ConstraintVisitorInterface $visitor
+     * @param Visitor\ConstraintVisitorInterface $visitor
      *
      * @return mixed
      */
-    public function accept(ConstraintVisitorInterface $visitor)
+    public function accept(Visitor\ConstraintVisitorInterface $visitor)
     {
         return $visitor->visitSchema($this);
     }

@@ -12,27 +12,37 @@
 namespace Eloquent\Schemer\Constraint\Factory;
 
 use Eloquent\Schemer\Constraint\ArrayValue;
+use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\DateTimeValue;
 use Eloquent\Schemer\Constraint\Generic;
 use Eloquent\Schemer\Constraint\NumberValue;
 use Eloquent\Schemer\Constraint\ObjectValue;
-use Eloquent\Schemer\Constraint\StringValue;
+use Eloquent\Schemer\Constraint\PlaceholderSchema;
 use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Constraint\StringValue;
+use Eloquent\Schemer\Constraint\Transform\ConstraintTransformInterface;
+use Eloquent\Schemer\Constraint\Transform\PlaceholderUnwrapTransform;
 use Eloquent\Schemer\Value;
 
 class SchemaFactory implements SchemaFactoryInterface
 {
     /**
      * @param FormatConstraintFactoryInterface|null $formatConstraintFactory
+     * @param ConstraintTransformInterface|null     $placeholderUnwrap
      */
     public function __construct(
-        FormatConstraintFactoryInterface $formatConstraintFactory = null
+        FormatConstraintFactoryInterface $formatConstraintFactory = null,
+        ConstraintTransformInterface $placeholderUnwrap = null
     ) {
         if (null === $formatConstraintFactory) {
             $formatConstraintFactory = new FormatConstraintFactory;
         }
+        if (null === $placeholderUnwrap) {
+            $placeholderUnwrap = new PlaceholderUnwrapTransform;
+        }
 
         $this->formatConstraintFactory = $formatConstraintFactory;
+        $this->placeholderUnwrap = $placeholderUnwrap;
     }
 
     /**
@@ -44,12 +54,39 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     /**
+     * @return ConstraintTransformInterface
+     */
+    public function placeholderUnwrap()
+    {
+        return $this->placeholderUnwrap;
+    }
+
+    /**
      * @param Value\ValueInterface $value
      *
      * @return \Eloquent\Schemer\Constraint\Schema
      */
     public function create(Value\ValueInterface $value)
     {
+        $this->clear();
+        $schema = $this->createSchema($value);
+        $this->clear();
+
+        return $this->placeholderUnwrap()->transform($schema);
+    }
+
+    /**
+     * @param Value\ValueInterface $value
+     *
+     * @return \Eloquent\Schemer\Constraint\Schema
+     */
+    public function createSchema(Value\ValueInterface $value)
+    {
+        if ($this->hasSchema($value)) {
+            return $this->schema($value);
+        }
+        $this->startSchema($value);
+
         if (!$value instanceof Value\ObjectValue) {
             throw new UnexpectedValueException(
                 $value,
@@ -71,7 +108,7 @@ class SchemaFactory implements SchemaFactoryInterface
             $defaultValue = null;
         }
 
-        return new Schema(
+        $schema = new Schema(
             array_merge(
                 $constraints,
                 $this->createCompositeConstraints($value)
@@ -80,13 +117,16 @@ class SchemaFactory implements SchemaFactoryInterface
             $value->getRawDefault('title'),
             $value->getRawDefault('description')
         );
+        $this->completeSchema($value, $schema);
+
+        return $schema;
     }
 
     /**
      * @param string               $property
      * @param Value\ValueInterface $value
      *
-     * @return array<\Eloquent\Schemer\Constraint\ConstraintInterface>
+     * @return array<ConstraintInterface>
      */
     protected function createConstraints(
         $property,
@@ -159,7 +199,7 @@ class SchemaFactory implements SchemaFactoryInterface
     /**
      * @param Value\ValueInterface $value
      *
-     * @return array<\Eloquent\Schemer\Constraint\ConstraintInterface>
+     * @return array<ConstraintInterface>
      */
     protected function createCompositeConstraints(Value\ValueInterface $value)
     {
@@ -249,7 +289,7 @@ class SchemaFactory implements SchemaFactoryInterface
 
         $schemas = array();
         foreach ($value as $subValue) {
-            $schemas[] = $this->create($subValue);
+            $schemas[] = $this->createSchema($subValue);
         }
 
         return new Generic\AllOfConstraint($schemas);
@@ -271,7 +311,7 @@ class SchemaFactory implements SchemaFactoryInterface
 
         $schemas = array();
         foreach ($value as $subValue) {
-            $schemas[] = $this->create($subValue);
+            $schemas[] = $this->createSchema($subValue);
         }
 
         return new Generic\AnyOfConstraint($schemas);
@@ -293,7 +333,7 @@ class SchemaFactory implements SchemaFactoryInterface
 
         $schemas = array();
         foreach ($value as $subValue) {
-            $schemas[] = $this->create($subValue);
+            $schemas[] = $this->createSchema($subValue);
         }
 
         return new Generic\OneOfConstraint($schemas);
@@ -306,7 +346,7 @@ class SchemaFactory implements SchemaFactoryInterface
      */
     protected function createNotConstraint(Value\ValueInterface $value)
     {
-        return new Generic\NotConstraint($this->create($value));
+        return new Generic\NotConstraint($this->createSchema($value));
     }
 
     // object constraints ======================================================
@@ -406,7 +446,7 @@ class SchemaFactory implements SchemaFactoryInterface
             }
 
             foreach ($value->get('properties') as $property => $subValue) {
-                $schemas[$property] = $this->create($subValue);
+                $schemas[$property] = $this->createSchema($subValue);
             }
         }
 
@@ -420,13 +460,13 @@ class SchemaFactory implements SchemaFactoryInterface
             }
 
             foreach ($value->get('patternProperties') as $pattern => $subValue) {
-                $patternSchemas[$pattern] = $this->create($subValue);
+                $patternSchemas[$pattern] = $this->createSchema($subValue);
             }
         }
 
         if ($value->has('additionalProperties')) {
             if ($value->get('additionalProperties') instanceof Value\ObjectValue) {
-                $additionalSchema = $this->create($value->get('additionalProperties'));
+                $additionalSchema = $this->createSchema($value->get('additionalProperties'));
             } elseif ($value->get('additionalProperties') instanceof Value\BooleanValue) {
                 if ($value->getRaw('additionalProperties')) {
                     $additionalSchema = new Schema;
@@ -471,7 +511,7 @@ class SchemaFactory implements SchemaFactoryInterface
             if ($subValue instanceof Value\ObjectValue) {
                 $constraints[] = new ObjectValue\DependencyConstraint(
                     $property,
-                    $this->create($subValue)
+                    $this->createSchema($subValue)
                 );
             } elseif ($subValue instanceof Value\ArrayValue) {
                 $subConstraints = array();
@@ -530,10 +570,10 @@ class SchemaFactory implements SchemaFactoryInterface
         $additionalSchema = null;
         if ($value->has('items')) {
             if ($value->get('items') instanceof Value\ObjectValue) {
-                $additionalSchema = $this->create($value->get('items'));
+                $additionalSchema = $this->createSchema($value->get('items'));
             } elseif ($value->get('items') instanceof Value\ArrayValue) {
                 foreach ($value->get('items') as $subValue) {
-                    $schemas[] = $this->create($subValue);
+                    $schemas[] = $this->createSchema($subValue);
                 }
             } else {
                 throw new UnexpectedValueException(
@@ -545,7 +585,7 @@ class SchemaFactory implements SchemaFactoryInterface
 
         if (null === $additionalSchema && $value->has('additionalItems')) {
             if ($value->get('additionalItems') instanceof Value\ObjectValue) {
-                $additionalSchema = $this->create($value->get('additionalItems'));
+                $additionalSchema = $this->createSchema($value->get('additionalItems'));
             } elseif ($value->get('additionalItems') instanceof Value\BooleanValue) {
                 if (!$value->getRaw('additionalItems')) {
                     $additionalSchema = new Schema(
@@ -774,5 +814,57 @@ class SchemaFactory implements SchemaFactoryInterface
         return new DateTimeValue\MinimumDateTimeConstraint($value->value());
     }
 
+    // implementation details ==================================================
+
+    protected function clear()
+    {
+        $this->schemas = array();
+    }
+
+    /**
+     * @param Value\ValueInterface $value
+     */
+    protected function startSchema(Value\ValueInterface $value)
+    {
+        $this->schemas[spl_object_hash($value)] = new PlaceholderSchema;
+    }
+
+    /**
+     * @param Value\ValueInterface $value
+     * @param Schema               $schema
+     */
+    protected function completeSchema(
+        Value\ValueInterface $value,
+        Schema $schema
+    ) {
+        $this->schema($value)->setInnerSchema($schema);
+    }
+
+    /**
+     * @param Value\ValueInterface $value
+     *
+     * @return boolean
+     */
+    protected function hasSchema(Value\ValueInterface $value)
+    {
+        return array_key_exists(spl_object_hash($value), $this->schemas);
+    }
+
+    /**
+     * @param Value\ValueInterface $value
+     *
+     * @return Value\ValueInterface
+     */
+    protected function schema(Value\ValueInterface $value)
+    {
+        if (!$this->hasSchema($value)) {
+            throw new LogicException('Undefined schema.');
+        }
+
+        return $this->schemas[spl_object_hash($value)];
+    }
+
     private $formatConstraintFactory;
+    private $placeholderUnwrap;
+    private $schemas;
 }

@@ -103,6 +103,18 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
         $this->assertSame('splat', $value->a->foo->bar->foo->doom->value());
     }
 
+    public function testResolveResolvableRecursiveFucked()
+    {
+        $path = sprintf(
+            '%s/recursive/resolvable-fucked.json',
+            $this->fixturePath
+        );
+        $resolver = $this->factory->create($this->pathUriFixture($path));
+        $value = $resolver->transform($this->reader->readPath($path));
+
+        $this->assertTrue($value->foo->has('qux'));
+    }
+
     public function testResolveUnresolvableRecursiveInline()
     {
         $path = sprintf(

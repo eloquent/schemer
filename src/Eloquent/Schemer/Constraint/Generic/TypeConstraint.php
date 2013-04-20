@@ -12,7 +12,7 @@
 namespace Eloquent\Schemer\Constraint\Generic;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 use Eloquent\Schemer\Value\ValueType;
 
 class TypeConstraint implements ConstraintInterface

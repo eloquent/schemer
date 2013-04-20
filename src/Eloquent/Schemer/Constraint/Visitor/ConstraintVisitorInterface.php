@@ -9,16 +9,33 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Constraint;
+namespace Eloquent\Schemer\Constraint\Visitor;
+
+use Eloquent\Schemer\Constraint\ArrayValue;
+use Eloquent\Schemer\Constraint\DateTimeValue;
+use Eloquent\Schemer\Constraint\Generic;
+use Eloquent\Schemer\Constraint\NumberValue;
+use Eloquent\Schemer\Constraint\ObjectValue;
+use Eloquent\Schemer\Constraint\PlaceholderSchema;
+use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Constraint\StringValue;
+use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 
 interface ConstraintVisitorInterface
 {
     /**
-     * @param Schema $constraint
+     * @param Schema $schema
      *
      * @return mixed
      */
-    public function visitSchema(Schema $constraint);
+    public function visitSchema(Schema $schema);
+
+    /**
+     * @param PlaceholderSchema $schema
+     *
+     * @return mixed
+     */
+    public function visitPlaceholderSchema(PlaceholderSchema $schema);
 
     // generic constraints =====================================================
 
@@ -202,6 +219,13 @@ interface ConstraintVisitorInterface
      * @return mixed
      */
     public function visitIpv6AddressFormatConstraint(StringValue\Ipv6AddressFormatConstraint $constraint);
+
+    /**
+     * @param StringValue\UriFormatConstraint $constraint
+     *
+     * @return mixed
+     */
+    public function visitUriFormatConstraint(StringValue\UriFormatConstraint $constraint);
 
     // number constraints ======================================================
 

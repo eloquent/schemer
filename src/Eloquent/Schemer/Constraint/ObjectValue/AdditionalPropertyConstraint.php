@@ -12,7 +12,7 @@
 namespace Eloquent\Schemer\Constraint\ObjectValue;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 
 class AdditionalPropertyConstraint implements ConstraintInterface
 {
