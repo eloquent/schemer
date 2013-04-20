@@ -11,6 +11,7 @@
 
 namespace Eloquent\Schemer\Validation;
 
+use Eloquent\Schemer\Constraint\Factory\MetaSchemaFactory;
 use Eloquent\Schemer\Constraint\Factory\SchemaFactory;
 use Eloquent\Schemer\Reader\Reader;
 use Eloquent\Schemer\Validation\Result\IssueRenderer;
@@ -38,7 +39,11 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
 
         $this->validator = new ConstraintValidator;
 
-        $this->schemaFactory = new SchemaFactory;
+        $this->metaSchemaFactory = new MetaSchemaFactory;
+        $this->schemaFactory = new SchemaFactory(
+            null,
+            $this->metaSchemaFactory->create()
+        );
         $this->renderer = new IssueRenderer;
     }
 

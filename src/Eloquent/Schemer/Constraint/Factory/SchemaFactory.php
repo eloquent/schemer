@@ -19,21 +19,33 @@ use Eloquent\Schemer\Constraint\NumberValue;
 use Eloquent\Schemer\Constraint\ObjectValue;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Constraint\StringValue;
+use Eloquent\Schemer\Validation\ConstraintValidator;
+use Eloquent\Schemer\Validation\ConstraintValidatorInterface;
 use Eloquent\Schemer\Value;
+use RuntimeException;
 
 class SchemaFactory implements SchemaFactoryInterface
 {
     /**
      * @param FormatConstraintFactoryInterface|null $formatConstraintFactory
+     * @param Schema|null                           $metaSchema
+     * @param ConstraintValidatorInterface|null     $constraintValidator
      */
     public function __construct(
-        FormatConstraintFactoryInterface $formatConstraintFactory = null
+        FormatConstraintFactoryInterface $formatConstraintFactory = null,
+        Schema $metaSchema = null,
+        ConstraintValidatorInterface $constraintValidator = null
     ) {
         if (null === $formatConstraintFactory) {
             $formatConstraintFactory = new FormatConstraintFactory;
         }
+        if (null === $constraintValidator && null !== $metaSchema) {
+            $constraintValidator = new ConstraintValidator;
+        }
 
         $this->formatConstraintFactory = $formatConstraintFactory;
+        $this->metaSchema = $metaSchema;
+        $this->constraintValidator = $constraintValidator;
     }
 
     /**
@@ -45,12 +57,38 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     /**
+     * @return Schema|null
+     */
+    public function metaSchema()
+    {
+        return $this->metaSchema;
+    }
+
+    /**
+     * @return ConstraintValidatorInterface|null
+     */
+    public function constraintValidator()
+    {
+        return $this->constraintValidator;
+    }
+
+    /**
      * @param Value\ConcreteValueInterface $value
      *
      * @return \Eloquent\Schemer\Constraint\Schema
      */
     public function create(Value\ConcreteValueInterface $value)
     {
+        if (null !== $this->metaSchema()) {
+            $result = $this->constraintValidator()->validate(
+                $this->metaSchema(),
+                $value
+            );
+            if (!$result->isValid()) {
+                throw new RuntimeException('Invalid schema.');
+            }
+        }
+
         $this->clear();
         $schema = $this->createSchema($value);
         $this->clear();
@@ -841,5 +879,7 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     private $formatConstraintFactory;
+    private $metaSchema;
+    private $constraintValidator;
     private $schemas;
 }

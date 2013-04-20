@@ -238,8 +238,8 @@ class MetaSchemaFactory
                                 $schema,
                             )
                         ),
-                        new Value\ObjectValue
-                    )
+                    ),
+                    new Value\ObjectValue
                 ),
 
                 'items' => new Schema(
@@ -247,8 +247,8 @@ class MetaSchemaFactory
                         new Generic\AnyOfConstraint(
                             array($schema, $schemaArraySchema)
                         ),
-                        new Value\ObjectValue
-                    )
+                    ),
+                    new Value\ObjectValue
                 ),
 
                 'maxItems' => $positiveIntegerSchema,
@@ -281,8 +281,8 @@ class MetaSchemaFactory
                                 $schema,
                             )
                         ),
-                        new Value\ObjectValue
-                    )
+                    ),
+                    new Value\ObjectValue
                 ),
 
                 'definitions' => new Schema(
