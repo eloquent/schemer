@@ -83,7 +83,7 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->comparator->equals($expected, $actual));
     }
 
-    public function testResolveResolvableRecursive()
+    public function testResolveResolvableRecursiveInline()
     {
         $path = sprintf(
             '%s/recursive/resolvable-inline.json',
@@ -93,5 +93,19 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
         $value = $resolver->transform($this->reader->readPath($path));
 
         $this->assertSame('splat', $value->a->foo->bar->foo->doom->value());
+    }
+
+    public function testResolveUnresolvableRecursiveInline()
+    {
+        $path = sprintf(
+            '%s/recursive/unresolvable-inline.json',
+            $this->fixturePath
+        );
+        $resolver = $this->factory->create($this->pathUriFixture($path));
+        $value = $resolver->transform($this->reader->readPath($path));
+
+        $this->assertNull($value->a->value());
+        $this->assertNull($value->b->value());
+        $this->assertSame($value->a, $value->b);
     }
 }

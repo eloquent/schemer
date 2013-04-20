@@ -28,12 +28,13 @@ use Zend\Uri\UriInterface;
 class ReferenceResolver extends Value\Transform\AbstractValueTransform
 {
     /**
-     * @param UriInterface                  $baseUri
-     * @param UriResolverInterface|null     $uriResolver
-     * @param ReaderInterface|null          $reader
-     * @param UriFactoryInterface|null      $uriFactory
-     * @param PointerFactoryInterface|null  $pointerFactory
-     * @param PointerResolverInterface|null $pointerResolver
+     * @param UriInterface                       $baseUri
+     * @param UriResolverInterface|null          $uriResolver
+     * @param ReaderInterface|null               $reader
+     * @param UriFactoryInterface|null           $uriFactory
+     * @param PointerFactoryInterface|null       $pointerFactory
+     * @param PointerResolverInterface|null      $pointerResolver
+     * @param Value\ValueTransformInterface|null $placeholderUnwrap
      */
     public function __construct(
         UriInterface $baseUri,
@@ -41,7 +42,8 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         ReaderInterface $reader = null,
         UriFactoryInterface $uriFactory = null,
         PointerFactoryInterface $pointerFactory = null,
-        PointerResolverInterface $pointerResolver = null
+        PointerResolverInterface $pointerResolver = null,
+        Value\ValueTransformInterface $placeholderUnwrap = null
     ) {
         parent::__construct();
 
@@ -60,6 +62,9 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         if (null === $pointerResolver) {
             $pointerResolver = new PointerResolver;
         }
+        if (null === $placeholderUnwrap) {
+            $placeholderUnwrap = new Value\Transform\PlaceholderUnwrapTransform;
+        }
 
         $this->baseUri = $baseUri;
         $this->uriResolver = $uriResolver;
@@ -67,6 +72,7 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         $this->uriFactory = $uriFactory;
         $this->pointerFactory = $pointerFactory;
         $this->pointerResolver = $pointerResolver;
+        $this->placeholderUnwrap = $placeholderUnwrap;
 
         $this->baseUriStack = array();
         $this->resolutions = array();
@@ -118,6 +124,26 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     public function pointerResolver()
     {
         return $this->pointerResolver;
+    }
+
+    /**
+     * @return Value\ValueTransformInterface
+     */
+    public function placeholderUnwrap()
+    {
+        return $this->placeholderUnwrap;
+    }
+
+    /**
+     * @param Value\ValueInterface $value
+     *
+     * @return Value\ValueInterface
+     */
+    public function transform(Value\ValueInterface $value)
+    {
+        $value = parent::transform($value);
+
+        return $this->placeholderUnwrap()->transform($value);
     }
 
     /**
@@ -270,7 +296,7 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
      */
     protected function startResolution(Value\ReferenceValue $reference)
     {
-        $this->resolutions[$reference->uri()->toString()] = null;
+        $this->resolutions[$reference->uri()->toString()] = new Value\PlaceholderValue;
     }
 
     /**
@@ -281,7 +307,7 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         Value\ReferenceValue $reference,
         Value\ValueInterface $value
     ) {
-        $this->resolutions[$reference->uri()->toString()] = $value;
+        $this->resolution($reference)->setInnerValue($value);
     }
 
     /**
@@ -300,7 +326,7 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     /**
      * @param Value\ReferenceValue $reference
      *
-     * @return Value\ValueInterface|null
+     * @return Value\ValueInterface
      */
     protected function resolution(Value\ReferenceValue $reference)
     {
@@ -317,6 +343,7 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     private $uriFactory;
     private $pointerFactory;
     private $pointerResolver;
+    private $placeholderUnwrap;
     private $baseUriStack;
     private $resolutions;
 }

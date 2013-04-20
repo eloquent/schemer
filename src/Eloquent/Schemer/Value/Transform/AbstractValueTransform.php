@@ -144,6 +144,16 @@ abstract class AbstractValueTransform implements
         return $value;
     }
 
+    /**
+     * @param Value\PlaceholderValue $value
+     *
+     * @return Value\PlaceholderValue
+     */
+    public function visitPlaceholderValue(Value\PlaceholderValue $value)
+    {
+        return $value;
+    }
+
     protected function clear()
     {
         $this->setContext(new Pointer);

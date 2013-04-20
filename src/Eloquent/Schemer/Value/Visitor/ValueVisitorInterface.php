@@ -77,4 +77,11 @@ interface ValueVisitorInterface
      * @return mixed
      */
     public function visitReferenceValue(Value\ReferenceValue $value);
+
+    /**
+     * @param Value\PlaceholderValue $value
+     *
+     * @return mixed
+     */
+    public function visitPlaceholderValue(Value\PlaceholderValue $value);
 }
