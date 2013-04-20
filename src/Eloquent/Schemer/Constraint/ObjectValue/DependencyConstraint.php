@@ -12,16 +12,16 @@
 namespace Eloquent\Schemer\Constraint\ObjectValue;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Constraint\SchemaInterface;
 use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 
 class DependencyConstraint implements ConstraintInterface
 {
     /**
-     * @param string $property
-     * @param Schema $schema
+     * @param string          $property
+     * @param SchemaInterface $schema
      */
-    public function __construct($property, Schema $schema)
+    public function __construct($property, SchemaInterface $schema)
     {
         $this->property = $property;
         $this->schema = $schema;
@@ -36,7 +36,7 @@ class DependencyConstraint implements ConstraintInterface
     }
 
     /**
-     * @return Schema
+     * @return SchemaInterface
      */
     public function schema()
     {

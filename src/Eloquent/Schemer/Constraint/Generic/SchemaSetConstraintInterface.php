@@ -16,7 +16,7 @@ use Eloquent\Schemer\Constraint\ConstraintInterface;
 interface SchemaSetConstraintInterface extends ConstraintInterface
 {
     /**
-     * @return array<\Eloquent\Schemer\Constraint\Schema>
+     * @return array<\Eloquent\Schemer\Constraint\SchemaInterface>
      */
     public function schemas();
 }

@@ -19,6 +19,7 @@ use Eloquent\Schemer\Constraint\DateTimeValue;
 use Eloquent\Schemer\Constraint\Generic;
 use Eloquent\Schemer\Constraint\NumberValue;
 use Eloquent\Schemer\Constraint\ObjectValue;
+use Eloquent\Schemer\Constraint\PlaceholderSchema;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
@@ -210,6 +211,16 @@ class ConstraintValidator implements
         return $result;
     }
 
+    /**
+     * @param PlaceholderSchema $schema
+     *
+     * @return Result\ValidationResult
+     */
+    public function visitPlaceholderSchema(PlaceholderSchema $schema)
+    {
+        return $schema->innerSchema()->accept($this);
+    }
+
     // generic constraints =====================================================
 
     /**
@@ -359,16 +370,6 @@ class ConstraintValidator implements
         return new Result\ValidationResult(
             array($this->createIssue($constraint))
         );
-    }
-
-    /**
-     * @param Generic\PlaceholderConstraint $constraint
-     *
-     * @return Result\ValidationResult
-     */
-    public function visitPlaceholderConstraint(Generic\PlaceholderConstraint $constraint)
-    {
-        return $constraint->innerConstraint()->accept($this);
     }
 
     // object constraints ======================================================

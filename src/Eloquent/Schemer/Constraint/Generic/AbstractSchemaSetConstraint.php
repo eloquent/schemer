@@ -11,12 +11,12 @@
 
 namespace Eloquent\Schemer\Constraint\Generic;
 
-use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Constraint\SchemaInterface;
 
 abstract class AbstractSchemaSetConstraint implements SchemaSetConstraintInterface
 {
     /**
-     * @param array<Schema> $schemas
+     * @param array<SchemaInterface> $schemas
      */
     public function __construct(array $schemas)
     {
@@ -24,7 +24,7 @@ abstract class AbstractSchemaSetConstraint implements SchemaSetConstraintInterfa
     }
 
     /**
-     * @return array<Schema>
+     * @return array<SchemaInterface>
      */
     public function schemas()
     {

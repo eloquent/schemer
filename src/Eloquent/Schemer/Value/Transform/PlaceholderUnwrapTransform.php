@@ -42,7 +42,7 @@ class PlaceholderUnwrapTransform extends AbstractValueTransform
         $innerValue = $valueProperty->getValue($value);
         foreach ($innerValue as $index => $subValue) {
             if ($subValue instanceof Value\PlaceholderValue) {
-                $innerValue[$index] = $subValue->innerValue();
+                $innerValue[$index] = $innerValue[$index]->accept($this);
                 $valueProperty->setValue($innerValue);
             }
             $innerValue[$index] = $innerValue[$index]->accept($this);
@@ -69,10 +69,30 @@ class PlaceholderUnwrapTransform extends AbstractValueTransform
         $innerValue = $valueProperty->getValue($value);
         foreach (get_object_vars($innerValue) as $property => $subValue) {
             if ($subValue instanceof Value\PlaceholderValue) {
-                $innerValue->$property = $subValue->innerValue();
-            } else {
-                $innerValue->$property = $subValue->accept($this);
+                $innerValue->$property = $innerValue->$property->accept($this);
             }
+            $innerValue->$property = $innerValue->$property->accept($this);
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param Value\PlaceholderValue $value
+     *
+     * @return Value\ValueInterface
+     */
+    public function visitPlaceholderValue(Value\PlaceholderValue $value)
+    {
+        if ($value->isClosedRecursion()) {
+            $nullValue = new Value\NullValue;
+            $value->innerValue()->setInnerValue($nullValue);
+
+            return $nullValue;
+        }
+
+        while ($value instanceof Value\PlaceholderValue) {
+            $value = $value->innerValue();
         }
 
         return $value;

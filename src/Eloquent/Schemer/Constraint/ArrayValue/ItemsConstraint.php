@@ -12,25 +12,25 @@
 namespace Eloquent\Schemer\Constraint\ArrayValue;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Constraint\SchemaInterface;
 use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 
 class ItemsConstraint implements ConstraintInterface
 {
     /**
-     * @param array<integer,Schema> $schemas
-     * @param Schema                $additionalSchema
+     * @param array<integer,SchemaInterface> $schemas
+     * @param SchemaInterface                $additionalSchema
      */
     public function __construct(
         array $schemas,
-        Schema $additionalSchema
+        SchemaInterface $additionalSchema
     ) {
         $this->schemas = $schemas;
         $this->additionalSchema = $additionalSchema;
     }
 
     /**
-     * @return array<integer,Schema>
+     * @return array<integer,SchemaInterface>
      */
     public function schemas()
     {
@@ -38,7 +38,7 @@ class ItemsConstraint implements ConstraintInterface
     }
 
     /**
-     * @return Schema
+     * @return SchemaInterface
      */
     public function additionalSchema()
     {

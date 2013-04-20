@@ -12,20 +12,20 @@
 namespace Eloquent\Schemer\Constraint\ObjectValue;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Constraint\SchemaInterface;
 use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 
 class PropertiesConstraint implements ConstraintInterface
 {
     /**
-     * @param array<string,Schema> $schemas
-     * @param array<string,Schema> $patternSchemas
-     * @param Schema               $additionalSchema
+     * @param array<string,SchemaInterface> $schemas
+     * @param array<string,SchemaInterface> $patternSchemas
+     * @param SchemaInterface               $additionalSchema
      */
     public function __construct(
         array $schemas,
         array $patternSchemas,
-        Schema $additionalSchema
+        SchemaInterface $additionalSchema
     ) {
         $this->schemas = $schemas;
         $this->patternSchemas = $patternSchemas;
@@ -33,7 +33,7 @@ class PropertiesConstraint implements ConstraintInterface
     }
 
     /**
-     * @return array<string,Schema>
+     * @return array<string,SchemaInterface>
      */
     public function schemas()
     {
@@ -41,7 +41,7 @@ class PropertiesConstraint implements ConstraintInterface
     }
 
     /**
-     * @return array<string,Schema>
+     * @return array<string,SchemaInterface>
      */
     public function patternSchemas()
     {
@@ -49,7 +49,7 @@ class PropertiesConstraint implements ConstraintInterface
     }
 
     /**
-     * @return Schema
+     * @return SchemaInterface
      */
     public function additionalSchema()
     {

@@ -12,21 +12,21 @@
 namespace Eloquent\Schemer\Constraint\Generic;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Constraint\SchemaInterface;
 use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 
 class NotConstraint implements ConstraintInterface
 {
     /**
-     * @param Schema $schema
+     * @param SchemaInterface $schema
      */
-    public function __construct(Schema $schema)
+    public function __construct(SchemaInterface $schema)
     {
         $this->schema = $schema;
     }
 
     /**
-     * @return Schema
+     * @return SchemaInterface
      */
     public function schema()
     {
