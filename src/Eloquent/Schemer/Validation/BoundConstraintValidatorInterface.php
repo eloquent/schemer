@@ -11,14 +11,14 @@
 
 namespace Eloquent\Schemer\Validation;
 
-use Eloquent\Schemer\Value\ValueInterface;
+use Eloquent\Schemer\Value\ConcreteValueInterface;
 
 interface BoundConstraintValidatorInterface
 {
     /**
-     * @param ValueInterface $value
+     * @param ConcreteValueInterface $value
      *
      * @return ValidationResult
      */
-    public function validate(ValueInterface $value);
+    public function validate(ConcreteValueInterface $value);
 }

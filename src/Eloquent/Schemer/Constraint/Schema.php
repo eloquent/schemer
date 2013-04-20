@@ -11,19 +11,19 @@
 
 namespace Eloquent\Schemer\Constraint;
 
-use Eloquent\Schemer\Value\ValueInterface;
+use Eloquent\Schemer\Value\ConcreteValueInterface;
 
 class Schema implements SchemaInterface
 {
     /**
      * @param array<ConstraintInterface>|null $constraints
-     * @param ValueInterface|null             $defaultValue
+     * @param ConcreteValueInterface|null     $defaultValue
      * @param string|null                     $title
      * @param string|null                     $description
      */
     public function __construct(
         array $constraints = null,
-        ValueInterface $defaultValue = null,
+        ConcreteValueInterface $defaultValue = null,
         $title = null,
         $description = null
     ) {
@@ -46,7 +46,7 @@ class Schema implements SchemaInterface
     }
 
     /**
-     * @return ValueInterface|null
+     * @return ConcreteValueInterface|null
      */
     public function defaultValue()
     {

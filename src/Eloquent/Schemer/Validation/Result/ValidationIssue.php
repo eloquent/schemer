@@ -13,18 +13,18 @@ namespace Eloquent\Schemer\Validation\Result;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
-use Eloquent\Schemer\Value\ValueInterface;
+use Eloquent\Schemer\Value\ConcreteValueInterface;
 
 class ValidationIssue
 {
     /**
-     * @param ConstraintInterface $constraint
-     * @param ValueInterface      $value
-     * @param PointerInterface    $pointer
+     * @param ConstraintInterface    $constraint
+     * @param ConcreteValueInterface $value
+     * @param PointerInterface       $pointer
      */
     public function __construct(
         ConstraintInterface $constraint,
-        ValueInterface $value,
+        ConcreteValueInterface $value,
         PointerInterface $pointer
     ) {
         $this->constraint = $constraint;
@@ -41,7 +41,7 @@ class ValidationIssue
     }
 
     /**
-     * @return ValueInterface
+     * @return ConcreteValueInterface
      */
     public function value()
     {

@@ -12,7 +12,7 @@
 namespace Eloquent\Schemer\Validation;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Value\ValueInterface;
+use Eloquent\Schemer\Value\ConcreteValueInterface;
 
 class BoundConstraintValidator implements BoundConstraintValidatorInterface
 {
@@ -45,11 +45,11 @@ class BoundConstraintValidator implements BoundConstraintValidatorInterface
     }
 
     /**
-     * @param ValueInterface $value
+     * @param ConcreteValueInterface $value
      *
      * @return ValidationResult
      */
-    public function validate(ValueInterface $value)
+    public function validate(ConcreteValueInterface $value)
     {
         return $this->validator()->validate($this->constraint(), $value);
     }

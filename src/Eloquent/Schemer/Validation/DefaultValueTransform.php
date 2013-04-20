@@ -85,7 +85,7 @@ class DefaultValueTransform extends Value\Transform\AbstractValueTransform
     }
 
     /**
-     * @return array<string,Value\ValueInterface>
+     * @return array<string,Value\ConcreteValueInterface>
      */
     protected function defaultProperties()
     {
@@ -108,7 +108,7 @@ class DefaultValueTransform extends Value\Transform\AbstractValueTransform
     }
 
     /**
-     * @return array<integer,Value\ValueInterface>
+     * @return array<integer,Value\ConcreteValueInterface>
      */
     protected function defaultItems()
     {

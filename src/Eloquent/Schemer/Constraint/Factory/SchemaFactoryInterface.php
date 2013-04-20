@@ -11,14 +11,14 @@
 
 namespace Eloquent\Schemer\Constraint\Factory;
 
-use Eloquent\Schemer\Value\ValueInterface;
+use Eloquent\Schemer\Value\ConcreteValueInterface;
 
 interface SchemaFactoryInterface
 {
     /**
-     * @param ValueInterface $schema
+     * @param ConcreteValueInterface $schema
      *
      * @return \Eloquent\Schemer\Constraint\Schema
      */
-    public function create(ValueInterface $schema);
+    public function create(ConcreteValueInterface $schema);
 }

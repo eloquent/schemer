@@ -134,7 +134,7 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     /**
      * @param Value\ValueInterface $value
      *
-     * @return Value\ValueInterface
+     * @return Value\ConcreteValueInterface
      */
     public function transform(Value\ValueInterface $value)
     {

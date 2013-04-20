@@ -161,15 +161,15 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param ConstraintInterface   $constraint
-     * @param Value\ValueInterface  $value
-     * @param PointerInterface|null $entryPoint
+     * @param ConstraintInterface          $constraint
+     * @param Value\ConcreteValueInterface $value
+     * @param PointerInterface|null        $entryPoint
      *
      * @return Result\ValidationResult
      */
     public function validate(
         ConstraintInterface $constraint,
-        Value\ValueInterface $value,
+        Value\ConcreteValueInterface $value,
         PointerInterface $entryPoint = null
     ) {
         if (null === $entryPoint) {
@@ -1022,7 +1022,7 @@ class ConstraintValidator implements
     }
 
     /**
-     * @param tuple<ValueInterface,PointerInterface> $context
+     * @param tuple<ConcreteValueInterface,PointerInterface> $context
      */
     protected function pushContext(array $context)
     {
@@ -1045,7 +1045,7 @@ class ConstraintValidator implements
     }
 
     /**
-     * @return tuple<ValueInterface,PointerInterface>
+     * @return tuple<ConcreteValueInterface,PointerInterface>
      * @throws LogicException
      */
     protected function currentContext()
@@ -1059,7 +1059,7 @@ class ConstraintValidator implements
     }
 
     /**
-     * @return ValueInterface
+     * @return ConcreteValueInterface
      * @throws LogicException
      */
     protected function currentValue()

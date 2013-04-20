@@ -13,20 +13,20 @@ namespace Eloquent\Schemer\Validation;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
-use Eloquent\Schemer\Value\ValueInterface;
+use Eloquent\Schemer\Value\ConcreteValueInterface;
 
 interface ConstraintValidatorInterface
 {
     /**
-     * @param ConstraintInterface   $constraint
-     * @param ValueInterface        $value
-     * @param PointerInterface|null $entryPoint
+     * @param ConstraintInterface    $constraint
+     * @param ConcreteValueInterface $value
+     * @param PointerInterface|null  $entryPoint
      *
      * @return ValidationResult
      */
     public function validate(
         ConstraintInterface $constraint,
-        ValueInterface $value,
+        ConcreteValueInterface $value,
         PointerInterface $entryPoint = null
     );
 }
