@@ -31,11 +31,11 @@ class UriFactory implements UriFactoryInterface
             $schemeClasses = array(
                 'data' => __NAMESPACE__ . '\DataUri',
                 'file' => 'Zend\Uri\File',
-                'http' => 'Zend\Uri\Http',
-                'https' => 'Zend\Uri\Http',
+                'http' => __NAMESPACE__ . '\HttpUri',
+                'https' => __NAMESPACE__ . '\HttpUri',
                 'mailto' => 'Zend\Uri\Mailto',
-                'tag' => 'Zend\Uri\Uri',
-                'urn' => 'Zend\Uri\Uri',
+                'tag' => __NAMESPACE__ . '\Uri',
+                'urn' => __NAMESPACE__ . '\Uri',
             );
         }
         if (null === $defaultClass) {

@@ -1,8 +1,19 @@
 <?php
 
+/*
+ * This file is part of the Schemer package.
+ *
+ * Copyright © 2013 Erin Millard
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Eloquent\Schemer\Uri;
 
-class ZendUriTest extends \PHPUnit_Framework_TestCase
+use PHPUnit_Framework_TestCase;
+
+class UriTest extends PHPUnit_Framework_TestCase
 {
     /**
      * General composing / parsing tests
@@ -11,7 +22,7 @@ class ZendUriTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that parsing and composing a valid URI returns the same URI
      *
-     * @param        string $uriString
+     * @param string $uriString
      * @dataProvider validUriStringProvider
      */
     public function testParseComposeUri($uriString)
@@ -60,7 +71,7 @@ class ZendUriTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that parseScheme throws an exception in case of invalid input
      *
-     * @param  mixed $input
+     * @param mixed $input
      * @dataProvider notStringInputProvider
      */
     public function testParseSchemeInvalidInput($input)
@@ -649,8 +660,8 @@ class ZendUriTest extends \PHPUnit_Framework_TestCase
     /**
      * Test the removal of extra dot segments from paths
      *
-     * @param        $orig
-     * @param        $expected
+     * @param   $orig
+     * @param   $expected
      * @dataProvider pathWithDotSegmentProvider
      */
     public function testRemovePathDotSegments($orig, $expected)
@@ -992,7 +1003,6 @@ class ZendUriTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
     /**
      * Data provider for valid URIs with their different parts
      *
@@ -1276,6 +1286,7 @@ class ZendUriTest extends \PHPUnit_Framework_TestCase
             array('File:///SitePages/fi%6ce%20has%20spaces', 'file:///SitePages/file%20has%20spaces'),
             array('/foo/bar/../baz?do=action#showFragment', '/foo/baz?do=action#showFragment'),
             array('/foo/bar/../baz?do=action#', '/foo/baz?do=action'),
+            array('#', '#'),
 
             //  RFC 3986 Capitalizing letters in escape sequences.
             array('http://www.example.com/a%c2%b1b', 'http://www.example.com/a%C2%B1b'),
@@ -1293,7 +1304,6 @@ class ZendUriTest extends \PHPUnit_Framework_TestCase
              array('http://example.com/dir/subdir/', 'http://otherhost.com/dir/subdir/file3.txt',    'http://otherhost.com/dir/subdir/file3.txt'),
         );
     }
-
 
     /**
      * Provider for testing the constructor's behavior on invalid input

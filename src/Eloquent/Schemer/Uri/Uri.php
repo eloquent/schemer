@@ -194,7 +194,7 @@ class Uri extends ZendUri
 
         if ($this->path) {
             $uri .= self::encodePath($this->path);
-        } elseif ($this->host && ($this->query || $this->fragment)) {
+        } elseif ($this->host && ($this->query || null !== $this->fragment)) {
             $uri .= '/';
         }
 
@@ -216,7 +216,16 @@ class Uri extends ZendUri
     {
         parent::normalize();
 
-        $this->setFragment(static::normalizeFragment($this->getFragment()));
+        $this->fragment = static::normalizeFragment($this->fragment);
+
+        if (
+            !$this->isAbsolute() &&
+            !$this->path &&
+            !$this->query &&
+            null === $this->fragment
+        ) {
+            $this->fragment = '';
+        }
 
         return $this;
     }

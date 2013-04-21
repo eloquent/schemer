@@ -30,7 +30,7 @@ use LogicException;
 use Zend\Validator\EmailAddress;
 use Zend\Validator\Hostname;
 use Zend\Validator\Ip;
-use Zend\Validator\Uri;
+use Zend\Validator\Uri as UriValidator;
 use Zend\Validator\ValidatorInterface;
 
 class ConstraintValidator implements
@@ -84,7 +84,7 @@ class ConstraintValidator implements
             ));
         }
         if (null === $uriValidator) {
-            $uriValidator = new Uri;
+            $uriValidator = new UriValidator('Eloquent\Schemer\Uri\Uri');
         }
 
         $this->formatValidationEnabled = $formatValidationEnabled;

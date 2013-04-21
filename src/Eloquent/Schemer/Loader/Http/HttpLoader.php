@@ -17,8 +17,8 @@ use Eloquent\Schemer\Loader\Content;
 use Eloquent\Schemer\Loader\ContentType;
 use Eloquent\Schemer\Loader\Exception\LoadException;
 use Eloquent\Schemer\Loader\LoaderInterface;
+use Eloquent\Schemer\Uri\HttpUri;
 use InvalidArgumentException;
-use Zend\Uri\Http as HttpUri;
 use Zend\Uri\UriInterface;
 
 class HttpLoader implements LoaderInterface

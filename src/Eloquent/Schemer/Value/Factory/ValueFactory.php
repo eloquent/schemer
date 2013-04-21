@@ -12,11 +12,11 @@
 namespace Eloquent\Schemer\Value\Factory;
 
 use DateTime;
+use Eloquent\Schemer\Uri\Uri;
 use Eloquent\Schemer\Value;
 use Icecave\Repr\Repr;
 use InvalidArgumentException;
 use stdClass;
-use Zend\Uri\Uri;
 
 class ValueFactory implements ValueFactoryInterface
 {
