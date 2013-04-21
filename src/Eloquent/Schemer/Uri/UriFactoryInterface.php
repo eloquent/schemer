@@ -22,6 +22,13 @@ interface UriFactoryInterface
     public function create($uri, $defaultScheme = null);
 
     /**
+     * @param string $uri
+     *
+     * @return \Zend\Uri\UriInterface
+     */
+    public function createGeneric($uri);
+
+    /**
      * @param string $path
      *
      * @return \Zend\Uri\File

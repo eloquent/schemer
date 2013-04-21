@@ -13,7 +13,6 @@ namespace Eloquent\Schemer\Uri;
 
 use Icecave\Isolator\Isolator;
 use InvalidArgumentException;
-use Zend\Uri\File as FileUri;
 
 class UriFactory implements UriFactoryInterface
 {
@@ -114,16 +113,33 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
+     * @param string $uri
+     *
+     * @return \Zend\Uri\UriInterface
+     */
+    public function createGeneric($uri)
+    {
+        if (!is_string($uri)) {
+            throw new InvalidArgumentException('URI must be a string.');
+        }
+
+        $schemeClass = $this->defaultClass();
+
+        return new $schemeClass($uri);
+    }
+
+    /**
      * @param string $path
      *
      * @return FileUri
      */
     public function fromPath($path)
     {
+        $schemeClass = $this->schemeClass('file');
         if ($this->isolator->defined('PHP_WINDOWS_VERSION_BUILD')) {
-            $uri = FileUri::fromWindowsPath($path);
+            $uri = $schemeClass::fromWindowsPath($path);
         } else {
-            $uri = FileUri::fromUnixPath($path);
+            $uri = $schemeClass::fromUnixPath($path);
         }
 
         return $uri;
@@ -137,7 +153,8 @@ class UriFactory implements UriFactoryInterface
      */
     public function fromData($data, $mimeType = null)
     {
-        $uri = new DataUri;
+        $schemeClass = $this->schemeClass('data');
+        $uri = new $schemeClass;
         $uri->setData($data);
         if (null !== $mimeType) {
             $uri->setMimeType($mimeType);

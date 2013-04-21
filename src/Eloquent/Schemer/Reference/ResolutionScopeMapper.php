@@ -36,7 +36,7 @@ class ResolutionScopeMapper implements Value\Visitor\ValueVisitorInterface
         PointerFactoryInterface $pointerFactory = null
     ) {
         if (null === $uriFactory) {
-            $uriFactory = new UriFactory(array());
+            $uriFactory = new UriFactory;
         }
         if (null === $uriResolver) {
             $uriResolver = new UriResolver;
@@ -152,7 +152,7 @@ class ResolutionScopeMapper implements Value\Visitor\ValueVisitorInterface
                 }
 
                 $this->pushBaseUri(
-                    $this->uriFactory()->create($subValue->value())
+                    $this->uriFactory()->createGeneric($subValue->value())
                 );
                 $this->addMapping(
                     $this->currentBaseUri(),

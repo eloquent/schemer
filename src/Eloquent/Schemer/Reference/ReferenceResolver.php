@@ -154,8 +154,7 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         }
         $resolution = $this->startResolution($reference);
 
-        // use scheme-specific URI instances
-        $referenceUri = $this->uriFactory()->create(
+        $referenceUri = $this->uriFactory()->createGeneric(
             $reference->uri()->toString()
         );
         if (!$referenceUri->isAbsolute()) {
@@ -200,6 +199,9 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         Value\ReferenceValue $reference,
         UriInterface $referenceUri
     ) {
+        // use scheme-specific URI instances
+        $referenceUri = $this->uriFactory()->create($referenceUri->toString());
+
         try {
             $value = $this->reader()->read($referenceUri, $reference->mimeType());
         } catch (ReadException $e) {

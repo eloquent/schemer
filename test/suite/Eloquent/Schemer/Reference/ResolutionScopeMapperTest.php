@@ -83,6 +83,7 @@ class ResolutionScopeMapperTest extends PHPUnit_Framework_TestCase
             $actual[sprintf('#%s', $pointer->string())] = $uri;
         }
 
+        $this->assertEquals($expected, $actual);
         $this->assertSame($expected, $actual);
     }
 }
