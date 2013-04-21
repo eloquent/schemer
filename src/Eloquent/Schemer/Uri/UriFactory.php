@@ -14,7 +14,6 @@ namespace Eloquent\Schemer\Uri;
 use Icecave\Isolator\Isolator;
 use InvalidArgumentException;
 use Zend\Uri\File as FileUri;
-use Zend\Uri\Uri;
 
 class UriFactory implements UriFactoryInterface
 {
@@ -40,7 +39,7 @@ class UriFactory implements UriFactoryInterface
             );
         }
         if (null === $defaultClass) {
-            $defaultClass = 'Zend\Uri\Uri';
+            $defaultClass = __NAMESPACE__ . '\Uri';
         }
 
         $this->schemeClasses = $schemeClasses;

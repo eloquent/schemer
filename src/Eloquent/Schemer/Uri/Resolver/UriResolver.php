@@ -11,8 +11,8 @@
 
 namespace Eloquent\Schemer\Uri\Resolver;
 
+use Eloquent\Schemer\Uri\Uri;
 use ReflectionObject;
-use Zend\Uri\Uri;
 use Zend\Uri\UriInterface;
 
 class UriResolver implements UriResolverInterface

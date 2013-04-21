@@ -13,7 +13,6 @@ namespace Eloquent\Schemer\Uri;
 
 use Zend\Uri\Exception\InvalidArgumentException;
 use Zend\Uri\Exception\InvalidUriException;
-use Zend\Uri\Uri;
 use Zend\Uri\UriInterface;
 
 class DataUri extends Uri
