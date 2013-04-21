@@ -21,7 +21,7 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
         $this->fixturePath = sprintf(
-            '%s/../../../../fixture/reference',
+            '%s/../../../../fixture/reference/resolver',
             __DIR__
         );
 

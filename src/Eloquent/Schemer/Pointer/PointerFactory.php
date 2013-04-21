@@ -14,12 +14,16 @@ namespace Eloquent\Schemer\Pointer;
 class PointerFactory implements PointerFactoryInterface
 {
     /**
-     * @param string $pointer
+     * @param string|null $pointer
      *
      * @return PointerInterface
      */
-    public function create($pointer)
+    public function create($pointer = null)
     {
+        if (null === $pointer) {
+            return new Pointer;
+        }
+
         return new Pointer($this->parseAtoms($pointer));
     }
 

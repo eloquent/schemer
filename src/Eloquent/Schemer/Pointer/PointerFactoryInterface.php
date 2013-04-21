@@ -14,9 +14,9 @@ namespace Eloquent\Schemer\Pointer;
 interface PointerFactoryInterface
 {
     /**
-     * @param string $pointer
+     * @param string|null $pointer
      *
      * @return PointerInterface
      */
-    public function create($pointer);
+    public function create($pointer = null);
 }

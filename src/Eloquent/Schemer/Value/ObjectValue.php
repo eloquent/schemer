@@ -45,7 +45,7 @@ class ObjectValue extends AbstractConcreteValue implements
     public function value()
     {
         $value = clone $this->value;
-        foreach ($this->properties() as $property) {
+        foreach ($this->keys() as $property) {
             $value->$property = $value->$property->value();
         }
 

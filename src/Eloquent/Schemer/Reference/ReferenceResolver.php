@@ -245,6 +245,14 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         return $value;
     }
 
+    protected function clear()
+    {
+        parent::clear();
+
+        $this->baseUriStack = array();
+        $this->resolutions = array();
+    }
+
     /**
      * @param UriInterface $baseUri
      */
@@ -272,14 +280,6 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         }
 
         return $this->baseUriStack[count($this->baseUriStack) - 1];
-    }
-
-    protected function clear()
-    {
-        parent::clear();
-
-        $this->baseUriStack = array();
-        $this->resolutions = array();
     }
 
     /**
