@@ -36,6 +36,7 @@ class ResolutionScopeMapperTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
+        $this->mapper = new ResolutionScopeMapper;
         $this->reader = new Reader;
         $this->pointerFactory = new PointerFactory;
         $this->uriFactory = new UriFactory;
@@ -75,11 +76,14 @@ class ResolutionScopeMapperTest extends PHPUnit_Framework_TestCase
     public function testMapper($testName)
     {
         $path = sprintf('%s/%s', $this->fixturePath, $testName);
-        $mapper = new ResolutionScopeMapper($this->uriFactory->create('#'));
         $fixture = $this->reader->readPath($path);
         $expected = get_object_vars($fixture->expected->value());
+        $map = $this->mapper->create(
+            $this->uriFactory->create('#'),
+            $fixture->document
+        );
         $actual = array();
-        foreach ($mapper->create($fixture->document)->map() as $uri => $pointer) {
+        foreach ($map->map() as $uri => $pointer) {
             $actual[sprintf('#%s', $pointer->string())] = $uri;
         }
 

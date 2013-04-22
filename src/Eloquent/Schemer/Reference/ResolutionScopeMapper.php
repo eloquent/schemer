@@ -21,16 +21,15 @@ use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Value;
 use Zend\Uri\UriInterface;
 
-class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor
+class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implements
+    ResolutionScopeMapperInterface
 {
     /**
-     * @param UriInterface                 $baseUri
      * @param UriFactoryInterface|null     $uriFactory
      * @param UriResolverInterface|null    $uriResolver
      * @param PointerFactoryInterface|null $pointerFactory
      */
     public function __construct(
-        UriInterface $baseUri,
         UriFactoryInterface $uriFactory = null,
         UriResolverInterface $uriResolver = null,
         PointerFactoryInterface $pointerFactory = null
@@ -45,20 +44,11 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor
             $pointerFactory = new PointerFactory;
         }
 
-        $this->baseUri = $baseUri;
         $this->uriFactory = $uriFactory;
         $this->uriResolver = $uriResolver;
         $this->pointerFactory = $pointerFactory;
 
         $this->clear();
-    }
-
-    /**
-     * @return UriInterface
-     */
-    public function baseUri()
-    {
-        return $this->baseUri;
     }
 
     /**
@@ -86,15 +76,20 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor
     }
 
     /**
+     * @param UriInterface         $baseUri
      * @param Value\ValueInterface $value
      *
      * @return ResolutionScopeMap
      */
-    public function create(Value\ValueInterface $value)
+    public function create(UriInterface $baseUri, Value\ValueInterface $value)
     {
         $this->clear();
+        $this->pushBaseUri($baseUri);
+        $this->addMapping($baseUri, $this->currentPointer());
+
         $value->accept($this);
         $map = new ResolutionScopeMap($this->map());
+
         $this->clear();
 
         return $map;
@@ -123,7 +118,7 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor
                     throw new RuntimeException('Invalid resolution scope.');
                 }
 
-                $this->pushBaseUri(
+                $this->pushBaseUriReference(
                     $this->uriFactory()->createGeneric($subValue->value())
                 );
                 $this->addMapping(
@@ -140,13 +135,9 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor
 
     protected function clear()
     {
-        $pointer = $this->pointerFactory()->create();
-
         $this->baseUriStack = array();
-        $this->pointerStack = array($pointer);
-        $this->map = array(
-            array($this->baseUri(), $pointer),
-        );
+        $this->pointerStack = array($this->pointerFactory()->create());
+        $this->map = array();
     }
 
     /**
@@ -154,8 +145,15 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor
      */
     protected function pushBaseUri(UriInterface $baseUri)
     {
-        array_push(
-            $this->baseUriStack,
+        array_push($this->baseUriStack, $baseUri);
+    }
+
+    /**
+     * @param UriInterface $baseUri
+     */
+    protected function pushBaseUriReference(UriInterface $baseUri)
+    {
+        $this->pushBaseUri(
             $this->uriResolver()->resolve($baseUri, $this->currentBaseUri())
         );
     }
@@ -175,7 +173,7 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor
     protected function currentBaseUri()
     {
         if (count($this->baseUriStack) < 1) {
-            return $this->baseUri;
+            throw new LogicException('Base URI stack is empty.');
         }
 
         return $this->baseUriStack[count($this->baseUriStack) - 1];
@@ -227,7 +225,6 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor
         return $this->map;
     }
 
-    private $baseUri;
     private $uriFactory;
     private $uriResolver;
     private $pointerFactory;
