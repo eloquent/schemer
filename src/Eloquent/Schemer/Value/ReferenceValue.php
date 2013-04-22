@@ -21,8 +21,7 @@ class ReferenceValue implements ValueInterface
      */
     public function __construct(UriInterface $uri, $mimeType = null)
     {
-        $this->uri = clone $uri;
-        $this->uri->normalize();
+        $this->uri = $uri;
         $this->mimeType = $mimeType;
     }
 

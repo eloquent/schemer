@@ -1286,6 +1286,14 @@ class UriTest extends PHPUnit_Framework_TestCase
             array('File:///SitePages/fi%6ce%20has%20spaces', 'file:///SitePages/file%20has%20spaces'),
             array('/foo/bar/../baz?do=action#showFragment', '/foo/baz?do=action#showFragment'),
             array('/foo/bar/../baz?do=action#', '/foo/baz?do=action'),
+            array('/foo/bar/..', '/foo'),
+            array('/foo/..', '/'),
+            array('/foo/../..', '/'),
+            array('/foo/../../bar', '/bar'),
+            array('foo/bar/..', 'foo/bar/..'),
+            array('foo/..', 'foo/..'),
+            array('foo/../..', 'foo/../..'),
+            array('foo/../../bar', 'foo/../../bar'),
             array('#', '#'),
 
             //  RFC 3986 Capitalizing letters in escape sequences.
@@ -1300,8 +1308,11 @@ class UriTest extends PHPUnit_Framework_TestCase
     {
         return array(
              array('http://example.com/dir/subdir/', 'http://example.com/dir/subdir/more/file1.txt', 'more/file1.txt'),
+             array('http://example.com/dir/subdir', 'http://example.com/dir/subdir/more/file1.txt', 'more/file1.txt'),
              array('http://example.com/dir/subdir/', 'http://example.com/dir/otherdir/file2.txt',    '../otherdir/file2.txt'),
+             array('http://example.com/dir/subdir', 'http://example.com/dir/otherdir/file2.txt',    '../otherdir/file2.txt'),
              array('http://example.com/dir/subdir/', 'http://otherhost.com/dir/subdir/file3.txt',    'http://otherhost.com/dir/subdir/file3.txt'),
+             array('http://example.com/dir/subdir', 'http://otherhost.com/dir/subdir/file3.txt',    'http://otherhost.com/dir/subdir/file3.txt'),
         );
     }
 

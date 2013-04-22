@@ -24,7 +24,7 @@ class Uri extends ZendUri
     public function parse($uri)
     {
         // Capture scheme
-        if (($scheme = self::parseScheme($uri)) !== null) {
+        if (($scheme = static::parseScheme($uri)) !== null) {
             $this->setScheme($scheme);
             $uri = substr($uri, strlen($scheme) + 1);
         }
@@ -193,17 +193,17 @@ class Uri extends ZendUri
         }
 
         if ($this->path) {
-            $uri .= self::encodePath($this->path);
+            $uri .= static::encodePath($this->path);
         } elseif ($this->host && ($this->query || null !== $this->fragment)) {
             $uri .= '/';
         }
 
         if ($this->query) {
-            $uri .= "?" . self::encodeQueryFragment($this->query);
+            $uri .= "?" . static::encodeQueryFragment($this->query);
         }
 
         if (null !== $this->fragment) {
-            $uri .= "#" . self::encodeQueryFragment($this->fragment);
+            $uri .= "#" . static::encodeQueryFragment($this->fragment);
         }
 
         return $uri;
@@ -231,6 +231,31 @@ class Uri extends ZendUri
     }
 
     /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected static function normalizePath($path)
+    {
+        if ('/' === substr($path, 0, 1)) {
+            $path = static::removePathDotSegments($path);
+        }
+
+        $path = static::encodePath(
+            static::decodeUrlEncodedChars(
+                $path,
+                '/[' . static::CHAR_UNRESERVED . ':@&=\+\$,\/;%]/'
+            )
+        );
+
+        if (strlen($path) > 1 && '/' === substr($path, -1)) {
+            $path = substr($path, 0, -1);
+        }
+
+        return $path;
+    }
+
+    /**
      * @param string|null $fragment
      *
      * @return string|null
@@ -242,5 +267,82 @@ class Uri extends ZendUri
         }
 
         return parent::normalizeFragment($fragment);
+    }
+
+    /**
+     * @param Uri|string $baseUri
+     *
+     * @return Uri
+     */
+    public function makeRelative($baseUri)
+    {
+        // Copy base URI, we should not modify it
+        $baseUri = new static($baseUri);
+
+        $this->normalize();
+        $baseUri->normalize();
+
+        $host     = $this->getHost();
+        $baseHost = $baseUri->getHost();
+        if ($host && $baseHost && ($host != $baseHost)) {
+            // Not the same hostname
+            return $this;
+        }
+
+        $port     = $this->getPort();
+        $basePort = $baseUri->getPort();
+        if ($port && $basePort && ($port != $basePort)) {
+            // Not the same port
+            return $this;
+        }
+
+        $scheme     = $this->getScheme();
+        $baseScheme = $baseUri->getScheme();
+        if ($scheme && $baseScheme && ($scheme != $baseScheme)) {
+            // Not the same scheme (e.g. HTTP vs. HTTPS)
+            return $this;
+        }
+
+        // Remove host, port and scheme
+        $this->setHost(null)
+             ->setPort(null)
+             ->setScheme(null);
+
+        // Is path the same?
+        if ($this->getPath() == $baseUri->getPath()) {
+            $this->setPath('');
+
+            return $this;
+        }
+
+        $pathParts = preg_split('|(/)|', $this->getPath(), null,
+                                PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        $baseParts = preg_split('|(/)|', $baseUri->getPath(), null,
+                                PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        if ('/' !== $baseParts[count($baseParts) - 1]) {
+            $baseParts[] = '/';
+        }
+
+        // Get the intersection of existing path parts and those from the
+        // provided URI
+        $matchingParts = array_intersect_assoc($pathParts, $baseParts);
+
+        // Loop through the matches
+        foreach ($matchingParts as $index => $segment) {
+            // If we skip an index at any point, we have parent traversal, and
+            // need to prepend the path accordingly
+            if ($index && !isset($matchingParts[$index - 1])) {
+                array_unshift($pathParts, '../');
+                continue;
+            }
+
+            // Otherwise, we simply unset the given path segment
+            unset($pathParts[$index]);
+        }
+
+        // Reset the path by imploding path segments
+        $this->setPath(implode($pathParts));
+
+        return $this;
     }
 }
