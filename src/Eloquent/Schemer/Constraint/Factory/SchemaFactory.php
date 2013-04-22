@@ -11,6 +11,7 @@
 
 namespace Eloquent\Schemer\Constraint\Factory;
 
+use DateTime;
 use Eloquent\Schemer\Constraint\ArrayValue;
 use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\DateTimeValue;
@@ -22,6 +23,7 @@ use Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Validation\ConstraintValidator;
 use Eloquent\Schemer\Validation\ConstraintValidatorInterface;
 use Eloquent\Schemer\Value;
+use InvalidArgumentException;
 use RuntimeException;
 
 class SchemaFactory implements SchemaFactoryInterface
@@ -97,21 +99,14 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ObjectValue $value
      *
      * @return \Eloquent\Schemer\Constraint\Schema
      */
-    public function createSchema(Value\ConcreteValueInterface $value)
+    protected function createSchema(Value\ObjectValue $value)
     {
         if ($this->hasRegisteredSchema($value)) {
             return $this->registeredSchema($value);
-        }
-
-        if (!$value instanceof Value\ObjectValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::OBJECT_TYPE())
-            );
         }
 
         if ($value->has('default')) {
@@ -219,11 +214,11 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ObjectValue $value
      *
      * @return array<ConstraintInterface>
      */
-    protected function createCompositeConstraints(Value\ConcreteValueInterface $value)
+    protected function createCompositeConstraints(Value\ObjectValue $value)
     {
         $constraints = array();
 
@@ -246,19 +241,12 @@ class SchemaFactory implements SchemaFactoryInterface
     // generic constraints =====================================================
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ArrayValue $value
      *
      * @return Generic\EnumConstraint
      */
-    protected function createEnumConstraint(Value\ConcreteValueInterface $value)
+    protected function createEnumConstraint(Value\ArrayValue $value)
     {
-        if (!$value instanceof Value\ArrayValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::ARRAY_TYPE())
-            );
-        }
-
         return new Generic\EnumConstraint($value);
     }
 
@@ -277,9 +265,8 @@ class SchemaFactory implements SchemaFactoryInterface
             $valueTypes = array();
             foreach ($value as $typeValue) {
                 if (!$typeValue instanceof Value\StringValue) {
-                    throw new UnexpectedValueException(
-                        $typeValue->valueType(),
-                        array(Value\ValueType::STRING_TYPE())
+                    throw new InvalidArgumentException(
+                        'Value for type constraint must be either a string or an array of strings.'
                     );
                 }
 
@@ -289,26 +276,18 @@ class SchemaFactory implements SchemaFactoryInterface
             return new Generic\TypeConstraint($valueTypes);
         }
 
-        throw new UnexpectedValueException(
-            $value,
-            array(Value\ValueType::STRING_TYPE(), Value\ValueType::ARRAY_TYPE())
+        throw new InvalidArgumentException(
+            'Value for type constraint must be either a string or an array of strings.'
         );
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ArrayValue $value
      *
      * @return Generic\AllOfConstraint
      */
-    protected function createAllOfConstraint(Value\ConcreteValueInterface $value)
+    protected function createAllOfConstraint(Value\ArrayValue $value)
     {
-        if (!$value instanceof Value\ArrayValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::ARRAY_TYPE())
-            );
-        }
-
         $schemas = array();
         foreach ($value as $subValue) {
             $schemas[] = $this->createSchema($subValue);
@@ -318,19 +297,12 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ArrayValue $value
      *
      * @return Generic\AnyOfConstraint
      */
-    protected function createAnyOfConstraint(Value\ConcreteValueInterface $value)
+    protected function createAnyOfConstraint(Value\ArrayValue $value)
     {
-        if (!$value instanceof Value\ArrayValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::ARRAY_TYPE())
-            );
-        }
-
         $schemas = array();
         foreach ($value as $subValue) {
             $schemas[] = $this->createSchema($subValue);
@@ -340,19 +312,12 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ArrayValue $value
      *
      * @return Generic\OneOfConstraint
      */
-    protected function createOneOfConstraint(Value\ConcreteValueInterface $value)
+    protected function createOneOfConstraint(Value\ArrayValue $value)
     {
-        if (!$value instanceof Value\ArrayValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::ARRAY_TYPE())
-            );
-        }
-
         $schemas = array();
         foreach ($value as $subValue) {
             $schemas[] = $this->createSchema($subValue);
@@ -362,11 +327,11 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ObjectValue $value
      *
      * @return Generic\NotConstraint
      */
-    protected function createNotConstraint(Value\ConcreteValueInterface $value)
+    protected function createNotConstraint(Value\ObjectValue $value)
     {
         return new Generic\NotConstraint($this->createSchema($value));
     }
@@ -374,82 +339,57 @@ class SchemaFactory implements SchemaFactoryInterface
     // object constraints ======================================================
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\IntegerValue $value
      *
      * @return ObjectValue\MaximumPropertiesConstraint
      */
-    protected function createMaximumPropertiesConstraint(Value\ConcreteValueInterface $value)
+    protected function createMaximumPropertiesConstraint(Value\IntegerValue $value)
     {
-        if (!$value instanceof Value\IntegerValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::INTEGER_TYPE())
-            );
-        }
-
         return new ObjectValue\MaximumPropertiesConstraint($value->value());
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\IntegerValue $value
      *
      * @return ObjectValue\MinimumPropertiesConstraint
      */
-    protected function createMinimumPropertiesConstraint(Value\ConcreteValueInterface $value)
+    protected function createMinimumPropertiesConstraint(Value\IntegerValue $value)
     {
-        if (!$value instanceof Value\IntegerValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::INTEGER_TYPE())
-            );
-        }
-
         return new ObjectValue\MinimumPropertiesConstraint($value->value());
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ArrayValue $value
      *
      * @return array<RequiredConstraint>
      */
-    protected function createRequiredConstraints(Value\ConcreteValueInterface $value)
+    protected function createRequiredConstraints(Value\ArrayValue $value)
     {
-        if (!$value instanceof Value\ArrayValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::ARRAY_TYPE())
-            );
-        }
-
         $constraints = array();
         foreach ($value as $subValue) {
-            if (!$subValue instanceof Value\StringValue) {
-                throw new UnexpectedValueException(
-                    $subValue,
-                    array(Value\ValueType::STRING_TYPE())
-                );
-            }
-
-            $constraints[] = new ObjectValue\RequiredConstraint($subValue->value());
+            $constraints[] = $this->createRequiredConstraint($subValue);
         }
 
         return $constraints;
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\StringValue $value
+     *
+     * @return array<RequiredConstraint>
+     */
+    protected function createRequiredConstraint(Value\StringValue $value)
+    {
+        return new ObjectValue\RequiredConstraint($value->value());
+    }
+
+    /**
+     * @param Value\ObjectValue $value
      *
      * @return ObjectValue\PropertiesConstraint|null
      */
-    protected function createPropertiesConstraint(Value\ConcreteValueInterface $value)
+    protected function createPropertiesConstraint(Value\ObjectValue $value)
     {
-        if (!$value instanceof Value\ObjectValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::OBJECT_TYPE())
-            );
-        }
-
         if (
             !$value->has('properties') &&
             !$value->has('patternProperties') &&
@@ -461,9 +401,8 @@ class SchemaFactory implements SchemaFactoryInterface
         $schemas = array();
         if ($value->has('properties')) {
             if (!$value->get('properties') instanceof Value\ObjectValue) {
-                throw new UnexpectedValueException(
-                    $value->get('properties'),
-                    array(Value\ValueType::OBJECT_TYPE())
+                throw new InvalidArgumentException(
+                    'Value for properties constraint must be an object.'
                 );
             }
 
@@ -475,9 +414,8 @@ class SchemaFactory implements SchemaFactoryInterface
         $patternSchemas = array();
         if ($value->has('patternProperties')) {
             if (!$value->get('patternProperties') instanceof Value\ObjectValue) {
-                throw new UnexpectedValueException(
-                    $value->get('patternProperties'),
-                    array(Value\ValueType::OBJECT_TYPE())
+                throw new InvalidArgumentException(
+                    'Value for patternProperties constraint must be an object.'
                 );
             }
 
@@ -498,9 +436,8 @@ class SchemaFactory implements SchemaFactoryInterface
                     );
                 }
             } else {
-                throw new UnexpectedValueException(
-                    $value->get('additionalProperties'),
-                    array(Value\ValueType::OBJECT_TYPE(), Value\ValueType::BOOLEAN_TYPE())
+                throw new InvalidArgumentException(
+                    'Value for additionalProperties constraint must be either an object or a boolean.'
                 );
             }
         } else {
@@ -515,19 +452,12 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ObjectValue $value
      *
      * @return array<DependencyConstraint>
      */
-    protected function createDependencyConstraints(Value\ConcreteValueInterface $value)
+    protected function createDependencyConstraints(Value\ObjectValue $value)
     {
-        if (!$value instanceof Value\ObjectValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::OBJECT_TYPE())
-            );
-        }
-
         $constraints = array();
         foreach ($value as $property => $subValue) {
             if ($subValue instanceof Value\ObjectValue) {
@@ -538,16 +468,7 @@ class SchemaFactory implements SchemaFactoryInterface
             } elseif ($subValue instanceof Value\ArrayValue) {
                 $subConstraints = array();
                 foreach ($subValue as $subSubValue) {
-                    if (!$subSubValue instanceof Value\StringValue) {
-                        throw new UnexpectedValueException(
-                            $subSubValue,
-                            array(Value\ValueType::STRING_TYPE())
-                        );
-                    }
-
-                    $subConstraints[] = new ObjectValue\RequiredConstraint(
-                        $subSubValue->value()
-                    );
+                    $subConstraints[] = $this->createRequiredConstraint($subSubValue);
                 }
 
                 $constraints[] = new ObjectValue\DependencyConstraint(
@@ -555,9 +476,8 @@ class SchemaFactory implements SchemaFactoryInterface
                     new Schema($subConstraints)
                 );
             } else {
-                throw new UnexpectedValueException(
-                    $subValue,
-                    array(Value\ValueType::OBJECT_TYPE(), Value\ValueType::ARRAY_TYPE())
+                throw new InvalidArgumentException(
+                    'Value for dependencies constraint must be an array of objects or arrays.'
                 );
             }
         }
@@ -568,19 +488,12 @@ class SchemaFactory implements SchemaFactoryInterface
     // array constraints =======================================================
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ObjectValue $value
      *
      * @return ArrayValue\ItemsConstraint|null
      */
-    protected function createItemsConstraint(Value\ConcreteValueInterface $value)
+    protected function createItemsConstraint(Value\ObjectValue $value)
     {
-        if (!$value instanceof Value\ObjectValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::OBJECT_TYPE())
-            );
-        }
-
         if (
             !$value->has('items') &&
             !$value->has('additionalItems')
@@ -598,9 +511,8 @@ class SchemaFactory implements SchemaFactoryInterface
                     $schemas[] = $this->createSchema($subValue);
                 }
             } else {
-                throw new UnexpectedValueException(
-                    $value->get('items'),
-                    array(Value\ValueType::OBJECT_TYPE(), Value\ValueType::ARRAY_TYPE())
+                throw new InvalidArgumentException(
+                    'Value for items constraint must be an object or an array.'
                 );
             }
         }
@@ -615,9 +527,8 @@ class SchemaFactory implements SchemaFactoryInterface
                     );
                 }
             } else {
-                throw new UnexpectedValueException(
-                    $value->get('additionalItems'),
-                    array(Value\ValueType::OBJECT_TYPE(), Value\ValueType::BOOLEAN_TYPE())
+                throw new InvalidArgumentException(
+                    'Value for additionalItems constraint must be an object or a boolean.'
                 );
             }
         }
@@ -630,142 +541,86 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\IntegerValue $value
      *
      * @return ArrayValue\MaximumItemsConstraint
      */
-    protected function createMaximumItemsConstraint(Value\ConcreteValueInterface $value)
+    protected function createMaximumItemsConstraint(Value\IntegerValue $value)
     {
-        if (!$value instanceof Value\IntegerValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::INTEGER_TYPE())
-            );
-        }
-
         return new ArrayValue\MaximumItemsConstraint($value->value());
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\IntegerValue $value
      *
      * @return ArrayValue\MinimumItemsConstraint
      */
-    protected function createMinimumItemsConstraint(Value\ConcreteValueInterface $value)
+    protected function createMinimumItemsConstraint(Value\IntegerValue $value)
     {
-        if (!$value instanceof Value\IntegerValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::INTEGER_TYPE())
-            );
-        }
-
         return new ArrayValue\MinimumItemsConstraint($value->value());
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\BooleanValue $value
      *
      * @return ArrayValue\UniqueItemsConstraint
      */
-    protected function createUniqueItemsConstraint(Value\ConcreteValueInterface $value)
+    protected function createUniqueItemsConstraint(Value\BooleanValue $value)
     {
-        if (!$value instanceof Value\BooleanValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::BOOLEAN_TYPE())
-            );
-        }
-
         return new ArrayValue\UniqueItemsConstraint($value->value());
     }
 
     // string constraints ======================================================
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\IntegerValue $value
      *
      * @return StringValue\MaximumLengthConstraint
      */
-    protected function createMaximumLengthConstraint(Value\ConcreteValueInterface $value)
+    protected function createMaximumLengthConstraint(Value\IntegerValue $value)
     {
-        if (!$value instanceof Value\IntegerValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::INTEGER_TYPE())
-            );
-        }
-
         return new StringValue\MaximumLengthConstraint($value->value());
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\IntegerValue $value
      *
      * @return StringValue\MinimumLengthConstraint
      */
-    protected function createMinimumLengthConstraint(Value\ConcreteValueInterface $value)
+    protected function createMinimumLengthConstraint(Value\IntegerValue $value)
     {
-        if (!$value instanceof Value\IntegerValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::INTEGER_TYPE())
-            );
-        }
-
         return new StringValue\MinimumLengthConstraint($value->value());
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\StringValue $value
      *
      * @return StringValue\PatternConstraint
      */
-    protected function createPatternConstraint(Value\ConcreteValueInterface $value)
+    protected function createPatternConstraint(Value\StringValue $value)
     {
-        if (!$value instanceof Value\StringValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::STRING_TYPE())
-            );
-        }
-
         return new StringValue\PatternConstraint($value->value());
     }
 
     // number constraints ======================================================
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\NumberValueInterface $value
      *
      * @return NumberValue\MultipleOfConstraint
      */
-    protected function createMultipleOfConstraint(Value\ConcreteValueInterface $value)
+    protected function createMultipleOfConstraint(Value\NumberValueInterface $value)
     {
-        if (!$value instanceof Value\NumberValueInterface) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::NUMBER_TYPE())
-            );
-        }
-
         return new NumberValue\MultipleOfConstraint($value->value());
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ObjectValue $value
      *
      * @return NumberValue\MaximumConstraint|null
      */
-    protected function createMaximumConstraint(Value\ConcreteValueInterface $value)
+    protected function createMaximumConstraint(Value\ObjectValue $value)
     {
-        if (!$value instanceof Value\ObjectValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::OBJECT_TYPE())
-            );
-        }
-
         if (!$value->has('maximum')) {
             return null;
         }
@@ -777,19 +632,12 @@ class SchemaFactory implements SchemaFactoryInterface
     }
 
     /**
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ObjectValue $value
      *
      * @return NumberValue\MinimumConstraint|null
      */
-    protected function createMinimumConstraint(Value\ConcreteValueInterface $value)
+    protected function createMinimumConstraint(Value\ObjectValue $value)
     {
-        if (!$value instanceof Value\ObjectValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::OBJECT_TYPE())
-            );
-        }
-
         if (!$value->has('minimum')) {
             return null;
         }
@@ -809,14 +657,17 @@ class SchemaFactory implements SchemaFactoryInterface
      */
     protected function createMaximumDateTimeConstraint(Value\ConcreteValueInterface $value)
     {
-        if (!$value instanceof Value\DateTimeValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::DATE_TIME_TYPE())
+        if ($value instanceof Value\DateTimeValue) {
+            return new DateTimeValue\MaximumDateTimeConstraint($value->value());
+        } elseif ($value instanceof Value\StringValue) {
+            return new DateTimeValue\MaximumDateTimeConstraint(
+                new DateTime($value->value())
             );
         }
 
-        return new DateTimeValue\MaximumDateTimeConstraint($value->value());
+        throw new InvalidArgumentException(
+            'Value for maxDateTime constraint must be a date-time or a string.'
+        );
     }
 
     /**
@@ -826,14 +677,17 @@ class SchemaFactory implements SchemaFactoryInterface
      */
     protected function createMinimumDateTimeConstraint(Value\ConcreteValueInterface $value)
     {
-        if (!$value instanceof Value\DateTimeValue) {
-            throw new UnexpectedValueException(
-                $value,
-                array(Value\ValueType::DATE_TIME_TYPE())
+        if ($value instanceof Value\DateTimeValue) {
+            return new DateTimeValue\MinimumDateTimeConstraint($value->value());
+        } elseif ($value instanceof Value\StringValue) {
+            return new DateTimeValue\MinimumDateTimeConstraint(
+                new DateTime($value->value())
             );
         }
 
-        return new DateTimeValue\MinimumDateTimeConstraint($value->value());
+        throw new InvalidArgumentException(
+            'Value for minDateTime constraint must be a date-time or a string.'
+        );
     }
 
     // implementation details ==================================================
