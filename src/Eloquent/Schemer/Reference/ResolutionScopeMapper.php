@@ -21,7 +21,7 @@ use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Value;
 use Zend\Uri\UriInterface;
 
-class ResolutionScopeMapper implements Value\Visitor\ValueVisitorInterface
+class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor
 {
     /**
      * @param UriInterface                 $baseUri
@@ -113,34 +113,6 @@ class ResolutionScopeMapper implements Value\Visitor\ValueVisitorInterface
     }
 
     /**
-     * @param Value\BooleanValue $value
-     */
-    public function visitBooleanValue(Value\BooleanValue $value)
-    {
-    }
-
-    /**
-     * @param Value\FloatingPointValue $value
-     */
-    public function visitFloatingPointValue(Value\FloatingPointValue $value)
-    {
-    }
-
-    /**
-     * @param Value\IntegerValue $value
-     */
-    public function visitIntegerValue(Value\IntegerValue $value)
-    {
-    }
-
-    /**
-     * @param Value\NullValue $value
-     */
-    public function visitNullValue(Value\NullValue $value)
-    {
-    }
-
-    /**
      * @param Value\ObjectValue $value
      */
     public function visitObjectValue(Value\ObjectValue $value)
@@ -164,34 +136,6 @@ class ResolutionScopeMapper implements Value\Visitor\ValueVisitorInterface
             $subValue->accept($this);
             $this->popPointer();
         }
-    }
-
-    /**
-     * @param Value\StringValue $value
-     */
-    public function visitStringValue(Value\StringValue $value)
-    {
-    }
-
-    /**
-     * @param Value\DateTimeValue $value
-     */
-    public function visitDateTimeValue(Value\DateTimeValue $value)
-    {
-    }
-
-    /**
-     * @param Value\ReferenceValue $value
-     */
-    public function visitReferenceValue(Value\ReferenceValue $value)
-    {
-    }
-
-    /**
-     * @param Value\PlaceholderValue $value
-     */
-    public function visitPlaceholderValue(Value\PlaceholderValue $value)
-    {
     }
 
     protected function clear()
