@@ -85,7 +85,7 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
     {
         $this->clear();
         $this->pushBaseUri($baseUri);
-        $this->addMapping($baseUri, $this->currentPointer());
+        $this->addMapping($this->currentPointer(), $baseUri);
 
         $value->accept($this);
         $map = new ResolutionScopeMap($this->map());
@@ -122,8 +122,8 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
                     $this->uriFactory()->createGeneric($subValue->value())
                 );
                 $this->addMapping(
-                    $this->currentBaseUri(),
-                    $this->currentPointer()
+                    $this->currentPointer(),
+                    $this->currentBaseUri()
                 );
             }
 
@@ -209,12 +209,12 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
     }
 
     /**
-     * @param UriInterface     $uri
      * @param PointerInterface $pointer
+     * @param UriInterface     $uri
      */
-    protected function addMapping(UriInterface $uri, PointerInterface $pointer)
+    protected function addMapping(PointerInterface $pointer, UriInterface $uri)
     {
-        $this->map[] = array($uri, $pointer);
+        $this->map[] = array($pointer, $uri);
     }
 
     /**

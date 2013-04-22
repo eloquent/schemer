@@ -31,9 +31,7 @@ abstract class AbstractValueTransform extends Value\Visitor\AbstractValueVisitor
      */
     public function transform(Value\ValueInterface $value)
     {
-        $this->clear();
-        $this->setValue($value);
-        $this->initialize();
+        $this->initialize($value);
         $value = $value->accept($this);
         $this->clear();
 
@@ -74,14 +72,16 @@ abstract class AbstractValueTransform extends Value\Visitor\AbstractValueVisitor
         return new Value\ObjectValue($subValues);
     }
 
+    protected function initialize(Value\ValueInterface $value)
+    {
+        $this->clear();
+        $this->setValue($value);
+    }
+
     protected function clear()
     {
         $this->setContext(new Pointer);
         $this->setValue(null);
-    }
-
-    protected function initialize()
-    {
     }
 
     /**

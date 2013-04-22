@@ -11,24 +11,32 @@
 
 namespace Eloquent\Schemer\Reference;
 
+use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Pointer\PointerInterface;
 use Zend\Uri\UriInterface;
 
 class ResolutionScopeMap
 {
     /**
-     * @param array<tuple<UriInterface,PointerInterface>> $map
+     * @param array<tuple<PointerInterface,UriInterface>> $map
+     * @param Comparator|null                             $comparator
      */
-    public function __construct(array $map)
+    public function __construct(array $map, Comparator $comparator = null)
     {
-        foreach ($map as $tuple) {
-            list($uri, $pointer) = $tuple;
-            $this->add($uri, $pointer);
+        if (null === $comparator) {
+            $comparator = new Comparator;
         }
+
+        foreach ($map as $tuple) {
+            list($pointer, $uri) = $tuple;
+            $this->add($pointer, $uri);
+        }
+
+        $this->comparator = $comparator;
     }
 
     /**
-     * @return array<string,PointerInterface>
+     * @return array<tuple<PointerInterface,UriInterface>>
      */
     public function map()
     {
@@ -36,41 +44,39 @@ class ResolutionScopeMap
     }
 
     /**
-     * @param UriInterface $uri
-     *
-     * @return PointerInterface|null
+     * @return Comparator
      */
-    public function get(UriInterface $uri)
+    public function comparator()
     {
-        $key = $this->normalizeUri($uri)->toString();
-        if (array_key_exists($key, $this->map)) {
-            return $this->map[$key];
+        return $this->comparator;
+    }
+
+    /**
+     * @param PointerInterface $pointer
+     *
+     * @return UriInterface|null
+     */
+    public function uriByPointer(PointerInterface $pointer)
+    {
+        foreach ($this->map() as $tuple) {
+            list($thisPointer, $uri) = $tuple;
+            if ($this->comparator()->equals($thisPointer, $pointer)) {
+                return $uri;
+            }
         }
 
         return null;
     }
 
     /**
-     * @param UriInterface     $uri
      * @param PointerInterface $pointer
+     * @param UriInterface     $uri
      */
-    protected function add(UriInterface $uri, PointerInterface $pointer)
+    protected function add(PointerInterface $pointer, UriInterface $uri)
     {
-        $this->map[$this->normalizeUri($uri)->toString()] = $pointer;
-    }
-
-    /**
-     * @param UriInterface $uri
-     *
-     * @return UriInterface
-     */
-    protected function normalizeUri(UriInterface $uri)
-    {
-        $uri = clone $uri;
-        $uri->normalize();
-
-        return $uri;
+        $this->map[] = array($pointer, $uri);
     }
 
     private $map;
+    private $comparator;
 }

@@ -83,8 +83,9 @@ class ResolutionScopeMapperTest extends PHPUnit_Framework_TestCase
             $fixture->document
         );
         $actual = array();
-        foreach ($map->map() as $uri => $pointer) {
-            $actual[sprintf('#%s', $pointer->string())] = $uri;
+        foreach ($map->map() as $tuple) {
+            list($pointer, $uri) = $tuple;
+            $actual[sprintf('#%s', $pointer->string())] = $uri->toString();
         }
 
         $this->assertEquals($expected, $actual);
