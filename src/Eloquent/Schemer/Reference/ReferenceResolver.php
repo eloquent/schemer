@@ -342,6 +342,7 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     private $pointerFactory;
     private $pointerResolver;
     private $placeholderUnwrap;
+
     private $baseUriStack;
     private $resolutions;
 }

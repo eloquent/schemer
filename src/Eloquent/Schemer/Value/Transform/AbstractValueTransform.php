@@ -33,6 +33,7 @@ abstract class AbstractValueTransform extends Value\Visitor\AbstractValueVisitor
     {
         $this->clear();
         $this->setValue($value);
+        $this->initialize();
         $value = $value->accept($this);
         $this->clear();
 
@@ -77,6 +78,10 @@ abstract class AbstractValueTransform extends Value\Visitor\AbstractValueVisitor
     {
         $this->setContext(new Pointer);
         $this->setValue(null);
+    }
+
+    protected function initialize()
+    {
     }
 
     /**
