@@ -55,7 +55,6 @@ class DefaultValueTransformTest extends PHPUnit_Framework_TestCase
                 $data[sprintf('%s / %s', $category, $testName)] =
                     array($category, $testName);
             }
-
         }
 
         return $data;

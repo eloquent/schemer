@@ -90,9 +90,6 @@ class ValueFactory implements ValueFactoryInterface
         $value = clone $value;
 
         foreach (get_object_vars($value) as $property => $subValue) {
-            if ('' === $property) {
-                $property = '_empty_';
-            }
             $value->$property = $this->create($subValue);
         }
 

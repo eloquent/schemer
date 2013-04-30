@@ -18,11 +18,11 @@
         }
     },
     "expected": {
-        "#": "http://x.y.z/rootschema.json#",
+        "#": "http://x.y.z/rootschema.json",
         "#/schema1": "http://x.y.z/rootschema.json#foo",
         "#/schema2": "http://x.y.z/otherschema.json",
         "#/schema2/nested": "http://x.y.z/otherschema.json#bar",
         "#/schema2/alsonested": "http://x.y.z/t/inner.json#a",
-        "#/schema3": "some://where.else/completely#"
+        "#/schema3": "some://where.else/completely"
     }
 }

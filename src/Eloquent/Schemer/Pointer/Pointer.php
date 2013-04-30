@@ -36,6 +36,20 @@ class Pointer implements PointerInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function lastAtom()
+    {
+        if (!$this->hasAtoms()) {
+            return null;
+        }
+
+        $atoms = $this->atoms();
+
+        return array_pop($atoms);
+    }
+
+    /**
      * @return boolean
      */
     public function hasAtoms()
@@ -44,16 +58,39 @@ class Pointer implements PointerInterface
     }
 
     /**
-     * @param string $atom
+     * @param PointerInterface $pointer
      *
      * @return PointerInterface
      */
-    public function joinAtom($atom)
+    public function join(PointerInterface $pointer)
     {
-        $atoms = $this->atoms();
-        array_push($atoms, $atom);
+        return new static(array_merge($this->atoms(), $pointer->atoms()));
+    }
 
-        return new static($atoms);
+    /**
+     * @param string     $atom
+     * @param string,... $additionalAtoms
+     *
+     * @return PointerInterface
+     */
+    public function joinAtoms($atom)
+    {
+        return $this->joinAtomSequence(func_get_args());
+    }
+
+    /**
+     * @param mixed<string> $atoms
+     *
+     * @return PointerInterface
+     */
+    public function joinAtomSequence($atoms)
+    {
+        $newAtoms = $this->atoms();
+        foreach ($atoms as $atom) {
+            array_push($newAtoms, $atom);
+        }
+
+        return new static($newAtoms);
     }
 
     /**

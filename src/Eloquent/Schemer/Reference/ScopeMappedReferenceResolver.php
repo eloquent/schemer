@@ -164,80 +164,91 @@ class ScopeMappedReferenceResolver extends Value\Transform\AbstractValueTransfor
     public function visitReferenceValue(Value\ReferenceValue $reference)
     {
         // resolve reference against current base URI and normalize
+        $referenceUri = $this->uriResolver()->resolve(
+            $this->currentBaseUri(),
+            $reference->uri()
+        );
 
         // if in-progress resolution exists
+        if ($this->hasResolution($referenceUri)) {
             // return it
+            return $this->resolution($referenceUri);
+        }
         // start new resolution
+        $resolution = $this->startResolution($referenceUri);
 
         // if reference is a child of any inline scope throughout the stack
-            // resolve inline
-        // else
-            // resolve externally
+        // resolve inline
+        if (!$value = $this->resolveInline($referenceUri)) {
+            // else resolve externally
+            $value = $this->resolveExternal($referenceUri);
+        }
 
-        // resolve pointer
         // complete resolution
+        $this->completeResolution($referenceUri, $value);
 
         // return resolution
+        return $resolution;
     }
 
     /**
-     * @param Value\ReferenceValue $reference
+     * @param UriInterface $referenceUri
      *
-     * @return Value\ValueInterface
+     * @return Value\ValueInterface|null
      * @throws Exception\UndefinedReferenceException
      */
-    protected function resolveInline(Value\ReferenceValue $reference)
+    protected function resolveInline(UriInterface $referenceUri)
     {
         // pull relevant inline value from stack
+        foreach (array_reverse($this->scopeMapStack()) as $scopeMap) {
+            if
+        }
+
         // push the relevant scope map onto the stack
         // visit the value
         // pop the scope map stack
+        // resolve pointer
 
         // return the visited value
     }
 
     /**
-     * @param Value\ReferenceValue $reference
-     * @param UriInterface         $referenceUri
+     * @param UriInterface $referenceUri
      *
      * @return Value\ValueInterface
      * @throws Exception\UndefinedReferenceException
      */
-    protected function resolveExternal(
-        Value\ReferenceValue $reference,
-        UriInterface $referenceUri
-    ) {
+    protected function resolveExternal(UriInterface $referenceUri)
+    {
         // read external value
         // create its scope map
         // push scope map onto the stack
         // visit the value
         // pop the scope map stack
+        // resolve pointer
 
         // return the visited value
     }
 
     /**
-     * @param Value\ReferenceValue $reference
+     * @param UriInterface         $referenceUri
      * @param Value\ValueInterface $value
      *
      * @return Value\ValueInterface
      * @throws Exception\UndefinedReferenceException
      */
-    protected function resolvePointer(
-        Value\ReferenceValue $reference,
+    protected function resolveUriFragmentPointer(
+        UriInterface $referenceUri,
         Value\ValueInterface $value
     ) {
-        if (null !== $reference->uri()->getFragment()) {
+        if (null !== $referenceUri->getFragment()) {
             $pointer = $this->pointerFactory()->create(
-                $reference->uri()->getFragment()
+                $referenceUri->getFragment()
             );
 
             $value = $this->pointerResolver()->resolve($pointer, $value);
             if (null === $value) {
-                throw new Exception\UndefinedReferenceException(
-                    $reference,
-                    $this->currentBaseUri()
-                );
+                throw new Exception\UndefinedReferenceException($referenceUri);
             }
         }
 
@@ -294,70 +305,72 @@ class ScopeMappedReferenceResolver extends Value\Transform\AbstractValueTransfor
     }
 
     /**
+     * @return array<ResolutionScopeMap>
+     */
+    protected function scopeMapStack()
+    {
+        return $this->scopeMapStack;
+    }
+
+    /**
      * @return UriInterface
      */
     protected function currentBaseUri()
     {
-        $scopeMap = $this->currentScopeMap();
-        $baseUri = $scopeMap->uriByPointer($this->pointerFactory()->create());
-        if (null === $baseUri) {
-            throw new LogicException(
-                'Scope map does not define a URI for the document root.'
-            );
-        }
-
-        return $baseUri;
+        return $this
+            ->currentScopeMap()
+            ->uriByPointer($this->pointerFactory()->create());
     }
 
     /**
-     * @param Value\ReferenceValue $reference
+     * @param UriInterface $referenceUri
      *
      * @return Value\PlaceholderValue
      */
-    protected function startResolution(Value\ReferenceValue $reference)
+    protected function startResolution(UriInterface $referenceUri)
     {
         $resolution = new Value\PlaceholderValue;
-        $this->resolutions[$reference->uri()->toString()] = $resolution;
+        $this->resolutions[$referenceUri->toString()] = $resolution;
 
         return $resolution;
     }
 
     /**
-     * @param Value\ReferenceValue $reference
+     * @param UriInterface         $referenceUri
      * @param Value\ValueInterface $value
      */
     protected function completeResolution(
-        Value\ReferenceValue $reference,
+        UriInterface $referenceUri,
         Value\ValueInterface $value
     ) {
-        $this->resolution($reference)->setInnerValue($value);
+        $this->resolution($referenceUri)->setInnerValue($value);
     }
 
     /**
-     * @param Value\ReferenceValue $reference
+     * @param UriInterface $referenceUri
      *
      * @return boolean
      */
-    protected function hasResolution(Value\ReferenceValue $reference)
+    protected function hasResolution(UriInterface $referenceUri)
     {
         return array_key_exists(
-            $reference->uri()->toString(),
+            $referenceUri->toString(),
             $this->resolutions
         );
     }
 
     /**
-     * @param Value\ReferenceValue $reference
+     * @param UriInterface $referenceUri
      *
      * @return Value\ValueInterface
      */
-    protected function resolution(Value\ReferenceValue $reference)
+    protected function resolution(UriInterface $referenceUri)
     {
-        if (!$this->hasResolution($reference)) {
+        if (!$this->hasResolution($referenceUri)) {
             throw new LogicException('Undefined resolution.');
         }
 
-        return $this->resolutions[$reference->uri()->toString()];
+        return $this->resolutions[$referenceUri->toString()];
     }
 
     private $baseUri;

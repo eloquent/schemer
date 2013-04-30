@@ -1,0 +1,61 @@
+{
+    "map": {
+        "": "http://example.org/a",
+        "/b": "http://example.org/a#b",
+        "/c": "http://example.org/a#/d",
+        "/e": "http://example.org/e",
+        "/f": "http://example.org/e#f",
+        "/g": "http://example.org/g#/h"
+    },
+    "tests": {
+        "document root match": {
+            "uri": "http://example.org/a",
+            "pointer": ""
+        },
+
+        "document root match with pointer-fragment": {
+            "uri": "http://example.org/a#/x/y/z",
+            "pointer": "/x/y/z"
+        },
+
+        "document root match with non-pointer fragment": {
+            "uri": "http://example.org/a#b",
+            "pointer": "/b"
+        },
+
+        "later overlapping pointer-fragment match ignored": {
+            "uri": "http://example.org/a#/d",
+            "pointer": "/d"
+        },
+
+        "exact URI match": {
+            "uri": "http://example.org/e",
+            "pointer": "/e"
+        },
+
+        "URI match with pointer-fragment": {
+            "uri": "http://example.org/e#/x/y/z",
+            "pointer": "/e/x/y/z"
+        },
+
+        "URI match with non-pointer fragment": {
+            "uri": "http://example.org/e#f",
+            "pointer": "/f"
+        },
+
+        "URI match with pointer-fragment": {
+            "uri": "http://example.org/g#/h",
+            "pointer": "/g"
+        },
+
+        "URI match with parent pointer-fragment": {
+            "uri": "http://example.org/g#/h/x/y/z",
+            "pointer": "/g/x/y/z"
+        },
+
+        "non match": {
+            "uri": "http://example.org/z",
+            "pointer": null
+        }
+    }
+}

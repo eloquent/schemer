@@ -994,7 +994,7 @@ class ConstraintValidator implements
         list($value, $pointer) = $this->currentContext();
         $this->pushContext(array(
             $value->get($property),
-            $pointer->joinAtom($property)
+            $pointer->joinAtoms($property)
         ));
         $result = $schema->accept($this);
         $this->popContext();
@@ -1013,7 +1013,7 @@ class ConstraintValidator implements
         list($value, $pointer) = $this->currentContext();
         $this->pushContext(array(
             $value->get($index),
-            $pointer->joinAtom(strval($index))
+            $pointer->joinAtoms(strval($index))
         ));
         $result = $schema->accept($this);
         $this->popContext();
@@ -1123,7 +1123,7 @@ class ConstraintValidator implements
 
         return new Result\DefaultValueMatch(
             $schema,
-            $pointer->joinAtom($atom)
+            $pointer->joinAtoms($atom)
         );
     }
 

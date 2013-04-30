@@ -113,7 +113,7 @@ abstract class AbstractValueTransform extends Value\Visitor\AbstractValueVisitor
      */
     protected function pushContextAtom($atom)
     {
-        $this->setContext($this->context()->joinAtom($atom));
+        $this->setContext($this->context()->joinAtoms($atom));
     }
 
     protected function popContextAtom()

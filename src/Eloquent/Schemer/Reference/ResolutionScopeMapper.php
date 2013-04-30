@@ -184,7 +184,7 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
      */
     protected function pushPointerAtom($atom)
     {
-        array_push($this->pointerStack, $this->currentPointer()->joinAtom($atom));
+        array_push($this->pointerStack, $this->currentPointer()->joinAtoms($atom));
     }
 
     protected function popPointer()

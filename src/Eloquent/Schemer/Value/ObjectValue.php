@@ -61,11 +61,28 @@ class ObjectValue extends AbstractConcreteValue implements
     }
 
     /**
+     * @return array<string,ValueInterface>
+     */
+    public function properties()
+    {
+        $properties = array();
+        foreach (get_object_vars($this->value) as $property => $value) {
+            if ('_empty_' === $property) {
+                $properties[''] = $value;
+            } else {
+                $properties[$property] = $value;
+            }
+        }
+
+        return $properties;
+    }
+
+    /**
      * @return array<integer,string>
      */
     public function keys()
     {
-        return array_keys(get_object_vars($this->value));
+        return array_keys($this->properties());
     }
 
     /**
@@ -90,6 +107,10 @@ class ObjectValue extends AbstractConcreteValue implements
      */
     public function set($property, ValueInterface $value)
     {
+        if ('' === $property) {
+            $property = '_empty_';
+        }
+
         $this->value->$property = $value;
     }
 
@@ -100,6 +121,10 @@ class ObjectValue extends AbstractConcreteValue implements
      */
     public function has($property)
     {
+        if ('' === $property) {
+            $property = '_empty_';
+        }
+
         return property_exists($this->value, $property);
     }
 
@@ -110,6 +135,9 @@ class ObjectValue extends AbstractConcreteValue implements
      */
     public function get($property)
     {
+        if ('' === $property) {
+            $property = '_empty_';
+        }
         if (!$this->has($property)) {
             throw new Exception\UndefinedPropertyException($property);
         }
@@ -182,6 +210,6 @@ class ObjectValue extends AbstractConcreteValue implements
      */
     public function getIterator()
     {
-        return new ArrayIterator(get_object_vars($this->value));
+        return new ArrayIterator($this->properties());
     }
 }

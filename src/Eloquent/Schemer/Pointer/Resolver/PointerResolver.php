@@ -76,10 +76,6 @@ class PointerResolver implements PointerResolverInterface
         $atom,
         ObjectValue $value
     ) {
-        if ('' === $atom) {
-            $atom = '_empty_';
-        }
-
         if (!$value->has($atom)) {
             return null;
         }

@@ -24,11 +24,26 @@ interface PointerInterface
     public function hasAtoms();
 
     /**
-     * @param string $atom
+     * @param PointerInterface $pointer
      *
      * @return PointerInterface
      */
-    public function joinAtom($atom);
+    public function join(PointerInterface $pointer);
+
+    /**
+     * @param string     $atom
+     * @param string,... $additionalAtoms
+     *
+     * @return PointerInterface
+     */
+    public function joinAtoms($atom);
+
+    /**
+     * @param mixed<string> $atoms
+     *
+     * @return PointerInterface
+     */
+    public function joinAtomSequence($atoms);
 
     /**
      * @return PointerInterface
