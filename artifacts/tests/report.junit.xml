@@ -1,0 +1,883 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="726" assertions="783" failures="0" errors="0" time="10.611843">
+    <testsuite name="Eloquent\Schemer\Constraint\Factory\MetaSchemaFactoryTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Constraint/Factory/MetaSchemaFactoryTest.php" namespace="Eloquent\Schemer\Constraint\Factory" fullPackage="Eloquent.Schemer.Constraint.Factory" tests="1" assertions="1" failures="0" errors="0" time="0.022518">
+      <testcase name="testCreate" class="Eloquent\Schemer\Constraint\Factory\MetaSchemaFactoryTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Constraint/Factory/MetaSchemaFactoryTest.php" line="25" assertions="1" time="0.022518"/>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Constraint\Factory\SchemaFactoryTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Constraint/Factory/SchemaFactoryTest.php" namespace="Eloquent\Schemer\Constraint\Factory" fullPackage="Eloquent.Schemer.Constraint.Factory" tests="1" assertions="1" failures="0" errors="0" time="0.034786">
+      <testcase name="testRecursiveSchemaCreation" class="Eloquent\Schemer\Constraint\Factory\SchemaFactoryTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Constraint/Factory/SchemaFactoryTest.php" line="50" assertions="1" time="0.034786"/>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Pointer\PointerFactoryTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Pointer/PointerFactoryTest.php" namespace="Eloquent\Schemer\Pointer" fullPackage="Eloquent.Schemer.Pointer" tests="4" assertions="7" failures="0" errors="0" time="0.034638">
+      <testsuite name="Eloquent\Schemer\Pointer\PointerFactoryTest::testCreate" tests="3" assertions="6" failures="0" errors="0" time="0.028475">
+        <testcase name="testCreate with data set &quot;Empty pointer&quot;" assertions="2" time="0.015634"/>
+        <testcase name="testCreate with data set &quot;Pointer with single empty string atom&quot;" assertions="2" time="0.005285"/>
+        <testcase name="testCreate with data set &quot;Escaped characters in atoms&quot;" assertions="2" time="0.007556"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Pointer\PointerFactoryTest::testCreateFailure" tests="1" assertions="1" failures="0" errors="0" time="0.006163">
+        <testcase name="testCreateFailure with data set &quot;No leading separator&quot;" assertions="1" time="0.006163"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Pointer\PointerTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Pointer/PointerTest.php" namespace="Eloquent\Schemer\Pointer" fullPackage="Eloquent.Schemer.Pointer" tests="3" assertions="3" failures="0" errors="0" time="0.009644">
+      <testsuite name="Eloquent\Schemer\Pointer\PointerTest::testString" tests="3" assertions="3" failures="0" errors="0" time="0.009644">
+        <testcase name="testString with data set &quot;Empty pointer&quot;" assertions="1" time="0.003232"/>
+        <testcase name="testString with data set &quot;Pointer with single empty string atom&quot;" assertions="1" time="0.003017"/>
+        <testcase name="testString with data set &quot;Escaped characters in atoms&quot;" assertions="1" time="0.003395"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Pointer\Resolver\PointerResolverTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Pointer/Resolver/PointerResolverTest.php" namespace="Eloquent\Schemer\Pointer\Resolver" fullPackage="Eloquent.Schemer.Pointer.Resolver" tests="12" assertions="24" failures="0" errors="0" time="0.185180">
+      <testsuite name="Eloquent\Schemer\Pointer\Resolver\PointerResolverTest::testResolver" tests="12" assertions="24" failures="0" errors="0" time="0.185180">
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 1&quot;" assertions="2" time="0.033190"/>
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 2&quot;" assertions="2" time="0.016637"/>
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 3&quot;" assertions="2" time="0.013680"/>
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 4&quot;" assertions="2" time="0.013555"/>
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 5&quot;" assertions="2" time="0.013705"/>
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 6&quot;" assertions="2" time="0.013576"/>
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 7&quot;" assertions="2" time="0.013562"/>
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 8&quot;" assertions="2" time="0.013342"/>
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 9&quot;" assertions="2" time="0.013352"/>
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 10&quot;" assertions="2" time="0.013355"/>
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 11&quot;" assertions="2" time="0.013454"/>
+        <testcase name="testResolver with data set &quot;spec-examples.json / example 12&quot;" assertions="2" time="0.013772"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Reader\ReaderTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Reader/ReaderTest.php" namespace="Eloquent\Schemer\Reader" fullPackage="Eloquent.Schemer.Reader" tests="3" assertions="6" failures="0" errors="0" time="0.035147">
+      <testcase name="testReadStringJson" class="Eloquent\Schemer\Reader\ReaderTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Reader/ReaderTest.php" line="32" assertions="2" time="0.012130"/>
+      <testcase name="testReadStringToml" class="Eloquent\Schemer\Reader\ReaderTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Reader/ReaderTest.php" line="45" assertions="2" time="0.010011"/>
+      <testcase name="testReadStringYaml" class="Eloquent\Schemer\Reader\ReaderTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Reader/ReaderTest.php" line="57" assertions="2" time="0.013006"/>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Reference\ReferenceResolverTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Reference/ReferenceResolverTest.php" namespace="Eloquent\Schemer\Reference" fullPackage="Eloquent.Schemer.Reference" tests="11" assertions="20" failures="0" errors="0" time="0.341840">
+      <testsuite name="Eloquent\Schemer\Reference\ReferenceResolverTest::testResolver" tests="6" assertions="12" failures="0" errors="0" time="0.194197">
+        <testcase name="testResolver with data set #0" assertions="2" time="0.032386"/>
+        <testcase name="testResolver with data set #1" assertions="2" time="0.033748"/>
+        <testcase name="testResolver with data set #2" assertions="2" time="0.032588"/>
+        <testcase name="testResolver with data set #3" assertions="2" time="0.028509"/>
+        <testcase name="testResolver with data set #4" assertions="2" time="0.039025"/>
+        <testcase name="testResolver with data set #5" assertions="2" time="0.027941"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Reference\ReferenceResolverTest::testResolveResolvableRecursive" tests="2" assertions="2" failures="0" errors="0" time="0.067425">
+        <testcase name="testResolveResolvableRecursive with data set #0" assertions="1" time="0.036064"/>
+        <testcase name="testResolveResolvableRecursive with data set #1" assertions="1" time="0.031361"/>
+      </testsuite>
+      <testcase name="testResolveResolvableRecursiveFucked" class="Eloquent\Schemer\Reference\ReferenceResolverTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Reference/ReferenceResolverTest.php" line="106" assertions="1" time="0.025645"/>
+      <testcase name="testResolveUnresolvableRecursiveInline" class="Eloquent\Schemer\Reference\ReferenceResolverTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Reference/ReferenceResolverTest.php" line="118" assertions="3" time="0.028045"/>
+      <testcase name="testResolveUnresolvableRecursiveExternal" class="Eloquent\Schemer\Reference\ReferenceResolverTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Reference/ReferenceResolverTest.php" line="132" assertions="2" time="0.026528"/>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Reference\ResolutionScopeMapTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Reference/ResolutionScopeMapTest.php" namespace="Eloquent\Schemer\Reference" fullPackage="Eloquent.Schemer.Reference" tests="9" assertions="17" failures="0" errors="0" time="0.220807">
+      <testsuite name="Eloquent\Schemer\Reference\ResolutionScopeMapTest::testPointerByUri" tests="9" assertions="17" failures="0" errors="0" time="0.220807">
+        <testcase name="testPointerByUri with data set &quot;document root match&quot;" assertions="2" time="0.023626"/>
+        <testcase name="testPointerByUri with data set &quot;document root match with pointer-fragment&quot;" assertions="2" time="0.026680"/>
+        <testcase name="testPointerByUri with data set &quot;document root match with non-pointer fragment&quot;" assertions="2" time="0.023541"/>
+        <testcase name="testPointerByUri with data set &quot;later overlapping pointer-fragment match ignored&quot;" assertions="2" time="0.023977"/>
+        <testcase name="testPointerByUri with data set &quot;exact URI match&quot;" assertions="2" time="0.022528"/>
+        <testcase name="testPointerByUri with data set &quot;URI match with pointer-fragment&quot;" assertions="2" time="0.024894"/>
+        <testcase name="testPointerByUri with data set &quot;URI match with non-pointer fragment&quot;" assertions="2" time="0.024014"/>
+        <testcase name="testPointerByUri with data set &quot;URI match with parent pointer-fragment&quot;" assertions="2" time="0.029257"/>
+        <testcase name="testPointerByUri with data set &quot;non match&quot;" assertions="1" time="0.022290"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Reference\ResolutionScopeMapperTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Reference/ResolutionScopeMapperTest.php" namespace="Eloquent\Schemer\Reference" fullPackage="Eloquent.Schemer.Reference" tests="1" assertions="2" failures="0" errors="0" time="0.033572">
+      <testsuite name="Eloquent\Schemer\Reference\ResolutionScopeMapperTest::testMapper" tests="1" assertions="2" failures="0" errors="0" time="0.033572">
+        <testcase name="testMapper with data set &quot;spec-example.json&quot;" assertions="2" time="0.033572"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" namespace="Eloquent\Schemer\Uri" fullPackage="Eloquent.Schemer.Uri" tests="50" assertions="60" failures="0" errors="0" time="0.245055">
+      <testsuite name="Eloquent\Schemer\Uri\HttpUriTest::testValidScheme" tests="4" assertions="4" failures="0" errors="0" time="0.014742">
+        <testcase name="testValidScheme with data set #0" assertions="1" time="0.004042"/>
+        <testcase name="testValidScheme with data set #1" assertions="1" time="0.003523"/>
+        <testcase name="testValidScheme with data set #2" assertions="1" time="0.003530"/>
+        <testcase name="testValidScheme with data set #3" assertions="1" time="0.003647"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\HttpUriTest::testInvalidScheme" tests="4" assertions="4" failures="0" errors="0" time="0.014044">
+        <testcase name="testInvalidScheme with data set #0" assertions="1" time="0.004020"/>
+        <testcase name="testInvalidScheme with data set #1" assertions="1" time="0.003403"/>
+        <testcase name="testInvalidScheme with data set #2" assertions="1" time="0.003309"/>
+        <testcase name="testInvalidScheme with data set #3" assertions="1" time="0.003312"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\HttpUriTest::testValidateSchemeInvalid" tests="4" assertions="4" failures="0" errors="0" time="0.012307">
+        <testcase name="testValidateSchemeInvalid with data set #0" assertions="1" time="0.003198"/>
+        <testcase name="testValidateSchemeInvalid with data set #1" assertions="1" time="0.003018"/>
+        <testcase name="testValidateSchemeInvalid with data set #2" assertions="1" time="0.003020"/>
+        <testcase name="testValidateSchemeInvalid with data set #3" assertions="1" time="0.003071"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\HttpUriTest::testValidateHost" tests="21" assertions="21" failures="0" errors="0" time="0.114447">
+        <testcase name="testValidateHost with data set #0" assertions="1" time="0.007664"/>
+        <testcase name="testValidateHost with data set #1" assertions="1" time="0.005015"/>
+        <testcase name="testValidateHost with data set #2" assertions="1" time="0.005197"/>
+        <testcase name="testValidateHost with data set #3" assertions="1" time="0.005267"/>
+        <testcase name="testValidateHost with data set #4" assertions="1" time="0.005315"/>
+        <testcase name="testValidateHost with data set #5" assertions="1" time="0.005061"/>
+        <testcase name="testValidateHost with data set #6" assertions="1" time="0.007320"/>
+        <testcase name="testValidateHost with data set #7" assertions="1" time="0.007450"/>
+        <testcase name="testValidateHost with data set #8" assertions="1" time="0.005231"/>
+        <testcase name="testValidateHost with data set #9" assertions="1" time="0.005076"/>
+        <testcase name="testValidateHost with data set #10" assertions="1" time="0.004916"/>
+        <testcase name="testValidateHost with data set #11" assertions="1" time="0.005535"/>
+        <testcase name="testValidateHost with data set #12" assertions="1" time="0.005469"/>
+        <testcase name="testValidateHost with data set #13" assertions="1" time="0.005642"/>
+        <testcase name="testValidateHost with data set #14" assertions="1" time="0.003791"/>
+        <testcase name="testValidateHost with data set #15" assertions="1" time="0.006292"/>
+        <testcase name="testValidateHost with data set #16" assertions="1" time="0.005279"/>
+        <testcase name="testValidateHost with data set #17" assertions="1" time="0.004238"/>
+        <testcase name="testValidateHost with data set #18" assertions="1" time="0.005162"/>
+        <testcase name="testValidateHost with data set #19" assertions="1" time="0.005248"/>
+        <testcase name="testValidateHost with data set #20" assertions="1" time="0.004279"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\HttpUriTest::testNormalizationRemovesPort" tests="5" assertions="5" failures="0" errors="0" time="0.025932">
+        <testcase name="testNormalizationRemovesPort with data set #0" assertions="1" time="0.005171"/>
+        <testcase name="testNormalizationRemovesPort with data set #1" assertions="1" time="0.005022"/>
+        <testcase name="testNormalizationRemovesPort with data set #2" assertions="1" time="0.005157"/>
+        <testcase name="testNormalizationRemovesPort with data set #3" assertions="1" time="0.005324"/>
+        <testcase name="testNormalizationRemovesPort with data set #4" assertions="1" time="0.005258"/>
+      </testsuite>
+      <testcase name="testUserIsNullByDefaultWhenNoUserInfoIsProvided" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="159" assertions="1" time="0.004579"/>
+      <testcase name="testPasswordIsNullByDefaultWhenNoUserInfoIsProvided" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="166" assertions="1" time="0.004350"/>
+      <testcase name="testCanParseUsernameAndPasswordFromUriNotContainingPort" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="173" assertions="3" time="0.006154"/>
+      <testcase name="testCanParseUsernameAndPasswordFromUriContainingPort" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="182" assertions="3" time="0.006309"/>
+      <testcase name="testCanParseUsernameContainingAtMarkFromUri" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="191" assertions="3" time="0.006125"/>
+      <testcase name="testCanParsePasswordContainingAtMarkFromUri" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="200" assertions="3" time="0.006148"/>
+      <testcase name="testUserInfoCanOmitPassword" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="209" assertions="3" time="0.006101"/>
+      <testcase name="testGetPortReturnsDefaultPortHttp" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="218" assertions="1" time="0.004643"/>
+      <testcase name="testGetPortReturnsDefaultPortHttps" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="224" assertions="1" time="0.004564"/>
+      <testcase name="testGetPortDoesntModifyUrlHttp" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="230" assertions="1" time="0.004865"/>
+      <testcase name="testGetPortDoesntModifyUrlHttps" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="238" assertions="1" time="0.004831"/>
+      <testcase name="testValidHostTypesWithUnderScore" class="Eloquent\Schemer\Uri\HttpUriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/HttpUriTest.php" line="246" assertions="1" time="0.004914"/>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Uri\UriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/UriTest.php" namespace="Eloquent\Schemer\Uri" fullPackage="Eloquent.Schemer.Uri" tests="469" assertions="474" failures="0" errors="0" time="2.229442">
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testParseComposeUri" tests="30" assertions="30" failures="0" errors="0" time="0.125935">
+        <testcase name="testParseComposeUri with data set #0" assertions="1" time="0.003770"/>
+        <testcase name="testParseComposeUri with data set #1" assertions="1" time="0.004449"/>
+        <testcase name="testParseComposeUri with data set #2" assertions="1" time="0.004673"/>
+        <testcase name="testParseComposeUri with data set #3" assertions="1" time="0.003773"/>
+        <testcase name="testParseComposeUri with data set #4" assertions="1" time="0.003766"/>
+        <testcase name="testParseComposeUri with data set #5" assertions="1" time="0.003762"/>
+        <testcase name="testParseComposeUri with data set #6" assertions="1" time="0.004517"/>
+        <testcase name="testParseComposeUri with data set #7" assertions="1" time="0.004136"/>
+        <testcase name="testParseComposeUri with data set #8" assertions="1" time="0.003870"/>
+        <testcase name="testParseComposeUri with data set #9" assertions="1" time="0.004837"/>
+        <testcase name="testParseComposeUri with data set #10" assertions="1" time="0.004929"/>
+        <testcase name="testParseComposeUri with data set #11" assertions="1" time="0.004836"/>
+        <testcase name="testParseComposeUri with data set #12" assertions="1" time="0.004986"/>
+        <testcase name="testParseComposeUri with data set #13" assertions="1" time="0.004685"/>
+        <testcase name="testParseComposeUri with data set #14" assertions="1" time="0.004748"/>
+        <testcase name="testParseComposeUri with data set #15" assertions="1" time="0.004529"/>
+        <testcase name="testParseComposeUri with data set #16" assertions="1" time="0.003722"/>
+        <testcase name="testParseComposeUri with data set #17" assertions="1" time="0.003801"/>
+        <testcase name="testParseComposeUri with data set #18" assertions="1" time="0.003712"/>
+        <testcase name="testParseComposeUri with data set #19" assertions="1" time="0.004448"/>
+        <testcase name="testParseComposeUri with data set #20" assertions="1" time="0.004574"/>
+        <testcase name="testParseComposeUri with data set #21" assertions="1" time="0.003748"/>
+        <testcase name="testParseComposeUri with data set #22" assertions="1" time="0.004150"/>
+        <testcase name="testParseComposeUri with data set #23" assertions="1" time="0.003730"/>
+        <testcase name="testParseComposeUri with data set #24" assertions="1" time="0.003695"/>
+        <testcase name="testParseComposeUri with data set #25" assertions="1" time="0.004578"/>
+        <testcase name="testParseComposeUri with data set #26" assertions="1" time="0.003823"/>
+        <testcase name="testParseComposeUri with data set #27" assertions="1" time="0.004031"/>
+        <testcase name="testParseComposeUri with data set #28" assertions="1" time="0.003914"/>
+        <testcase name="testParseComposeUri with data set #29" assertions="1" time="0.003743"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testComposeNewUriAndCastToString" tests="7" assertions="7" failures="0" errors="0" time="0.029609">
+        <testcase name="testComposeNewUriAndCastToString with data set #0" assertions="1" time="0.004748"/>
+        <testcase name="testComposeNewUriAndCastToString with data set #1" assertions="1" time="0.003801"/>
+        <testcase name="testComposeNewUriAndCastToString with data set #2" assertions="1" time="0.004559"/>
+        <testcase name="testComposeNewUriAndCastToString with data set #3" assertions="1" time="0.003705"/>
+        <testcase name="testComposeNewUriAndCastToString with data set #4" assertions="1" time="0.004431"/>
+        <testcase name="testComposeNewUriAndCastToString with data set #5" assertions="1" time="0.004560"/>
+        <testcase name="testComposeNewUriAndCastToString with data set #6" assertions="1" time="0.003805"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testParseScheme" tests="7" assertions="7" failures="0" errors="0" time="0.024958">
+        <testcase name="testParseScheme with data set #0" assertions="1" time="0.003526"/>
+        <testcase name="testParseScheme with data set #1" assertions="1" time="0.003666"/>
+        <testcase name="testParseScheme with data set #2" assertions="1" time="0.003532"/>
+        <testcase name="testParseScheme with data set #3" assertions="1" time="0.003667"/>
+        <testcase name="testParseScheme with data set #4" assertions="1" time="0.003566"/>
+        <testcase name="testParseScheme with data set #5" assertions="1" time="0.003526"/>
+        <testcase name="testParseScheme with data set #6" assertions="1" time="0.003475"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testParseSchemeInvalidInput" tests="4" assertions="4" failures="0" errors="0" time="0.012985">
+        <testcase name="testParseSchemeInvalidInput with data set #0" assertions="1" time="0.003262"/>
+        <testcase name="testParseSchemeInvalidInput with data set #1" assertions="1" time="0.003208"/>
+        <testcase name="testParseSchemeInvalidInput with data set #2" assertions="1" time="0.003218"/>
+        <testcase name="testParseSchemeInvalidInput with data set #3" assertions="1" time="0.003297"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testMagicToStringEmptyIfInvalid" tests="4" assertions="4" failures="0" errors="0" time="0.015551">
+        <testcase name="testMagicToStringEmptyIfInvalid with data set #0" assertions="1" time="0.004144"/>
+        <testcase name="testMagicToStringEmptyIfInvalid with data set #1" assertions="1" time="0.003768"/>
+        <testcase name="testMagicToStringEmptyIfInvalid with data set #2" assertions="1" time="0.003820"/>
+        <testcase name="testMagicToStringEmptyIfInvalid with data set #3" assertions="1" time="0.003819"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testToStringThrowsExceptionIfInvalid" tests="4" assertions="4" failures="0" errors="0" time="0.013726">
+        <testcase name="testToStringThrowsExceptionIfInvalid with data set #0" assertions="1" time="0.003461"/>
+        <testcase name="testToStringThrowsExceptionIfInvalid with data set #1" assertions="1" time="0.003441"/>
+        <testcase name="testToStringThrowsExceptionIfInvalid with data set #2" assertions="1" time="0.003429"/>
+        <testcase name="testToStringThrowsExceptionIfInvalid with data set #3" assertions="1" time="0.003394"/>
+      </testsuite>
+      <testcase name="testCanParseMalformedUrlZF11286" class="Eloquent\Schemer\Uri\UriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/UriTest.php" line="109" assertions="1" time="0.005911"/>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testGetScheme" tests="7" assertions="7" failures="0" errors="0" time="0.028273">
+        <testcase name="testGetScheme with data set #0" assertions="1" time="0.004448"/>
+        <testcase name="testGetScheme with data set #1" assertions="1" time="0.003761"/>
+        <testcase name="testGetScheme with data set #2" assertions="1" time="0.004510"/>
+        <testcase name="testGetScheme with data set #3" assertions="1" time="0.003245"/>
+        <testcase name="testGetScheme with data set #4" assertions="1" time="0.004444"/>
+        <testcase name="testGetScheme with data set #5" assertions="1" time="0.004607"/>
+        <testcase name="testGetScheme with data set #6" assertions="1" time="0.003258"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testGetUserInfo" tests="7" assertions="7" failures="0" errors="0" time="0.026968">
+        <testcase name="testGetUserInfo with data set #0" assertions="1" time="0.004047"/>
+        <testcase name="testGetUserInfo with data set #1" assertions="1" time="0.003394"/>
+        <testcase name="testGetUserInfo with data set #2" assertions="1" time="0.004819"/>
+        <testcase name="testGetUserInfo with data set #3" assertions="1" time="0.003238"/>
+        <testcase name="testGetUserInfo with data set #4" assertions="1" time="0.004055"/>
+        <testcase name="testGetUserInfo with data set #5" assertions="1" time="0.004112"/>
+        <testcase name="testGetUserInfo with data set #6" assertions="1" time="0.003303"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testGetHost" tests="7" assertions="7" failures="0" errors="0" time="0.029233">
+        <testcase name="testGetHost with data set #0" assertions="1" time="0.004729"/>
+        <testcase name="testGetHost with data set #1" assertions="1" time="0.003803"/>
+        <testcase name="testGetHost with data set #2" assertions="1" time="0.004524"/>
+        <testcase name="testGetHost with data set #3" assertions="1" time="0.003203"/>
+        <testcase name="testGetHost with data set #4" assertions="1" time="0.004556"/>
+        <testcase name="testGetHost with data set #5" assertions="1" time="0.004752"/>
+        <testcase name="testGetHost with data set #6" assertions="1" time="0.003666"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testGetPort" tests="7" assertions="7" failures="0" errors="0" time="0.027488">
+        <testcase name="testGetPort with data set #0" assertions="1" time="0.004811"/>
+        <testcase name="testGetPort with data set #1" assertions="1" time="0.003215"/>
+        <testcase name="testGetPort with data set #2" assertions="1" time="0.004181"/>
+        <testcase name="testGetPort with data set #3" assertions="1" time="0.003315"/>
+        <testcase name="testGetPort with data set #4" assertions="1" time="0.004654"/>
+        <testcase name="testGetPort with data set #5" assertions="1" time="0.004059"/>
+        <testcase name="testGetPort with data set #6" assertions="1" time="0.003253"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testGetPath" tests="7" assertions="7" failures="0" errors="0" time="0.029670">
+        <testcase name="testGetPath with data set #0" assertions="1" time="0.004606"/>
+        <testcase name="testGetPath with data set #1" assertions="1" time="0.003820"/>
+        <testcase name="testGetPath with data set #2" assertions="1" time="0.004705"/>
+        <testcase name="testGetPath with data set #3" assertions="1" time="0.003683"/>
+        <testcase name="testGetPath with data set #4" assertions="1" time="0.004685"/>
+        <testcase name="testGetPath with data set #5" assertions="1" time="0.004483"/>
+        <testcase name="testGetPath with data set #6" assertions="1" time="0.003688"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testGetQuery" tests="7" assertions="7" failures="0" errors="0" time="0.026556">
+        <testcase name="testGetQuery with data set #0" assertions="1" time="0.004484"/>
+        <testcase name="testGetQuery with data set #1" assertions="1" time="0.003318"/>
+        <testcase name="testGetQuery with data set #2" assertions="1" time="0.004152"/>
+        <testcase name="testGetQuery with data set #3" assertions="1" time="0.003273"/>
+        <testcase name="testGetQuery with data set #4" assertions="1" time="0.004013"/>
+        <testcase name="testGetQuery with data set #5" assertions="1" time="0.004022"/>
+        <testcase name="testGetQuery with data set #6" assertions="1" time="0.003293"/>
+      </testsuite>
+      <testcase name="testGetQueryAsArrayReturnsCorrectArray" class="Eloquent\Schemer\Uri\UriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/UriTest.php" line="227" assertions="2" time="0.008774"/>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testGetFragment" tests="7" assertions="7" failures="0" errors="0" time="0.025936">
+        <testcase name="testGetFragment with data set #0" assertions="1" time="0.004143"/>
+        <testcase name="testGetFragment with data set #1" assertions="1" time="0.003359"/>
+        <testcase name="testGetFragment with data set #2" assertions="1" time="0.004081"/>
+        <testcase name="testGetFragment with data set #3" assertions="1" time="0.003010"/>
+        <testcase name="testGetFragment with data set #4" assertions="1" time="0.004024"/>
+        <testcase name="testGetFragment with data set #5" assertions="1" time="0.004073"/>
+        <testcase name="testGetFragment with data set #6" assertions="1" time="0.003246"/>
+      </testsuite>
+      <testcase name="testSetSchemeNull" class="Eloquent\Schemer\Uri\UriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/UriTest.php" line="266" assertions="2" time="0.004702"/>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testSetSchemeValid" tests="7" assertions="7" failures="0" errors="0" time="0.026318">
+        <testcase name="testSetSchemeValid with data set #0" assertions="1" time="0.003702"/>
+        <testcase name="testSetSchemeValid with data set #1" assertions="1" time="0.003585"/>
+        <testcase name="testSetSchemeValid with data set #2" assertions="1" time="0.003687"/>
+        <testcase name="testSetSchemeValid with data set #3" assertions="1" time="0.003773"/>
+        <testcase name="testSetSchemeValid with data set #4" assertions="1" time="0.004019"/>
+        <testcase name="testSetSchemeValid with data set #5" assertions="1" time="0.003749"/>
+        <testcase name="testSetSchemeValid with data set #6" assertions="1" time="0.003803"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testSetInvalidScheme" tests="5" assertions="5" failures="0" errors="0" time="0.017886">
+        <testcase name="testSetInvalidScheme with data set #0" assertions="1" time="0.003606"/>
+        <testcase name="testSetInvalidScheme with data set #1" assertions="1" time="0.003509"/>
+        <testcase name="testSetInvalidScheme with data set #2" assertions="1" time="0.003677"/>
+        <testcase name="testSetInvalidScheme with data set #3" assertions="1" time="0.003533"/>
+        <testcase name="testSetInvalidScheme with data set #4" assertions="1" time="0.003561"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testSetGetValidHost" tests="24" assertions="24" failures="0" errors="0" time="0.105616">
+        <testcase name="testSetGetValidHost with data set #0" assertions="1" time="0.004053"/>
+        <testcase name="testSetGetValidHost with data set #1" assertions="1" time="0.003984"/>
+        <testcase name="testSetGetValidHost with data set #2" assertions="1" time="0.004009"/>
+        <testcase name="testSetGetValidHost with data set #3" assertions="1" time="0.003992"/>
+        <testcase name="testSetGetValidHost with data set #4" assertions="1" time="0.004485"/>
+        <testcase name="testSetGetValidHost with data set #5" assertions="1" time="0.004429"/>
+        <testcase name="testSetGetValidHost with data set #6" assertions="1" time="0.004676"/>
+        <testcase name="testSetGetValidHost with data set #7" assertions="1" time="0.004728"/>
+        <testcase name="testSetGetValidHost with data set #8" assertions="1" time="0.004672"/>
+        <testcase name="testSetGetValidHost with data set #9" assertions="1" time="0.004704"/>
+        <testcase name="testSetGetValidHost with data set #10" assertions="1" time="0.004621"/>
+        <testcase name="testSetGetValidHost with data set #11" assertions="1" time="0.004359"/>
+        <testcase name="testSetGetValidHost with data set #12" assertions="1" time="0.004335"/>
+        <testcase name="testSetGetValidHost with data set #13" assertions="1" time="0.004354"/>
+        <testcase name="testSetGetValidHost with data set #14" assertions="1" time="0.004373"/>
+        <testcase name="testSetGetValidHost with data set #15" assertions="1" time="0.004340"/>
+        <testcase name="testSetGetValidHost with data set #16" assertions="1" time="0.004494"/>
+        <testcase name="testSetGetValidHost with data set #17" assertions="1" time="0.004328"/>
+        <testcase name="testSetGetValidHost with data set #18" assertions="1" time="0.004219"/>
+        <testcase name="testSetGetValidHost with data set #19" assertions="1" time="0.004599"/>
+        <testcase name="testSetGetValidHost with data set #20" assertions="1" time="0.004392"/>
+        <testcase name="testSetGetValidHost with data set #21" assertions="1" time="0.004646"/>
+        <testcase name="testSetGetValidHost with data set #22" assertions="1" time="0.004392"/>
+        <testcase name="testSetGetValidHost with data set #23" assertions="1" time="0.004432"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testSetInvalidHost" tests="3" assertions="3" failures="0" errors="0" time="0.016204">
+        <testcase name="testSetInvalidHost with data set #0" assertions="1" time="0.005495"/>
+        <testcase name="testSetInvalidHost with data set #1" assertions="1" time="0.005561"/>
+        <testcase name="testSetInvalidHost with data set #2" assertions="1" time="0.005148"/>
+      </testsuite>
+      <testcase name="testSetNullHost" class="Eloquent\Schemer\Uri\UriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/UriTest.php" line="331" assertions="1" time="0.004158"/>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testSetQueryFromArray" tests="3" assertions="3" failures="0" errors="0" time="0.011192">
+        <testcase name="testSetQueryFromArray with data set #0" assertions="1" time="0.003726"/>
+        <testcase name="testSetQueryFromArray with data set #1" assertions="1" time="0.003751"/>
+        <testcase name="testSetQueryFromArray with data set #2" assertions="1" time="0.003715"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidUriIsValid" tests="30" assertions="30" failures="0" errors="0" time="0.108714">
+        <testcase name="testValidUriIsValid with data set #0" assertions="1" time="0.003329"/>
+        <testcase name="testValidUriIsValid with data set #1" assertions="1" time="0.004026"/>
+        <testcase name="testValidUriIsValid with data set #2" assertions="1" time="0.004177"/>
+        <testcase name="testValidUriIsValid with data set #3" assertions="1" time="0.003278"/>
+        <testcase name="testValidUriIsValid with data set #4" assertions="1" time="0.003287"/>
+        <testcase name="testValidUriIsValid with data set #5" assertions="1" time="0.003277"/>
+        <testcase name="testValidUriIsValid with data set #6" assertions="1" time="0.003243"/>
+        <testcase name="testValidUriIsValid with data set #7" assertions="1" time="0.003235"/>
+        <testcase name="testValidUriIsValid with data set #8" assertions="1" time="0.003104"/>
+        <testcase name="testValidUriIsValid with data set #9" assertions="1" time="0.004049"/>
+        <testcase name="testValidUriIsValid with data set #10" assertions="1" time="0.004140"/>
+        <testcase name="testValidUriIsValid with data set #11" assertions="1" time="0.004201"/>
+        <testcase name="testValidUriIsValid with data set #12" assertions="1" time="0.004143"/>
+        <testcase name="testValidUriIsValid with data set #13" assertions="1" time="0.004319"/>
+        <testcase name="testValidUriIsValid with data set #14" assertions="1" time="0.004123"/>
+        <testcase name="testValidUriIsValid with data set #15" assertions="1" time="0.004197"/>
+        <testcase name="testValidUriIsValid with data set #16" assertions="1" time="0.003275"/>
+        <testcase name="testValidUriIsValid with data set #17" assertions="1" time="0.003337"/>
+        <testcase name="testValidUriIsValid with data set #18" assertions="1" time="0.003276"/>
+        <testcase name="testValidUriIsValid with data set #19" assertions="1" time="0.003937"/>
+        <testcase name="testValidUriIsValid with data set #20" assertions="1" time="0.004080"/>
+        <testcase name="testValidUriIsValid with data set #21" assertions="1" time="0.003258"/>
+        <testcase name="testValidUriIsValid with data set #22" assertions="1" time="0.003684"/>
+        <testcase name="testValidUriIsValid with data set #23" assertions="1" time="0.003191"/>
+        <testcase name="testValidUriIsValid with data set #24" assertions="1" time="0.003160"/>
+        <testcase name="testValidUriIsValid with data set #25" assertions="1" time="0.004192"/>
+        <testcase name="testValidUriIsValid with data set #26" assertions="1" time="0.003309"/>
+        <testcase name="testValidUriIsValid with data set #27" assertions="1" time="0.003349"/>
+        <testcase name="testValidUriIsValid with data set #28" assertions="1" time="0.003323"/>
+        <testcase name="testValidUriIsValid with data set #29" assertions="1" time="0.003216"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidRelativeUriIsValid" tests="5" assertions="5" failures="0" errors="0" time="0.016162">
+        <testcase name="testValidRelativeUriIsValid with data set #0" assertions="1" time="0.003199"/>
+        <testcase name="testValidRelativeUriIsValid with data set #1" assertions="1" time="0.003080"/>
+        <testcase name="testValidRelativeUriIsValid with data set #2" assertions="1" time="0.003248"/>
+        <testcase name="testValidRelativeUriIsValid with data set #3" assertions="1" time="0.003327"/>
+        <testcase name="testValidRelativeUriIsValid with data set #4" assertions="1" time="0.003308"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testInvalidUriIsInvalid" tests="4" assertions="4" failures="0" errors="0" time="0.012222">
+        <testcase name="testInvalidUriIsInvalid with data set #0" assertions="1" time="0.003108"/>
+        <testcase name="testInvalidUriIsInvalid with data set #1" assertions="1" time="0.003032"/>
+        <testcase name="testInvalidUriIsInvalid with data set #2" assertions="1" time="0.002948"/>
+        <testcase name="testInvalidUriIsInvalid with data set #3" assertions="1" time="0.003134"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testInvalidRelativeUriIsInvalid" tests="6" assertions="6" failures="0" errors="0" time="0.018348">
+        <testcase name="testInvalidRelativeUriIsInvalid with data set #0" assertions="1" time="0.003164"/>
+        <testcase name="testInvalidRelativeUriIsInvalid with data set #1" assertions="1" time="0.003065"/>
+        <testcase name="testInvalidRelativeUriIsInvalid with data set #2" assertions="1" time="0.002978"/>
+        <testcase name="testInvalidRelativeUriIsInvalid with data set #3" assertions="1" time="0.002894"/>
+        <testcase name="testInvalidRelativeUriIsInvalid with data set #4" assertions="1" time="0.003125"/>
+        <testcase name="testInvalidRelativeUriIsInvalid with data set #5" assertions="1" time="0.003122"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidateSchemeValid" tests="7" assertions="7" failures="0" errors="0" time="0.021429">
+        <testcase name="testValidateSchemeValid with data set #0" assertions="1" time="0.003134"/>
+        <testcase name="testValidateSchemeValid with data set #1" assertions="1" time="0.003081"/>
+        <testcase name="testValidateSchemeValid with data set #2" assertions="1" time="0.003090"/>
+        <testcase name="testValidateSchemeValid with data set #3" assertions="1" time="0.003025"/>
+        <testcase name="testValidateSchemeValid with data set #4" assertions="1" time="0.003043"/>
+        <testcase name="testValidateSchemeValid with data set #5" assertions="1" time="0.003018"/>
+        <testcase name="testValidateSchemeValid with data set #6" assertions="1" time="0.003039"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidateSchemeInvalid" tests="5" assertions="5" failures="0" errors="0" time="0.015076">
+        <testcase name="testValidateSchemeInvalid with data set #0" assertions="1" time="0.002996"/>
+        <testcase name="testValidateSchemeInvalid with data set #1" assertions="1" time="0.003027"/>
+        <testcase name="testValidateSchemeInvalid with data set #2" assertions="1" time="0.002981"/>
+        <testcase name="testValidateSchemeInvalid with data set #3" assertions="1" time="0.003037"/>
+        <testcase name="testValidateSchemeInvalid with data set #4" assertions="1" time="0.003035"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidateHostValid" tests="24" assertions="24" failures="0" errors="0" time="0.088602">
+        <testcase name="testValidateHostValid with data set #0" assertions="1" time="0.003368"/>
+        <testcase name="testValidateHostValid with data set #1" assertions="1" time="0.003301"/>
+        <testcase name="testValidateHostValid with data set #2" assertions="1" time="0.003401"/>
+        <testcase name="testValidateHostValid with data set #3" assertions="1" time="0.003405"/>
+        <testcase name="testValidateHostValid with data set #4" assertions="1" time="0.003844"/>
+        <testcase name="testValidateHostValid with data set #5" assertions="1" time="0.003842"/>
+        <testcase name="testValidateHostValid with data set #6" assertions="1" time="0.003838"/>
+        <testcase name="testValidateHostValid with data set #7" assertions="1" time="0.003812"/>
+        <testcase name="testValidateHostValid with data set #8" assertions="1" time="0.003793"/>
+        <testcase name="testValidateHostValid with data set #9" assertions="1" time="0.003826"/>
+        <testcase name="testValidateHostValid with data set #10" assertions="1" time="0.003775"/>
+        <testcase name="testValidateHostValid with data set #11" assertions="1" time="0.003757"/>
+        <testcase name="testValidateHostValid with data set #12" assertions="1" time="0.003782"/>
+        <testcase name="testValidateHostValid with data set #13" assertions="1" time="0.003808"/>
+        <testcase name="testValidateHostValid with data set #14" assertions="1" time="0.003779"/>
+        <testcase name="testValidateHostValid with data set #15" assertions="1" time="0.003645"/>
+        <testcase name="testValidateHostValid with data set #16" assertions="1" time="0.003769"/>
+        <testcase name="testValidateHostValid with data set #17" assertions="1" time="0.003743"/>
+        <testcase name="testValidateHostValid with data set #18" assertions="1" time="0.003411"/>
+        <testcase name="testValidateHostValid with data set #19" assertions="1" time="0.003680"/>
+        <testcase name="testValidateHostValid with data set #20" assertions="1" time="0.003782"/>
+        <testcase name="testValidateHostValid with data set #21" assertions="1" time="0.003757"/>
+        <testcase name="testValidateHostValid with data set #22" assertions="1" time="0.003716"/>
+        <testcase name="testValidateHostValid with data set #23" assertions="1" time="0.003768"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidateHostInvalid" tests="3" assertions="3" failures="0" errors="0" time="0.014929">
+        <testcase name="testValidateHostInvalid with data set #0" assertions="1" time="0.004840"/>
+        <testcase name="testValidateHostInvalid with data set #1" assertions="1" time="0.005255"/>
+        <testcase name="testValidateHostInvalid with data set #2" assertions="1" time="0.004834"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidatePathValid" tests="11" assertions="11" failures="0" errors="0" time="0.035073">
+        <testcase name="testValidatePathValid with data set #0" assertions="1" time="0.003154"/>
+        <testcase name="testValidatePathValid with data set #1" assertions="1" time="0.003117"/>
+        <testcase name="testValidatePathValid with data set #2" assertions="1" time="0.003131"/>
+        <testcase name="testValidatePathValid with data set #3" assertions="1" time="0.003140"/>
+        <testcase name="testValidatePathValid with data set #4" assertions="1" time="0.003568"/>
+        <testcase name="testValidatePathValid with data set #5" assertions="1" time="0.003017"/>
+        <testcase name="testValidatePathValid with data set #6" assertions="1" time="0.003176"/>
+        <testcase name="testValidatePathValid with data set #7" assertions="1" time="0.003396"/>
+        <testcase name="testValidatePathValid with data set #8" assertions="1" time="0.003009"/>
+        <testcase name="testValidatePathValid with data set #9" assertions="1" time="0.003109"/>
+        <testcase name="testValidatePathValid with data set #10" assertions="1" time="0.003256"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidatePathInvalid" tests="3" assertions="3" failures="0" errors="0" time="0.010113">
+        <testcase name="testValidatePathInvalid with data set #0" assertions="1" time="0.003326"/>
+        <testcase name="testValidatePathInvalid with data set #1" assertions="1" time="0.003389"/>
+        <testcase name="testValidatePathInvalid with data set #2" assertions="1" time="0.003398"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testEncodePathValid" tests="11" assertions="11" failures="0" errors="0" time="0.040356">
+        <testcase name="testEncodePathValid with data set #0" assertions="1" time="0.003995"/>
+        <testcase name="testEncodePathValid with data set #1" assertions="1" time="0.003535"/>
+        <testcase name="testEncodePathValid with data set #2" assertions="1" time="0.003479"/>
+        <testcase name="testEncodePathValid with data set #3" assertions="1" time="0.003718"/>
+        <testcase name="testEncodePathValid with data set #4" assertions="1" time="0.003733"/>
+        <testcase name="testEncodePathValid with data set #5" assertions="1" time="0.003713"/>
+        <testcase name="testEncodePathValid with data set #6" assertions="1" time="0.003569"/>
+        <testcase name="testEncodePathValid with data set #7" assertions="1" time="0.003699"/>
+        <testcase name="testEncodePathValid with data set #8" assertions="1" time="0.003723"/>
+        <testcase name="testEncodePathValid with data set #9" assertions="1" time="0.003555"/>
+        <testcase name="testEncodePathValid with data set #10" assertions="1" time="0.003637"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testEncodePathInvalid" tests="3" assertions="3" failures="0" errors="0" time="0.011161">
+        <testcase name="testEncodePathInvalid with data set #0" assertions="1" time="0.003769"/>
+        <testcase name="testEncodePathInvalid with data set #1" assertions="1" time="0.003800"/>
+        <testcase name="testEncodePathInvalid with data set #2" assertions="1" time="0.003592"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidQueryFragment" tests="5" assertions="5" failures="0" errors="0" time="0.016049">
+        <testcase name="testValidQueryFragment with data set #0" assertions="1" time="0.003320"/>
+        <testcase name="testValidQueryFragment with data set #1" assertions="1" time="0.003148"/>
+        <testcase name="testValidQueryFragment with data set #2" assertions="1" time="0.003241"/>
+        <testcase name="testValidQueryFragment with data set #3" assertions="1" time="0.003263"/>
+        <testcase name="testValidQueryFragment with data set #4" assertions="1" time="0.003077"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testInvalidQueryFragment" tests="5" assertions="5" failures="0" errors="0" time="0.015584">
+        <testcase name="testInvalidQueryFragment with data set #0" assertions="1" time="0.003052"/>
+        <testcase name="testInvalidQueryFragment with data set #1" assertions="1" time="0.003095"/>
+        <testcase name="testInvalidQueryFragment with data set #2" assertions="1" time="0.003359"/>
+        <testcase name="testInvalidQueryFragment with data set #3" assertions="1" time="0.003060"/>
+        <testcase name="testInvalidQueryFragment with data set #4" assertions="1" time="0.003018"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testEncodeInvalidQueryFragment" tests="5" assertions="5" failures="0" errors="0" time="0.018486">
+        <testcase name="testEncodeInvalidQueryFragment with data set #0" assertions="1" time="0.003545"/>
+        <testcase name="testEncodeInvalidQueryFragment with data set #1" assertions="1" time="0.003672"/>
+        <testcase name="testEncodeInvalidQueryFragment with data set #2" assertions="1" time="0.003947"/>
+        <testcase name="testEncodeInvalidQueryFragment with data set #3" assertions="1" time="0.003712"/>
+        <testcase name="testEncodeInvalidQueryFragment with data set #4" assertions="1" time="0.003610"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testEncodeValidQueryFragment" tests="5" assertions="5" failures="0" errors="0" time="0.018135">
+        <testcase name="testEncodeValidQueryFragment with data set #0" assertions="1" time="0.003452"/>
+        <testcase name="testEncodeValidQueryFragment with data set #1" assertions="1" time="0.003747"/>
+        <testcase name="testEncodeValidQueryFragment with data set #2" assertions="1" time="0.003625"/>
+        <testcase name="testEncodeValidQueryFragment with data set #3" assertions="1" time="0.003531"/>
+        <testcase name="testEncodeValidQueryFragment with data set #4" assertions="1" time="0.003780"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidateUserInfoValid" tests="8" assertions="8" failures="0" errors="0" time="0.025298">
+        <testcase name="testValidateUserInfoValid with data set #0" assertions="1" time="0.003213"/>
+        <testcase name="testValidateUserInfoValid with data set #1" assertions="1" time="0.003385"/>
+        <testcase name="testValidateUserInfoValid with data set #2" assertions="1" time="0.003283"/>
+        <testcase name="testValidateUserInfoValid with data set #3" assertions="1" time="0.003023"/>
+        <testcase name="testValidateUserInfoValid with data set #4" assertions="1" time="0.003108"/>
+        <testcase name="testValidateUserInfoValid with data set #5" assertions="1" time="0.002997"/>
+        <testcase name="testValidateUserInfoValid with data set #6" assertions="1" time="0.003167"/>
+        <testcase name="testValidateUserInfoValid with data set #7" assertions="1" time="0.003122"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidateUserInfoInvalid" tests="3" assertions="3" failures="0" errors="0" time="0.009552">
+        <testcase name="testValidateUserInfoInvalid with data set #0" assertions="1" time="0.003208"/>
+        <testcase name="testValidateUserInfoInvalid with data set #1" assertions="1" time="0.003035"/>
+        <testcase name="testValidateUserInfoInvalid with data set #2" assertions="1" time="0.003309"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testEncodeUserInfoValid" tests="8" assertions="8" failures="0" errors="0" time="0.028817">
+        <testcase name="testEncodeUserInfoValid with data set #0" assertions="1" time="0.003634"/>
+        <testcase name="testEncodeUserInfoValid with data set #1" assertions="1" time="0.003504"/>
+        <testcase name="testEncodeUserInfoValid with data set #2" assertions="1" time="0.003639"/>
+        <testcase name="testEncodeUserInfoValid with data set #3" assertions="1" time="0.003525"/>
+        <testcase name="testEncodeUserInfoValid with data set #4" assertions="1" time="0.003485"/>
+        <testcase name="testEncodeUserInfoValid with data set #5" assertions="1" time="0.003716"/>
+        <testcase name="testEncodeUserInfoValid with data set #6" assertions="1" time="0.003749"/>
+        <testcase name="testEncodeUserInfoValid with data set #7" assertions="1" time="0.003565"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testEncodeUserInfoInvalid" tests="3" assertions="3" failures="0" errors="0" time="0.011077">
+        <testcase name="testEncodeUserInfoInvalid with data set #0" assertions="1" time="0.003653"/>
+        <testcase name="testEncodeUserInfoInvalid with data set #1" assertions="1" time="0.003604"/>
+        <testcase name="testEncodeUserInfoInvalid with data set #2" assertions="1" time="0.003820"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidatePortValid" tests="5" assertions="5" failures="0" errors="0" time="0.016039">
+        <testcase name="testValidatePortValid with data set #0" assertions="1" time="0.003264"/>
+        <testcase name="testValidatePortValid with data set #1" assertions="1" time="0.003299"/>
+        <testcase name="testValidatePortValid with data set #2" assertions="1" time="0.003303"/>
+        <testcase name="testValidatePortValid with data set #3" assertions="1" time="0.003012"/>
+        <testcase name="testValidatePortValid with data set #4" assertions="1" time="0.003161"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testValidatePortInvalid" tests="8" assertions="8" failures="0" errors="0" time="0.025350">
+        <testcase name="testValidatePortInvalid with data set #0" assertions="1" time="0.003008"/>
+        <testcase name="testValidatePortInvalid with data set #1" assertions="1" time="0.003232"/>
+        <testcase name="testValidatePortInvalid with data set #2" assertions="1" time="0.003086"/>
+        <testcase name="testValidatePortInvalid with data set #3" assertions="1" time="0.003025"/>
+        <testcase name="testValidatePortInvalid with data set #4" assertions="1" time="0.003501"/>
+        <testcase name="testValidatePortInvalid with data set #5" assertions="1" time="0.003238"/>
+        <testcase name="testValidatePortInvalid with data set #6" assertions="1" time="0.003092"/>
+        <testcase name="testValidatePortInvalid with data set #7" assertions="1" time="0.003167"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testRelativeUriResolvingRfcSamples" tests="39" assertions="39" failures="0" errors="0" time="0.260274">
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #0" assertions="1" time="0.004119"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #1" assertions="1" time="0.006305"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #2" assertions="1" time="0.006199"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #3" assertions="1" time="0.006035"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #4" assertions="1" time="0.006066"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #5" assertions="1" time="0.005894"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #6" assertions="1" time="0.006320"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #7" assertions="1" time="0.006705"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #8" assertions="1" time="0.006927"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #9" assertions="1" time="0.006873"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #10" assertions="1" time="0.006846"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #11" assertions="1" time="0.007049"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #12" assertions="1" time="0.006814"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #13" assertions="1" time="0.006713"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #14" assertions="1" time="0.007070"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #15" assertions="1" time="0.006827"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #16" assertions="1" time="0.006819"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #17" assertions="1" time="0.006975"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #18" assertions="1" time="0.006944"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #19" assertions="1" time="0.006888"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #20" assertions="1" time="0.006923"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #21" assertions="1" time="0.007005"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #22" assertions="1" time="0.007022"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #23" assertions="1" time="0.006965"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #24" assertions="1" time="0.007025"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #25" assertions="1" time="0.006908"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #26" assertions="1" time="0.006830"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #27" assertions="1" time="0.006909"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #28" assertions="1" time="0.006985"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #29" assertions="1" time="0.006947"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #30" assertions="1" time="0.006939"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #31" assertions="1" time="0.006966"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #32" assertions="1" time="0.006985"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #33" assertions="1" time="0.006983"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #34" assertions="1" time="0.006982"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #35" assertions="1" time="0.006994"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #36" assertions="1" time="0.007005"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #37" assertions="1" time="0.006991"/>
+        <testcase name="testRelativeUriResolvingRfcSamples with data set #38" assertions="1" time="0.004522"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testRemovePathDotSegments" tests="2" assertions="2" failures="0" errors="0" time="0.008398">
+        <testcase name="testRemovePathDotSegments with data set #0" assertions="1" time="0.004217"/>
+        <testcase name="testRemovePathDotSegments with data set #1" assertions="1" time="0.004181"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testNormalizeUrl" tests="19" assertions="19" failures="0" errors="0" time="0.093737">
+        <testcase name="testNormalizeUrl with data set #0" assertions="1" time="0.005589"/>
+        <testcase name="testNormalizeUrl with data set #1" assertions="1" time="0.005881"/>
+        <testcase name="testNormalizeUrl with data set #2" assertions="1" time="0.006000"/>
+        <testcase name="testNormalizeUrl with data set #3" assertions="1" time="0.005039"/>
+        <testcase name="testNormalizeUrl with data set #4" assertions="1" time="0.005077"/>
+        <testcase name="testNormalizeUrl with data set #5" assertions="1" time="0.004908"/>
+        <testcase name="testNormalizeUrl with data set #6" assertions="1" time="0.005505"/>
+        <testcase name="testNormalizeUrl with data set #7" assertions="1" time="0.005072"/>
+        <testcase name="testNormalizeUrl with data set #8" assertions="1" time="0.004787"/>
+        <testcase name="testNormalizeUrl with data set #9" assertions="1" time="0.004670"/>
+        <testcase name="testNormalizeUrl with data set #10" assertions="1" time="0.004779"/>
+        <testcase name="testNormalizeUrl with data set #11" assertions="1" time="0.004455"/>
+        <testcase name="testNormalizeUrl with data set #12" assertions="1" time="0.004560"/>
+        <testcase name="testNormalizeUrl with data set #13" assertions="1" time="0.004261"/>
+        <testcase name="testNormalizeUrl with data set #14" assertions="1" time="0.004230"/>
+        <testcase name="testNormalizeUrl with data set #15" assertions="1" time="0.004132"/>
+        <testcase name="testNormalizeUrl with data set #16" assertions="1" time="0.003955"/>
+        <testcase name="testNormalizeUrl with data set #17" assertions="1" time="0.005307"/>
+        <testcase name="testNormalizeUrl with data set #18" assertions="1" time="0.005530"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testMergeToNewUri" tests="39" assertions="39" failures="0" errors="0" time="0.241893">
+        <testcase name="testMergeToNewUri with data set #0" assertions="1" time="0.004191"/>
+        <testcase name="testMergeToNewUri with data set #1" assertions="1" time="0.006389"/>
+        <testcase name="testMergeToNewUri with data set #2" assertions="1" time="0.006240"/>
+        <testcase name="testMergeToNewUri with data set #3" assertions="1" time="0.006370"/>
+        <testcase name="testMergeToNewUri with data set #4" assertions="1" time="0.006185"/>
+        <testcase name="testMergeToNewUri with data set #5" assertions="1" time="0.005983"/>
+        <testcase name="testMergeToNewUri with data set #6" assertions="1" time="0.006543"/>
+        <testcase name="testMergeToNewUri with data set #7" assertions="1" time="0.006384"/>
+        <testcase name="testMergeToNewUri with data set #8" assertions="1" time="0.006480"/>
+        <testcase name="testMergeToNewUri with data set #9" assertions="1" time="0.006313"/>
+        <testcase name="testMergeToNewUri with data set #10" assertions="1" time="0.006493"/>
+        <testcase name="testMergeToNewUri with data set #11" assertions="1" time="0.006667"/>
+        <testcase name="testMergeToNewUri with data set #12" assertions="1" time="0.006205"/>
+        <testcase name="testMergeToNewUri with data set #13" assertions="1" time="0.006313"/>
+        <testcase name="testMergeToNewUri with data set #14" assertions="1" time="0.006256"/>
+        <testcase name="testMergeToNewUri with data set #15" assertions="1" time="0.006212"/>
+        <testcase name="testMergeToNewUri with data set #16" assertions="1" time="0.006378"/>
+        <testcase name="testMergeToNewUri with data set #17" assertions="1" time="0.006478"/>
+        <testcase name="testMergeToNewUri with data set #18" assertions="1" time="0.006508"/>
+        <testcase name="testMergeToNewUri with data set #19" assertions="1" time="0.006491"/>
+        <testcase name="testMergeToNewUri with data set #20" assertions="1" time="0.006279"/>
+        <testcase name="testMergeToNewUri with data set #21" assertions="1" time="0.006273"/>
+        <testcase name="testMergeToNewUri with data set #22" assertions="1" time="0.006384"/>
+        <testcase name="testMergeToNewUri with data set #23" assertions="1" time="0.006222"/>
+        <testcase name="testMergeToNewUri with data set #24" assertions="1" time="0.006454"/>
+        <testcase name="testMergeToNewUri with data set #25" assertions="1" time="0.006510"/>
+        <testcase name="testMergeToNewUri with data set #26" assertions="1" time="0.006260"/>
+        <testcase name="testMergeToNewUri with data set #27" assertions="1" time="0.005969"/>
+        <testcase name="testMergeToNewUri with data set #28" assertions="1" time="0.006227"/>
+        <testcase name="testMergeToNewUri with data set #29" assertions="1" time="0.006191"/>
+        <testcase name="testMergeToNewUri with data set #30" assertions="1" time="0.006052"/>
+        <testcase name="testMergeToNewUri with data set #31" assertions="1" time="0.006318"/>
+        <testcase name="testMergeToNewUri with data set #32" assertions="1" time="0.006280"/>
+        <testcase name="testMergeToNewUri with data set #33" assertions="1" time="0.006214"/>
+        <testcase name="testMergeToNewUri with data set #34" assertions="1" time="0.006435"/>
+        <testcase name="testMergeToNewUri with data set #35" assertions="1" time="0.006212"/>
+        <testcase name="testMergeToNewUri with data set #36" assertions="1" time="0.006287"/>
+        <testcase name="testMergeToNewUri with data set #37" assertions="1" time="0.006227"/>
+        <testcase name="testMergeToNewUri with data set #38" assertions="1" time="0.004020"/>
+      </testsuite>
+      <testcase name="testMergeTwoObjectsNotModifying" class="Eloquent\Schemer\Uri\UriTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Uri/UriTest.php" line="707" assertions="4" time="0.007394"/>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testMakeRelative" tests="6" assertions="6" failures="0" errors="0" time="0.041378">
+        <testcase name="testMakeRelative with data set #0" assertions="1" time="0.006929"/>
+        <testcase name="testMakeRelative with data set #1" assertions="1" time="0.007193"/>
+        <testcase name="testMakeRelative with data set #2" assertions="1" time="0.007143"/>
+        <testcase name="testMakeRelative with data set #3" assertions="1" time="0.006927"/>
+        <testcase name="testMakeRelative with data set #4" assertions="1" time="0.006617"/>
+        <testcase name="testMakeRelative with data set #5" assertions="1" time="0.006569"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testConstructorCopyExistingObject" tests="30" assertions="30" failures="0" errors="0" time="0.324947">
+        <testcase name="testConstructorCopyExistingObject with data set #0" assertions="1" time="0.010055"/>
+        <testcase name="testConstructorCopyExistingObject with data set #1" assertions="1" time="0.011619"/>
+        <testcase name="testConstructorCopyExistingObject with data set #2" assertions="1" time="0.011467"/>
+        <testcase name="testConstructorCopyExistingObject with data set #3" assertions="1" time="0.009749"/>
+        <testcase name="testConstructorCopyExistingObject with data set #4" assertions="1" time="0.009851"/>
+        <testcase name="testConstructorCopyExistingObject with data set #5" assertions="1" time="0.009848"/>
+        <testcase name="testConstructorCopyExistingObject with data set #6" assertions="1" time="0.010095"/>
+        <testcase name="testConstructorCopyExistingObject with data set #7" assertions="1" time="0.010283"/>
+        <testcase name="testConstructorCopyExistingObject with data set #8" assertions="1" time="0.010260"/>
+        <testcase name="testConstructorCopyExistingObject with data set #9" assertions="1" time="0.012760"/>
+        <testcase name="testConstructorCopyExistingObject with data set #10" assertions="1" time="0.013136"/>
+        <testcase name="testConstructorCopyExistingObject with data set #11" assertions="1" time="0.012779"/>
+        <testcase name="testConstructorCopyExistingObject with data set #12" assertions="1" time="0.011614"/>
+        <testcase name="testConstructorCopyExistingObject with data set #13" assertions="1" time="0.011845"/>
+        <testcase name="testConstructorCopyExistingObject with data set #14" assertions="1" time="0.011524"/>
+        <testcase name="testConstructorCopyExistingObject with data set #15" assertions="1" time="0.011790"/>
+        <testcase name="testConstructorCopyExistingObject with data set #16" assertions="1" time="0.010006"/>
+        <testcase name="testConstructorCopyExistingObject with data set #17" assertions="1" time="0.010211"/>
+        <testcase name="testConstructorCopyExistingObject with data set #18" assertions="1" time="0.010007"/>
+        <testcase name="testConstructorCopyExistingObject with data set #19" assertions="1" time="0.011268"/>
+        <testcase name="testConstructorCopyExistingObject with data set #20" assertions="1" time="0.011548"/>
+        <testcase name="testConstructorCopyExistingObject with data set #21" assertions="1" time="0.009787"/>
+        <testcase name="testConstructorCopyExistingObject with data set #22" assertions="1" time="0.010842"/>
+        <testcase name="testConstructorCopyExistingObject with data set #23" assertions="1" time="0.009782"/>
+        <testcase name="testConstructorCopyExistingObject with data set #24" assertions="1" time="0.009921"/>
+        <testcase name="testConstructorCopyExistingObject with data set #25" assertions="1" time="0.011802"/>
+        <testcase name="testConstructorCopyExistingObject with data set #26" assertions="1" time="0.010125"/>
+        <testcase name="testConstructorCopyExistingObject with data set #27" assertions="1" time="0.010325"/>
+        <testcase name="testConstructorCopyExistingObject with data set #28" assertions="1" time="0.010485"/>
+        <testcase name="testConstructorCopyExistingObject with data set #29" assertions="1" time="0.010162"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testConstructorInvalidInput" tests="5" assertions="5" failures="0" errors="0" time="0.018450">
+        <testcase name="testConstructorInvalidInput with data set #0" assertions="1" time="0.003704"/>
+        <testcase name="testConstructorInvalidInput with data set #1" assertions="1" time="0.003985"/>
+        <testcase name="testConstructorInvalidInput with data set #2" assertions="1" time="0.003812"/>
+        <testcase name="testConstructorInvalidInput with data set #3" assertions="1" time="0.003497"/>
+        <testcase name="testConstructorInvalidInput with data set #4" assertions="1" time="0.003452"/>
+      </testsuite>
+      <testsuite name="Eloquent\Schemer\Uri\UriTest::testFluentInterface" tests="10" assertions="10" failures="0" errors="0" time="0.038750">
+        <testcase name="testFluentInterface with data set #0" assertions="1" time="0.003450"/>
+        <testcase name="testFluentInterface with data set #1" assertions="1" time="0.003454"/>
+        <testcase name="testFluentInterface with data set #2" assertions="1" time="0.004382"/>
+        <testcase name="testFluentInterface with data set #3" assertions="1" time="0.003497"/>
+        <testcase name="testFluentInterface with data set #4" assertions="1" time="0.003431"/>
+        <testcase name="testFluentInterface with data set #5" assertions="1" time="0.003473"/>
+        <testcase name="testFluentInterface with data set #6" assertions="1" time="0.003214"/>
+        <testcase name="testFluentInterface with data set #7" assertions="1" time="0.005283"/>
+        <testcase name="testFluentInterface with data set #8" assertions="1" time="0.005254"/>
+        <testcase name="testFluentInterface with data set #9" assertions="1" time="0.003312"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Validation\ConstraintValidatorTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Validation/ConstraintValidatorTest.php" namespace="Eloquent\Schemer\Validation" fullPackage="Eloquent.Schemer.Validation" tests="156" assertions="156" failures="0" errors="0" time="7.099218">
+      <testsuite name="Eloquent\Schemer\Validation\ConstraintValidatorTest::testValidateSchema" tests="156" assertions="156" failures="0" errors="0" time="7.099218">
+        <testcase name="testValidateSchema with data set &quot;format / ipv6.json / valid IP address&quot;" assertions="1" time="0.036322"/>
+        <testcase name="testValidateSchema with data set &quot;format / ipv6.json / valid non-string&quot;" assertions="1" time="0.028250"/>
+        <testcase name="testValidateSchema with data set &quot;format / ipv6.json / invalid string&quot;" assertions="1" time="0.028134"/>
+        <testcase name="testValidateSchema with data set &quot;format / ipv6.json / invalid IPv4 address&quot;" assertions="1" time="0.028045"/>
+        <testcase name="testValidateSchema with data set &quot;format / hostname.json / valid hostname&quot;" assertions="1" time="0.029152"/>
+        <testcase name="testValidateSchema with data set &quot;format / hostname.json / valid non-string&quot;" assertions="1" time="0.028219"/>
+        <testcase name="testValidateSchema with data set &quot;format / hostname.json / invalid string&quot;" assertions="1" time="0.030164"/>
+        <testcase name="testValidateSchema with data set &quot;format / hostname.json / invalid IP address&quot;" assertions="1" time="0.029455"/>
+        <testcase name="testValidateSchema with data set &quot;format / date-time.json / valid date/time (zulu)&quot;" assertions="1" time="0.028682"/>
+        <testcase name="testValidateSchema with data set &quot;format / date-time.json / valid date/time (offset with colon)&quot;" assertions="1" time="0.029005"/>
+        <testcase name="testValidateSchema with data set &quot;format / date-time.json / valid date/time (offset without colon)&quot;" assertions="1" time="0.031187"/>
+        <testcase name="testValidateSchema with data set &quot;format / date-time.json / valid non-string&quot;" assertions="1" time="0.030002"/>
+        <testcase name="testValidateSchema with data set &quot;format / date-time.json / invalid&quot;" assertions="1" time="0.030225"/>
+        <testcase name="testValidateSchema with data set &quot;format / ipv4.json / valid IP address&quot;" assertions="1" time="0.033423"/>
+        <testcase name="testValidateSchema with data set &quot;format / ipv4.json / valid non-string&quot;" assertions="1" time="0.029592"/>
+        <testcase name="testValidateSchema with data set &quot;format / ipv4.json / invalid string&quot;" assertions="1" time="0.028142"/>
+        <testcase name="testValidateSchema with data set &quot;format / ipv4.json / invalid IPv6 address&quot;" assertions="1" time="0.028501"/>
+        <testcase name="testValidateSchema with data set &quot;format / email.json / valid email&quot;" assertions="1" time="0.029474"/>
+        <testcase name="testValidateSchema with data set &quot;format / email.json / valid non-string&quot;" assertions="1" time="0.027176"/>
+        <testcase name="testValidateSchema with data set &quot;format / email.json / invalid&quot;" assertions="1" time="0.032150"/>
+        <testcase name="testValidateSchema with data set &quot;format / uri.json / valid URI&quot;" assertions="1" time="0.035116"/>
+        <testcase name="testValidateSchema with data set &quot;format / uri.json / valid non-string&quot;" assertions="1" time="0.032081"/>
+        <testcase name="testValidateSchema with data set &quot;format / uri.json / invalid&quot;" assertions="1" time="0.032669"/>
+        <testcase name="testValidateSchema with data set &quot;required / required.json / valid object&quot;" assertions="1" time="0.042669"/>
+        <testcase name="testValidateSchema with data set &quot;required / required.json / valid non-object&quot;" assertions="1" time="0.040738"/>
+        <testcase name="testValidateSchema with data set &quot;required / required.json / invalid&quot;" assertions="1" time="0.039378"/>
+        <testcase name="testValidateSchema with data set &quot;not / not.json / valid integer&quot;" assertions="1" time="0.047673"/>
+        <testcase name="testValidateSchema with data set &quot;not / not.json / valid floating point value&quot;" assertions="1" time="0.058515"/>
+        <testcase name="testValidateSchema with data set &quot;not / not.json / invalid&quot;" assertions="1" time="0.043968"/>
+        <testcase name="testValidateSchema with data set &quot;type / object-type.json / valid&quot;" assertions="1" time="0.032688"/>
+        <testcase name="testValidateSchema with data set &quot;type / object-type.json / invalid&quot;" assertions="1" time="0.032848"/>
+        <testcase name="testValidateSchema with data set &quot;type / array-type.json / valid&quot;" assertions="1" time="0.029218"/>
+        <testcase name="testValidateSchema with data set &quot;type / array-type.json / invalid&quot;" assertions="1" time="0.030511"/>
+        <testcase name="testValidateSchema with data set &quot;type / boolean-type.json / valid&quot;" assertions="1" time="0.030393"/>
+        <testcase name="testValidateSchema with data set &quot;type / boolean-type.json / invalid&quot;" assertions="1" time="0.030879"/>
+        <testcase name="testValidateSchema with data set &quot;type / integer-type.json / valid&quot;" assertions="1" time="0.030713"/>
+        <testcase name="testValidateSchema with data set &quot;type / integer-type.json / invalid&quot;" assertions="1" time="0.031242"/>
+        <testcase name="testValidateSchema with data set &quot;type / string-type.json / valid&quot;" assertions="1" time="0.032504"/>
+        <testcase name="testValidateSchema with data set &quot;type / string-type.json / invalid&quot;" assertions="1" time="0.032540"/>
+        <testcase name="testValidateSchema with data set &quot;type / null-type.json / valid&quot;" assertions="1" time="0.030757"/>
+        <testcase name="testValidateSchema with data set &quot;type / null-type.json / invalid&quot;" assertions="1" time="0.031047"/>
+        <testcase name="testValidateSchema with data set &quot;type / number-type.json / valid floating point value&quot;" assertions="1" time="0.031326"/>
+        <testcase name="testValidateSchema with data set &quot;type / number-type.json / valid integer&quot;" assertions="1" time="0.032182"/>
+        <testcase name="testValidateSchema with data set &quot;type / number-type.json / invalid&quot;" assertions="1" time="0.032280"/>
+        <testcase name="testValidateSchema with data set &quot;type / multiple-types.json / valid string&quot;" assertions="1" time="0.041023"/>
+        <testcase name="testValidateSchema with data set &quot;type / multiple-types.json / valid object&quot;" assertions="1" time="0.042142"/>
+        <testcase name="testValidateSchema with data set &quot;type / multiple-types.json / invalid&quot;" assertions="1" time="0.042657"/>
+        <testcase name="testValidateSchema with data set &quot;type / datetime-type.toml / valid&quot;" assertions="1" time="0.033211"/>
+        <testcase name="testValidateSchema with data set &quot;type / datetime-type.toml / invalid&quot;" assertions="1" time="0.033576"/>
+        <testcase name="testValidateSchema with data set &quot;pattern / pattern.json / valid string a&quot;" assertions="1" time="0.029580"/>
+        <testcase name="testValidateSchema with data set &quot;pattern / pattern.json / valid string b&quot;" assertions="1" time="0.028659"/>
+        <testcase name="testValidateSchema with data set &quot;pattern / pattern.json / valid non-string&quot;" assertions="1" time="0.029125"/>
+        <testcase name="testValidateSchema with data set &quot;pattern / pattern.json / invalid&quot;" assertions="1" time="0.030087"/>
+        <testcase name="testValidateSchema with data set &quot;maxLength / maxLength.json / valid string&quot;" assertions="1" time="0.028470"/>
+        <testcase name="testValidateSchema with data set &quot;maxLength / maxLength.json / valid non-string&quot;" assertions="1" time="0.028010"/>
+        <testcase name="testValidateSchema with data set &quot;maxLength / maxLength.json / invalid&quot;" assertions="1" time="0.028628"/>
+        <testcase name="testValidateSchema with data set &quot;maximum / maximum-integer.json / valid integers&quot;" assertions="1" time="0.044432"/>
+        <testcase name="testValidateSchema with data set &quot;maximum / maximum-integer.json / valid floating-point values&quot;" assertions="1" time="0.045291"/>
+        <testcase name="testValidateSchema with data set &quot;maximum / maximum-integer.json / valid non-number&quot;" assertions="1" time="0.042283"/>
+        <testcase name="testValidateSchema with data set &quot;maximum / maximum-integer.json / invalid&quot;" assertions="1" time="0.047527"/>
+        <testcase name="testValidateSchema with data set &quot;maximum / maximum-floating-point-value.json / valid floating-point values&quot;" assertions="1" time="0.063152"/>
+        <testcase name="testValidateSchema with data set &quot;maximum / maximum-floating-point-value.json / valid integers&quot;" assertions="1" time="0.046637"/>
+        <testcase name="testValidateSchema with data set &quot;maximum / maximum-floating-point-value.json / valid non-number&quot;" assertions="1" time="0.041829"/>
+        <testcase name="testValidateSchema with data set &quot;maximum / maximum-floating-point-value.json / invalid&quot;" assertions="1" time="0.048200"/>
+        <testcase name="testValidateSchema with data set &quot;minDateTime / minDateTime.toml / valid date/time&quot;" assertions="1" time="0.051960"/>
+        <testcase name="testValidateSchema with data set &quot;minDateTime / minDateTime.toml / valid non-date/time&quot;" assertions="1" time="0.051860"/>
+        <testcase name="testValidateSchema with data set &quot;minDateTime / minDateTime.toml / invalid&quot;" assertions="1" time="0.052936"/>
+        <testcase name="testValidateSchema with data set &quot;minimum / minimum-floating-point-value.json / valid floating-point values&quot;" assertions="1" time="0.045750"/>
+        <testcase name="testValidateSchema with data set &quot;minimum / minimum-floating-point-value.json / valid integers&quot;" assertions="1" time="0.047441"/>
+        <testcase name="testValidateSchema with data set &quot;minimum / minimum-floating-point-value.json / valid non-number&quot;" assertions="1" time="0.042636"/>
+        <testcase name="testValidateSchema with data set &quot;minimum / minimum-floating-point-value.json / invalid&quot;" assertions="1" time="0.048153"/>
+        <testcase name="testValidateSchema with data set &quot;minimum / minimum-integer.json / valid integers&quot;" assertions="1" time="0.046191"/>
+        <testcase name="testValidateSchema with data set &quot;minimum / minimum-integer.json / valid floating-point values&quot;" assertions="1" time="0.043532"/>
+        <testcase name="testValidateSchema with data set &quot;minimum / minimum-integer.json / valid non-number&quot;" assertions="1" time="0.043307"/>
+        <testcase name="testValidateSchema with data set &quot;minimum / minimum-integer.json / invalid&quot;" assertions="1" time="0.055367"/>
+        <testcase name="testValidateSchema with data set &quot;enum / multiple-values.json / valid - first element&quot;" assertions="1" time="0.033956"/>
+        <testcase name="testValidateSchema with data set &quot;enum / multiple-values.json / valid - middle element&quot;" assertions="1" time="0.034696"/>
+        <testcase name="testValidateSchema with data set &quot;enum / multiple-values.json / invalid&quot;" assertions="1" time="0.035678"/>
+        <testcase name="testValidateSchema with data set &quot;enum / single-value.json / valid&quot;" assertions="1" time="0.033170"/>
+        <testcase name="testValidateSchema with data set &quot;enum / single-value.json / invalid&quot;" assertions="1" time="0.033049"/>
+        <testcase name="testValidateSchema with data set &quot;properties / additionalProperties-false.json / valid&quot;" assertions="1" time="0.054420"/>
+        <testcase name="testValidateSchema with data set &quot;properties / additionalProperties-false.json / invalid&quot;" assertions="1" time="0.054716"/>
+        <testcase name="testValidateSchema with data set &quot;properties / multiple-properties.json / valid&quot;" assertions="1" time="0.077335"/>
+        <testcase name="testValidateSchema with data set &quot;properties / multiple-properties.json / invalid&quot;" assertions="1" time="0.082358"/>
+        <testcase name="testValidateSchema with data set &quot;properties / multiple-patternProperties.json / valid&quot;" assertions="1" time="0.081891"/>
+        <testcase name="testValidateSchema with data set &quot;properties / multiple-patternProperties.json / invalid&quot;" assertions="1" time="0.081318"/>
+        <testcase name="testValidateSchema with data set &quot;properties / property-schema-cascade.json / valid object&quot;" assertions="1" time="0.144400"/>
+        <testcase name="testValidateSchema with data set &quot;properties / property-schema-cascade.json / valid non-object&quot;" assertions="1" time="0.123498"/>
+        <testcase name="testValidateSchema with data set &quot;properties / property-schema-cascade.json / invalid&quot;" assertions="1" time="0.149392"/>
+        <testcase name="testValidateSchema with data set &quot;properties / additionalProperties-true.json / valid&quot;" assertions="1" time="0.050360"/>
+        <testcase name="testValidateSchema with data set &quot;properties / additionalProperties-schema.json / valid&quot;" assertions="1" time="0.065087"/>
+        <testcase name="testValidateSchema with data set &quot;properties / additionalProperties-schema.json / invalid&quot;" assertions="1" time="0.068108"/>
+        <testcase name="testValidateSchema with data set &quot;maxDateTime / maxDateTime.toml / valid date/time&quot;" assertions="1" time="0.051707"/>
+        <testcase name="testValidateSchema with data set &quot;maxDateTime / maxDateTime.toml / valid non-date/time&quot;" assertions="1" time="0.073092"/>
+        <testcase name="testValidateSchema with data set &quot;maxDateTime / maxDateTime.toml / invalid&quot;" assertions="1" time="0.052778"/>
+        <testcase name="testValidateSchema with data set &quot;oneOf / multiple-schemas.json / valid&quot;" assertions="1" time="0.090107"/>
+        <testcase name="testValidateSchema with data set &quot;oneOf / multiple-schemas.json / invalid - none matching&quot;" assertions="1" time="0.089195"/>
+        <testcase name="testValidateSchema with data set &quot;oneOf / multiple-schemas.json / invalid - more than one matching&quot;" assertions="1" time="0.090287"/>
+        <testcase name="testValidateSchema with data set &quot;oneOf / single-schema.json / valid&quot;" assertions="1" time="0.044585"/>
+        <testcase name="testValidateSchema with data set &quot;oneOf / single-schema.json / invalid&quot;" assertions="1" time="0.044549"/>
+        <testcase name="testValidateSchema with data set &quot;allOf / multiple-schemas.json / valid&quot;" assertions="1" time="0.087310"/>
+        <testcase name="testValidateSchema with data set &quot;allOf / multiple-schemas.json / one invalid&quot;" assertions="1" time="0.093346"/>
+        <testcase name="testValidateSchema with data set &quot;allOf / multiple-schemas.json / all invalid&quot;" assertions="1" time="0.088261"/>
+        <testcase name="testValidateSchema with data set &quot;allOf / single-schema.json / valid&quot;" assertions="1" time="0.044203"/>
+        <testcase name="testValidateSchema with data set &quot;allOf / single-schema.json / invalid&quot;" assertions="1" time="0.044303"/>
+        <testcase name="testValidateSchema with data set &quot;minItems / minItems.json / valid array&quot;" assertions="1" time="0.030162"/>
+        <testcase name="testValidateSchema with data set &quot;minItems / minItems.json / valid non-array&quot;" assertions="1" time="0.030173"/>
+        <testcase name="testValidateSchema with data set &quot;minItems / minItems.json / invalid&quot;" assertions="1" time="0.030528"/>
+        <testcase name="testValidateSchema with data set &quot;items / additionalItems-false.json / valid&quot;" assertions="1" time="0.065349"/>
+        <testcase name="testValidateSchema with data set &quot;items / additionalItems-false.json / invalid&quot;" assertions="1" time="0.067852"/>
+        <testcase name="testValidateSchema with data set &quot;items / additionalItems-schema.json / valid array&quot;" assertions="1" time="0.065757"/>
+        <testcase name="testValidateSchema with data set &quot;items / additionalItems-schema.json / valid non-array&quot;" assertions="1" time="0.061192"/>
+        <testcase name="testValidateSchema with data set &quot;items / additionalItems-schema.json / invalid&quot;" assertions="1" time="0.068509"/>
+        <testcase name="testValidateSchema with data set &quot;items / multiple-schemas.json / valid&quot;" assertions="1" time="0.081018"/>
+        <testcase name="testValidateSchema with data set &quot;items / multiple-schemas.json / invalid&quot;" assertions="1" time="0.080605"/>
+        <testcase name="testValidateSchema with data set &quot;items / single-schema.json / valid&quot;" assertions="1" time="0.045648"/>
+        <testcase name="testValidateSchema with data set &quot;items / single-schema.json / invalid&quot;" assertions="1" time="0.048755"/>
+        <testcase name="testValidateSchema with data set &quot;dependencies / schema-dependency.json / valid - dependant&quot;" assertions="1" time="0.060442"/>
+        <testcase name="testValidateSchema with data set &quot;dependencies / schema-dependency.json / valid - not dependant&quot;" assertions="1" time="0.057025"/>
+        <testcase name="testValidateSchema with data set &quot;dependencies / schema-dependency.json / valid non-object&quot;" assertions="1" time="0.056793"/>
+        <testcase name="testValidateSchema with data set &quot;dependencies / schema-dependency.json / invalid&quot;" assertions="1" time="0.060842"/>
+        <testcase name="testValidateSchema with data set &quot;dependencies / property-dependency.json / valid - dependant&quot;" assertions="1" time="0.039442"/>
+        <testcase name="testValidateSchema with data set &quot;dependencies / property-dependency.json / valid - not dependant&quot;" assertions="1" time="0.038470"/>
+        <testcase name="testValidateSchema with data set &quot;dependencies / property-dependency.json / valid non-object&quot;" assertions="1" time="0.038430"/>
+        <testcase name="testValidateSchema with data set &quot;dependencies / property-dependency.json / invalid&quot;" assertions="1" time="0.039732"/>
+        <testcase name="testValidateSchema with data set &quot;maxItems / maxItems.json / valid array&quot;" assertions="1" time="0.029402"/>
+        <testcase name="testValidateSchema with data set &quot;maxItems / maxItems.json / valid non-array&quot;" assertions="1" time="0.028886"/>
+        <testcase name="testValidateSchema with data set &quot;maxItems / maxItems.json / invalid&quot;" assertions="1" time="0.057255"/>
+        <testcase name="testValidateSchema with data set &quot;minLength / minLength.json / valid string&quot;" assertions="1" time="0.030372"/>
+        <testcase name="testValidateSchema with data set &quot;minLength / minLength.json / valid non-string&quot;" assertions="1" time="0.029922"/>
+        <testcase name="testValidateSchema with data set &quot;minLength / minLength.json / invalid&quot;" assertions="1" time="0.030238"/>
+        <testcase name="testValidateSchema with data set &quot;anyOf / multiple-schemas.json / valid string&quot;" assertions="1" time="0.059081"/>
+        <testcase name="testValidateSchema with data set &quot;anyOf / multiple-schemas.json / valid object&quot;" assertions="1" time="0.060605"/>
+        <testcase name="testValidateSchema with data set &quot;anyOf / multiple-schemas.json / invalid&quot;" assertions="1" time="0.062867"/>
+        <testcase name="testValidateSchema with data set &quot;anyOf / single-schema.json / valid&quot;" assertions="1" time="0.047252"/>
+        <testcase name="testValidateSchema with data set &quot;anyOf / single-schema.json / invalid&quot;" assertions="1" time="0.046318"/>
+        <testcase name="testValidateSchema with data set &quot;multipleOf / multipleOf-floating-point-value.json / valid floating point values&quot;" assertions="1" time="0.047081"/>
+        <testcase name="testValidateSchema with data set &quot;multipleOf / multipleOf-floating-point-value.json / valid integers&quot;" assertions="1" time="0.046232"/>
+        <testcase name="testValidateSchema with data set &quot;multipleOf / multipleOf-floating-point-value.json / valid non-number&quot;" assertions="1" time="0.041540"/>
+        <testcase name="testValidateSchema with data set &quot;multipleOf / multipleOf-floating-point-value.json / invalid&quot;" assertions="1" time="0.045662"/>
+        <testcase name="testValidateSchema with data set &quot;multipleOf / multipleOf-integer.json / valid integers&quot;" assertions="1" time="0.045235"/>
+        <testcase name="testValidateSchema with data set &quot;multipleOf / multipleOf-integer.json / valid floating point values&quot;" assertions="1" time="0.045122"/>
+        <testcase name="testValidateSchema with data set &quot;multipleOf / multipleOf-integer.json / valid non-number&quot;" assertions="1" time="0.041436"/>
+        <testcase name="testValidateSchema with data set &quot;multipleOf / multipleOf-integer.json / invalid&quot;" assertions="1" time="0.045801"/>
+        <testcase name="testValidateSchema with data set &quot;uniqueItems / uniqueItems-false.json / valid unique&quot;" assertions="1" time="0.027962"/>
+        <testcase name="testValidateSchema with data set &quot;uniqueItems / uniqueItems-false.json / valid non-unique&quot;" assertions="1" time="0.028112"/>
+        <testcase name="testValidateSchema with data set &quot;uniqueItems / uniqueItems-false.json / valid non-array&quot;" assertions="1" time="0.027968"/>
+        <testcase name="testValidateSchema with data set &quot;uniqueItems / uniqueItems-true.json / valid array&quot;" assertions="1" time="0.029481"/>
+        <testcase name="testValidateSchema with data set &quot;uniqueItems / uniqueItems-true.json / valid non-array&quot;" assertions="1" time="0.028766"/>
+        <testcase name="testValidateSchema with data set &quot;uniqueItems / uniqueItems-true.json / invalid&quot;" assertions="1" time="0.029273"/>
+        <testcase name="testValidateSchema with data set &quot;maxProperties / maxProperties.json / valid object&quot;" assertions="1" time="0.029695"/>
+        <testcase name="testValidateSchema with data set &quot;maxProperties / maxProperties.json / valid non-object&quot;" assertions="1" time="0.029316"/>
+        <testcase name="testValidateSchema with data set &quot;maxProperties / maxProperties.json / invalid&quot;" assertions="1" time="0.029761"/>
+        <testcase name="testValidateSchema with data set &quot;minProperties / minProperties.json / valid object&quot;" assertions="1" time="0.030806"/>
+        <testcase name="testValidateSchema with data set &quot;minProperties / minProperties.json / valid non-object&quot;" assertions="1" time="0.030311"/>
+        <testcase name="testValidateSchema with data set &quot;minProperties / minProperties.json / invalid&quot;" assertions="1" time="0.030694"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Eloquent\Schemer\Validation\DefaultValueTransformTest" file="/home/travis/build/eloquent/schemer/test/suite/Eloquent/Schemer/Validation/DefaultValueTransformTest.php" namespace="Eloquent\Schemer\Validation" fullPackage="Eloquent.Schemer.Validation" tests="6" assertions="12" failures="0" errors="0" time="0.119996">
+      <testsuite name="Eloquent\Schemer\Validation\DefaultValueTransformTest::testTransform" tests="6" assertions="12" failures="0" errors="0" time="0.119996">
+        <testcase name="testTransform with data set &quot;object-properties.json / object missing defaults&quot;" assertions="2" time="0.022563"/>
+        <testcase name="testTransform with data set &quot;object-properties.json / object not missing defaults&quot;" assertions="2" time="0.022543"/>
+        <testcase name="testTransform with data set &quot;object-properties.json / array unchanged&quot;" assertions="2" time="0.015704"/>
+        <testcase name="testTransform with data set &quot;array-items.json / array missing defaults&quot;" assertions="2" time="0.021395"/>
+        <testcase name="testTransform with data set &quot;array-items.json / array not missing defaults&quot;" assertions="2" time="0.021711"/>
+        <testcase name="testTransform with data set &quot;array-items.json / object unchanged&quot;" assertions="2" time="0.016080"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,36 @@
+
+
+Code Coverage Report 
+  2013-05-08 03:58:38
+
+ Summary: 
+  Classes: 4.95% (5/101)
+  Methods: 19.13% (115/601)
+  Lines:   41.76% (1332/3190)
+
+\Eloquent\Schemer\Constraint\Factory::MetaSchemaFactory
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (267/267)
+\Eloquent\Schemer\Constraint\Factory::SchemaFactory
+  Methods:  41.67% (15/36)   Lines:  36.11% (104/288)
+\Eloquent\Schemer\Pointer::Pointer
+  Methods:  50.00% ( 5/10)   Lines:  50.00% ( 18/ 36)
+\Eloquent\Schemer\Pointer::PointerFactory
+  Methods: 100.00% ( 3/ 3)   Lines:  91.67% ( 11/ 12)
+\Eloquent\Schemer\Pointer\Resolver::PointerResolver
+  Methods: 100.00% ( 4/ 4)   Lines:  82.61% ( 19/ 23)
+\Eloquent\Schemer\Reader::Reader
+  Methods:  87.50% ( 7/ 8)   Lines:  86.11% ( 31/ 36)
+\Eloquent\Schemer\Reference::ReferenceResolver
+  Methods:  95.24% (20/21)   Lines:  89.42% ( 93/104)
+\Eloquent\Schemer\Reference::ResolutionScopeMap
+  Methods:  75.00% ( 6/ 8)   Lines:  85.00% ( 51/ 60)
+\Eloquent\Schemer\Reference::ResolutionScopeMapper
+  Methods:  88.24% (15/17)   Lines:  81.58% ( 62/ 76)
+\Eloquent\Schemer\Uri::HttpUri
+  Methods: 100.00% ( 9/ 9)   Lines:  90.91% ( 30/ 33)
+\Eloquent\Schemer\Uri::Uri
+  Methods: 100.00% ( 9/ 9)   Lines:  95.09% (155/163)
+\Eloquent\Schemer\Validation::ConstraintValidator
+  Methods:  94.64% (53/56)   Lines:  95.75% (451/471)
+\Eloquent\Schemer\Validation::DefaultValueTransform
+  Methods: 100.00% ( 7/ 7)   Lines: 100.00% ( 43/ 43)
