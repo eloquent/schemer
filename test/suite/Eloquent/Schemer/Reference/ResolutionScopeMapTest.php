@@ -14,7 +14,6 @@ namespace Eloquent\Schemer\Reference;
 use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Reader\Reader;
 use Eloquent\Schemer\Uri\UriFactory;
-use FilesystemIterator;
 use PHPUnit_Framework_TestCase;
 
 class ResolutionScopeMapTest extends PHPUnit_Framework_TestCase

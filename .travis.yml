@@ -16,7 +16,7 @@ php:
 env:
   global:
     - ARCHER_PUBLISH_VERSION=5.4
-    
+    - secure: "Z0maED2ekh1wDTIpxe8Q39vIqkat3RrDYFPCgpcKj9RNHw7fQKBb+rQgHOw4gcXYMLcraGAHNwDuOK4JMh1nSyAhkwQqKrtxFSABtY6SMPfFdAtVK4IDucTUw3xlgPWFapT2uVsBCfoypcLulw+iqGz1HTqALcRA1eTbPRGkmDM="
 
 install:
   - ./.travis.install
