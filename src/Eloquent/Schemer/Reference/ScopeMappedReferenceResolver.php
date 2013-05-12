@@ -50,7 +50,7 @@ class ScopeMappedReferenceResolver extends Value\Transform\AbstractValueTransfor
         parent::__construct();
 
         if (null === $scopeMapper) {
-            $scopeMapper = new ResolutionScopeMapperInterface;
+            $scopeMapper = new ResolutionScopeMapper;
         }
         if (null === $uriResolver) {
             $uriResolver = new UriResolver;
@@ -165,8 +165,8 @@ class ScopeMappedReferenceResolver extends Value\Transform\AbstractValueTransfor
     {
         // resolve reference against current base URI and normalize
         $referenceUri = $this->uriResolver()->resolve(
-            $this->currentBaseUri(),
-            $reference->uri()
+            $reference->uri(),
+            $this->currentBaseUri()
         );
 
         // if in-progress resolution exists
@@ -179,9 +179,9 @@ class ScopeMappedReferenceResolver extends Value\Transform\AbstractValueTransfor
 
         // if reference is a child of any inline scope throughout the stack
         // resolve inline
-        if (!$value = $this->resolveInline($referenceUri)) {
+        if (!$value = $this->resolveInline($referenceUri, $reference)) {
             // else resolve externally
-            $value = $this->resolveExternal($referenceUri);
+            $value = $this->resolveExternal($referenceUri, $reference);
         }
 
         // complete resolution
@@ -192,63 +192,100 @@ class ScopeMappedReferenceResolver extends Value\Transform\AbstractValueTransfor
     }
 
     /**
-     * @param UriInterface $referenceUri
+     * @param UriInterface         $referenceUri
+     * @param Value\ReferenceValue $reference
      *
      * @return Value\ValueInterface|null
      * @throws Exception\UndefinedReferenceException
      */
-    protected function resolveInline(UriInterface $referenceUri)
-    {
-        // pull relevant inline value from stack
+    protected function resolveInline(
+        UriInterface $referenceUri,
+        Value\ReferenceValue $reference
+    ) {
+        // pull relevant scope map and pointer from stack
+        $scopeMap = $pointer = null;
         foreach (array_reverse($this->scopeMapStack()) as $scopeMap) {
-            if
+            $pointer = $scopeMap->pointerByUri($referenceUri);
+            if (null !== $pointer) {
+                break;
+            }
+        }
+
+        if (null === $pointer) {
+            return null;
         }
 
         // push the relevant scope map onto the stack
+        $this->pushScopeMap($scopeMap);
         // visit the value
+        $value = $scopeMap->value()->accept($this);
         // pop the scope map stack
+        $this->popScopeMap();
+
         // resolve pointer
+        $value = $this->pointerResolver()->resolve($pointer, $value);
+        if (null === $value) {
+            throw new Exception\UndefinedReferenceException(
+                $reference,
+                $this->currentBaseUri()
+            );
+        }
 
-        // return the visited value
-    }
-
-    /**
-     * @param UriInterface $referenceUri
-     *
-     * @return Value\ValueInterface
-     * @throws Exception\UndefinedReferenceException
-     */
-    protected function resolveExternal(UriInterface $referenceUri)
-    {
-        // read external value
-        // create its scope map
-        // push scope map onto the stack
-        // visit the value
-        // pop the scope map stack
-        // resolve pointer
-
-        // return the visited value
+        return $value;
     }
 
     /**
      * @param UriInterface         $referenceUri
-     * @param Value\ValueInterface $value
+     * @param Value\ReferenceValue $reference
      *
      * @return Value\ValueInterface
      * @throws Exception\UndefinedReferenceException
      */
-    protected function resolveUriFragmentPointer(
+    protected function resolveExternal(
         UriInterface $referenceUri,
-        Value\ValueInterface $value
+        Value\ReferenceValue $reference
     ) {
-        if (null !== $referenceUri->getFragment()) {
+        // read external value
+        $schemeSpecificUri = $this->uriFactory()->create(
+            $referenceUri->toString()
+        );
+        try {
+            $value = $this->reader()->read(
+                $schemeSpecificUri,
+                $reference->mimeType()
+            );
+        } catch (ReadException $e) {
+            throw new Exception\UndefinedReferenceException(
+                $reference,
+                $this->currentBaseUri(),
+                $e
+            );
+        }
+
+        // create its scope map and push onto stack
+        $this->pushScopeMap(
+            $this->scopeMapper()->create($referenceUri, $value)
+        );
+        // visit the value
+        $value = $value->accept($this);
+        // pop the scope map stack
+        $this->popScopeMap();
+
+        // check for fragment pointer and resolve
+        if (
+            null !== $referenceUri->getFragment() &&
+            '/' === substr($referenceUri->getFragment(), 0, 1)
+        ) {
             $pointer = $this->pointerFactory()->create(
                 $referenceUri->getFragment()
             );
 
             $value = $this->pointerResolver()->resolve($pointer, $value);
             if (null === $value) {
-                throw new Exception\UndefinedReferenceException($referenceUri);
+                throw new Exception\UndefinedReferenceException(
+                    $reference,
+                    $this->currentBaseUri()
+                );
             }
         }
 
@@ -269,7 +306,9 @@ class ScopeMappedReferenceResolver extends Value\Transform\AbstractValueTransfor
 
         $this->pushScopeMap(
             $this->scopeMapper()->create(
-                $this->baseUri(),
+                $this->uriFactory()->createGeneric(
+                    $this->baseUri()->toString()
+                ),
                 $this->value()
             )
         );

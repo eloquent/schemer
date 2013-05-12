@@ -15,6 +15,7 @@ use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Pointer\PointerFactoryInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
+use Eloquent\Schemer\Value;
 use LogicException;
 use Zend\Uri\UriInterface;
 
@@ -22,11 +23,13 @@ class ResolutionScopeMap
 {
     /**
      * @param array<tuple<PointerInterface,UriInterface>> $map
+     * @param Value\ValueInterface                        $value
      * @param PointerFactoryInterface|null                $pointerFactory
      * @param Comparator|null                             $comparator
      */
     public function __construct(
         array $map,
+        Value\ValueInterface $value,
         PointerFactoryInterface $pointerFactory = null,
         Comparator $comparator = null
     ) {
@@ -42,6 +45,7 @@ class ResolutionScopeMap
             $this->add($pointer, $uri);
         }
 
+        $this->value = $value;
         $this->pointerFactory = $pointerFactory;
         $this->comparator = $comparator;
     }
@@ -52,6 +56,14 @@ class ResolutionScopeMap
     public function map()
     {
         return $this->map;
+    }
+
+    /**
+     * @return Value\ValueInterface
+     */
+    public function value()
+    {
+        return $this->value;
     }
 
     /**
@@ -166,6 +178,7 @@ class ResolutionScopeMap
     }
 
     private $map;
+    private $value;
     private $pointerFactory;
     private $comparator;
 }

@@ -88,7 +88,7 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
         $this->addMapping($this->currentPointer(), $baseUri);
 
         $value->accept($this);
-        $map = new ResolutionScopeMap($this->map());
+        $map = new ResolutionScopeMap($this->map(), $value);
 
         $this->clear();
 

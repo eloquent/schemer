@@ -14,6 +14,7 @@ namespace Eloquent\Schemer\Reference;
 use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Reader\Reader;
 use Eloquent\Schemer\Uri\UriFactory;
+use Eloquent\Schemer\Value;
 use PHPUnit_Framework_TestCase;
 
 class ResolutionScopeMapTest extends PHPUnit_Framework_TestCase
@@ -70,7 +71,7 @@ class ResolutionScopeMapTest extends PHPUnit_Framework_TestCase
                 $this->uriFactory->create($uri->value()),
             );
         }
-        $map = new ResolutionScopeMap($map);
+        $map = new ResolutionScopeMap($map, new Value\NullValue);
 
         $test = $fixture->tests->$testName;
         $uri = $this->uriFactory->create($test->uri->value());

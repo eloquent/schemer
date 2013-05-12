@@ -90,5 +90,6 @@ class ResolutionScopeMapperTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $actual);
         $this->assertSame($expected, $actual);
+        $this->assertSame($fixture->document, $map->value());
     }
 }
