@@ -61,7 +61,7 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
                 continue;
             }
 
-            $data[] = array($item);
+            $data[$item] = array($item);
         }
 
         return $data;
@@ -86,8 +86,8 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
     public function resolvableRecursiveData()
     {
         return array(
-            array('resolvable-inline.json'),
-            array('resolvable-external.json'),
+            'resolvable-inline.json' => array('resolvable-inline.json'),
+            'resolvable-external.json' => array('resolvable-external.json'),
         );
     }
 

@@ -1,0 +1,11 @@
+{
+    "document": {
+        "schema1": {
+            "id": "#foo"
+        }
+    },
+    "expected": [
+        ["", "#"],
+        ["/schema1", "#foo"]
+    ]
+}

@@ -16,6 +16,8 @@ use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Pointer\PointerFactoryInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
 use Eloquent\Schemer\Value;
+use Icecave\Repr\Repr;
+use InvalidArgumentException;
 use LogicException;
 use Zend\Uri\UriInterface;
 
@@ -40,6 +42,9 @@ class ResolutionScopeMap
             $comparator = new Comparator;
         }
 
+        $this->comparator = $comparator;
+
+        $this->map = array();
         foreach ($map as $tuple) {
             list($pointer, $uri) = $tuple;
             $this->add($pointer, $uri);
@@ -47,7 +52,6 @@ class ResolutionScopeMap
 
         $this->value = $value;
         $this->pointerFactory = $pointerFactory;
-        $this->comparator = $comparator;
     }
 
     /**
@@ -132,6 +136,18 @@ class ResolutionScopeMap
      */
     protected function add(PointerInterface $pointer, UriInterface $uri)
     {
+        foreach ($this->map() as $tuple) {
+            list($existingPointer) = $tuple;
+            if ($this->comparator()->equals($existingPointer, $pointer)) {
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'Mapping already exists at pointer %s.',
+                        Repr::repr($pointer->string())
+                    )
+                );
+            }
+        }
+
         $uri = clone $uri;
         $uri->normalize();
 

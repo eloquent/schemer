@@ -28,11 +28,15 @@ class UriResolver implements UriResolverInterface
         $baseUriReflector = new ReflectionObject($baseUri);
         if (!$baseUriReflector->hasMethod('resolve')) {
             $baseUri = new Uri($baseUri->toString());
-            if (!$uri instanceof Uri) {
+            if ($uri instanceof Uri) {
+                $uri = clone $uri;
+            } else {
                 $uri = new Uri($uri->toString());
             }
         } elseif (!$uri instanceof $baseUri) {
             $uri = $baseUriReflector->newInstance($uri->toString());
+        } else {
+            $uri = clone $uri;
         }
 
         return $uri->resolve($baseUri);

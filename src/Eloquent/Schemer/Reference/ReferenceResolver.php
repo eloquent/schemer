@@ -163,31 +163,22 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
      */
     public function visitReferenceValue(Value\ReferenceValue $reference)
     {
-        // resolve reference against current base URI and normalize
         $referenceUri = $this->uriResolver()->resolve(
             $reference->uri(),
             $this->currentBaseUri()
         );
 
-        // if in-progress resolution exists
         if ($this->hasResolution($referenceUri)) {
-            // return it
             return $this->resolution($referenceUri);
         }
-        // start new resolution
         $resolution = $this->startResolution($referenceUri);
 
-        // if reference is a child of any inline scope throughout the stack
-        // resolve inline
         if (!$value = $this->resolveInline($referenceUri, $reference)) {
-            // else resolve externally
             $value = $this->resolveExternal($referenceUri, $reference);
         }
 
-        // complete resolution
         $this->completeResolution($referenceUri, $value);
 
-        // return resolution
         return $resolution;
     }
 
@@ -202,7 +193,6 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         UriInterface $referenceUri,
         Value\ReferenceValue $reference
     ) {
-        // pull relevant scope map and pointer from stack
         $scopeMap = $pointer = null;
         foreach (array_reverse($this->scopeMapStack()) as $scopeMap) {
             $pointer = $scopeMap->pointerByUri($referenceUri);
@@ -210,19 +200,14 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
                 break;
             }
         }
-
         if (null === $pointer) {
             return null;
         }
 
-        // push the relevant scope map onto the stack
         $this->pushScopeMap($scopeMap);
-        // visit the value
         $value = $scopeMap->value()->accept($this);
-        // pop the scope map stack
         $this->popScopeMap();
 
-        // resolve pointer
         $value = $this->pointerResolver()->resolve($pointer, $value);
         if (null === $value) {
             throw new Exception\UndefinedReferenceException(

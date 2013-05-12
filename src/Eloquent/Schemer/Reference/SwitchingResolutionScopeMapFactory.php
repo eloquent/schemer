@@ -11,6 +11,7 @@
 
 namespace Eloquent\Schemer\Reference;
 
+use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Pointer\PointerFactoryInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
@@ -29,12 +30,14 @@ class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisi
      * @param UriFactoryInterface|null     $uriFactory
      * @param UriResolverInterface|null    $uriResolver
      * @param PointerFactoryInterface|null $pointerFactory
+     * @param Comparator|null              $comparator
      */
     public function __construct(
         $propertyName = null,
         UriFactoryInterface $uriFactory = null,
         UriResolverInterface $uriResolver = null,
-        PointerFactoryInterface $pointerFactory = null
+        PointerFactoryInterface $pointerFactory = null,
+        Comparator $comparator = null
     ) {
         if (null === $propertyName) {
             $propertyName = 'id';
@@ -48,11 +51,15 @@ class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisi
         if (null === $pointerFactory) {
             $pointerFactory = new PointerFactory;
         }
+        if (null === $comparator) {
+            $comparator = new Comparator;
+        }
 
         $this->propertyName = $propertyName;
         $this->uriFactory = $uriFactory;
         $this->uriResolver = $uriResolver;
         $this->pointerFactory = $pointerFactory;
+        $this->comparator = $comparator;
 
         $this->clear();
     }
@@ -87,6 +94,14 @@ class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisi
     public function pointerFactory()
     {
         return $this->pointerFactory;
+    }
+
+    /**
+     * @return Comparator
+     */
+    public function comparator()
+    {
+        return $this->comparator;
     }
 
     /**
@@ -228,6 +243,15 @@ class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisi
      */
     protected function addMapping(PointerInterface $pointer, UriInterface $uri)
     {
+        foreach ($this->map as $index => $tuple) {
+            list($existingPointer) = $tuple;
+            if ($this->comparator->equals($existingPointer, $pointer)) {
+                $this->map[$index] = array($pointer, $uri);
+
+                return;
+            }
+        }
+
         $this->map[] = array($pointer, $uri);
     }
 
@@ -243,6 +267,7 @@ class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisi
     private $uriFactory;
     private $uriResolver;
     private $pointerFactory;
+    private $comparator;
 
     private $baseUriStack;
     private $pointerStack;

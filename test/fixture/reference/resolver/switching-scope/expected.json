@@ -1,0 +1,16 @@
+{
+    "id": "http://my.site/myschema#",
+    "definitions": {
+        "schema1": {
+            "id": "schema1",
+            "type": "integer"
+        },
+        "schema2": {
+            "type": "array",
+            "items": {
+                "id": "schema1",
+                "type": "integer"
+            }
+        }
+    }
+}

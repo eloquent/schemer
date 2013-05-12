@@ -1,0 +1,10 @@
+{
+    "id": "http://some.site/schema#",
+    "not": { "$ref": "#inner" },
+    "definitions": {
+        "schema1": {
+            "id": "#inner",
+            "type": "boolean"
+        }
+    }
+}

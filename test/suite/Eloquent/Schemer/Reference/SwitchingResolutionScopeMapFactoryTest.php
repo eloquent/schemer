@@ -77,7 +77,7 @@ class SwitchingResolutionScopeMapFactoryTest extends PHPUnit_Framework_TestCase
     {
         $path = sprintf('%s/%s', $this->fixturePath, $testName);
         $fixture = $this->reader->readPath($path);
-        $expected = get_object_vars($fixture->expected->value());
+        $expected = $fixture->expected->value();
         $map = $this->factory->create(
             $this->uriFactory->create('#'),
             $fixture->document
@@ -85,7 +85,7 @@ class SwitchingResolutionScopeMapFactoryTest extends PHPUnit_Framework_TestCase
         $actual = array();
         foreach ($map->map() as $tuple) {
             list($pointer, $uri) = $tuple;
-            $actual[sprintf('#%s', $pointer->string())] = $uri->toString();
+            $actual[] = array($pointer->string(), $uri->toString());
         }
 
         $this->assertEquals($expected, $actual);
