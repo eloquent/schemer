@@ -245,13 +245,11 @@ class ScopeMappedReferenceResolver extends Value\Transform\AbstractValueTransfor
         UriInterface $referenceUri,
         Value\ReferenceValue $reference
     ) {
-        // read external value
-        $schemeSpecificUri = $this->uriFactory()->create(
-            $referenceUri->toString()
-        );
         try {
             $value = $this->reader()->read(
-                $schemeSpecificUri,
+                $this->uriFactory()->create(
+                    $referenceUri->toString()
+                ),
                 $reference->mimeType()
             );
         } catch (ReadException $e) {
@@ -262,25 +260,21 @@ class ScopeMappedReferenceResolver extends Value\Transform\AbstractValueTransfor
             );
         }
 
-        // create its scope map and push onto stack
         $this->pushScopeMap(
             $this->scopeMapper()->create($referenceUri, $value)
         );
-        // visit the value
         $value = $value->accept($this);
-        // pop the scope map stack
         $this->popScopeMap();
 
-        // check for fragment pointer and resolve
-        if (
-            null !== $referenceUri->getFragment() &&
-            '/' === substr($referenceUri->getFragment(), 0, 1)
-        ) {
-            $pointer = $this->pointerFactory()->create(
-                $referenceUri->getFragment()
+        $referencePointer = $this->pointerFactory()->createFromUri(
+            $referenceUri
+        );
+        if ($referencePointer->hasAtoms()) {
+            $value = $this->pointerResolver()->resolve(
+                $referencePointer,
+                $value
             );
 
-            $value = $this->pointerResolver()->resolve($pointer, $value);
             if (null === $value) {
                 throw new Exception\UndefinedReferenceException(
                     $reference,

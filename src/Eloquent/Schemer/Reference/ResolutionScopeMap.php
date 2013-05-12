@@ -152,13 +152,9 @@ class ResolutionScopeMap
         $uri->normalize();
         $map = array(array($uri->toString(), array()));
 
-        if (
-            null !== $uri->getFragment() &&
-            '/' === substr($uri->getFragment(), 0, 1)
-        ) {
+        $fragmentPointer = $this->pointerFactory()->createFromUri($uri);
+        if ($fragmentPointer->hasAtoms()) {
             $atoms = array();
-            $fragmentPointer = $this->pointerFactory()
-                ->create($uri->getFragment());
             $fragmentlessUri = clone $uri;
             $fragmentlessUri->setFragment(null);
 

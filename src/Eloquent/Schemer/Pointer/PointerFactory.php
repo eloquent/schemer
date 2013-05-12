@@ -11,6 +11,8 @@
 
 namespace Eloquent\Schemer\Pointer;
 
+use Zend\Uri\UriInterface;
+
 class PointerFactory implements PointerFactoryInterface
 {
     /**
@@ -25,6 +27,21 @@ class PointerFactory implements PointerFactoryInterface
         }
 
         return new Pointer($this->parseAtoms($pointer));
+    }
+
+    /**
+     * @param UriInterface $uri
+     *
+     * @return PointerInterface
+     */
+    public function createFromUri(UriInterface $uri)
+    {
+        $pointer = $uri->getFragment();
+        if (null === $pointer || '/' !== substr($pointer, 0, 1)) {
+            return new Pointer;
+        }
+
+        return $this->create($pointer);
     }
 
     /**

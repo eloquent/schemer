@@ -11,6 +11,8 @@
 
 namespace Eloquent\Schemer\Pointer;
 
+use Zend\Uri\UriInterface;
+
 interface PointerFactoryInterface
 {
     /**
@@ -19,4 +21,11 @@ interface PointerFactoryInterface
      * @return PointerInterface
      */
     public function create($pointer = null);
+
+    /**
+     * @param UriInterface $uri
+     *
+     * @return PointerInterface
+     */
+    public function createFromUri(UriInterface $uri);
 }
