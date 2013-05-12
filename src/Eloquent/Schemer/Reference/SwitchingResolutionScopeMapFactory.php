@@ -144,7 +144,7 @@ class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisi
         foreach ($value as $property => $subValue) {
             if ($this->propertyName() === $property) {
                 if (!$subValue instanceof Value\StringValue) {
-                    throw new RuntimeException('Invalid resolution scope.');
+                    continue;
                 }
 
                 $this->pushBaseUriReference(

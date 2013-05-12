@@ -103,6 +103,21 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
         $this->assertSame('splat', $value->a->foo->bar->foo->doom->value());
     }
 
+    public function testResolveResolvableMetaSchema()
+    {
+        $path = sprintf(
+            '%s/recursive/resolvable-meta-schema.json',
+            $this->fixturePath
+        );
+        $resolver = $this->factory->create($this->pathUriFixture($path));
+        $value = $resolver->transform($this->reader->readPath($path));
+
+        $this->assertSame(
+            'Core schema meta-schema',
+            $value->properties->allOf->items->description->value()
+        );
+    }
+
     public function testResolveResolvableRecursiveFucked()
     {
         $path = sprintf(
