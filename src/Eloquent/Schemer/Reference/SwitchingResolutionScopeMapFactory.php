@@ -21,19 +21,24 @@ use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Value;
 use Zend\Uri\UriInterface;
 
-class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implements
-    ResolutionScopeMapperInterface
+class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisitor implements
+    ResolutionScopeMapFactoryInterface
 {
     /**
+     * @param string|null                  $propertyName
      * @param UriFactoryInterface|null     $uriFactory
      * @param UriResolverInterface|null    $uriResolver
      * @param PointerFactoryInterface|null $pointerFactory
      */
     public function __construct(
+        $propertyName = null,
         UriFactoryInterface $uriFactory = null,
         UriResolverInterface $uriResolver = null,
         PointerFactoryInterface $pointerFactory = null
     ) {
+        if (null === $propertyName) {
+            $propertyName = 'id';
+        }
         if (null === $uriFactory) {
             $uriFactory = new UriFactory;
         }
@@ -44,11 +49,20 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
             $pointerFactory = new PointerFactory;
         }
 
+        $this->propertyName = $propertyName;
         $this->uriFactory = $uriFactory;
         $this->uriResolver = $uriResolver;
         $this->pointerFactory = $pointerFactory;
 
         $this->clear();
+    }
+
+    /**
+     * @return string
+     */
+    public function propertyName()
+    {
+        return $this->propertyName;
     }
 
     /**
@@ -113,7 +127,7 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
     public function visitObjectValue(Value\ObjectValue $value)
     {
         foreach ($value as $property => $subValue) {
-            if ('id' === $property) {
+            if ($this->propertyName() === $property) {
                 if (!$subValue instanceof Value\StringValue) {
                     throw new RuntimeException('Invalid resolution scope.');
                 }
@@ -225,6 +239,7 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
         return $this->map;
     }
 
+    private $propertyName;
     private $uriFactory;
     private $uriResolver;
     private $pointerFactory;

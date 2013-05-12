@@ -13,15 +13,15 @@ namespace Eloquent\Schemer\Reference;
 
 use Zend\Uri\UriInterface;
 
-class ScopeMappedReferenceResolverFactory implements ReferenceResolverFactoryInterface
+class FixedScopeReferenceResolverFactory implements ReferenceResolverFactoryInterface
 {
     /**
      * @param UriInterface $baseUri
      *
-     * @return ScopeMappedReferenceResolver
+     * @return ReferenceResolver
      */
     public function create(UriInterface $baseUri)
     {
-        return new ScopeMappedReferenceResolver($baseUri);
+        return new ReferenceResolver($baseUri);
     }
 }

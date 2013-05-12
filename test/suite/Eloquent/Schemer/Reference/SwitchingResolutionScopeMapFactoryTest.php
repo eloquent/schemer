@@ -20,12 +20,12 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Zend\Uri\File as FileUri;
 
-class ResolutionScopeMapperTest extends PHPUnit_Framework_TestCase
+class SwitchingResolutionScopeMapFactoryTest extends PHPUnit_Framework_TestCase
 {
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
         $this->fixturePath = sprintf(
-            '%s/../../../../fixture/reference/scope-mapper',
+            '%s/../../../../fixture/reference/switching-scope-map',
             __DIR__
         );
 
@@ -36,7 +36,7 @@ class ResolutionScopeMapperTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->mapper = new ResolutionScopeMapper;
+        $this->factory = new SwitchingResolutionScopeMapFactory;
         $this->reader = new Reader;
         $this->pointerFactory = new PointerFactory;
         $this->uriFactory = new UriFactory;
@@ -53,7 +53,7 @@ class ResolutionScopeMapperTest extends PHPUnit_Framework_TestCase
         return $uri;
     }
 
-    public function mapperData()
+    public function factoryData()
     {
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(
@@ -71,14 +71,14 @@ class ResolutionScopeMapperTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider mapperData
+     * @dataProvider factoryData
      */
-    public function testMapper($testName)
+    public function testFactory($testName)
     {
         $path = sprintf('%s/%s', $this->fixturePath, $testName);
         $fixture = $this->reader->readPath($path);
         $expected = get_object_vars($fixture->expected->value());
-        $map = $this->mapper->create(
+        $map = $this->factory->create(
             $this->uriFactory->create('#'),
             $fixture->document
         );

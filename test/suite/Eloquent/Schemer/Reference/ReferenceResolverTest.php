@@ -32,7 +32,7 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->factory = new ReferenceResolverFactory;
+        $this->factory = new SwitchingScopeReferenceResolverFactory;
         $this->reader = new Reader;
         $this->comparator = new Comparator;
     }
