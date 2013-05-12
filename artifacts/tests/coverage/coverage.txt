@@ -1,12 +1,12 @@
 
 
 Code Coverage Report 
-  2013-05-12 10:25:25
+  2013-05-12 12:10:22
 
  Summary: 
   Classes: 4.90% (5/102)
-  Methods: 22.22% (134/603)
-  Lines:   46.22% (1453/3144)
+  Methods: 20.10% (118/587)
+  Lines:   44.70% (1379/3085)
 
 \Eloquent\Schemer\Constraint\Factory::MetaSchemaFactory
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (267/267)
@@ -21,13 +21,11 @@ Code Coverage Report
 \Eloquent\Schemer\Reader::Reader
   Methods:  87.50% ( 7/ 8)   Lines:  86.11% ( 31/ 36)
 \Eloquent\Schemer\Reference::ReferenceResolver
-  Methods:  95.24% (20/21)   Lines:  89.42% ( 93/104)
+  Methods: 100.00% (24/24)   Lines:  87.68% (121/138)
 \Eloquent\Schemer\Reference::ResolutionScopeMap
-  Methods:  66.67% ( 6/ 9)   Lines:  83.05% ( 49/ 59)
-\Eloquent\Schemer\Reference::ResolutionScopeMapper
-  Methods:  88.24% (15/17)   Lines:  81.58% ( 62/ 76)
-\Eloquent\Schemer\Reference::ScopeMappedReferenceResolver
-  Methods: 100.00% (24/24)   Lines:  89.13% (123/138)
+  Methods:  77.78% ( 7/ 9)   Lines:  78.57% ( 55/ 70)
+\Eloquent\Schemer\Reference::SwitchingResolutionScopeMapFactory
+  Methods:  84.21% (16/19)   Lines:  83.70% ( 77/ 92)
 \Eloquent\Schemer\Uri::HttpUri
   Methods: 100.00% ( 9/ 9)   Lines:  90.91% ( 30/ 33)
 \Eloquent\Schemer\Uri::Uri
