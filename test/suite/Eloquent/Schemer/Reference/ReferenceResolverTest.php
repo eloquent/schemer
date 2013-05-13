@@ -20,6 +20,10 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
 {
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
+        $this->schemataPath = sprintf(
+            '%s/../../../../../resources/schemata',
+            __DIR__
+        );
         $this->fixturePath = sprintf(
             '%s/../../../../fixture/reference/resolver',
             __DIR__
@@ -32,9 +36,19 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
+        $this->nestingLevel = ini_get('xdebug.max_nesting_level');
+        ini_set('xdebug.max_nesting_level', 150);
+
         $this->factory = new SwitchingScopeReferenceResolverFactory;
         $this->reader = new Reader;
         $this->comparator = new Comparator;
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        ini_set('xdebug.max_nesting_level', $this->nestingLevel);
     }
 
     protected function pathUriFixture($path)
@@ -88,6 +102,7 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
         return array(
             'resolvable-inline.json' => array('resolvable-inline.json'),
             'resolvable-external.json' => array('resolvable-external.json'),
+            'resolvable-external-switching-scope.json' => array('resolvable-external-switching-scope.json'),
         );
     }
 
@@ -105,10 +120,19 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
 
     public function testResolveResolvableMetaSchema()
     {
-        $path = sprintf(
-            '%s/recursive/resolvable-meta-schema.json',
-            $this->fixturePath
+        $path = sprintf('%s/meta-schema.json', $this->schemataPath);
+        $resolver = $this->factory->create($this->pathUriFixture($path));
+        $value = $resolver->transform($this->reader->readPath($path));
+
+        $this->assertSame(
+            'Schemer meta-schema',
+            $value->properties->allOf->items->title->value()
         );
+    }
+
+    public function testResolveResolvableJsonSchemaMetaSchema()
+    {
+        $path = sprintf('%s/json-schema-meta-schema.json', $this->schemataPath);
         $resolver = $this->factory->create($this->pathUriFixture($path));
         $value = $resolver->transform($this->reader->readPath($path));
 
