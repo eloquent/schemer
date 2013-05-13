@@ -1,0 +1,38 @@
+{
+    "schema": { "$ref": "../../../../resources/schemata/json-schema-meta-schema.json" },
+
+    "tests": {
+        "valid - empty schema": {
+            "value": {},
+            "expected": []
+        },
+
+        "valid - JSON schema meta schema": {
+            "value": { "$ref": "../../../../resources/schemata/json-schema-meta-schema.json" },
+            "expected": []
+        },
+
+        "invalid - Schemer meta schema": {
+            "value": { "$ref": "../../../../resources/schemata/meta-schema.json" },
+            "expected": [
+                "Validation failed for value at \"/definitions/schemaArray/items\": The value did not match any of the defined schemas."
+            ]
+        },
+
+        "invalid - not object": {
+            "value": null,
+            "expected": [
+                "Validation failed for value at document root: The value must be of type \"object\"."
+            ]
+        },
+
+        "invalid - unknown type": {
+            "value": {
+                "type": "date-time"
+            },
+            "expected": [
+                "Validation failed for value at \"/type\": The value did not match any of the defined schemas."
+            ]
+        }
+    }
+}

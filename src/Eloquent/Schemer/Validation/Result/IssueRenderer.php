@@ -13,21 +13,27 @@ namespace Eloquent\Schemer\Validation\Result;
 
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Renderer\ConstraintFailureRenderer;
-use Icecave\Repr\Repr;
+use Icecave\Repr\Generator;
 
 class IssueRenderer implements IssueRendererInterface
 {
     /**
      * @param ConstraintVisitorInterface|null $constraintRenderer
+     * @param Generator|null                  $generator
      */
     public function __construct(
-        ConstraintVisitorInterface $constraintRenderer = null
+        ConstraintVisitorInterface $constraintRenderer = null,
+        Generator $generator = null
     ) {
+        if (null === $generator) {
+            $generator = new Generator(255);
+        }
         if (null === $constraintRenderer) {
-            $constraintRenderer = new ConstraintFailureRenderer;
+            $constraintRenderer = new ConstraintFailureRenderer($generator);
         }
 
         $this->constraintRenderer = $constraintRenderer;
+        $this->generator = $generator;
     }
 
     /**
@@ -36,6 +42,14 @@ class IssueRenderer implements IssueRendererInterface
     public function constraintRenderer()
     {
         return $this->constraintRenderer;
+    }
+
+    /**
+     * @return Generator
+     */
+    public function generator()
+    {
+        return $this->generator;
     }
 
     /**
@@ -48,7 +62,7 @@ class IssueRenderer implements IssueRendererInterface
         if ($issue->pointer()->hasAtoms()) {
             return sprintf(
                 "Validation failed for value at %s: %s",
-                Repr::repr($issue->pointer()->string()),
+                $this->generator()->generate($issue->pointer()->string()),
                 $issue->constraint()->accept($this->constraintRenderer())
             );
         }
@@ -74,4 +88,5 @@ class IssueRenderer implements IssueRendererInterface
     }
 
     private $constraintRenderer;
+    private $generator;
 }

@@ -14,11 +14,13 @@ namespace Eloquent\Schemer\Validation;
 use Eloquent\Schemer\Constraint\Factory\MetaSchemaFactory;
 use Eloquent\Schemer\Constraint\Factory\SchemaFactory;
 use Eloquent\Schemer\Reader\Reader;
+use Eloquent\Schemer\Reference\SwitchingScopeReferenceResolverFactory;
 use Eloquent\Schemer\Validation\Result\IssueRenderer;
 use FilesystemIterator;
 use PHPUnit_Framework_TestCase;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Zend\Uri\File as FileUri;
 
 class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
 {
@@ -39,12 +41,24 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
 
         $this->validator = new ConstraintValidator;
 
+        $this->referenceResolverFactory = new SwitchingScopeReferenceResolverFactory;
         $this->metaSchemaFactory = new MetaSchemaFactory;
         $this->schemaFactory = new SchemaFactory(
             null,
             $this->metaSchemaFactory->create()
         );
         $this->renderer = new IssueRenderer;
+    }
+
+    protected function pathUriFixture($path)
+    {
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $uri = FileUri::fromWindowsPath($path);
+        } else {
+            $uri = FileUri::fromUnixPath($path);
+        }
+
+        return $uri;
     }
 
     public function validateSchemaData()
@@ -77,9 +91,9 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
      */
     public function testValidateSchema($constraint, $category, $testName)
     {
-        $fixture = $this->reader->readPath(
-            sprintf('%s/%s/%s', $this->fixturePath, $constraint, $category)
-        );
+        $path = sprintf('%s/%s/%s', $this->fixturePath, $constraint, $category);
+        $resolver = $this->referenceResolverFactory->create($this->pathUriFixture($path));
+        $fixture = $resolver->transform($this->reader->readPath($path));
         $test = $fixture->tests->$testName;
         $result = $this->validator->validate(
             $this->schemaFactory->create($fixture->schema),

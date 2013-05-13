@@ -36,19 +36,9 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->nestingLevel = ini_get('xdebug.max_nesting_level');
-        ini_set('xdebug.max_nesting_level', 150);
-
         $this->factory = new SwitchingScopeReferenceResolverFactory;
         $this->reader = new Reader;
         $this->comparator = new Comparator;
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        ini_set('xdebug.max_nesting_level', $this->nestingLevel);
     }
 
     protected function pathUriFixture($path)
