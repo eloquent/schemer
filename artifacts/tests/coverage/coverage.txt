@@ -1,12 +1,12 @@
 
 
 Code Coverage Report 
-  2013-05-13 12:01:28
+  2013-05-14 10:18:36
 
  Summary: 
   Classes: 4.90% (5/102)
-  Methods: 20.10% (118/587)
-  Lines:   44.27% (1355/3061)
+  Methods: 20.51% (121/590)
+  Lines:   44.42% (1370/3084)
 
 \Eloquent\Schemer\Constraint\Factory::MetaSchemaFactory
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (243/243)
@@ -31,6 +31,6 @@ Code Coverage Report
 \Eloquent\Schemer\Uri::Uri
   Methods: 100.00% ( 9/ 9)   Lines:  95.09% (155/163)
 \Eloquent\Schemer\Validation::ConstraintValidator
-  Methods:  94.64% (53/56)   Lines:  95.75% (451/471)
+  Methods:  94.92% (56/59)   Lines:  95.88% (466/486)
 \Eloquent\Schemer\Validation::DefaultValueTransform
   Methods: 100.00% ( 7/ 7)   Lines: 100.00% ( 43/ 43)
