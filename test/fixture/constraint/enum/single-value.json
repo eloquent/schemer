@@ -12,7 +12,7 @@
         "invalid": {
             "value": "bar",
             "expected": [
-                "Validation failed for value at document root: The value must be equal to \"foo\"."
+                "Validation failed for value at document root: The value must be equal to 'foo'."
             ]
         }
     }

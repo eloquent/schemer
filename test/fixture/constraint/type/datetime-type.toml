@@ -8,5 +8,5 @@
 [tests.invalid]
     value = "foo"
     expected = [
-        "Validation failed for value at document root: The value must be of type \"date-time\"."
+        "Validation failed for value at document root: The value must be of type 'date-time'."
     ]

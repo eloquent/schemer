@@ -22,7 +22,7 @@
         "invalid": {
             "value": "foo",
             "expected": [
-                "Validation failed for value at document root: The string must match the pattern \"ba[rz]\"."
+                "Validation failed for value at document root: The string must match the pattern 'ba[rz]'."
             ]
         }
     }

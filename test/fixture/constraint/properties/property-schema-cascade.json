@@ -64,12 +64,12 @@
                 "pang": "pung"
             },
             "expected": [
-                "Validation failed for value at \"/foo\": The value must be of type \"string\".",
-                "Validation failed for value at \"/bar/qux\": The value must be of type \"string\".",
-                "Validation failed for value at \"/bar/doom\": The value must be of type \"null\".",
-                "Validation failed for value at \"/baz/doom\": The value must be of type \"null\".",
-                "Validation failed for value at \"/pong\": The value must be of type \"integer\".",
-                "Validation failed for value at \"/pang\": The value must be of type \"integer\"."
+                "Validation failed for value at '/foo': The value must be of type 'string'.",
+                "Validation failed for value at '/bar/qux': The value must be of type 'string'.",
+                "Validation failed for value at '/bar/doom': The value must be of type 'null'.",
+                "Validation failed for value at '/baz/doom': The value must be of type 'null'.",
+                "Validation failed for value at '/pong': The value must be of type 'integer'.",
+                "Validation failed for value at '/pang': The value must be of type 'integer'."
             ]
         }
     }

@@ -22,7 +22,7 @@
         "invalid": {
             "value": "qux",
             "expected": [
-                "Validation failed for value at document root: The value must be equal to one of the following: \"foo\", \"bar\", \"baz\"."
+                "Validation failed for value at document root: The value must be equal to one of the following: 'foo', 'bar', 'baz'."
             ]
         }
     }

@@ -20,7 +20,7 @@
         "invalid - not object": {
             "value": null,
             "expected": [
-                "Validation failed for value at document root: The value must be of type \"object\"."
+                "Validation failed for value at document root: The value must be of type 'object'."
             ]
         },
 
@@ -29,7 +29,7 @@
                 "type": "foo"
             },
             "expected": [
-                "Validation failed for value at \"/type\": The value did not match any of the defined schemas."
+                "Validation failed for value at '/type': The value did not match any of the defined schemas."
             ]
         }
     }

@@ -17,8 +17,8 @@
         "invalid": {
             "value": {"foo": "qux"},
             "expected": [
-                "Validation failed for value at document root: The property \"bar\" is required.",
-                "Validation failed for value at document root: The property \"baz\" is required."
+                "Validation failed for value at document root: The property 'bar' is required.",
+                "Validation failed for value at document root: The property 'baz' is required."
             ]
         }
     }

@@ -12,7 +12,6 @@
 namespace Eloquent\Schemer\Loader\Exception;
 
 use Exception;
-use Icecave\Repr\Repr;
 use RuntimeException;
 use Zend\Uri\UriInterface;
 
@@ -27,7 +26,7 @@ final class LoadException extends RuntimeException implements LoadExceptionInter
         $this->uri = $uri;
 
         parent::__construct(
-            sprintf("Unable to read from %s.", Repr::repr($uri)),
+            sprintf("Unable to read from %s.", var_export($uri, true)),
             0,
             $previous
         );

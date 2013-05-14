@@ -20,31 +20,10 @@ use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 use Eloquent\Schemer\Value\ValueType;
-use Icecave\Repr\Generator;
 
 class ConstraintFailureRenderer implements ConstraintVisitorInterface
 {
     const UNMATCHED_SCHEMA = 'The value did not match the defined schema.';
-
-    /**
-     * @param Generator|null $generator
-     */
-    public function __construct(Generator $generator = null)
-    {
-        if (null === $generator) {
-            $generator = new Generator(255);
-        }
-
-        $this->generator = $generator;
-    }
-
-    /**
-     * @return Generator
-     */
-    public function generator()
-    {
-        return $this->generator;
-    }
 
     /**
      * @param Schema $schema
@@ -67,7 +46,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         $enumValues = array();
         foreach ($constraint->values() as $enumValue) {
-            $enumValues[] = $this->generator()->generate($enumValue->value());
+            $enumValues[] = var_export($enumValue->value(), true);
         }
 
         if (count($enumValues) < 2) {
@@ -91,7 +70,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     public function visitTypeConstraint(Generic\TypeConstraint $constraint)
     {
         $valueTypes = array_map(function (ValueType $valueType) {
-            return $this->generator()->generate($valueType->value());
+            return var_export($valueType->value(), true);
         }, $constraint->valueTypes());
 
         if (count($valueTypes) < 2) {
@@ -158,7 +137,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The object must not have more than %s properties.',
-            $this->generator()->generate($constraint->maximum())
+            var_export($constraint->maximum(), true)
         );
     }
 
@@ -171,7 +150,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The object must not have less than %s properties.',
-            $this->generator()->generate($constraint->minimum())
+            var_export($constraint->minimum(), true)
         );
     }
 
@@ -184,7 +163,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The property %s is required.',
-            $this->generator()->generate($constraint->property())
+            var_export($constraint->property(), true)
         );
     }
 
@@ -249,7 +228,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The array must not have more than %s items.',
-            $this->generator()->generate($constraint->maximum())
+            var_export($constraint->maximum(), true)
         );
     }
 
@@ -262,7 +241,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The array must not have less than %s items.',
-            $this->generator()->generate($constraint->minimum())
+            var_export($constraint->minimum(), true)
         );
     }
 
@@ -287,7 +266,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The string must not have more than %s characters.',
-            $this->generator()->generate($constraint->maximum())
+            var_export($constraint->maximum(), true)
         );
     }
 
@@ -300,7 +279,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The string must not have less than %s characters.',
-            $this->generator()->generate($constraint->minimum())
+            var_export($constraint->minimum(), true)
         );
     }
 
@@ -313,7 +292,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The string must match the pattern %s.',
-            $this->generator()->generate($constraint->pattern())
+            var_export($constraint->pattern(), true)
         );
     }
 
@@ -388,7 +367,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The number must be a multiple of %s.',
-            $this->generator()->generate($constraint->quantity())
+            var_export($constraint->quantity(), true)
         );
     }
 
@@ -401,7 +380,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The number must not be more than %s.',
-            $this->generator()->generate($constraint->maximum())
+            var_export($constraint->maximum(), true)
         );
     }
 
@@ -414,7 +393,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The number must not be less than %s.',
-            $this->generator()->generate($constraint->minimum())
+            var_export($constraint->minimum(), true)
         );
     }
 
@@ -429,7 +408,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The date-time value must not be after %s.',
-            $this->generator()->generate($constraint->maximum()->format('c'))
+            var_export($constraint->maximum()->format('c'), true)
         );
     }
 
@@ -442,9 +421,7 @@ class ConstraintFailureRenderer implements ConstraintVisitorInterface
     {
         return sprintf(
             'The date-time value must not be before %s.',
-            $this->generator()->generate($constraint->minimum()->format('c'))
+            var_export($constraint->minimum()->format('c'), true)
         );
     }
-
-    private $generator;
 }

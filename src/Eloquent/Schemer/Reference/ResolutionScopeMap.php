@@ -16,7 +16,6 @@ use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Pointer\PointerFactoryInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
 use Eloquent\Schemer\Value;
-use Icecave\Repr\Repr;
 use InvalidArgumentException;
 use LogicException;
 use Zend\Uri\UriInterface;
@@ -142,7 +141,7 @@ class ResolutionScopeMap
                 throw new InvalidArgumentException(
                     sprintf(
                         'Mapping already exists at pointer %s.',
-                        Repr::repr($pointer->string())
+                        var_export($pointer->string(), true)
                     )
                 );
             }

@@ -24,7 +24,7 @@
         "invalid": {
             "value": {"foo": "baz", "bar": null},
             "expected": [
-                "Validation failed for value at document root: The property \"baz\" is required."
+                "Validation failed for value at document root: The property 'baz' is required."
             ]
         }
     }

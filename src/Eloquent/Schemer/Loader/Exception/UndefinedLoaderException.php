@@ -12,7 +12,6 @@
 namespace Eloquent\Schemer\Loader\Exception;
 
 use Exception;
-use Icecave\Repr\Repr;
 use LogicException;
 
 final class UndefinedLoaderException extends LogicException
@@ -26,7 +25,10 @@ final class UndefinedLoaderException extends LogicException
         $this->scheme = $scheme;
 
         parent::__construct(
-            sprintf("No loader defined for scheme %s.", Repr::repr($scheme)),
+            sprintf(
+                "No loader defined for scheme %s.",
+                var_export($scheme, true)
+            ),
             0,
             $previous
         );
