@@ -14,7 +14,6 @@ namespace Eloquent\Schemer\Value\Factory;
 use DateTime;
 use Eloquent\Schemer\Uri\Uri;
 use Eloquent\Schemer\Value;
-use Icecave\Repr\Repr;
 use InvalidArgumentException;
 use stdClass;
 
@@ -50,7 +49,10 @@ class ValueFactory implements ValueFactoryInterface
         }
 
         throw new InvalidArgumentException(
-            sprintf("Unsupported value type %s.", Repr::repr($variableType))
+            sprintf(
+                "Unsupported value type %s.",
+                var_export($variableType, true)
+            )
         );
     }
 

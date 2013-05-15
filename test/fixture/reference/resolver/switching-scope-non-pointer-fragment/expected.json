@@ -1,0 +1,13 @@
+{
+    "id": "http://some.site/schema#",
+    "not": {
+        "id": "#inner",
+        "type": "boolean"
+    },
+    "definitions": {
+        "schema1": {
+            "id": "#inner",
+            "type": "boolean"
+        }
+    }
+}

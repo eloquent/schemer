@@ -15,6 +15,8 @@ use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Pointer\PointerFactoryInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
+use Eloquent\Schemer\Value;
+use InvalidArgumentException;
 use LogicException;
 use Zend\Uri\UriInterface;
 
@@ -22,11 +24,13 @@ class ResolutionScopeMap
 {
     /**
      * @param array<tuple<PointerInterface,UriInterface>> $map
+     * @param Value\ValueInterface                        $value
      * @param PointerFactoryInterface|null                $pointerFactory
      * @param Comparator|null                             $comparator
      */
     public function __construct(
         array $map,
+        Value\ValueInterface $value,
         PointerFactoryInterface $pointerFactory = null,
         Comparator $comparator = null
     ) {
@@ -37,13 +41,16 @@ class ResolutionScopeMap
             $comparator = new Comparator;
         }
 
+        $this->comparator = $comparator;
+
+        $this->map = array();
         foreach ($map as $tuple) {
             list($pointer, $uri) = $tuple;
             $this->add($pointer, $uri);
         }
 
+        $this->value = $value;
         $this->pointerFactory = $pointerFactory;
-        $this->comparator = $comparator;
     }
 
     /**
@@ -52,6 +59,14 @@ class ResolutionScopeMap
     public function map()
     {
         return $this->map;
+    }
+
+    /**
+     * @return Value\ValueInterface
+     */
+    public function value()
+    {
+        return $this->value;
     }
 
     /**
@@ -120,6 +135,18 @@ class ResolutionScopeMap
      */
     protected function add(PointerInterface $pointer, UriInterface $uri)
     {
+        foreach ($this->map() as $tuple) {
+            list($existingPointer) = $tuple;
+            if ($this->comparator()->equals($existingPointer, $pointer)) {
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'Mapping already exists at pointer %s.',
+                        var_export($pointer->string(), true)
+                    )
+                );
+            }
+        }
+
         $uri = clone $uri;
         $uri->normalize();
 
@@ -140,13 +167,9 @@ class ResolutionScopeMap
         $uri->normalize();
         $map = array(array($uri->toString(), array()));
 
-        if (
-            null !== $uri->getFragment() &&
-            '/' === substr($uri->getFragment(), 0, 1)
-        ) {
+        $fragmentPointer = $this->pointerFactory()->createFromUri($uri);
+        if ($fragmentPointer->hasAtoms()) {
             $atoms = array();
-            $fragmentPointer = $this->pointerFactory()
-                ->create($uri->getFragment());
             $fragmentlessUri = clone $uri;
             $fragmentlessUri->setFragment(null);
 
@@ -166,6 +189,7 @@ class ResolutionScopeMap
     }
 
     private $map;
+    private $value;
     private $pointerFactory;
     private $comparator;
 }

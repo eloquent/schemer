@@ -12,7 +12,6 @@
 namespace Eloquent\Schemer\Value\Exception;
 
 use Exception;
-use Icecave\Repr\Repr;
 
 final class UndefinedPropertyException extends Exception
 {
@@ -25,7 +24,7 @@ final class UndefinedPropertyException extends Exception
         $this->property = $property;
 
         parent::__construct(
-            sprintf("Undefined property: %s.", Repr::repr($property)),
+            sprintf("Undefined property: %s.", var_export($property, true)),
             0,
             $previous
         );

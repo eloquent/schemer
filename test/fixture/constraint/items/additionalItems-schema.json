@@ -24,8 +24,8 @@
         "invalid": {
             "value": ["foo", 111, "bar", null],
             "expected": [
-                "Validation failed for value at \"/2\": The value must be of type \"integer\".",
-                "Validation failed for value at \"/3\": The value must be of type \"integer\"."
+                "Validation failed for value at '/2': The value must be of type 'integer'.",
+                "Validation failed for value at '/3': The value must be of type 'integer'."
             ]
         }
     }

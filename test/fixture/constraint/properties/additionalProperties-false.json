@@ -16,8 +16,8 @@
         "invalid": {
             "value": {"foo": "baz", "bar": "qux", "doom": "splat", "ping": "pong"},
             "expected": [
-                "Validation failed for value at \"/doom\": Unexpected property.",
-                "Validation failed for value at \"/ping\": Unexpected property."
+                "Validation failed for value at '/doom': Unexpected property.",
+                "Validation failed for value at '/ping': Unexpected property."
             ]
         }
     }

@@ -19,8 +19,8 @@
         "invalid": {
             "value": {"foo": "bar", "baz": 111, "qux": null, "doom": 2.22},
             "expected": [
-                "Validation failed for value at \"/qux\": The value must be of type \"integer\".",
-                "Validation failed for value at \"/doom\": The value must be of type \"integer\"."
+                "Validation failed for value at '/qux': The value must be of type 'integer'.",
+                "Validation failed for value at '/doom': The value must be of type 'integer'."
             ]
         }
     }

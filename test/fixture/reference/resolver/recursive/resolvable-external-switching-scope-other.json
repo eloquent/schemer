@@ -1,0 +1,7 @@
+{
+    "b": {
+        "id": "schemaB",
+        "bar": { "$ref": "schemaA" },
+        "doom": "splat"
+    }
+}

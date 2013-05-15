@@ -18,6 +18,6 @@
         2001-01-01T01:01:00Z
     ]
     expected = [
-        "Validation failed for value at \"/0\": The date-time value must not be before \"2001-01-01T01:01:01+00:00\".",
-        "Validation failed for value at \"/1\": The date-time value must not be before \"2001-01-01T01:01:01+00:00\"."
+        "Validation failed for value at '/0': The date-time value must not be before '2001-01-01T01:01:01+00:00'.",
+        "Validation failed for value at '/1': The date-time value must not be before '2001-01-01T01:01:01+00:00'."
     ]

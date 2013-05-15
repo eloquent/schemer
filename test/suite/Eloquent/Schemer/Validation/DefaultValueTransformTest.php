@@ -35,7 +35,7 @@ class DefaultValueTransformTest extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->schemaFactory = new SchemaFactory;
-        $this->validator = new ConstraintValidator;
+        $this->validator = new DefaultingConstraintValidator;
         $this->comparator = new Comparator;
     }
 
@@ -69,13 +69,11 @@ class DefaultValueTransformTest extends PHPUnit_Framework_TestCase
             sprintf('%s/%s', $this->fixturePath, $category)
         );
         $test = $fixture->tests->$testName;
-        $transform = new DefaultValueTransform(
-            $this->validator->validate(
-                $this->schemaFactory->create($fixture->schema),
-                $test->value
-            )
+        $actual = clone $test->value;
+        $this->validator->validateAndApplyDefaults(
+            $this->schemaFactory->create($fixture->schema),
+            $actual
         );
-        $actual = $transform->transform($test->value);
         $expected = $test->expected;
 
         $this->assertEquals($expected, $actual);

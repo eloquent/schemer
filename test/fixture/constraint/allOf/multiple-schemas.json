@@ -27,15 +27,15 @@
         "one invalid": {
             "value": {"foo": "baz", "bar": null},
             "expected": [
-                "Validation failed for value at \"/bar\": The value must be of type \"integer\"."
+                "Validation failed for value at '/bar': The value must be of type 'integer'."
             ]
         },
 
         "all invalid": {
             "value": {"foo": null, "bar": null},
             "expected": [
-                "Validation failed for value at \"/foo\": The value must be of type \"string\".",
-                "Validation failed for value at \"/bar\": The value must be of type \"integer\"."
+                "Validation failed for value at '/foo': The value must be of type 'string'.",
+                "Validation failed for value at '/bar': The value must be of type 'integer'."
             ]
         }
     }

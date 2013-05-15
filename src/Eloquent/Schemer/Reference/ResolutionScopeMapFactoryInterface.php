@@ -14,7 +14,7 @@ namespace Eloquent\Schemer\Reference;
 use Eloquent\Schemer\Value;
 use Zend\Uri\UriInterface;
 
-interface ResolutionScopeMapperInterface
+interface ResolutionScopeMapFactoryInterface
 {
     /**
      * @param UriInterface         $baseUri

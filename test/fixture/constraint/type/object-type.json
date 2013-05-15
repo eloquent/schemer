@@ -12,7 +12,7 @@
         "invalid": {
             "value": null,
             "expected": [
-                "Validation failed for value at document root: The value must be of type \"object\"."
+                "Validation failed for value at document root: The value must be of type 'object'."
             ]
         }
     }

@@ -13,7 +13,6 @@ namespace Eloquent\Schemer\Reference\Exception;
 
 use Eloquent\Schemer\Value\ReferenceValue;
 use Exception;
-use Icecave\Repr\Repr;
 
 final class UndefinedReferenceException extends Exception
 {
@@ -33,13 +32,13 @@ final class UndefinedReferenceException extends Exception
         if (null === $context) {
             $message = sprintf(
                 "Unable to resolve reference %s.",
-                Repr::repr($reference->uri()->toString())
+                var_export($reference->uri()->toString(), true)
             );
         } else {
             $message = sprintf(
                 "Unable to resolve reference %s from within context %s.",
-                Repr::repr($reference->uri()->toString()),
-                Repr::repr($context)
+                var_export($reference->uri()->toString(), true),
+                var_export($context, true)
             );
         }
 

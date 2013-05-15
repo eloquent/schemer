@@ -22,7 +22,7 @@ interface ConstraintValidatorInterface
      * @param ConcreteValueInterface $value
      * @param PointerInterface|null  $entryPoint
      *
-     * @return ValidationResult
+     * @return Result\ValidationResult
      */
     public function validate(
         ConstraintInterface $constraint,

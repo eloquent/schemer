@@ -13,7 +13,7 @@ namespace Eloquent\Schemer\Validation;
 
 use Eloquent\Schemer\Constraint\Factory\MetaSchemaFactory;
 use Eloquent\Schemer\Constraint\Factory\SchemaFactory;
-use Eloquent\Schemer\Reader\Reader;
+use Eloquent\Schemer\Reader\SwitchingScopeResolvingReader;
 use Eloquent\Schemer\Validation\Result\IssueRenderer;
 use FilesystemIterator;
 use PHPUnit_Framework_TestCase;
@@ -24,7 +24,7 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
 {
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
-        $this->reader = new Reader;
+        $this->reader = new SwitchingScopeResolvingReader;
         $this->fixturePath = sprintf(
             '%s/../../../../fixture/constraint',
             __DIR__

@@ -193,6 +193,11 @@ class ConstraintValidator implements
      */
     public function visitSchema(Schema $schema)
     {
+        if ($this->isVisited($schema)) {
+            return new Result\ValidationResult;
+        }
+        $this->recordVisited($schema);
+
         $subResult = new Result\ValidationResult;
         foreach ($schema->constraints() as $constraint) {
             $subResult = $subResult->merge($constraint->accept($this));
@@ -1042,6 +1047,7 @@ class ConstraintValidator implements
     protected function clear()
     {
         $this->contextStack = array();
+        $this->visited = array();
     }
 
     /**
@@ -1154,6 +1160,41 @@ class ConstraintValidator implements
         return sprintf('/%s/', str_replace('/', '\\/', $pattern));
     }
 
+    /**
+     * @param Schema $schema
+     */
+    protected function recordVisited(Schema $schema)
+    {
+        $this->visited[$this->generateVisitKey($schema)] = true;
+    }
+
+    /**
+     * @param Schema $schema
+     *
+     * @return boolean
+     */
+    protected function isVisited(Schema $schema)
+    {
+        return array_key_exists(
+            $this->generateVisitKey($schema),
+            $this->visited
+        );
+    }
+
+    /**
+     * @param Schema $schema
+     *
+     * @return string
+     */
+    protected function generateVisitKey(Schema $schema)
+    {
+        return sprintf(
+            '%s.%s',
+            spl_object_hash($schema),
+            spl_object_hash($this->currentValue())
+        );
+    }
+
     private $formatValidationEnabled;
     private $comparator;
     private $emailValidator;
@@ -1161,5 +1202,7 @@ class ConstraintValidator implements
     private $ipv4AddressValidator;
     private $ipv6AddressValidator;
     private $uriValidator;
+
     private $contextStack;
+    private $visited;
 }

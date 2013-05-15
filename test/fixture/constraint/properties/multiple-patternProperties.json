@@ -22,10 +22,10 @@
         "invalid": {
             "value": {"foo": 111, "bar": "doom", "baz": null, "qux": 222},
             "expected": [
-                "Validation failed for value at \"/foo\": The value must be of type \"string\".",
-                "Validation failed for value at \"/bar\": The value must be of type \"integer\".",
-                "Validation failed for value at \"/baz\": The value must be of type \"integer\".",
-                "Validation failed for value at \"/qux\": The value must be of type \"null\"."
+                "Validation failed for value at '/foo': The value must be of type 'string'.",
+                "Validation failed for value at '/bar': The value must be of type 'integer'.",
+                "Validation failed for value at '/baz': The value must be of type 'integer'.",
+                "Validation failed for value at '/qux': The value must be of type 'null'."
             ]
         }
     }

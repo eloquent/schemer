@@ -11,47 +11,43 @@
 
 namespace Eloquent\Schemer\Reader;
 
-use Eloquent\Schemer\Loader\ContentType;
 use Eloquent\Schemer\Loader\Loader;
 use Eloquent\Schemer\Loader\LoaderInterface;
 use Eloquent\Schemer\Serialization\ProtocolMap;
 use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
-use Eloquent\Schemer\Value\Factory\ValueFactory;
-use Eloquent\Schemer\Value\Factory\ValueFactoryInterface;
+use Eloquent\Schemer\Value;
 use Zend\Uri\UriInterface;
 
-class Reader implements ReaderInterface
+class Reader extends AbstractReader
 {
     /**
-     * @param LoaderInterface|null       $loader
-     * @param ProtocolMap|null           $protocolMap
-     * @param ValueFactoryInterface|null $valueFactory
-     * @param UriFactoryInterface|null   $uriFactory
+     * @param LoaderInterface|null                     $loader
+     * @param ProtocolMap|null                         $protocolMap
+     * @param Value\Factory\ValueFactoryInterface|null $valueFactory
+     * @param UriFactoryInterface|null                 $uriFactory
      */
     public function __construct(
         LoaderInterface $loader = null,
         ProtocolMap $protocolMap = null,
-        ValueFactoryInterface $valueFactory = null,
+        Value\Factory\ValueFactoryInterface $valueFactory = null,
         UriFactoryInterface $uriFactory = null
     ) {
+        parent::__construct($uriFactory);
+
         if (null === $loader) {
             $loader = new Loader;
         }
         if (null === $protocolMap) {
             $protocolMap = new ProtocolMap;
         }
-        if (null === $uriFactory) {
-            $uriFactory = new UriFactory;
-        }
         if (null === $valueFactory) {
-            $valueFactory = new ValueFactory($uriFactory);
+            $valueFactory = new Value\Factory\ValueFactory($this->uriFactory());
         }
 
         $this->loader = $loader;
         $this->protocolMap = $protocolMap;
         $this->valueFactory = $valueFactory;
-        $this->uriFactory = $uriFactory;
     }
 
     /**
@@ -71,7 +67,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @return ValueFactoryInterface
+     * @return Value\Factory\ValueFactoryInterface
      */
     public function valueFactory()
     {
@@ -79,18 +75,10 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @return UriFactoryInterface
-     */
-    public function uriFactory()
-    {
-        return $this->uriFactory;
-    }
-
-    /**
      * @param \Zend\Uri\UriInterface|string $uri
      * @param string|null                   $mimeType
      *
-     * @return \Eloquent\Schemer\Value\ValueInterface
+     * @return Value\ValueInterface
      */
     public function read($uri, $mimeType = null)
     {
@@ -108,34 +96,7 @@ class Reader implements ReaderInterface
         );
     }
 
-    /**
-     * @param string      $path
-     * @param string|null $mimeType
-     *
-     * @return \Eloquent\Schemer\Value\ValueInterface
-     */
-    public function readPath($path, $mimeType = null)
-    {
-        return $this->read($this->uriFactory()->fromPath($path), $mimeType);
-    }
-
-    /**
-     * @param string      $data
-     * @param string|null $mimeType
-     *
-     * @return \Eloquent\Schemer\Value\ValueInterface
-     */
-    public function readString($data, $mimeType = null)
-    {
-        if (null === $mimeType) {
-            $mimeType = ContentType::JSON()->primaryMimeType();
-        }
-
-        return $this->read($this->uriFactory()->fromData($data, $mimeType), $mimeType);
-    }
-
     private $loader;
     private $protocolMap;
     private $valueFactory;
-    private $uriFactory;
 }

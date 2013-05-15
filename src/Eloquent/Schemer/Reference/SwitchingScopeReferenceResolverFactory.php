@@ -13,7 +13,7 @@ namespace Eloquent\Schemer\Reference;
 
 use Zend\Uri\UriInterface;
 
-class ReferenceResolverFactory implements ReferenceResolverFactoryInterface
+class SwitchingScopeReferenceResolverFactory implements ReferenceResolverFactoryInterface
 {
     /**
      * @param UriInterface $baseUri
@@ -22,6 +22,9 @@ class ReferenceResolverFactory implements ReferenceResolverFactoryInterface
      */
     public function create(UriInterface $baseUri)
     {
-        return new ReferenceResolver($baseUri);
+        return new ReferenceResolver(
+            $baseUri,
+            new SwitchingResolutionScopeMapFactory
+        );
     }
 }

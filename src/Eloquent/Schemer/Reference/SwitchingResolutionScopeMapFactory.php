@@ -11,6 +11,7 @@
 
 namespace Eloquent\Schemer\Reference;
 
+use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Pointer\PointerFactoryInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
@@ -21,19 +22,26 @@ use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Value;
 use Zend\Uri\UriInterface;
 
-class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implements
-    ResolutionScopeMapperInterface
+class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisitor implements
+    ResolutionScopeMapFactoryInterface
 {
     /**
+     * @param string|null                  $propertyName
      * @param UriFactoryInterface|null     $uriFactory
      * @param UriResolverInterface|null    $uriResolver
      * @param PointerFactoryInterface|null $pointerFactory
+     * @param Comparator|null              $comparator
      */
     public function __construct(
+        $propertyName = null,
         UriFactoryInterface $uriFactory = null,
         UriResolverInterface $uriResolver = null,
-        PointerFactoryInterface $pointerFactory = null
+        PointerFactoryInterface $pointerFactory = null,
+        Comparator $comparator = null
     ) {
+        if (null === $propertyName) {
+            $propertyName = 'id';
+        }
         if (null === $uriFactory) {
             $uriFactory = new UriFactory;
         }
@@ -43,12 +51,25 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
         if (null === $pointerFactory) {
             $pointerFactory = new PointerFactory;
         }
+        if (null === $comparator) {
+            $comparator = new Comparator;
+        }
 
+        $this->propertyName = $propertyName;
         $this->uriFactory = $uriFactory;
         $this->uriResolver = $uriResolver;
         $this->pointerFactory = $pointerFactory;
+        $this->comparator = $comparator;
 
         $this->clear();
+    }
+
+    /**
+     * @return string
+     */
+    public function propertyName()
+    {
+        return $this->propertyName;
     }
 
     /**
@@ -76,6 +97,14 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
     }
 
     /**
+     * @return Comparator
+     */
+    public function comparator()
+    {
+        return $this->comparator;
+    }
+
+    /**
      * @param UriInterface         $baseUri
      * @param Value\ValueInterface $value
      *
@@ -88,7 +117,7 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
         $this->addMapping($this->currentPointer(), $baseUri);
 
         $value->accept($this);
-        $map = new ResolutionScopeMap($this->map());
+        $map = new ResolutionScopeMap($this->map(), $value);
 
         $this->clear();
 
@@ -113,9 +142,9 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
     public function visitObjectValue(Value\ObjectValue $value)
     {
         foreach ($value as $property => $subValue) {
-            if ('id' === $property) {
+            if ($this->propertyName() === $property) {
                 if (!$subValue instanceof Value\StringValue) {
-                    throw new RuntimeException('Invalid resolution scope.');
+                    continue;
                 }
 
                 $this->pushBaseUriReference(
@@ -214,6 +243,15 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
      */
     protected function addMapping(PointerInterface $pointer, UriInterface $uri)
     {
+        foreach ($this->map as $index => $tuple) {
+            list($existingPointer) = $tuple;
+            if ($this->comparator->equals($existingPointer, $pointer)) {
+                $this->map[$index] = array($pointer, $uri);
+
+                return;
+            }
+        }
+
         $this->map[] = array($pointer, $uri);
     }
 
@@ -225,9 +263,11 @@ class ResolutionScopeMapper extends Value\Visitor\AbstractValueVisitor implement
         return $this->map;
     }
 
+    private $propertyName;
     private $uriFactory;
     private $uriResolver;
     private $pointerFactory;
+    private $comparator;
 
     private $baseUriStack;
     private $pointerStack;

@@ -12,7 +12,6 @@
 namespace Eloquent\Schemer\Serialization\Exception;
 
 use Exception;
-use Icecave\Repr\Repr;
 use LogicException;
 
 final class UndefinedProtocolException extends LogicException
@@ -28,7 +27,7 @@ final class UndefinedProtocolException extends LogicException
         parent::__construct(
             sprintf(
                 "No serialization protocol defined for MIME type %s.",
-                Repr::repr($mimeType)
+                var_export($mimeType, true)
             ),
             0,
             $previous

@@ -56,13 +56,12 @@ class MetaSchemaFactory
 
         $positiveIntegerDefault0Schema = new Schema(
             array(
-                new Generic\AllOfConstraint(
-                    array(
-                        $positiveIntegerSchema,
-                        new Schema(null, new Value\IntegerValue(0)),
-                    )
+                new Generic\TypeConstraint(
+                    array(Value\ValueType::INTEGER_TYPE())
                 ),
-            )
+                new NumberValue\MinimumConstraint(0),
+            ),
+            new Value\IntegerValue(0)
         );
 
         $simpleTypesSchema = new Schema(
@@ -100,6 +99,38 @@ class MetaSchemaFactory
                     )
                 ),
             )
+        );
+
+        $booleanOrSchemaDefaultEmptyObjectSchema = new Schema(
+            array(
+                new Generic\AnyOfConstraint(
+                    array(
+                        new Schema(
+                            array(
+                                new Generic\TypeConstraint(
+                                    array(Value\ValueType::BOOLEAN_TYPE())
+                                ),
+                            )
+                        ),
+                        $schema,
+                    )
+                ),
+            ),
+            new Value\ObjectValue
+        );
+
+        $schemaMapDefaultEmptyObjectSchema = new Schema(
+            array(
+                new Generic\TypeConstraint(
+                    array(Value\ValueType::OBJECT_TYPE())
+                ),
+                new ObjectValue\PropertiesConstraint(
+                    array(),
+                    array(),
+                    $schema
+                ),
+            ),
+            new Value\ObjectValue
         );
 
         $dateOrDateStringSchema = new Schema(
@@ -224,23 +255,7 @@ class MetaSchemaFactory
                     )
                 ),
 
-                'additionalItems' => new Schema(
-                    array(
-                        new Generic\AnyOfConstraint(
-                            array(
-                                new Schema(
-                                    array(
-                                        new Generic\TypeConstraint(
-                                            array(Value\ValueType::BOOLEAN_TYPE())
-                                        ),
-                                    )
-                                ),
-                                $schema,
-                            )
-                        ),
-                    ),
-                    new Value\ObjectValue
-                ),
+                'additionalItems' => $booleanOrSchemaDefaultEmptyObjectSchema,
 
                 'items' => new Schema(
                     array(
@@ -266,66 +281,10 @@ class MetaSchemaFactory
                 'maxProperties' => $positiveIntegerSchema,
                 'minProperties' => $positiveIntegerDefault0Schema,
                 'required' => $stringArraySchema,
-
-                'additionalProperties' => new Schema(
-                    array(
-                        new Generic\AnyOfConstraint(
-                            array(
-                                new Schema(
-                                    array(
-                                        new Generic\TypeConstraint(
-                                            array(Value\ValueType::BOOLEAN_TYPE())
-                                        ),
-                                    )
-                                ),
-                                $schema,
-                            )
-                        ),
-                    ),
-                    new Value\ObjectValue
-                ),
-
-                'definitions' => new Schema(
-                    array(
-                        new Generic\TypeConstraint(
-                            array(Value\ValueType::OBJECT_TYPE())
-                        ),
-                        new ObjectValue\PropertiesConstraint(
-                            array(),
-                            array(),
-                            $schema
-                        ),
-                    ),
-                    new Value\ObjectValue
-                ),
-
-                'properties' => new Schema(
-                    array(
-                        new Generic\TypeConstraint(
-                            array(Value\ValueType::OBJECT_TYPE())
-                        ),
-                        new ObjectValue\PropertiesConstraint(
-                            array(),
-                            array(),
-                            $schema
-                        ),
-                    ),
-                    new Value\ObjectValue
-                ),
-
-                'patternProperties' => new Schema(
-                    array(
-                        new Generic\TypeConstraint(
-                            array(Value\ValueType::OBJECT_TYPE())
-                        ),
-                        new ObjectValue\PropertiesConstraint(
-                            array(),
-                            array(),
-                            $schema
-                        ),
-                    ),
-                    new Value\ObjectValue
-                ),
+                'additionalProperties' => $booleanOrSchemaDefaultEmptyObjectSchema,
+                'definitions' => $schemaMapDefaultEmptyObjectSchema,
+                'properties' => $schemaMapDefaultEmptyObjectSchema,
+                'patternProperties' => $schemaMapDefaultEmptyObjectSchema,
 
                 'dependencies' => new Schema(
                     array(

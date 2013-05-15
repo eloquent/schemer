@@ -13,7 +13,6 @@ namespace Eloquent\Schemer\Validation\Result;
 
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Renderer\ConstraintFailureRenderer;
-use Icecave\Repr\Repr;
 
 class IssueRenderer implements IssueRendererInterface
 {
@@ -48,7 +47,7 @@ class IssueRenderer implements IssueRendererInterface
         if ($issue->pointer()->hasAtoms()) {
             return sprintf(
                 "Validation failed for value at %s: %s",
-                Repr::repr($issue->pointer()->string()),
+                var_export($issue->pointer()->string(), true),
                 $issue->constraint()->accept($this->constraintRenderer())
             );
         }

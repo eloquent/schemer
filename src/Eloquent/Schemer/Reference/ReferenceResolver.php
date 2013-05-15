@@ -28,16 +28,18 @@ use Zend\Uri\UriInterface;
 class ReferenceResolver extends Value\Transform\AbstractValueTransform
 {
     /**
-     * @param UriInterface                       $baseUri
-     * @param UriResolverInterface|null          $uriResolver
-     * @param ReaderInterface|null               $reader
-     * @param UriFactoryInterface|null           $uriFactory
-     * @param PointerFactoryInterface|null       $pointerFactory
-     * @param PointerResolverInterface|null      $pointerResolver
-     * @param Value\ValueTransformInterface|null $placeholderUnwrap
+     * @param UriInterface                            $baseUri
+     * @param ResolutionScopeMapFactoryInterface|null $scopeMapFactory
+     * @param UriResolverInterface|null               $uriResolver
+     * @param ReaderInterface|null                    $reader
+     * @param UriFactoryInterface|null                $uriFactory
+     * @param PointerFactoryInterface|null            $pointerFactory
+     * @param PointerResolverInterface|null           $pointerResolver
+     * @param Value\ValueTransformInterface|null      $placeholderUnwrap
      */
     public function __construct(
         UriInterface $baseUri,
+        ResolutionScopeMapFactoryInterface $scopeMapFactory = null,
         UriResolverInterface $uriResolver = null,
         ReaderInterface $reader = null,
         UriFactoryInterface $uriFactory = null,
@@ -47,6 +49,9 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     ) {
         parent::__construct();
 
+        if (null === $scopeMapFactory) {
+            $scopeMapFactory = new FixedResolutionScopeMapFactory;
+        }
         if (null === $uriResolver) {
             $uriResolver = new UriResolver;
         }
@@ -67,6 +72,7 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
         }
 
         $this->baseUri = $baseUri;
+        $this->scopeMapFactory = $scopeMapFactory;
         $this->uriResolver = $uriResolver;
         $this->reader = $reader;
         $this->uriFactory = $uriFactory;
@@ -81,6 +87,14 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     public function baseUri()
     {
         return $this->baseUri;
+    }
+
+    /**
+     * @return ResolutionScopeMapFactoryInterface
+     */
+    public function scopeMapFactory()
+    {
+        return $this->scopeMapFactory;
     }
 
     /**
@@ -149,61 +163,80 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
      */
     public function visitReferenceValue(Value\ReferenceValue $reference)
     {
-        if ($this->hasResolution($reference)) {
-            return $this->resolution($reference);
-        }
-        $resolution = $this->startResolution($reference);
-
-        $referenceUri = $this->uriFactory()->createGeneric(
-            $reference->uri()->toString()
+        $referenceUri = $this->uriResolver()->resolve(
+            $reference->uri(),
+            $this->currentBaseUri()
         );
-        if (!$referenceUri->isAbsolute()) {
-            $referenceUri = $this->uriResolver()->resolve(
-                $referenceUri,
-                $this->currentBaseUri()
-            );
-        }
-        $referenceUri->normalize();
 
-        if ($referenceUri->toString() === $this->currentBaseUri()->toString()) {
-            $value = $this->resolveInline($reference);
-        } else {
-            $value = $this->resolveExternal($reference, $referenceUri);
+        if ($this->hasResolution($referenceUri)) {
+            return $this->resolution($referenceUri);
+        }
+        $resolution = $this->startResolution($referenceUri);
+
+        if (!$value = $this->resolveInline($referenceUri, $reference)) {
+            $value = $this->resolveExternal($referenceUri, $reference);
         }
 
-        $value = $this->resolvePointer($reference, $value);
-        $this->completeResolution($reference, $value);
+        $this->completeResolution($referenceUri, $value);
 
         return $resolution;
     }
 
     /**
+     * @param UriInterface         $referenceUri
      * @param Value\ReferenceValue $reference
      *
-     * @return Value\ValueInterface
+     * @return Value\ValueInterface|null
      * @throws Exception\UndefinedReferenceException
      */
-    protected function resolveInline(Value\ReferenceValue $reference)
-    {
-        return $this->value()->accept($this);
+    protected function resolveInline(
+        UriInterface $referenceUri,
+        Value\ReferenceValue $reference
+    ) {
+        $scopeMap = $pointer = null;
+        foreach (array_reverse($this->scopeMapStack()) as $scopeMap) {
+            $pointer = $scopeMap->pointerByUri($referenceUri);
+            if (null !== $pointer) {
+                break;
+            }
+        }
+        if (null === $pointer) {
+            return null;
+        }
+
+        $this->pushScopeMap($scopeMap);
+        $value = $scopeMap->value()->accept($this);
+        $this->popScopeMap();
+
+        $value = $this->pointerResolver()->resolve($pointer, $value);
+        if (null === $value) {
+            throw new Exception\UndefinedReferenceException(
+                $reference,
+                $this->currentBaseUri()
+            );
+        }
+
+        return $value;
     }
 
     /**
-     * @param Value\ReferenceValue $reference
      * @param UriInterface         $referenceUri
+     * @param Value\ReferenceValue $reference
      *
      * @return Value\ValueInterface
      * @throws Exception\UndefinedReferenceException
      */
     protected function resolveExternal(
-        Value\ReferenceValue $reference,
-        UriInterface $referenceUri
+        UriInterface $referenceUri,
+        Value\ReferenceValue $reference
     ) {
-        // use scheme-specific URI instances
-        $referenceUri = $this->uriFactory()->create($referenceUri->toString());
-
         try {
-            $value = $this->reader()->read($referenceUri, $reference->mimeType());
+            $value = $this->reader()->read(
+                $this->uriFactory()->create(
+                    $referenceUri->toString()
+                ),
+                $reference->mimeType()
+            );
         } catch (ReadException $e) {
             throw new Exception\UndefinedReferenceException(
                 $reference,
@@ -212,30 +245,21 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
             );
         }
 
-        $this->pushBaseUri($referenceUri);
+        $this->pushScopeMap(
+            $this->scopeMapFactory()->create($referenceUri, $value)
+        );
         $value = $value->accept($this);
-        $this->popBaseUri();
+        $this->popScopeMap();
 
-        return $value;
-    }
-
-    /**
-     * @param Value\ReferenceValue $reference
-     * @param Value\ValueInterface $value
-     *
-     * @return Value\ValueInterface
-     * @throws Exception\UndefinedReferenceException
-     */
-    protected function resolvePointer(
-        Value\ReferenceValue $reference,
-        Value\ValueInterface $value
-    ) {
-        if (null !== $reference->uri()->getFragment()) {
-            $pointer = $this->pointerFactory()->create(
-                $reference->uri()->getFragment()
+        $referencePointer = $this->pointerFactory()->createFromUri(
+            $referenceUri
+        );
+        if ($referencePointer->hasAtoms()) {
+            $value = $this->pointerResolver()->resolve(
+                $referencePointer,
+                $value
             );
 
-            $value = $this->pointerResolver()->resolve($pointer, $value);
             if (null === $value) {
                 throw new Exception\UndefinedReferenceException(
                     $reference,
@@ -251,25 +275,59 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     {
         parent::clear();
 
-        $this->baseUriStack = array();
+        $this->scopeMapStack = array();
         $this->resolutions = array();
     }
 
-    /**
-     * @param UriInterface $baseUri
-     */
-    protected function pushBaseUri(UriInterface $baseUri)
+    protected function initialize(Value\ValueInterface $value)
     {
-        array_push($this->baseUriStack, $baseUri);
+        parent::initialize($value);
+
+        $this->pushScopeMap(
+            $this->scopeMapFactory()->create(
+                $this->uriFactory()->createGeneric(
+                    $this->baseUri()->toString()
+                ),
+                $this->value()
+            )
+        );
     }
 
-    protected function popBaseUri()
+    /**
+     * @param ResolutionScopeMap $scopeMap
+     */
+    protected function pushScopeMap(ResolutionScopeMap $scopeMap)
     {
-        if (count($this->baseUriStack) < 1) {
-            throw new LogicException('Base URI stack is empty.');
+        array_push($this->scopeMapStack, $scopeMap);
+    }
+
+    protected function popScopeMap()
+    {
+        if (count($this->scopeMapStack) < 1) {
+            throw new LogicException('Scope map stack is empty.');
         }
 
-        array_pop($this->baseUriStack);
+        array_pop($this->scopeMapStack);
+    }
+
+    /**
+     * @return ResolutionScopeMap
+     */
+    protected function currentScopeMap()
+    {
+        if (count($this->scopeMapStack) < 1) {
+            throw new LogicException('Scope map stack is empty.');
+        }
+
+        return $this->scopeMapStack[count($this->scopeMapStack) - 1];
+    }
+
+    /**
+     * @return array<ResolutionScopeMap>
+     */
+    protected function scopeMapStack()
+    {
+        return $this->scopeMapStack;
     }
 
     /**
@@ -277,65 +335,64 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
      */
     protected function currentBaseUri()
     {
-        if (count($this->baseUriStack) < 1) {
-            return $this->baseUri;
-        }
-
-        return $this->baseUriStack[count($this->baseUriStack) - 1];
+        return $this
+            ->currentScopeMap()
+            ->uriByPointer($this->pointerFactory()->create());
     }
 
     /**
-     * @param Value\ReferenceValue $reference
+     * @param UriInterface $referenceUri
      *
      * @return Value\PlaceholderValue
      */
-    protected function startResolution(Value\ReferenceValue $reference)
+    protected function startResolution(UriInterface $referenceUri)
     {
         $resolution = new Value\PlaceholderValue;
-        $this->resolutions[$reference->uri()->toString()] = $resolution;
+        $this->resolutions[$referenceUri->toString()] = $resolution;
 
         return $resolution;
     }
 
     /**
-     * @param Value\ReferenceValue $reference
+     * @param UriInterface         $referenceUri
      * @param Value\ValueInterface $value
      */
     protected function completeResolution(
-        Value\ReferenceValue $reference,
+        UriInterface $referenceUri,
         Value\ValueInterface $value
     ) {
-        $this->resolution($reference)->setInnerValue($value);
+        $this->resolution($referenceUri)->setInnerValue($value);
     }
 
     /**
-     * @param Value\ReferenceValue $reference
+     * @param UriInterface $referenceUri
      *
      * @return boolean
      */
-    protected function hasResolution(Value\ReferenceValue $reference)
+    protected function hasResolution(UriInterface $referenceUri)
     {
         return array_key_exists(
-            $reference->uri()->toString(),
+            $referenceUri->toString(),
             $this->resolutions
         );
     }
 
     /**
-     * @param Value\ReferenceValue $reference
+     * @param UriInterface $referenceUri
      *
      * @return Value\ValueInterface
      */
-    protected function resolution(Value\ReferenceValue $reference)
+    protected function resolution(UriInterface $referenceUri)
     {
-        if (!$this->hasResolution($reference)) {
+        if (!$this->hasResolution($referenceUri)) {
             throw new LogicException('Undefined resolution.');
         }
 
-        return $this->resolutions[$reference->uri()->toString()];
+        return $this->resolutions[$referenceUri->toString()];
     }
 
     private $baseUri;
+    private $scopeMapFactory;
     private $uriResolver;
     private $reader;
     private $uriFactory;
@@ -343,6 +400,6 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     private $pointerResolver;
     private $placeholderUnwrap;
 
-    private $baseUriStack;
+    private $scopeMapStack;
     private $resolutions;
 }

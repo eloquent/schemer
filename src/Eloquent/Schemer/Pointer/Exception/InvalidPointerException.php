@@ -12,7 +12,6 @@
 namespace Eloquent\Schemer\Pointer\Exception;
 
 use Exception;
-use Icecave\Repr\Repr;
 
 final class InvalidPointerException extends Exception
 {
@@ -25,7 +24,7 @@ final class InvalidPointerException extends Exception
         $this->pointer = $pointer;
 
         parent::__construct(
-            sprintf("Invalid pointer %s.", Repr::repr($pointer)),
+            sprintf("Invalid pointer %s.", var_export($pointer, true)),
             0,
             $previous
         );

@@ -13,13 +13,17 @@ namespace Eloquent\Schemer\Reference;
 
 use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Reader\Reader;
+use Eloquent\Schemer\Uri\UriFactory;
 use PHPUnit_Framework_TestCase;
-use Zend\Uri\File as FileUri;
 
 class ReferenceResolverTest extends PHPUnit_Framework_TestCase
 {
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
+        $this->schemataPath = sprintf(
+            '%s/../../../../../resources/schemata',
+            __DIR__
+        );
         $this->fixturePath = sprintf(
             '%s/../../../../fixture/reference/resolver',
             __DIR__
@@ -32,20 +36,10 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->factory = new ReferenceResolverFactory;
+        $this->factory = new SwitchingScopeReferenceResolverFactory;
+        $this->uriFactory = new UriFactory;
         $this->reader = new Reader;
         $this->comparator = new Comparator;
-    }
-
-    protected function pathUriFixture($path)
-    {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
-            $uri = FileUri::fromWindowsPath($path);
-        } else {
-            $uri = FileUri::fromUnixPath($path);
-        }
-
-        return $uri;
     }
 
     public function resolverData()
@@ -61,7 +55,7 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
                 continue;
             }
 
-            $data[] = array($item);
+            $data[$item] = array($item);
         }
 
         return $data;
@@ -73,7 +67,7 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
     public function testResolver($testName)
     {
         $path = sprintf('%s/%s/document.json', $this->fixturePath, $testName);
-        $resolver = $this->factory->create($this->pathUriFixture($path));
+        $resolver = $this->factory->create($this->uriFactory->fromPath($path));
         $actual = $resolver->transform($this->reader->readPath($path));
         $expected = $this->reader->readPath(
             sprintf('%s/%s/expected.json', $this->fixturePath, $testName)
@@ -86,8 +80,9 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
     public function resolvableRecursiveData()
     {
         return array(
-            array('resolvable-inline.json'),
-            array('resolvable-external.json'),
+            'resolvable-inline.json' => array('resolvable-inline.json'),
+            'resolvable-external.json' => array('resolvable-external.json'),
+            'resolvable-external-switching-scope.json' => array('resolvable-external-switching-scope.json'),
         );
     }
 
@@ -97,10 +92,34 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
     public function testResolveResolvableRecursive($test)
     {
         $path = sprintf('%s/recursive/%s', $this->fixturePath, $test);
-        $resolver = $this->factory->create($this->pathUriFixture($path));
+        $resolver = $this->factory->create($this->uriFactory->fromPath($path));
         $value = $resolver->transform($this->reader->readPath($path));
 
         $this->assertSame('splat', $value->a->foo->bar->foo->doom->value());
+    }
+
+    public function testResolveResolvableMetaSchema()
+    {
+        $path = sprintf('%s/meta-schema.json', $this->schemataPath);
+        $resolver = $this->factory->create($this->uriFactory->fromPath($path));
+        $value = $resolver->transform($this->reader->readPath($path));
+
+        $this->assertSame(
+            'Schemer meta-schema',
+            $value->properties->allOf->items->title->value()
+        );
+    }
+
+    public function testResolveResolvableJsonSchemaMetaSchema()
+    {
+        $path = sprintf('%s/json-schema-meta-schema.json', $this->schemataPath);
+        $resolver = $this->factory->create($this->uriFactory->fromPath($path));
+        $value = $resolver->transform($this->reader->readPath($path));
+
+        $this->assertSame(
+            'Core schema meta-schema',
+            $value->properties->allOf->items->description->value()
+        );
     }
 
     public function testResolveResolvableRecursiveFucked()
@@ -109,7 +128,7 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
             '%s/recursive/resolvable-fucked.json',
             $this->fixturePath
         );
-        $resolver = $this->factory->create($this->pathUriFixture($path));
+        $resolver = $this->factory->create($this->uriFactory->fromPath($path));
         $value = $resolver->transform($this->reader->readPath($path));
 
         $this->assertTrue($value->foo->has('qux'));
@@ -121,7 +140,7 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
             '%s/recursive/unresolvable-inline.json',
             $this->fixturePath
         );
-        $resolver = $this->factory->create($this->pathUriFixture($path));
+        $resolver = $this->factory->create($this->uriFactory->fromPath($path));
         $value = $resolver->transform($this->reader->readPath($path));
 
         $this->assertNull($value->a->value());
@@ -135,7 +154,7 @@ class ReferenceResolverTest extends PHPUnit_Framework_TestCase
             '%s/recursive/unresolvable-external.json',
             $this->fixturePath
         );
-        $resolver = $this->factory->create($this->pathUriFixture($path));
+        $resolver = $this->factory->create($this->uriFactory->fromPath($path));
         $value = $resolver->transform($this->reader->readPath($path));
 
         $this->assertNull($value->a->value());

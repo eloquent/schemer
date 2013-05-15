@@ -30,7 +30,7 @@
         "invalid": {
             "value": {"foo": "baz", "bar": 111},
             "expected": [
-                "Validation failed for value at \"/bar\": The value must be of type \"string\"."
+                "Validation failed for value at '/bar': The value must be of type 'string'."
             ]
         }
     }
