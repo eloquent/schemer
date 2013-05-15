@@ -13,7 +13,6 @@ namespace Eloquent\Schemer\Constraint\Factory;
 
 use Eloquent\Schemer\Reader\SwitchingScopeResolvingReader;
 use PHPUnit_Framework_TestCase;
-use Zend\Uri\File as FileUri;
 
 class SchemaFactoryTest extends PHPUnit_Framework_TestCase
 {
@@ -33,17 +32,6 @@ class SchemaFactoryTest extends PHPUnit_Framework_TestCase
 
         $this->factory = new SchemaFactory;
         $this->reader = new SwitchingScopeResolvingReader;
-    }
-
-    protected function pathUriFixture($path)
-    {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
-            $uri = FileUri::fromWindowsPath($path);
-        } else {
-            $uri = FileUri::fromUnixPath($path);
-        }
-
-        return $uri;
     }
 
     public function testRecursiveSchemaCreation()

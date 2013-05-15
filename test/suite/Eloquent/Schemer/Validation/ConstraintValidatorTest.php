@@ -19,7 +19,6 @@ use FilesystemIterator;
 use PHPUnit_Framework_TestCase;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use Zend\Uri\File as FileUri;
 
 class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
 {
@@ -46,17 +45,6 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
             $this->metaSchemaFactory->create()
         );
         $this->renderer = new IssueRenderer;
-    }
-
-    protected function pathUriFixture($path)
-    {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
-            $uri = FileUri::fromWindowsPath($path);
-        } else {
-            $uri = FileUri::fromUnixPath($path);
-        }
-
-        return $uri;
     }
 
     public function validateSchemaData()

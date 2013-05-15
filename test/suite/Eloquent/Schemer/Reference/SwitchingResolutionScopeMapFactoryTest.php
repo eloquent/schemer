@@ -18,7 +18,6 @@ use FilesystemIterator;
 use PHPUnit_Framework_TestCase;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use Zend\Uri\File as FileUri;
 
 class SwitchingResolutionScopeMapFactoryTest extends PHPUnit_Framework_TestCase
 {
@@ -40,17 +39,6 @@ class SwitchingResolutionScopeMapFactoryTest extends PHPUnit_Framework_TestCase
         $this->reader = new Reader;
         $this->pointerFactory = new PointerFactory;
         $this->uriFactory = new UriFactory;
-    }
-
-    protected function pathUriFixture($path)
-    {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
-            $uri = FileUri::fromWindowsPath($path);
-        } else {
-            $uri = FileUri::fromUnixPath($path);
-        }
-
-        return $uri;
     }
 
     public function factoryData()
