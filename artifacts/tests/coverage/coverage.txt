@@ -1,12 +1,12 @@
 
 
 Code Coverage Report 
-  2013-05-14 10:18:36
+  2013-05-15 08:54:49
 
  Summary: 
-  Classes: 4.90% (5/102)
-  Methods: 20.51% (121/590)
-  Lines:   44.42% (1370/3084)
+  Classes: 4.72% (5/106)
+  Methods: 19.93% (119/597)
+  Lines:   43.42% (1362/3137)
 
 \Eloquent\Schemer\Constraint\Factory::MetaSchemaFactory
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (243/243)
@@ -19,7 +19,7 @@ Code Coverage Report
 \Eloquent\Schemer\Pointer\Resolver::PointerResolver
   Methods: 100.00% ( 4/ 4)   Lines:  82.61% ( 19/ 23)
 \Eloquent\Schemer\Reader::Reader
-  Methods:  87.50% ( 7/ 8)   Lines:  86.11% ( 31/ 36)
+  Methods: 100.00% ( 5/ 5)   Lines:  85.19% ( 23/ 27)
 \Eloquent\Schemer\Reference::ReferenceResolver
   Methods: 100.00% (24/24)   Lines:  87.68% (121/138)
 \Eloquent\Schemer\Reference::ResolutionScopeMap
