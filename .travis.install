@@ -15,7 +15,7 @@ if ($token = getenv('ARCHER_TOKEN')) {
     $config['config']['github-oauth'] = array(
         'github.com' => $token
     );
-    $composerFlags = '--prefer-dist';
+    $composerFlags = '--prefer-source';
 } else {
     $composerFlags = '--prefer-source';
 }
