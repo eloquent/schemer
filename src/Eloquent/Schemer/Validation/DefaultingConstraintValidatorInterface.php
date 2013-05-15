@@ -15,18 +15,30 @@ use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
 use Eloquent\Schemer\Value\ConcreteValueInterface;
 
-interface ConstraintValidatorInterface
+interface DefaultingConstraintValidatorInterface extends
+    ConstraintValidatorInterface
 {
     /**
      * @param ConstraintInterface    $constraint
-     * @param ConcreteValueInterface $value
+     * @param ConcreteValueInterface &$value
      * @param PointerInterface|null  $entryPoint
      *
      * @return Result\ValidationResult
      */
-    public function validate(
+    public function validateAndApplyDefaults(
         ConstraintInterface $constraint,
-        ConcreteValueInterface $value,
+        ConcreteValueInterface &$value,
         PointerInterface $entryPoint = null
+    );
+
+    /**
+     * @param Result\ValidationResult $result
+     * @param ConcreteValueInterface  $value
+     *
+     * @return ConcreteValueInterface
+     */
+    public function applyDefaults(
+        Result\ValidationResult $result,
+        ConcreteValueInterface $value
     );
 }

@@ -77,8 +77,9 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
      */
     public function testValidateSchema($constraint, $category, $testName)
     {
-        $path = sprintf('%s/%s/%s', $this->fixturePath, $constraint, $category);
-        $fixture = $this->reader->readPath($path);
+        $fixture = $this->reader->readPath(
+            sprintf('%s/%s/%s', $this->fixturePath, $constraint, $category)
+        );
         $test = $fixture->tests->$testName;
         $result = $this->validator->validate(
             $this->schemaFactory->create($fixture->schema),
