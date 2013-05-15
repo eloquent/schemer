@@ -13,8 +13,7 @@ namespace Eloquent\Schemer\Validation;
 
 use Eloquent\Schemer\Constraint\Factory\MetaSchemaFactory;
 use Eloquent\Schemer\Constraint\Factory\SchemaFactory;
-use Eloquent\Schemer\Reader\Reader;
-use Eloquent\Schemer\Reference\SwitchingScopeReferenceResolverFactory;
+use Eloquent\Schemer\Reader\SwitchingScopeResolvingReader;
 use Eloquent\Schemer\Validation\Result\IssueRenderer;
 use FilesystemIterator;
 use PHPUnit_Framework_TestCase;
@@ -26,7 +25,7 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
 {
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
-        $this->reader = new Reader;
+        $this->reader = new SwitchingScopeResolvingReader;
         $this->fixturePath = sprintf(
             '%s/../../../../fixture/constraint',
             __DIR__
@@ -41,7 +40,6 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
 
         $this->validator = new ConstraintValidator;
 
-        $this->referenceResolverFactory = new SwitchingScopeReferenceResolverFactory;
         $this->metaSchemaFactory = new MetaSchemaFactory;
         $this->schemaFactory = new SchemaFactory(
             null,
@@ -92,8 +90,7 @@ class ConstraintValidatorTest extends PHPUnit_Framework_TestCase
     public function testValidateSchema($constraint, $category, $testName)
     {
         $path = sprintf('%s/%s/%s', $this->fixturePath, $constraint, $category);
-        $resolver = $this->referenceResolverFactory->create($this->pathUriFixture($path));
-        $fixture = $resolver->transform($this->reader->readPath($path));
+        $fixture = $this->reader->readPath($path);
         $test = $fixture->tests->$testName;
         $result = $this->validator->validate(
             $this->schemaFactory->create($fixture->schema),

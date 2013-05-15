@@ -13,8 +13,8 @@ namespace Eloquent\Schemer\Constraint\Reader;
 
 use Eloquent\Schemer\Constraint\Factory\SchemaFactory;
 use Eloquent\Schemer\Constraint\Factory\SchemaFactoryInterface;
-use Eloquent\Schemer\Reader\Reader;
 use Eloquent\Schemer\Reader\ReaderInterface;
+use Eloquent\Schemer\Reader\SwitchingScopeResolvingReader;
 
 class SchemaReader implements SchemaReaderInterface
 {
@@ -30,7 +30,7 @@ class SchemaReader implements SchemaReaderInterface
             $schemaFactory = new SchemaFactory;
         }
         if (null === $reader) {
-            $reader = new Reader;
+            $reader = new SwitchingScopeResolvingReader;
         }
 
         $this->schemaFactory = $schemaFactory;
