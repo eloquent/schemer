@@ -11,7 +11,7 @@
 
 namespace Eloquent\Schemer\Pointer;
 
-use Zend\Uri\UriInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 
 interface PointerFactoryInterface
 {

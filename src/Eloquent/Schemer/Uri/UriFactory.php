@@ -29,12 +29,9 @@ class UriFactory implements UriFactoryInterface
         if (null === $schemeClasses) {
             $schemeClasses = array(
                 'data' => __NAMESPACE__ . '\DataUri',
-                'file' => 'Zend\Uri\File',
+                'file' => __NAMESPACE__ . '\FileUri',
                 'http' => __NAMESPACE__ . '\HttpUri',
                 'https' => __NAMESPACE__ . '\HttpUri',
-                'mailto' => 'Zend\Uri\Mailto',
-                'tag' => __NAMESPACE__ . '\Uri',
-                'urn' => __NAMESPACE__ . '\Uri',
             );
         }
         if (null === $defaultClass) {
@@ -95,7 +92,7 @@ class UriFactory implements UriFactoryInterface
      * @param string      $uri
      * @param string|null $defaultScheme
      *
-     * @return \Zend\Uri\UriInterface
+     * @return UriInterface
      */
     public function create($uri, $defaultScheme = null)
     {
@@ -115,7 +112,7 @@ class UriFactory implements UriFactoryInterface
     /**
      * @param string $uri
      *
-     * @return \Zend\Uri\UriInterface
+     * @return UriInterface
      */
     public function createGeneric($uri)
     {

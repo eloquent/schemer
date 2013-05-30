@@ -11,7 +11,7 @@
 
 namespace Eloquent\Schemer\Value;
 
-use Zend\Uri\UriInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 
 class ReferenceValue implements ValueInterface
 {

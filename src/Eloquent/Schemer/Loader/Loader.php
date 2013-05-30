@@ -12,7 +12,7 @@
 namespace Eloquent\Schemer\Loader;
 
 use Eloquent\Schemer\Loader\ContentType;
-use Zend\Uri\UriInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 
 class Loader implements LoaderInterface
 {

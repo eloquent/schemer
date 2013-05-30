@@ -11,8 +11,8 @@
 
 namespace Eloquent\Schemer\Reference;
 
+use Eloquent\Schemer\Uri\UriInterface;
 use Eloquent\Schemer\Value;
-use Zend\Uri\UriInterface;
 
 interface ResolutionScopeMapFactoryInterface
 {

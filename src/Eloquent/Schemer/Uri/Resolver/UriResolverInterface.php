@@ -11,7 +11,7 @@
 
 namespace Eloquent\Schemer\Uri\Resolver;
 
-use Zend\Uri\UriInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 
 interface UriResolverInterface
 {

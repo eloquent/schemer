@@ -12,13 +12,13 @@
 namespace Eloquent\Schemer\Loader\FileSystem;
 
 use Eloquent\Schemer\Loader\Content;
+use Eloquent\Schemer\Loader\Exception\InvalidUriTypeException;
 use Eloquent\Schemer\Loader\Exception\LoadException;
 use Eloquent\Schemer\Loader\LoaderInterface;
+use Eloquent\Schemer\Uri\FileUriInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 use ErrorException;
 use Icecave\Isolator\Isolator;
-use InvalidArgumentException;
-use Zend\Uri\File as FileUri;
-use Zend\Uri\UriInterface;
 
 class FileSystemLoader implements LoaderInterface
 {
@@ -70,8 +70,11 @@ class FileSystemLoader implements LoaderInterface
      */
     public function load(UriInterface $uri)
     {
-        if (!$uri instanceof FileUri) {
-            throw new InvalidArgumentException('URI must be a file URI.');
+        if (!$uri instanceof FileUriInterface) {
+            throw new InvalidUriTypeException(
+                $uri,
+                'Eloquent\Schemer\Uri\FileUriInterface'
+            );
         }
 
         $path = $this->pathFromUri($uri);
@@ -90,7 +93,7 @@ class FileSystemLoader implements LoaderInterface
      *
      * @return string
      */
-    protected function pathFromUri(FileUri $uri)
+    protected function pathFromUri(FileUriInterface $uri)
     {
         $path = $uri->getPath();
         if (null === $path) {

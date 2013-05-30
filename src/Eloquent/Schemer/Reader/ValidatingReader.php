@@ -11,12 +11,12 @@
 
 namespace Eloquent\Schemer\Reader;
 
-use Eloquent\Schemer\Validation\BoundConstraintValidator;
-use Eloquent\Schemer\Validation\BoundConstraintValidatorInterface;
 use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
+use Eloquent\Schemer\Uri\UriInterface;
+use Eloquent\Schemer\Validation\BoundConstraintValidator;
+use Eloquent\Schemer\Validation\BoundConstraintValidatorInterface;
 use Eloquent\Schemer\Value;
-use Zend\Uri\UriInterface;
 
 class ValidatingReader extends AbstractReader
 {
@@ -60,8 +60,8 @@ class ValidatingReader extends AbstractReader
     }
 
     /**
-     * @param \Zend\Uri\UriInterface|string $uri
-     * @param string|null                   $mimeType
+     * @param UriInterface|string $uri
+     * @param string|null         $mimeType
      *
      * @return Value\ValueInterface
      */

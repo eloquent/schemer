@@ -11,13 +11,16 @@
 
 namespace Eloquent\Schemer\Reader;
 
+use Eloquent\Schemer\Uri\UriInterface;
+use Eloquent\Schemer\Value\ValueInterface;
+
 interface ReaderInterface
 {
     /**
-     * @param \Zend\Uri\UriInterface|string $uri
-     * @param string|null                   $mimeType
+     * @param UriInterface|string $uri
+     * @param string|null         $mimeType
      *
-     * @return \Eloquent\Schemer\Value\ValueInterface
+     * @return ValueInterface
      */
     public function read($uri, $mimeType = null);
 
@@ -25,7 +28,7 @@ interface ReaderInterface
      * @param string      $path
      * @param string|null $mimeType
      *
-     * @return \Eloquent\Schemer\Value\ValueInterface
+     * @return ValueInterface
      */
     public function readPath($path, $mimeType = null);
 
@@ -33,7 +36,7 @@ interface ReaderInterface
      * @param string      $data
      * @param string|null $mimeType
      *
-     * @return \Eloquent\Schemer\Value\ValueInterface
+     * @return ValueInterface
      */
     public function readString($data, $mimeType = null);
 }

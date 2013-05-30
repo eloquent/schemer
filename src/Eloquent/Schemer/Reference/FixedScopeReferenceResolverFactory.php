@@ -11,7 +11,7 @@
 
 namespace Eloquent\Schemer\Reference;
 
-use Zend\Uri\UriInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 
 class FixedScopeReferenceResolverFactory implements ReferenceResolverFactoryInterface
 {

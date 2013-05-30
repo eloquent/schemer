@@ -11,7 +11,7 @@
 
 namespace Eloquent\Schemer\Loader;
 
-use Zend\Uri\UriInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 
 interface LoaderInterface
 {

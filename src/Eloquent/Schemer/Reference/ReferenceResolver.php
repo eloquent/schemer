@@ -21,9 +21,9 @@ use Eloquent\Schemer\Uri\Resolver\UriResolver;
 use Eloquent\Schemer\Uri\Resolver\UriResolverInterface;
 use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 use Eloquent\Schemer\Value;
 use LogicException;
-use Zend\Uri\UriInterface;
 
 class ReferenceResolver extends Value\Transform\AbstractValueTransform
 {

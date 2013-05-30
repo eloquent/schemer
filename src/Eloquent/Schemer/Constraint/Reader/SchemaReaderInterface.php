@@ -11,13 +11,16 @@
 
 namespace Eloquent\Schemer\Constraint\Reader;
 
+use Eloquent\Schemer\Constraint\Schema;
+use Eloquent\Schemer\Uri\UriInterface;
+
 interface SchemaReaderInterface
 {
     /**
-     * @param \Zend\Uri\UriInterface|string $uri
-     * @param string|null                   $mimeType
+     * @param UriInterface|string $uri
+     * @param string|null         $mimeType
      *
-     * @return \Eloquent\Schemer\Constraint\Schema
+     * @return Schema
      */
     public function read($uri, $mimeType = null);
 
@@ -25,7 +28,7 @@ interface SchemaReaderInterface
      * @param string      $path
      * @param string|null $mimeType
      *
-     * @return \Eloquent\Schemer\Constraint\Schema
+     * @return Schema
      */
     public function readPath($path, $mimeType = null);
 
@@ -33,7 +36,7 @@ interface SchemaReaderInterface
      * @param string      $data
      * @param string|null $mimeType
      *
-     * @return \Eloquent\Schemer\Constraint\Schema
+     * @return Schema
      */
     public function readString($data, $mimeType = null);
 }

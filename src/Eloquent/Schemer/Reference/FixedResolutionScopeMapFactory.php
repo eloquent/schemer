@@ -13,8 +13,8 @@ namespace Eloquent\Schemer\Reference;
 
 use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Pointer\PointerFactoryInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 use Eloquent\Schemer\Value;
-use Zend\Uri\UriInterface;
 
 class FixedResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisitor implements
     ResolutionScopeMapFactoryInterface

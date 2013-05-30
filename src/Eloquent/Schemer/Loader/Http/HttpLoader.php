@@ -15,11 +15,12 @@ use Buzz\Browser;
 use Buzz\Message\Response;
 use Eloquent\Schemer\Loader\Content;
 use Eloquent\Schemer\Loader\ContentType;
+use Eloquent\Schemer\Loader\Exception\InvalidUriTypeException;
 use Eloquent\Schemer\Loader\Exception\LoadException;
+use Eloquent\Schemer\Loader\Exception\RelativeUriException;
 use Eloquent\Schemer\Loader\LoaderInterface;
-use Eloquent\Schemer\Uri\HttpUri;
-use InvalidArgumentException;
-use Zend\Uri\UriInterface;
+use Eloquent\Schemer\Uri\HttpUriInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 
 class HttpLoader implements LoaderInterface
 {
@@ -72,10 +73,14 @@ class HttpLoader implements LoaderInterface
      */
     public function load(UriInterface $uri)
     {
-        if (!$uri instanceof HttpUri || !$uri->isAbsolute()) {
-            throw new InvalidArgumentException(
-                'URI must be an absolute HTTP URI.'
+        if (!$uri instanceof HttpUriInterface) {
+            throw new InvalidUriTypeException(
+                $uri,
+                'Eloquent\Schemer\Uri\HttpUriInterface'
             );
+        }
+        if (!$uri->isAbsolute()) {
+            throw new RelativeUriException($uri);
         }
 
         $response = $this->browser()->get($uri->toString());

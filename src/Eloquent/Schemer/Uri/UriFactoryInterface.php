@@ -17,21 +17,21 @@ interface UriFactoryInterface
      * @param string      $uri
      * @param string|null $defaultScheme
      *
-     * @return \Zend\Uri\UriInterface
+     * @return UriInterface
      */
     public function create($uri, $defaultScheme = null);
 
     /**
      * @param string $uri
      *
-     * @return \Zend\Uri\UriInterface
+     * @return UriInterface
      */
     public function createGeneric($uri);
 
     /**
      * @param string $path
      *
-     * @return \Zend\Uri\File
+     * @return FileUri
      */
     public function fromPath($path);
 

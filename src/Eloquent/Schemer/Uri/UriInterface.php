@@ -9,14 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Loader\Exception;
+namespace Eloquent\Schemer\Uri;
 
-use Eloquent\Schemer\Uri\UriInterface;
+use Zend\Uri\UriInterface as ZendUriInterface;
 
-interface LoadExceptionInterface
+interface UriInterface extends ZendUriInterface
 {
-    /**
-     * @return UriInterface
-     */
-    public function uri();
 }
