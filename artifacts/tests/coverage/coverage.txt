@@ -1,12 +1,12 @@
 
 
 Code Coverage Report 
-  2013-05-30 05:33:32
+  2013-05-30 07:03:44
 
  Summary: 
   Classes: 4.67% (5/107)
   Methods: 19.73% (119/603)
-  Lines:   43.22% (1362/3151)
+  Lines:   43.18% (1362/3154)
 
 \Eloquent\Schemer\Constraint\Factory::MetaSchemaFactory
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (243/243)
