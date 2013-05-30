@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Eloquent\Schemer\Value\ArrayValue | Schemer API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Schemer API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../Eloquent/Schemer/Value.html">Eloquent\Schemer\Value</a>\ArrayValue</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>ArrayValue</strong>        extends <a href="../../../Eloquent/Schemer/Value/AbstractConcreteValue.html"><abbr title="Eloquent\Schemer\Value\AbstractConcreteValue">AbstractConcreteValue</abbr></a>        implements
+        <a href="../../../Eloquent/Schemer/Value/ValueContainerInterface.html"><abbr title="Eloquent\Schemer\Value\ValueContainerInterface">ValueContainerInterface</abbr></a>, <a href="http://php.net/ArrayAccess"><abbr title="ArrayAccess">ArrayAccess</abbr></a>, <a href="http://php.net/IteratorAggregate"><abbr title="IteratorAggregate">IteratorAggregate</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(array $value = null)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\array&lt;integer,mixed&gt;">array&lt;integer,mixed&gt;</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_value">value</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Value/ValueType.html"><abbr title="Eloquent\Schemer\Value\ValueType">ValueType</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_valueType">valueType</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\array&lt;integer,integer&gt;">array&lt;integer,integer&gt;</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_keys">keys</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\array&lt;integer,ValueInterface&gt;">array&lt;integer,ValueInterface&gt;</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_values">values</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_count">count</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_set">set</a>(integer $index, <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a> $value)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_has">has</a>(integer $index)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_get">get</a>(integer $index)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_getRaw">getRaw</a>(integer $index)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a>|null
+                </td>
+                <td class="last">
+                    <a href="#method_getDefault">getDefault</a>(integer $index, <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a> $default = null)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_getRawDefault">getRawDefault</a>(integer $index, mixed $default = null)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_accept">accept</a>(<a href="../../../Eloquent/Schemer/Value/Visitor/ValueVisitorInterface.html"><abbr title="Eloquent\Schemer\Value\Visitor\ValueVisitorInterface">ValueVisitorInterface</abbr></a> $visitor)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_offsetExists">offsetExists</a>(integer $index)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_offsetGet">offsetGet</a>(integer $index)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_offsetSet">offsetSet</a>(integer $index, mixed $value)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_offsetUnset">offsetUnset</a>(integer $index)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="http://php.net/ArrayIterator"><abbr title="ArrayIterator">ArrayIterator</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getIterator">getIterator</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 28</div>
+        <code>            public            
+    <strong>__construct</strong>(array $value = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_value">
+        <div class="location">at line 54</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\array&lt;integer,mixed&gt;">array&lt;integer,mixed&gt;</abbr>
+    <strong>value</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\array&lt;integer,mixed&gt;">array&lt;integer,mixed&gt;</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_valueType">
+        <div class="location">at line 64</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Value/ValueType.html"><abbr title="Eloquent\Schemer\Value\ValueType">ValueType</abbr></a>
+    <strong>valueType</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Value/ValueType.html"><abbr title="Eloquent\Schemer\Value\ValueType">ValueType</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_keys">
+        <div class="location">at line 72</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\array&lt;integer,integer&gt;">array&lt;integer,integer&gt;</abbr>
+    <strong>keys</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\array&lt;integer,integer&gt;">array&lt;integer,integer&gt;</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_values">
+        <div class="location">at line 80</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\array&lt;integer,ValueInterface&gt;">array&lt;integer,ValueInterface&gt;</abbr>
+    <strong>values</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\array&lt;integer,ValueInterface&gt;">array&lt;integer,ValueInterface&gt;</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_count">
+        <div class="location">at line 88</div>
+        <code>            public            integer
+    <strong>count</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_set">
+        <div class="location">at line 97</div>
+        <code>            public            
+    <strong>set</strong>(integer $index, <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$index</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_has">
+        <div class="location">at line 107</div>
+        <code>            public            boolean
+    <strong>has</strong>(integer $index)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$index</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_get">
+        <div class="location">at line 117</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a>
+    <strong>get</strong>(integer $index)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$index</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getRaw">
+        <div class="location">at line 131</div>
+        <code>            public            mixed
+    <strong>getRaw</strong>(integer $index)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$index</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getDefault">
+        <div class="location">at line 142</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a>|null
+    <strong>getDefault</strong>(integer $index, <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a> $default = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$index</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a></td>
+                <td>$default</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a>|null</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getRawDefault">
+        <div class="location">at line 157</div>
+        <code>            public            mixed
+    <strong>getRawDefault</strong>(integer $index, mixed $default = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$index</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$default</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_accept">
+        <div class="location">at line 171</div>
+        <code>            public            mixed
+    <strong>accept</strong>(<a href="../../../Eloquent/Schemer/Value/Visitor/ValueVisitorInterface.html"><abbr title="Eloquent\Schemer\Value\Visitor\ValueVisitorInterface">ValueVisitorInterface</abbr></a> $visitor)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../Eloquent/Schemer/Value/Visitor/ValueVisitorInterface.html"><abbr title="Eloquent\Schemer\Value\Visitor\ValueVisitorInterface">ValueVisitorInterface</abbr></a></td>
+                <td>$visitor</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_offsetExists">
+        <div class="location">at line 181</div>
+        <code>            public            boolean
+    <strong>offsetExists</strong>(integer $index)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$index</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_offsetGet">
+        <div class="location">at line 191</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a>
+    <strong>offsetGet</strong>(integer $index)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$index</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_offsetSet">
+        <div class="location">at line 202</div>
+        <code>            public            
+    <strong>offsetSet</strong>(integer $index, mixed $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$index</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/LogicException"><abbr title="LogicException">LogicException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_offsetUnset">
+        <div class="location">at line 212</div>
+        <code>            public            
+    <strong>offsetUnset</strong>(integer $index)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$index</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/LogicException"><abbr title="LogicException">LogicException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getIterator">
+        <div class="location">at line 220</div>
+        <code>            public            <a href="http://php.net/ArrayIterator"><abbr title="ArrayIterator">ArrayIterator</abbr></a>
+    <strong>getIterator</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="http://php.net/ArrayIterator"><abbr title="ArrayIterator">ArrayIterator</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

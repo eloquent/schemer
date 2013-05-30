@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Eloquent\Schemer\Constraint\Schema | Schemer API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Schemer API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../Eloquent/Schemer/Constraint.html">Eloquent\Schemer\Constraint</a>\Schema</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>Schema</strong>        implements
+        <a href="../../../Eloquent/Schemer/Constraint/SchemaInterface.html"><abbr title="Eloquent\Schemer\Constraint\SchemaInterface">SchemaInterface</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(array $constraints = null, <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a> $defaultValue = null, string|null $title = null, string|null $description = null)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setConstraints">setConstraints</a>(array $constraints)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Constraint\array&lt;integer,ConstraintInterface&gt;">array&lt;integer,ConstraintInterface&gt;</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_constraints">constraints</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a>|null
+                </td>
+                <td class="last">
+                    <a href="#method_defaultValue">defaultValue</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string|null
+                </td>
+                <td class="last">
+                    <a href="#method_title">title</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string|null
+                </td>
+                <td class="last">
+                    <a href="#method_description">description</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isEmpty">isEmpty</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_accept">accept</a>(<a href="../../../Eloquent/Schemer/Constraint/Visitor/ConstraintVisitorInterface.html"><abbr title="Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface">ConstraintVisitorInterface</abbr></a> $visitor)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 25</div>
+        <code>            public            
+    <strong>__construct</strong>(array $constraints = null, <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a> $defaultValue = null, string|null $title = null, string|null $description = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$constraints</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a></td>
+                <td>$defaultValue</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string|null</td>
+                <td>$title</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string|null</td>
+                <td>$description</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setConstraints">
+        <div class="location">at line 44</div>
+        <code>            public            
+    <strong>setConstraints</strong>(array $constraints)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$constraints</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_constraints">
+        <div class="location">at line 60</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Constraint\array&lt;integer,ConstraintInterface&gt;">array&lt;integer,ConstraintInterface&gt;</abbr>
+    <strong>constraints</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Constraint\array&lt;integer,ConstraintInterface&gt;">array&lt;integer,ConstraintInterface&gt;</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_defaultValue">
+        <div class="location">at line 68</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a>|null
+    <strong>defaultValue</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a>|null</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_title">
+        <div class="location">at line 76</div>
+        <code>            public            string|null
+    <strong>title</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string|null</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_description">
+        <div class="location">at line 84</div>
+        <code>            public            string|null
+    <strong>description</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string|null</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isEmpty">
+        <div class="location">at line 92</div>
+        <code>            public            boolean
+    <strong>isEmpty</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_accept">
+        <div class="location">at line 102</div>
+        <code>            public            mixed
+    <strong>accept</strong>(<a href="../../../Eloquent/Schemer/Constraint/Visitor/ConstraintVisitorInterface.html"><abbr title="Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface">ConstraintVisitorInterface</abbr></a> $visitor)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../Eloquent/Schemer/Constraint/Visitor/ConstraintVisitorInterface.html"><abbr title="Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface">ConstraintVisitorInterface</abbr></a></td>
+                <td>$visitor</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Eloquent\Schemer\Uri\HttpUri | Schemer API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Schemer API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../Eloquent/Schemer/Uri.html">Eloquent\Schemer\Uri</a>\HttpUri</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>HttpUri</strong>        extends <a href="../../../Eloquent/Schemer/Uri/Uri.html"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Uri\Http">Http</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_parse">parse</a>(string $uri)
+                    <p>Parse a URI string</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    bool
+                </td>
+                <td class="last">
+                    <a href="#method_isValid">isValid</a>()
+                    <p>Check if the URI is a valid HTTP URI</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isValidRelative">isValidRelative</a>()
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Uri/Uri.html#method_isValidRelative"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    static&nbsp;boolean
+                </td>
+                <td class="last">
+                    <a href="#method_validateQueryFragment">validateQueryFragment</a>(string $input)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Uri/Uri.html#method_validateQueryFragment"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_toString">toString</a>()
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Uri/Uri.html#method_toString"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Uri/Uri.html"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_normalize">normalize</a>()
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Uri/Uri.html#method_normalize"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Uri/Uri.html"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_makeRelative">makeRelative</a>(<a href="../../../Eloquent/Schemer/Uri/Uri.html"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a>|string $baseUri)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Uri/Uri.html#method_makeRelative"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    null|string
+                </td>
+                <td class="last">
+                    <a href="#method_getUser">getUser</a>()
+                    <p>Get the username part (before the &#039;:&#039;) of the userInfo URI part</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getPassword">getPassword</a>()
+                    <p>Get the password part (after the &#039;:&#039;) of the userInfo URI part</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Uri\Http">Http</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_setUser">setUser</a>(string $user)
+                    <p>Set the username part (before the &#039;:&#039;) of the userInfo URI part</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Uri\Http">Http</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_setPassword">setPassword</a>(string $password)
+                    <p>Set the password part (after the &#039;:&#039;) of the userInfo URI part</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    static&nbsp;bool
+                </td>
+                <td class="last">
+                    <a href="#method_validateHost">validateHost</a>(string $host, integer $allowed = self::HOST_DNS_OR_IPV4_OR_IPV6)
+                    <p>Validate the host part of an HTTP URI</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getPort">getPort</a>()
+                    <p>Return the URI port</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method_parse">
+        <div class="location">at line 189</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Uri\Http">Http</abbr>
+    <strong>parse</strong>(string $uri)</code>
+    </h3>
+    <div class="details">
+        <p>Parse a URI string</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$uri</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Uri\Http">Http</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isValid">
+        <div class="location">at line 58</div>
+        <code>            public            bool
+    <strong>isValid</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Check if the URI is a valid HTTP URI</p>
+        <p>This applies additional HTTP specific validation rules beyond the ones<br />
+ required by the generic URI syntax</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>Uri::isValid()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_isValidRelative">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Uri/Uri.html#method_isValidRelative"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a> at line 130</div>
+        <code>            public            boolean
+    <strong>isValidRelative</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_validateQueryFragment">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Uri/Uri.html#method_validateQueryFragment"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a> at line 156</div>
+        <code>        static    public            boolean
+    <strong>validateQueryFragment</strong>(string $input)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$input</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_toString">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Uri/Uri.html#method_toString"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a> at line 168</div>
+        <code>            public            string
+    <strong>toString</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_normalize">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Uri/Uri.html#method_normalize"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a> at line 215</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Uri/Uri.html"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a>
+    <strong>normalize</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Uri/Uri.html"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_makeRelative">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Uri/Uri.html#method_makeRelative"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a> at line 277</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Uri/Uri.html"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a>
+    <strong>makeRelative</strong>(<a href="../../../Eloquent/Schemer/Uri/Uri.html"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a>|string $baseUri)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../Eloquent/Schemer/Uri/Uri.html"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a>|string</td>
+                <td>$baseUri</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Uri/Uri.html"><abbr title="Eloquent\Schemer\Uri\Uri">Uri</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getUser">
+        <div class="location">at line 68</div>
+        <code>            public            null|string
+    <strong>getUser</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the username part (before the &#039;:&#039;) of the userInfo URI part</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>null|string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPassword">
+        <div class="location">at line 84</div>
+        <code>            public            string
+    <strong>getPassword</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the password part (after the &#039;:&#039;) of the userInfo URI part</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setUser">
+        <div class="location">at line 101</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Uri\Http">Http</abbr>
+    <strong>setUser</strong>(string $user)</code>
+    </h3>
+    <div class="details">
+        <p>Set the username part (before the &#039;:&#039;) of the userInfo URI part</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$user</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Uri\Http">Http</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPassword">
+        <div class="location">at line 114</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Uri\Http">Http</abbr>
+    <strong>setPassword</strong>(string $password)</code>
+    </h3>
+    <div class="details">
+        <p>Set the password part (after the &#039;:&#039;) of the userInfo URI part</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$password</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Uri\Http">Http</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_validateHost">
+        <div class="location">at line 131</div>
+        <code>        static    public            bool
+    <strong>validateHost</strong>(string $host, integer $allowed = self::HOST_DNS_OR_IPV4_OR_IPV6)</code>
+    </h3>
+    <div class="details">
+        <p>Validate the host part of an HTTP URI</p>
+        <p>This overrides the common URI validation method with a DNS or IP only<br />
+ default. Users may still enforce allowing other host types.</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$host</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>integer</td>
+                <td>$allowed</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPort">
+        <div class="location">at line 172</div>
+        <code>            public            integer
+    <strong>getPort</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Return the URI port</p>
+        <p>If no port is set, will return the default port according to the scheme</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>Zend\Uri\Uri::getPort()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

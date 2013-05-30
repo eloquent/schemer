@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Eloquent\Schemer\Uri\UriFactory | Schemer API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Schemer API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../Eloquent/Schemer/Uri.html">Eloquent\Schemer\Uri</a>\UriFactory</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>UriFactory</strong>        implements
+        <a href="../../../Eloquent/Schemer/Uri/UriFactoryInterface.html"><abbr title="Eloquent\Schemer\Uri\UriFactoryInterface">UriFactoryInterface</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(array $schemeClasses = null, string|null $defaultClass = null, <abbr title="Icecave\Isolator\Isolator">Isolator</abbr> $isolator = null)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setSchemeClass">setSchemeClass</a>(string $scheme, string $class)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Uri\array&lt;string,string&gt;">array&lt;string,string&gt;</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_schemeClasses">schemeClasses</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_schemeClass">schemeClass</a>(string|null $scheme)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_defaultClass">defaultClass</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Zend\Uri\UriInterface">UriInterface</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_create">create</a>(string $uri, string|null $defaultScheme = null)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Zend\Uri\UriInterface">UriInterface</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_createGeneric">createGeneric</a>(string $uri)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Uri\FileUri">FileUri</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_fromPath">fromPath</a>(string $path)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Uri/DataUri.html"><abbr title="Eloquent\Schemer\Uri\DataUri">DataUri</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_fromData">fromData</a>(string $data, string|null $mimeType = null)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 24</div>
+        <code>            public            
+    <strong>__construct</strong>(array $schemeClasses = null, string|null $defaultClass = null, <abbr title="Icecave\Isolator\Isolator">Isolator</abbr> $isolator = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$schemeClasses</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string|null</td>
+                <td>$defaultClass</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Icecave\Isolator\Isolator">Isolator</abbr></td>
+                <td>$isolator</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setSchemeClass">
+        <div class="location">at line 53</div>
+        <code>            public            
+    <strong>setSchemeClass</strong>(string $scheme, string $class)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$scheme</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$class</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_schemeClasses">
+        <div class="location">at line 61</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Uri\array&lt;string,string&gt;">array&lt;string,string&gt;</abbr>
+    <strong>schemeClasses</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Uri\array&lt;string,string&gt;">array&lt;string,string&gt;</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_schemeClass">
+        <div class="location">at line 71</div>
+        <code>            public            string
+    <strong>schemeClass</strong>(string|null $scheme)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string|null</td>
+                <td>$scheme</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_defaultClass">
+        <div class="location">at line 89</div>
+        <code>            public            string
+    <strong>defaultClass</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_create">
+        <div class="location">at line 100</div>
+        <code>            public            <abbr title="Zend\Uri\UriInterface">UriInterface</abbr>
+    <strong>create</strong>(string $uri, string|null $defaultScheme = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$uri</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string|null</td>
+                <td>$defaultScheme</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Zend\Uri\UriInterface">UriInterface</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_createGeneric">
+        <div class="location">at line 120</div>
+        <code>            public            <abbr title="Zend\Uri\UriInterface">UriInterface</abbr>
+    <strong>createGeneric</strong>(string $uri)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$uri</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Zend\Uri\UriInterface">UriInterface</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_fromPath">
+        <div class="location">at line 136</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Uri\FileUri">FileUri</abbr>
+    <strong>fromPath</strong>(string $path)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$path</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Uri\FileUri">FileUri</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_fromData">
+        <div class="location">at line 154</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Uri/DataUri.html"><abbr title="Eloquent\Schemer\Uri\DataUri">DataUri</abbr></a>
+    <strong>fromData</strong>(string $data, string|null $mimeType = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string|null</td>
+                <td>$mimeType</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Uri/DataUri.html"><abbr title="Eloquent\Schemer\Uri\DataUri">DataUri</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

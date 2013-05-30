@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Eloquent\Schemer\Reference\FixedResolutionScopeMapFactory | Schemer API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Schemer API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../Eloquent/Schemer/Reference.html">Eloquent\Schemer\Reference</a>\FixedResolutionScopeMapFactory</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>FixedResolutionScopeMapFactory</strong>        extends <a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a>        implements
+        <a href="../../../Eloquent/Schemer/Reference/ResolutionScopeMapFactoryInterface.html"><abbr title="Eloquent\Schemer\Reference\ResolutionScopeMapFactoryInterface">ResolutionScopeMapFactoryInterface</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\Visitor\Value\ArrayValue">ArrayValue</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_visitArrayValue">visitArrayValue</a>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\ArrayValue">ArrayValue</abbr> $value)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitArrayValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\Visitor\Value\BooleanValue">BooleanValue</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_visitBooleanValue">visitBooleanValue</a>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\BooleanValue">BooleanValue</abbr> $value)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitBooleanValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\Visitor\Value\FloatingPointValue">FloatingPointValue</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_visitFloatingPointValue">visitFloatingPointValue</a>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\FloatingPointValue">FloatingPointValue</abbr> $value)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitFloatingPointValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\Visitor\Value\IntegerValue">IntegerValue</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_visitIntegerValue">visitIntegerValue</a>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\IntegerValue">IntegerValue</abbr> $value)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitIntegerValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\Visitor\Value\NullValue">NullValue</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_visitNullValue">visitNullValue</a>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\NullValue">NullValue</abbr> $value)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitNullValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\Visitor\Value\ObjectValue">ObjectValue</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_visitObjectValue">visitObjectValue</a>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\ObjectValue">ObjectValue</abbr> $value)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitObjectValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\Visitor\Value\StringValue">StringValue</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_visitStringValue">visitStringValue</a>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\StringValue">StringValue</abbr> $value)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitStringValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\Visitor\Value\DateTimeValue">DateTimeValue</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_visitDateTimeValue">visitDateTimeValue</a>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\DateTimeValue">DateTimeValue</abbr> $value)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitDateTimeValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\Visitor\Value\ReferenceValue">ReferenceValue</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_visitReferenceValue">visitReferenceValue</a>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\ReferenceValue">ReferenceValue</abbr> $value)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitReferenceValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Value\Visitor\Value\PlaceholderValue">PlaceholderValue</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_visitPlaceholderValue">visitPlaceholderValue</a>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\PlaceholderValue">PlaceholderValue</abbr> $value)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitPlaceholderValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../../Eloquent/Schemer/Pointer/PointerFactoryInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerFactoryInterface">PointerFactoryInterface</abbr></a> $pointerFactory = null)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Pointer/PointerFactoryInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerFactoryInterface">PointerFactoryInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_pointerFactory">pointerFactory</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Reference/ResolutionScopeMap.html"><abbr title="Eloquent\Schemer\Reference\ResolutionScopeMap">ResolutionScopeMap</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_create">create</a>(<abbr title="Zend\Uri\UriInterface">UriInterface</abbr> $baseUri, <abbr title="Eloquent\Schemer\Reference\Value\ValueInterface">ValueInterface</abbr> $value)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method_visitArrayValue">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitArrayValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a> at line 23</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\Visitor\Value\ArrayValue">ArrayValue</abbr>
+    <strong>visitArrayValue</strong>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\ArrayValue">ArrayValue</abbr> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\ArrayValue">ArrayValue</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\ArrayValue">ArrayValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitBooleanValue">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitBooleanValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a> at line 33</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\Visitor\Value\BooleanValue">BooleanValue</abbr>
+    <strong>visitBooleanValue</strong>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\BooleanValue">BooleanValue</abbr> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\BooleanValue">BooleanValue</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\BooleanValue">BooleanValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitFloatingPointValue">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitFloatingPointValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a> at line 43</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\Visitor\Value\FloatingPointValue">FloatingPointValue</abbr>
+    <strong>visitFloatingPointValue</strong>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\FloatingPointValue">FloatingPointValue</abbr> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\FloatingPointValue">FloatingPointValue</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\FloatingPointValue">FloatingPointValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitIntegerValue">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitIntegerValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a> at line 53</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\Visitor\Value\IntegerValue">IntegerValue</abbr>
+    <strong>visitIntegerValue</strong>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\IntegerValue">IntegerValue</abbr> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\IntegerValue">IntegerValue</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\IntegerValue">IntegerValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitNullValue">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitNullValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a> at line 63</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\Visitor\Value\NullValue">NullValue</abbr>
+    <strong>visitNullValue</strong>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\NullValue">NullValue</abbr> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\NullValue">NullValue</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\NullValue">NullValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitObjectValue">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitObjectValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a> at line 73</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\Visitor\Value\ObjectValue">ObjectValue</abbr>
+    <strong>visitObjectValue</strong>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\ObjectValue">ObjectValue</abbr> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\ObjectValue">ObjectValue</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\ObjectValue">ObjectValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitStringValue">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitStringValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a> at line 83</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\Visitor\Value\StringValue">StringValue</abbr>
+    <strong>visitStringValue</strong>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\StringValue">StringValue</abbr> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\StringValue">StringValue</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\StringValue">StringValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitDateTimeValue">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitDateTimeValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a> at line 93</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\Visitor\Value\DateTimeValue">DateTimeValue</abbr>
+    <strong>visitDateTimeValue</strong>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\DateTimeValue">DateTimeValue</abbr> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\DateTimeValue">DateTimeValue</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\DateTimeValue">DateTimeValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitReferenceValue">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitReferenceValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a> at line 103</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\Visitor\Value\ReferenceValue">ReferenceValue</abbr>
+    <strong>visitReferenceValue</strong>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\ReferenceValue">ReferenceValue</abbr> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\ReferenceValue">ReferenceValue</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\ReferenceValue">ReferenceValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitPlaceholderValue">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Value/Visitor/AbstractValueVisitor.html#method_visitPlaceholderValue"><abbr title="Eloquent\Schemer\Value\Visitor\AbstractValueVisitor">AbstractValueVisitor</abbr></a> at line 113</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Value\Visitor\Value\PlaceholderValue">PlaceholderValue</abbr>
+    <strong>visitPlaceholderValue</strong>(<abbr title="Eloquent\Schemer\Value\Visitor\Value\PlaceholderValue">PlaceholderValue</abbr> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\PlaceholderValue">PlaceholderValue</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Value\Visitor\Value\PlaceholderValue">PlaceholderValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method___construct">
+        <div class="location">at line 25</div>
+        <code>            public            
+    <strong>__construct</strong>(<a href="../../../Eloquent/Schemer/Pointer/PointerFactoryInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerFactoryInterface">PointerFactoryInterface</abbr></a> $pointerFactory = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../Eloquent/Schemer/Pointer/PointerFactoryInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerFactoryInterface">PointerFactoryInterface</abbr></a></td>
+                <td>$pointerFactory</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_pointerFactory">
+        <div class="location">at line 37</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Pointer/PointerFactoryInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerFactoryInterface">PointerFactoryInterface</abbr></a>
+    <strong>pointerFactory</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Pointer/PointerFactoryInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerFactoryInterface">PointerFactoryInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_create">
+        <div class="location">at line 48</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Reference/ResolutionScopeMap.html"><abbr title="Eloquent\Schemer\Reference\ResolutionScopeMap">ResolutionScopeMap</abbr></a>
+    <strong>create</strong>(<abbr title="Zend\Uri\UriInterface">UriInterface</abbr> $baseUri, <abbr title="Eloquent\Schemer\Reference\Value\ValueInterface">ValueInterface</abbr> $value)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Zend\Uri\UriInterface">UriInterface</abbr></td>
+                <td>$baseUri</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Reference\Value\ValueInterface">ValueInterface</abbr></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Reference/ResolutionScopeMap.html"><abbr title="Eloquent\Schemer\Reference\ResolutionScopeMap">ResolutionScopeMap</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

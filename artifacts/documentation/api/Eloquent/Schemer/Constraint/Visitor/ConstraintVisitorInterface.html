@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface | Schemer API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../../classes.html">Classes</a></li>
+                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Schemer API</div>
+
+            <div class="type">Interface</div>
+    <h1><a href="../../../../Eloquent/Schemer/Constraint/Visitor.html">Eloquent\Schemer\Constraint\Visitor</a>\ConstraintVisitorInterface</h1>
+    </div>
+        <div class="content">
+                <p>interface    <strong>ConstraintVisitorInterface</strong></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitSchema">visitSchema</a>(<a href="../../../../Eloquent/Schemer/Constraint/Schema.html"><abbr title="Eloquent\Schemer\Constraint\Schema">Schema</abbr></a> $schema)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitEnumConstraint">visitEnumConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\EnumConstraint">EnumConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitTypeConstraint">visitTypeConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\TypeConstraint">TypeConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitAllOfConstraint">visitAllOfConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\AllOfConstraint">AllOfConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitAnyOfConstraint">visitAnyOfConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\AnyOfConstraint">AnyOfConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitOneOfConstraint">visitOneOfConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\OneOfConstraint">OneOfConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitNotConstraint">visitNotConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\NotConstraint">NotConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitMaximumPropertiesConstraint">visitMaximumPropertiesConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\MaximumPropertiesConstraint">MaximumPropertiesConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitMinimumPropertiesConstraint">visitMinimumPropertiesConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\MinimumPropertiesConstraint">MinimumPropertiesConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitRequiredConstraint">visitRequiredConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\RequiredConstraint">RequiredConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitPropertiesConstraint">visitPropertiesConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\PropertiesConstraint">PropertiesConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitAdditionalPropertyConstraint">visitAdditionalPropertyConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\AdditionalPropertyConstraint">AdditionalPropertyConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitDependencyConstraint">visitDependencyConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\DependencyConstraint">DependencyConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitItemsConstraint">visitItemsConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\ItemsConstraint">ItemsConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitAdditionalItemConstraint">visitAdditionalItemConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\AdditionalItemConstraint">AdditionalItemConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitMaximumItemsConstraint">visitMaximumItemsConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\MaximumItemsConstraint">MaximumItemsConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitMinimumItemsConstraint">visitMinimumItemsConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\MinimumItemsConstraint">MinimumItemsConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitUniqueItemsConstraint">visitUniqueItemsConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\UniqueItemsConstraint">UniqueItemsConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitPatternConstraint">visitPatternConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\PatternConstraint">PatternConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitMaximumLengthConstraint">visitMaximumLengthConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\MaximumLengthConstraint">MaximumLengthConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitMinimumLengthConstraint">visitMinimumLengthConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\MinimumLengthConstraint">MinimumLengthConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitDateTimeFormatConstraint">visitDateTimeFormatConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\DateTimeFormatConstraint">DateTimeFormatConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitEmailFormatConstraint">visitEmailFormatConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\EmailFormatConstraint">EmailFormatConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitHostnameFormatConstraint">visitHostnameFormatConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\HostnameFormatConstraint">HostnameFormatConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitIpv4AddressFormatConstraint">visitIpv4AddressFormatConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\Ipv4AddressFormatConstraint">Ipv4AddressFormatConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitIpv6AddressFormatConstraint">visitIpv6AddressFormatConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\Ipv6AddressFormatConstraint">Ipv6AddressFormatConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitUriFormatConstraint">visitUriFormatConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\UriFormatConstraint">UriFormatConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitMultipleOfConstraint">visitMultipleOfConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\NumberValue\MultipleOfConstraint">MultipleOfConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitMaximumConstraint">visitMaximumConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\NumberValue\MaximumConstraint">MaximumConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitMinimumConstraint">visitMinimumConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\NumberValue\MinimumConstraint">MinimumConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitMaximumDateTimeConstraint">visitMaximumDateTimeConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\DateTimeValue\MaximumDateTimeConstraint">MaximumDateTimeConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_visitMinimumDateTimeConstraint">visitMinimumDateTimeConstraint</a>(<abbr title="Eloquent\Schemer\Constraint\Visitor\DateTimeValue\MinimumDateTimeConstraint">MinimumDateTimeConstraint</abbr> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method_visitSchema">
+        <div class="location">at line 30</div>
+        <code>            public            mixed
+    <strong>visitSchema</strong>(<a href="../../../../Eloquent/Schemer/Constraint/Schema.html"><abbr title="Eloquent\Schemer\Constraint\Schema">Schema</abbr></a> $schema)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../../Eloquent/Schemer/Constraint/Schema.html"><abbr title="Eloquent\Schemer\Constraint\Schema">Schema</abbr></a></td>
+                <td>$schema</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitEnumConstraint">
+        <div class="location">at line 39</div>
+        <code>            public            mixed
+    <strong>visitEnumConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\EnumConstraint">EnumConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\EnumConstraint">EnumConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitTypeConstraint">
+        <div class="location">at line 46</div>
+        <code>            public            mixed
+    <strong>visitTypeConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\TypeConstraint">TypeConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\TypeConstraint">TypeConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitAllOfConstraint">
+        <div class="location">at line 53</div>
+        <code>            public            mixed
+    <strong>visitAllOfConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\AllOfConstraint">AllOfConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\AllOfConstraint">AllOfConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitAnyOfConstraint">
+        <div class="location">at line 60</div>
+        <code>            public            mixed
+    <strong>visitAnyOfConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\AnyOfConstraint">AnyOfConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\AnyOfConstraint">AnyOfConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitOneOfConstraint">
+        <div class="location">at line 67</div>
+        <code>            public            mixed
+    <strong>visitOneOfConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\OneOfConstraint">OneOfConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\OneOfConstraint">OneOfConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitNotConstraint">
+        <div class="location">at line 74</div>
+        <code>            public            mixed
+    <strong>visitNotConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\NotConstraint">NotConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\Generic\NotConstraint">NotConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitMaximumPropertiesConstraint">
+        <div class="location">at line 83</div>
+        <code>            public            mixed
+    <strong>visitMaximumPropertiesConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\MaximumPropertiesConstraint">MaximumPropertiesConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\MaximumPropertiesConstraint">MaximumPropertiesConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitMinimumPropertiesConstraint">
+        <div class="location">at line 90</div>
+        <code>            public            mixed
+    <strong>visitMinimumPropertiesConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\MinimumPropertiesConstraint">MinimumPropertiesConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\MinimumPropertiesConstraint">MinimumPropertiesConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitRequiredConstraint">
+        <div class="location">at line 97</div>
+        <code>            public            mixed
+    <strong>visitRequiredConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\RequiredConstraint">RequiredConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\RequiredConstraint">RequiredConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitPropertiesConstraint">
+        <div class="location">at line 104</div>
+        <code>            public            mixed
+    <strong>visitPropertiesConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\PropertiesConstraint">PropertiesConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\PropertiesConstraint">PropertiesConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitAdditionalPropertyConstraint">
+        <div class="location">at line 111</div>
+        <code>            public            mixed
+    <strong>visitAdditionalPropertyConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\AdditionalPropertyConstraint">AdditionalPropertyConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\AdditionalPropertyConstraint">AdditionalPropertyConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitDependencyConstraint">
+        <div class="location">at line 118</div>
+        <code>            public            mixed
+    <strong>visitDependencyConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\DependencyConstraint">DependencyConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\ObjectValue\DependencyConstraint">DependencyConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitItemsConstraint">
+        <div class="location">at line 127</div>
+        <code>            public            mixed
+    <strong>visitItemsConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\ItemsConstraint">ItemsConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\ItemsConstraint">ItemsConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitAdditionalItemConstraint">
+        <div class="location">at line 134</div>
+        <code>            public            mixed
+    <strong>visitAdditionalItemConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\AdditionalItemConstraint">AdditionalItemConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\AdditionalItemConstraint">AdditionalItemConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitMaximumItemsConstraint">
+        <div class="location">at line 141</div>
+        <code>            public            mixed
+    <strong>visitMaximumItemsConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\MaximumItemsConstraint">MaximumItemsConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\MaximumItemsConstraint">MaximumItemsConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitMinimumItemsConstraint">
+        <div class="location">at line 148</div>
+        <code>            public            mixed
+    <strong>visitMinimumItemsConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\MinimumItemsConstraint">MinimumItemsConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\MinimumItemsConstraint">MinimumItemsConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitUniqueItemsConstraint">
+        <div class="location">at line 155</div>
+        <code>            public            mixed
+    <strong>visitUniqueItemsConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\UniqueItemsConstraint">UniqueItemsConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\ArrayValue\UniqueItemsConstraint">UniqueItemsConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitPatternConstraint">
+        <div class="location">at line 164</div>
+        <code>            public            mixed
+    <strong>visitPatternConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\PatternConstraint">PatternConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\PatternConstraint">PatternConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitMaximumLengthConstraint">
+        <div class="location">at line 171</div>
+        <code>            public            mixed
+    <strong>visitMaximumLengthConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\MaximumLengthConstraint">MaximumLengthConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\MaximumLengthConstraint">MaximumLengthConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitMinimumLengthConstraint">
+        <div class="location">at line 178</div>
+        <code>            public            mixed
+    <strong>visitMinimumLengthConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\MinimumLengthConstraint">MinimumLengthConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\MinimumLengthConstraint">MinimumLengthConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitDateTimeFormatConstraint">
+        <div class="location">at line 185</div>
+        <code>            public            mixed
+    <strong>visitDateTimeFormatConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\DateTimeFormatConstraint">DateTimeFormatConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\DateTimeFormatConstraint">DateTimeFormatConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitEmailFormatConstraint">
+        <div class="location">at line 192</div>
+        <code>            public            mixed
+    <strong>visitEmailFormatConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\EmailFormatConstraint">EmailFormatConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\EmailFormatConstraint">EmailFormatConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitHostnameFormatConstraint">
+        <div class="location">at line 199</div>
+        <code>            public            mixed
+    <strong>visitHostnameFormatConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\HostnameFormatConstraint">HostnameFormatConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\HostnameFormatConstraint">HostnameFormatConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitIpv4AddressFormatConstraint">
+        <div class="location">at line 206</div>
+        <code>            public            mixed
+    <strong>visitIpv4AddressFormatConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\Ipv4AddressFormatConstraint">Ipv4AddressFormatConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\Ipv4AddressFormatConstraint">Ipv4AddressFormatConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitIpv6AddressFormatConstraint">
+        <div class="location">at line 213</div>
+        <code>            public            mixed
+    <strong>visitIpv6AddressFormatConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\Ipv6AddressFormatConstraint">Ipv6AddressFormatConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\Ipv6AddressFormatConstraint">Ipv6AddressFormatConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitUriFormatConstraint">
+        <div class="location">at line 220</div>
+        <code>            public            mixed
+    <strong>visitUriFormatConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\UriFormatConstraint">UriFormatConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\StringValue\UriFormatConstraint">UriFormatConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitMultipleOfConstraint">
+        <div class="location">at line 229</div>
+        <code>            public            mixed
+    <strong>visitMultipleOfConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\NumberValue\MultipleOfConstraint">MultipleOfConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\NumberValue\MultipleOfConstraint">MultipleOfConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitMaximumConstraint">
+        <div class="location">at line 236</div>
+        <code>            public            mixed
+    <strong>visitMaximumConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\NumberValue\MaximumConstraint">MaximumConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\NumberValue\MaximumConstraint">MaximumConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitMinimumConstraint">
+        <div class="location">at line 243</div>
+        <code>            public            mixed
+    <strong>visitMinimumConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\NumberValue\MinimumConstraint">MinimumConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\NumberValue\MinimumConstraint">MinimumConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitMaximumDateTimeConstraint">
+        <div class="location">at line 252</div>
+        <code>            public            mixed
+    <strong>visitMaximumDateTimeConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\DateTimeValue\MaximumDateTimeConstraint">MaximumDateTimeConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\DateTimeValue\MaximumDateTimeConstraint">MaximumDateTimeConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_visitMinimumDateTimeConstraint">
+        <div class="location">at line 259</div>
+        <code>            public            mixed
+    <strong>visitMinimumDateTimeConstraint</strong>(<abbr title="Eloquent\Schemer\Constraint\Visitor\DateTimeValue\MinimumDateTimeConstraint">MinimumDateTimeConstraint</abbr> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Eloquent\Schemer\Constraint\Visitor\DateTimeValue\MinimumDateTimeConstraint">MinimumDateTimeConstraint</abbr></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>
