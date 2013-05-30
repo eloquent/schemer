@@ -42,7 +42,7 @@ class Reader extends AbstractReader
             $protocolMap = new ProtocolMap;
         }
         if (null === $valueFactory) {
-            $valueFactory = new Value\Factory\ValueFactory($this->uriFactory());
+            $valueFactory = new Value\Factory\ValueFactory;
         }
 
         $this->loader = $loader;
