@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Eloquent\Schemer\Reader\ValidatingReader | Schemer API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Schemer API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../Eloquent/Schemer/Reader.html">Eloquent\Schemer\Reader</a>\ValidatingReader</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>ValidatingReader</strong>        extends <a href="../../../Eloquent/Schemer/Reader/AbstractReader.html"><abbr title="Eloquent\Schemer\Reader\AbstractReader">AbstractReader</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../../Eloquent/Schemer/Validation/BoundConstraintValidatorInterface.html"><abbr title="Eloquent\Schemer\Validation\BoundConstraintValidatorInterface">BoundConstraintValidatorInterface</abbr></a> $validator = null, <a href="../../../Eloquent/Schemer/Reader/ReaderInterface.html"><abbr title="Eloquent\Schemer\Reader\ReaderInterface">ReaderInterface</abbr></a> $reader = null, <a href="../../../Eloquent/Schemer/Uri/UriFactoryInterface.html"><abbr title="Eloquent\Schemer\Uri\UriFactoryInterface">UriFactoryInterface</abbr></a> $uriFactory = null)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Uri/UriFactoryInterface.html"><abbr title="Eloquent\Schemer\Uri\UriFactoryInterface">UriFactoryInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_uriFactory">uriFactory</a>()
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Reader/AbstractReader.html#method_uriFactory"><abbr title="Eloquent\Schemer\Reader\AbstractReader">AbstractReader</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_readPath">readPath</a>(string $path, string|null $mimeType = null)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Reader/AbstractReader.html#method_readPath"><abbr title="Eloquent\Schemer\Reader\AbstractReader">AbstractReader</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_readString">readString</a>(string $data, string|null $mimeType = null)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Schemer/Reader/AbstractReader.html#method_readString"><abbr title="Eloquent\Schemer\Reader\AbstractReader">AbstractReader</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Validation/BoundConstraintValidatorInterface.html"><abbr title="Eloquent\Schemer\Validation\BoundConstraintValidatorInterface">BoundConstraintValidatorInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_validator">validator</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../Eloquent/Schemer/Reader/ReaderInterface.html"><abbr title="Eloquent\Schemer\Reader\ReaderInterface">ReaderInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_reader">reader</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Eloquent\Schemer\Reader\Value\ValueInterface">ValueInterface</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_read">read</a>(<abbr title="Zend\Uri\UriInterface">UriInterface</abbr>|string $uri, string|null $mimeType = null)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 28</div>
+        <code>            public            
+    <strong>__construct</strong>(<a href="../../../Eloquent/Schemer/Validation/BoundConstraintValidatorInterface.html"><abbr title="Eloquent\Schemer\Validation\BoundConstraintValidatorInterface">BoundConstraintValidatorInterface</abbr></a> $validator = null, <a href="../../../Eloquent/Schemer/Reader/ReaderInterface.html"><abbr title="Eloquent\Schemer\Reader\ReaderInterface">ReaderInterface</abbr></a> $reader = null, <a href="../../../Eloquent/Schemer/Uri/UriFactoryInterface.html"><abbr title="Eloquent\Schemer\Uri\UriFactoryInterface">UriFactoryInterface</abbr></a> $uriFactory = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../Eloquent/Schemer/Validation/BoundConstraintValidatorInterface.html"><abbr title="Eloquent\Schemer\Validation\BoundConstraintValidatorInterface">BoundConstraintValidatorInterface</abbr></a></td>
+                <td>$validator</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../Eloquent/Schemer/Reader/ReaderInterface.html"><abbr title="Eloquent\Schemer\Reader\ReaderInterface">ReaderInterface</abbr></a></td>
+                <td>$reader</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../Eloquent/Schemer/Uri/UriFactoryInterface.html"><abbr title="Eloquent\Schemer\Uri\UriFactoryInterface">UriFactoryInterface</abbr></a></td>
+                <td>$uriFactory</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_uriFactory">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Reader/AbstractReader.html#method_uriFactory"><abbr title="Eloquent\Schemer\Reader\AbstractReader">AbstractReader</abbr></a> at line 35</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Uri/UriFactoryInterface.html"><abbr title="Eloquent\Schemer\Uri\UriFactoryInterface">UriFactoryInterface</abbr></a>
+    <strong>uriFactory</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Uri/UriFactoryInterface.html"><abbr title="Eloquent\Schemer\Uri\UriFactoryInterface">UriFactoryInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_readPath">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Reader/AbstractReader.html#method_readPath"><abbr title="Eloquent\Schemer\Reader\AbstractReader">AbstractReader</abbr></a> at line 46</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a>
+    <strong>readPath</strong>(string $path, string|null $mimeType = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$path</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string|null</td>
+                <td>$mimeType</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_readString">
+        <div class="location">in <a href="../../../Eloquent/Schemer/Reader/AbstractReader.html#method_readString"><abbr title="Eloquent\Schemer\Reader\AbstractReader">AbstractReader</abbr></a> at line 57</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a>
+    <strong>readString</strong>(string $data, string|null $mimeType = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string|null</td>
+                <td>$mimeType</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Value/ValueInterface.html"><abbr title="Eloquent\Schemer\Value\ValueInterface">ValueInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_validator">
+        <div class="location">at line 49</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Validation/BoundConstraintValidatorInterface.html"><abbr title="Eloquent\Schemer\Validation\BoundConstraintValidatorInterface">BoundConstraintValidatorInterface</abbr></a>
+    <strong>validator</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Validation/BoundConstraintValidatorInterface.html"><abbr title="Eloquent\Schemer\Validation\BoundConstraintValidatorInterface">BoundConstraintValidatorInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_reader">
+        <div class="location">at line 57</div>
+        <code>            public            <a href="../../../Eloquent/Schemer/Reader/ReaderInterface.html"><abbr title="Eloquent\Schemer\Reader\ReaderInterface">ReaderInterface</abbr></a>
+    <strong>reader</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../Eloquent/Schemer/Reader/ReaderInterface.html"><abbr title="Eloquent\Schemer\Reader\ReaderInterface">ReaderInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_read">
+        <div class="location">at line 68</div>
+        <code>            public            <abbr title="Eloquent\Schemer\Reader\Value\ValueInterface">ValueInterface</abbr>
+    <strong>read</strong>(<abbr title="Zend\Uri\UriInterface">UriInterface</abbr>|string $uri, string|null $mimeType = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Zend\Uri\UriInterface">UriInterface</abbr>|string</td>
+                <td>$uri</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string|null</td>
+                <td>$mimeType</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Eloquent\Schemer\Reader\Value\ValueInterface">ValueInterface</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>
