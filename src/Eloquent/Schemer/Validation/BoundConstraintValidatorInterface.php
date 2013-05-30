@@ -16,6 +16,11 @@ use Eloquent\Schemer\Value\ConcreteValueInterface;
 interface BoundConstraintValidatorInterface
 {
     /**
+     * @return ConstraintInterface
+     */
+    public function constraint();
+
+    /**
      * @param ConcreteValueInterface $value
      *
      * @return ValidationResult

@@ -16,6 +16,7 @@ use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Uri\UriInterface;
 use Eloquent\Schemer\Validation\BoundConstraintValidator;
 use Eloquent\Schemer\Validation\BoundConstraintValidatorInterface;
+use Eloquent\Schemer\Validation\Exception\InvalidValueException;
 use Eloquent\Schemer\Value;
 
 class ValidatingReader extends AbstractReader
@@ -70,8 +71,10 @@ class ValidatingReader extends AbstractReader
         $value = $this->reader()->read($uri, $mimeType);
         $result = $this->validator()->validate($value);
         if ($result->isValid()) {
-            throw new RuntimeException(
-                'Value is invalid according to the constraint.'
+            throw new InvalidValueException(
+                $value,
+                $this->validator()->constraint(),
+                $result
             );
         }
 

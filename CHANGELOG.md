@@ -5,6 +5,7 @@
 * **[IMPROVED]** Made bound constraint validator's inner validator an optional
   dependency (#14).
 * **[NEW]** Implemented validating reader (#13).
+* **[IMPROVED]** Restricted Zend URI integration to Uri namespace.
 
 ## 0.2.0 (2013-05-15)
 
