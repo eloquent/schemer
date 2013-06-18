@@ -70,7 +70,7 @@ class DefaultValueTransformTest extends PHPUnit_Framework_TestCase
         );
         $test = $fixture->tests->$testName;
         $actual = clone $test->value;
-        $this->validator->validateAndApplyDefaults(
+        $this->validator->validate(
             $this->schemaFactory->create($fixture->schema),
             $actual
         );

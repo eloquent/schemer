@@ -15,8 +15,7 @@ use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
 use Eloquent\Schemer\Value\ConcreteValueInterface;
 
-class DefaultingConstraintValidator implements
-    DefaultingConstraintValidatorInterface
+class DefaultingConstraintValidator implements ConstraintValidatorInterface
 {
     /**
      * @param ConstraintValidatorInterface|null $validator
@@ -55,50 +54,22 @@ class DefaultingConstraintValidator implements
 
     /**
      * @param ConstraintInterface    $constraint
-     * @param ConcreteValueInterface $value
-     * @param PointerInterface|null  $entryPoint
-     *
-     * @return ValidationResult
-     */
-    public function validate(
-        ConstraintInterface $constraint,
-        ConcreteValueInterface $value,
-        PointerInterface $entryPoint = null
-    ) {
-        return $this->validator()->validate($constraint, $value, $entryPoint);
-    }
-
-    /**
-     * @param ConstraintInterface    $constraint
      * @param ConcreteValueInterface &$value
      * @param PointerInterface|null  $entryPoint
      *
      * @return Result\ValidationResult
      */
-    public function validateAndApplyDefaults(
+    public function validate(
         ConstraintInterface $constraint,
         ConcreteValueInterface &$value,
         PointerInterface $entryPoint = null
     ) {
-        $result = $this->validate($constraint, $value, $entryPoint);
-        $value = $this->applyDefaults($result, $value);
-
-        return $result;
-    }
-
-    /**
-     * @param Result\ValidationResult $result
-     * @param ConcreteValueInterface  $value
-     *
-     * @return ConcreteValueInterface
-     */
-    public function applyDefaults(
-        Result\ValidationResult $result,
-        ConcreteValueInterface $value
-    ) {
-        return $this->defaultTransformFactory()
+        $result = $this->validator()->validate($constraint, $value, $entryPoint);
+        $value = $this->defaultTransformFactory()
             ->create($result)
             ->transform($value);
+
+        return $result;
     }
 
     private $validator;

@@ -19,14 +19,14 @@ interface ConstraintValidatorInterface
 {
     /**
      * @param ConstraintInterface    $constraint
-     * @param ConcreteValueInterface $value
+     * @param ConcreteValueInterface &$value
      * @param PointerInterface|null  $entryPoint
      *
      * @return Result\ValidationResult
      */
     public function validate(
         ConstraintInterface $constraint,
-        ConcreteValueInterface $value,
+        ConcreteValueInterface &$value,
         PointerInterface $entryPoint = null
     );
 }

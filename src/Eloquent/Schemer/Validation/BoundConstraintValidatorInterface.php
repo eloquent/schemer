@@ -21,9 +21,9 @@ interface BoundConstraintValidatorInterface
     public function constraint();
 
     /**
-     * @param ConcreteValueInterface $value
+     * @param ConcreteValueInterface &$value
      *
      * @return ValidationResult
      */
-    public function validate(ConcreteValueInterface $value);
+    public function validate(ConcreteValueInterface &$value);
 }

@@ -162,14 +162,14 @@ class ConstraintValidator implements
 
     /**
      * @param ConstraintInterface          $constraint
-     * @param Value\ConcreteValueInterface $value
+     * @param Value\ConcreteValueInterface &$value
      * @param PointerInterface|null        $entryPoint
      *
      * @return Result\ValidationResult
      */
     public function validate(
         ConstraintInterface $constraint,
-        Value\ConcreteValueInterface $value,
+        Value\ConcreteValueInterface &$value,
         PointerInterface $entryPoint = null
     ) {
         if (null === $entryPoint) {

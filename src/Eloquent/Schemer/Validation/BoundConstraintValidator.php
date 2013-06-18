@@ -49,11 +49,11 @@ class BoundConstraintValidator implements BoundConstraintValidatorInterface
     }
 
     /**
-     * @param ConcreteValueInterface $value
+     * @param ConcreteValueInterface &$value
      *
      * @return ValidationResult
      */
-    public function validate(ConcreteValueInterface $value)
+    public function validate(ConcreteValueInterface &$value)
     {
         return $this->validator()->validate($this->constraint(), $value);
     }
