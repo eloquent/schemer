@@ -23,7 +23,7 @@
     </div>
         <div class="content">
                 <p>class    <strong>DefaultingConstraintValidator</strong>        implements
-        <a href="../../../Eloquent/Schemer/Validation/DefaultingConstraintValidatorInterface.html"><abbr title="Eloquent\Schemer\Validation\DefaultingConstraintValidatorInterface">DefaultingConstraintValidatorInterface</abbr></a></p>
+        <a href="../../../Eloquent/Schemer/Validation/ConstraintValidatorInterface.html"><abbr title="Eloquent\Schemer\Validation\ConstraintValidatorInterface">ConstraintValidatorInterface</abbr></a></p>
 
     
     
@@ -63,30 +63,10 @@
             </tr>
                     <tr>
                 <td class="type">
-                    <abbr title="Eloquent\Schemer\Validation\ValidationResult">ValidationResult</abbr>
-                </td>
-                <td class="last">
-                    <a href="#method_validate">validate</a>(<a href="../../../Eloquent/Schemer/Constraint/ConstraintInterface.html"><abbr title="Eloquent\Schemer\Constraint\ConstraintInterface">ConstraintInterface</abbr></a> $constraint, <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a> $value, <a href="../../../Eloquent/Schemer/Pointer/PointerInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerInterface">PointerInterface</abbr></a> $entryPoint = null)
-                    <p></p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
                     <a href="../../../Eloquent/Schemer/Validation/Result/ValidationResult.html"><abbr title="Eloquent\Schemer\Validation\Result\ValidationResult">ValidationResult</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_validateAndApplyDefaults">validateAndApplyDefaults</a>(<a href="../../../Eloquent/Schemer/Constraint/ConstraintInterface.html"><abbr title="Eloquent\Schemer\Constraint\ConstraintInterface">ConstraintInterface</abbr></a> $constraint, <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a> $value, <a href="../../../Eloquent/Schemer/Pointer/PointerInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerInterface">PointerInterface</abbr></a> $entryPoint = null)
-                    <p></p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a>
-                </td>
-                <td class="last">
-                    <a href="#method_applyDefaults">applyDefaults</a>(<a href="../../../Eloquent/Schemer/Validation/Result/ValidationResult.html"><abbr title="Eloquent\Schemer\Validation\Result\ValidationResult">ValidationResult</abbr></a> $result, <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a> $value)
+                    <a href="#method_validate">validate</a>(<a href="../../../Eloquent/Schemer/Constraint/ConstraintInterface.html"><abbr title="Eloquent\Schemer\Constraint\ConstraintInterface">ConstraintInterface</abbr></a> $constraint, <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a> $value, <a href="../../../Eloquent/Schemer/Pointer/PointerInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerInterface">PointerInterface</abbr></a> $entryPoint = null)
                     <p></p>
                 </td>
                 <td></td>
@@ -97,7 +77,7 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 25</div>
+        <div class="location">at line 24</div>
         <code>            public            
     <strong>__construct</strong>(<a href="../../../Eloquent/Schemer/Validation/ConstraintValidatorInterface.html"><abbr title="Eloquent\Schemer\Validation\ConstraintValidatorInterface">ConstraintValidatorInterface</abbr></a> $validator = null, <a href="../../../Eloquent/Schemer/Validation/DefaultValueTransformFactory.html"><abbr title="Eloquent\Schemer\Validation\DefaultValueTransformFactory">DefaultValueTransformFactory</abbr></a> $defaultTransformFactory = null)</code>
     </h3>
@@ -127,7 +107,7 @@
     </div>
 
                 <h3 id="method_validator">
-        <div class="location">at line 43</div>
+        <div class="location">at line 42</div>
         <code>            public            <a href="../../../Eloquent/Schemer/Validation/ConstraintValidatorInterface.html"><abbr title="Eloquent\Schemer\Validation\ConstraintValidatorInterface">ConstraintValidatorInterface</abbr></a>
     <strong>validator</strong>()</code>
     </h3>
@@ -151,7 +131,7 @@
     </div>
 
                 <h3 id="method_defaultTransformFactory">
-        <div class="location">at line 51</div>
+        <div class="location">at line 50</div>
         <code>            public            <a href="../../../Eloquent/Schemer/Validation/DefaultValueTransformFactory.html"><abbr title="Eloquent\Schemer\Validation\DefaultValueTransformFactory">DefaultValueTransformFactory</abbr></a>
     <strong>defaultTransformFactory</strong>()</code>
     </h3>
@@ -175,53 +155,9 @@
     </div>
 
                 <h3 id="method_validate">
-        <div class="location">at line 63</div>
-        <code>            public            <abbr title="Eloquent\Schemer\Validation\ValidationResult">ValidationResult</abbr>
-    <strong>validate</strong>(<a href="../../../Eloquent/Schemer/Constraint/ConstraintInterface.html"><abbr title="Eloquent\Schemer\Constraint\ConstraintInterface">ConstraintInterface</abbr></a> $constraint, <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a> $value, <a href="../../../Eloquent/Schemer/Pointer/PointerInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerInterface">PointerInterface</abbr></a> $entryPoint = null)</code>
-    </h3>
-    <div class="details">
-        <p></p>
-        <p></p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td><a href="../../../Eloquent/Schemer/Constraint/ConstraintInterface.html"><abbr title="Eloquent\Schemer\Constraint\ConstraintInterface">ConstraintInterface</abbr></a></td>
-                <td>$constraint</td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td><a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a></td>
-                <td>$value</td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td><a href="../../../Eloquent/Schemer/Pointer/PointerInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerInterface">PointerInterface</abbr></a></td>
-                <td>$entryPoint</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td><abbr title="Eloquent\Schemer\Validation\ValidationResult">ValidationResult</abbr></td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_validateAndApplyDefaults">
-        <div class="location">at line 78</div>
+        <div class="location">at line 62</div>
         <code>            public            <a href="../../../Eloquent/Schemer/Validation/Result/ValidationResult.html"><abbr title="Eloquent\Schemer\Validation\Result\ValidationResult">ValidationResult</abbr></a>
-    <strong>validateAndApplyDefaults</strong>(<a href="../../../Eloquent/Schemer/Constraint/ConstraintInterface.html"><abbr title="Eloquent\Schemer\Constraint\ConstraintInterface">ConstraintInterface</abbr></a> $constraint, <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a> $value, <a href="../../../Eloquent/Schemer/Pointer/PointerInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerInterface">PointerInterface</abbr></a> $entryPoint = null)</code>
+    <strong>validate</strong>(<a href="../../../Eloquent/Schemer/Constraint/ConstraintInterface.html"><abbr title="Eloquent\Schemer\Constraint\ConstraintInterface">ConstraintInterface</abbr></a> $constraint, <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a> $value, <a href="../../../Eloquent/Schemer/Pointer/PointerInterface.html"><abbr title="Eloquent\Schemer\Pointer\PointerInterface">PointerInterface</abbr></a> $entryPoint = null)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -253,45 +189,6 @@
                     <table>
         <tr>
             <td><a href="../../../Eloquent/Schemer/Validation/Result/ValidationResult.html"><abbr title="Eloquent\Schemer\Validation\Result\ValidationResult">ValidationResult</abbr></a></td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_applyDefaults">
-        <div class="location">at line 95</div>
-        <code>            public            <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a>
-    <strong>applyDefaults</strong>(<a href="../../../Eloquent/Schemer/Validation/Result/ValidationResult.html"><abbr title="Eloquent\Schemer\Validation\Result\ValidationResult">ValidationResult</abbr></a> $result, <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a> $value)</code>
-    </h3>
-    <div class="details">
-        <p></p>
-        <p></p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td><a href="../../../Eloquent/Schemer/Validation/Result/ValidationResult.html"><abbr title="Eloquent\Schemer\Validation\Result\ValidationResult">ValidationResult</abbr></a></td>
-                <td>$result</td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td><a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a></td>
-                <td>$value</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td><a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a></td>
             <td></td>
         </tr>
     </table>
