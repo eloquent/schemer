@@ -13,6 +13,9 @@
 * **[IMPROVED]** Bound constraint validator can now use a defaulting validator
   internally.
 * **[IMPROVED]** Restricted Zend URI integration to Uri namespace.
+* **[IMPROVED]** Value factory can now handle creation of recursive structures.
+* **[IMPROVED]** Value instances can now return their native equivalents, even
+  when circular references are present.
 
 ## 0.2.0 (2013-05-15)
 

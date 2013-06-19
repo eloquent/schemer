@@ -40,19 +40,6 @@ class ObjectValue extends AbstractConcreteValue implements
     }
 
     /**
-     * @return stdClass
-     */
-    public function value()
-    {
-        $value = clone $this->value;
-        foreach ($this->keys() as $property) {
-            $value->$property = $value->$property->value();
-        }
-
-        return $value;
-    }
-
-    /**
      * @return ValueType
      */
     public function valueType()
@@ -211,5 +198,26 @@ class ObjectValue extends AbstractConcreteValue implements
     public function getIterator()
     {
         return new ArrayIterator($this->properties());
+    }
+
+    /**
+     * @param array<tuple<string,mixed>> &$valueMap
+     *
+     * @return mixed
+     */
+    protected function unwrap(array &$valueMap)
+    {
+        $id = spl_object_hash($this);
+
+        if (array_key_exists($id, $valueMap)) {
+            return $valueMap[$id];
+        }
+
+        $valueMap[$id] = new stdClass;
+        foreach (get_object_vars($this->value) as $property => $subValue) {
+            $valueMap[$id]->$property = $subValue->unwrap($valueMap);
+        }
+
+        return $valueMap[$id];
     }
 }

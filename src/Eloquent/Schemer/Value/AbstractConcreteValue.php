@@ -26,6 +26,18 @@ abstract class AbstractConcreteValue implements ConcreteValueInterface
      */
     public function value()
     {
+        $valueMap = array();
+
+        return $this->unwrap($valueMap);
+    }
+
+    /**
+     * @param array<tuple<string,mixed>> &$valueMap
+     *
+     * @return mixed
+     */
+    protected function unwrap(array &$valueMap)
+    {
         return $this->value;
     }
 

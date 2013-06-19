@@ -49,16 +49,6 @@ class ArrayValue extends AbstractConcreteValue implements
     }
 
     /**
-     * @return array<integer,mixed>
-     */
-    public function value()
-    {
-        return array_map(function ($value) {
-            return $value->value();
-        }, $this->value);
-    }
-
-    /**
      * @return ValueType
      */
     public function valueType()
@@ -220,5 +210,26 @@ class ArrayValue extends AbstractConcreteValue implements
     public function getIterator()
     {
         return new ArrayIterator($this->value);
+    }
+
+    /**
+     * @param array<tuple<string,mixed>> &$valueMap
+     *
+     * @return mixed
+     */
+    protected function unwrap(array &$valueMap)
+    {
+        $id = spl_object_hash($this);
+
+        if (array_key_exists($id, $valueMap)) {
+            return $valueMap[$id];
+        }
+
+        $valueMap[$id] = array();
+        foreach ($this->value as $key => $subValue) {
+            $valueMap[$id][$key] = $subValue->unwrap($valueMap);
+        }
+
+        return $valueMap[$id];
     }
 }

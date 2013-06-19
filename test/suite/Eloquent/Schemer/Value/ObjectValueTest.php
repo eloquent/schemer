@@ -12,8 +12,9 @@
 namespace Eloquent\Schemer\Value;
 
 use PHPUnit_Framework_TestCase;
+use stdClass;
 
-class ArrayValueTest extends PHPUnit_Framework_TestCase
+class ObjectValueTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
@@ -24,8 +25,9 @@ class ArrayValueTest extends PHPUnit_Framework_TestCase
 
     public function testValueRecursive()
     {
-        $before = array('foo' => 'bar');
-        $before['baz'] = &$before;
+        $before = new stdClass;
+        $before->foo = 'bar';
+        $before->baz = $before;
         $instance = $this->factory->create($before);
         $after = $instance->value();
 
