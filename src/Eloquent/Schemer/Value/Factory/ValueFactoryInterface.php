@@ -14,9 +14,9 @@ namespace Eloquent\Schemer\Value\Factory;
 interface ValueFactoryInterface
 {
     /**
-     * @param mixed $value
+     * @param mixed &$value
      *
      * @return \Eloquent\Schemer\Value\ValueInterface
      */
-    public function create($value);
+    public function create(&$value);
 }

@@ -91,9 +91,9 @@ class Reader extends AbstractReader
             $mimeType = $content->mimeType();
         }
 
-        return $this->valueFactory()->create(
-            $this->protocolMap()->get($mimeType)->thaw($content->data())
-        );
+        $value = $this->protocolMap()->get($mimeType)->thaw($content->data());
+
+        return $this->valueFactory()->create($value);
     }
 
     private $loader;

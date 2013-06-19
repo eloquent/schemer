@@ -20,12 +20,31 @@ use stdClass;
 class ValueFactory implements ValueFactoryInterface
 {
     /**
-     * @param mixed $value
+     * @param mixed &$value
      *
      * @return Value\ValueInterface
      */
-    public function create($value)
+    public function create(&$value)
     {
+        $this->clear();
+        $instance = $this->createValue($value);
+        $this->clear();
+
+        return $instance;
+    }
+
+    /**
+     * @param mixed &$value
+     *
+     * @return Value\ValueInterface
+     */
+    protected function createValue(&$value)
+    {
+        $instance = $this->instance($value);
+        if (null !== $instance) {
+            return $instance;
+        }
+
         $variableType = gettype($value);
         switch ($variableType) {
             case 'boolean':
@@ -57,73 +76,168 @@ class ValueFactory implements ValueFactoryInterface
     }
 
     /**
-     * @param array<integer,mixed> $value
+     * @param array<integer,mixed> &$value
      *
      * @return Value\ValueInterface
      */
-    protected function createArray(array $value)
+    protected function createArray(array &$value)
     {
-        $isObject = false;
-        $expectedIndex = 0;
-        foreach ($value as $index => $subValue) {
-            $value[$index] = $this->create($subValue);
-            $isObject = $isObject || $index !== $expectedIndex++;
+        $size = count($value);
+        if ($size > 0 && array_keys($value) !== range(0, $size - 1)) {
+            return $this->createObjectFromArray($value);
         }
 
-        if ($isObject) {
-            $object = new stdClass;
-            foreach ($value as $key => $subValue) {
-                $object->$key = $subValue;
-            }
+        $instance = new Value\ArrayValue;
+        $this->register($value, $instance);
 
-            return $this->createReference($object);
+        foreach ($value as $key => &$subValue) {
+            $instance->set($key, $this->createValue($subValue));
         }
 
-        return new Value\ArrayValue($value);
+        return $instance;
     }
 
     /**
-     * @param stdClass $value
+     * @param array &$value
      *
      * @return Value\ValueInterface
      */
-    protected function createObject(stdClass $value)
+    protected function createObjectFromArray(array &$value)
     {
-        $value = clone $value;
+        if (array_key_exists('$ref', $value) && is_string($value['$ref'])) {
+            return $this->createReferenceFromArray($value);
+        }
+
+        $instance = new Value\ObjectValue;
+        $this->register($value, $instance);
+
+        foreach ($value as $key => &$subValue) {
+            $instance->set($key, $this->createValue($subValue));
+        }
+
+        return $instance;
+    }
+
+    /**
+     * @param array &$value
+     *
+     * @return Value\ValueInterface
+     */
+    protected function createReferenceFromArray(array &$value)
+    {
+        $uri = new Uri($value['$ref']);
+        $mimeType = null;
+        if (array_key_exists('$type', $value) && is_string($value['$type'])) {
+            $mimeType = $value['$type'];
+        }
+
+        return $this->register(
+            $value,
+            new Value\ReferenceValue($uri, $mimeType)
+        );
+    }
+
+    /**
+     * @param stdClass &$value
+     *
+     * @return Value\ValueInterface
+     */
+    protected function createObject(stdClass &$value)
+    {
+        if (property_exists($value, '$ref') && is_string($value->{'$ref'})) {
+            return $this->createReferenceFromObject($value);
+        }
+
+        $instance = new Value\ObjectValue;
+        $this->register($value, $instance);
 
         foreach (get_object_vars($value) as $property => $subValue) {
-            $value->$property = $this->create($subValue);
+            $realProperty = $property;
+            if ('_empty_' === $property) {
+                $property = '';
+            }
+
+            $instance->set($property, $this->createValue($value->$realProperty));
         }
 
-        return $this->createReference($value);
+        return $instance;
     }
 
     /**
-     * @param stdClass $value
+     * @param stdClass &$value
      *
      * @return Value\ValueInterface
      */
-    protected function createReference(stdClass $value)
+    protected function createReferenceFromObject(stdClass &$value)
     {
-        if (
-            property_exists($value, '$ref') &&
-            $value->{'$ref'} instanceof Value\StringValue
-        ) {
-            $uri = new Uri($value->{'$ref'}->value());
-            $mimeType = null;
-            if (
-                property_exists($value, '$type') &&
-                $value->{'$type'} instanceof Value\StringValue
-            ) {
-                $mimeType = $value->{'$type'}->value();
-            }
-
-            return new Value\ReferenceValue(
-                $uri,
-                $mimeType
-            );
+        $uri = new Uri($value->{'$ref'});
+        $mimeType = null;
+        if (property_exists($value, '$type') && is_string($value->{'$type'})) {
+            $mimeType = $value->{'$type'};
         }
 
-        return new Value\ObjectValue($value);
+        return $this->register(
+            $value,
+            new Value\ReferenceValue($uri, $mimeType)
+        );
     }
+
+    protected function clear()
+    {
+        $this->instances = array();
+    }
+
+    /**
+     * @param mixed                &$value
+     * @param Value\ValueInterface $instance
+     *
+     * @return Value\ValueInterface
+     */
+    protected function register(&$value, $instance)
+    {
+        $this->instances[] = array(&$value, $instance);
+
+        return $instance;
+    }
+
+    /**
+     * @param mixed &$value
+     *
+     * @return Value\ValueInterface|null
+     */
+    protected function instance(&$value)
+    {
+        foreach ($this->instances as &$tuple) {
+            if ($tuple[0] === $value) {
+                if (
+                    is_array($value) &&
+                    !$this->isArrayReference($tuple[0], $value)
+                ) {
+                    continue;
+                }
+
+                return $tuple[1];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array &$left
+     * @param array &$right
+     *
+     * @return boolean
+     */
+    protected function isArrayReference(array &$left, array &$right)
+    {
+        $id = uniqid('schemer-', true);
+        $left[$id] = true;
+        $isArrayReference = array_key_exists($id, $right);
+        unset($left[$id]);
+
+        return $isArrayReference;
+    }
+
+    private $instances;
 }
