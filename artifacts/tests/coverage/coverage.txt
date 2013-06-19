@@ -1,12 +1,12 @@
 
 
 Code Coverage Report 
-  2013-06-18 04:41:32
+  2013-06-19 00:54:32
 
  Summary: 
   Classes: 5.36% (6/112)
-  Methods: 19.38% (119/614)
-  Lines:   41.66% (1362/3269)
+  Methods: 20.35% (127/624)
+  Lines:   42.01% (1367/3254)
 
 \Eloquent\Schemer\Constraint\Factory::MetaSchemaFactory
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (243/243)
@@ -19,7 +19,7 @@ Code Coverage Report
 \Eloquent\Schemer\Pointer\Resolver::PointerResolver
   Methods: 100.00% ( 4/ 4)   Lines:  82.61% ( 19/ 23)
 \Eloquent\Schemer\Reader::Reader
-  Methods: 100.00% ( 5/ 5)   Lines:  85.19% ( 23/ 27)
+  Methods: 100.00% ( 5/ 5)   Lines:  84.62% ( 22/ 26)
 \Eloquent\Schemer\Reference::ReferenceResolver
   Methods: 100.00% (24/24)   Lines:  87.68% (121/138)
 \Eloquent\Schemer\Reference::ResolutionScopeMap
@@ -31,6 +31,8 @@ Code Coverage Report
 \Eloquent\Schemer\Uri::Uri
   Methods: 100.00% ( 9/ 9)   Lines:  95.09% (155/163)
 \Eloquent\Schemer\Validation::ConstraintValidator
-  Methods:  94.92% (56/59)   Lines:  95.88% (466/486)
+  Methods:  95.08% (58/61)   Lines:  95.35% (410/430)
 \Eloquent\Schemer\Validation::DefaultValueTransform
   Methods: 100.00% ( 7/ 7)   Lines: 100.00% ( 43/ 43)
+\Eloquent\Schemer\Value\Factory::ValueFactory
+  Methods:  81.82% ( 9/11)   Lines:  65.26% ( 62/ 95)
