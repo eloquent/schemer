@@ -22,4 +22,4 @@ install:
   - ./.travis.install
 script:
   - ./vendor/bin/archer travis:build
-  - ./vendor/bin/coveralls
+  - [[ $TRAVIS_PHP_VERSION == $ARCHER_PUBLISH_VERSION ]] && ./vendor/bin/coveralls
