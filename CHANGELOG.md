@@ -1,6 +1,6 @@
 # Schemer changelog
 
-## 0.3.0 (unreleased)
+## 0.3.0 (2013-06-25)
 
 * **[BC]** Defaulting validator interface removed.
 * **[BC]** Defaulting validator no longer needs to use
