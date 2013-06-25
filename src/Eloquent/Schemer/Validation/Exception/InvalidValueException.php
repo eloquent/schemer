@@ -11,7 +11,9 @@
 
 namespace Eloquent\Schemer\Validation\Exception;
 
+use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Validation\Result\ValidationResult;
+use Eloquent\Schemer\Value\ValueInterface;
 use Exception;
 
 final class InvalidValueException extends Exception
