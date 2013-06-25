@@ -70,7 +70,7 @@ class ValidatingReader extends AbstractReader
     {
         $value = $this->reader()->read($uri, $mimeType);
         $result = $this->validator()->validate($value);
-        if ($result->isValid()) {
+        if (!$result->isValid()) {
             throw new InvalidValueException(
                 $value,
                 $this->validator()->constraint(),
