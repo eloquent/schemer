@@ -9,14 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Loader\Exception;
+namespace Eloquent\Schemer\Uri;
 
-use Eloquent\Schemer\Uri\UriInterface;
+use Zend\Uri\File;
 
-interface LoadExceptionInterface
+class FileUri extends File implements FileUriInterface
 {
-    /**
-     * @return UriInterface
-     */
-    public function uri();
 }

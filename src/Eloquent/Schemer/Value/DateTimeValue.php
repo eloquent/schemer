@@ -24,14 +24,6 @@ class DateTimeValue extends AbstractConcreteValue
     }
 
     /**
-     * @return DateTime
-     */
-    public function value()
-    {
-        return clone $this->value;
-    }
-
-    /**
      * @return ValueType
      */
     public function valueType()
@@ -47,5 +39,15 @@ class DateTimeValue extends AbstractConcreteValue
     public function accept(Visitor\ValueVisitorInterface $visitor)
     {
         return $visitor->visitDateTimeValue($this);
+    }
+
+    /**
+     * @param array<tuple<string,mixed>> &$valueMap
+     *
+     * @return mixed
+     */
+    protected function unwrap(array &$valueMap)
+    {
+        return clone $this->value;
     }
 }

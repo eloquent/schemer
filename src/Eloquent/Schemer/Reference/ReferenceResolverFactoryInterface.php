@@ -11,14 +11,15 @@
 
 namespace Eloquent\Schemer\Reference;
 
-use Zend\Uri\UriInterface;
+use Eloquent\Schemer\Uri\UriInterface;
+use Eloquent\Schemer\Value\Transform\ValueTransformInterface;
 
 interface ReferenceResolverFactoryInterface
 {
     /**
      * @param UriInterface $baseUri
      *
-     * @return \Eloquent\Schemer\Value\Transform\ValueTransformInterface
+     * @return ValueTransformInterface
      */
     public function create(UriInterface $baseUri);
 }

@@ -11,7 +11,7 @@
 
 namespace Eloquent\Schemer\Uri;
 
-class HttpUri extends Uri
+class HttpUri extends Uri implements HttpUriInterface
 {
     /**
      * @see Uri::$validSchemes
@@ -167,7 +167,6 @@ class HttpUri extends Uri
      * If no port is set, will return the default port according to the scheme
      *
      * @return integer
-     * @see    Zend\Uri\Uri::getPort()
      */
     public function getPort()
     {

@@ -13,10 +13,10 @@ namespace Eloquent\Schemer\Loader\Data;
 
 use Eloquent\Schemer\Loader\Content;
 use Eloquent\Schemer\Loader\ContentType;
+use Eloquent\Schemer\Loader\Exception\InvalidUriTypeException;
 use Eloquent\Schemer\Loader\LoaderInterface;
-use Eloquent\Schemer\Uri\DataUri;
-use InvalidArgumentException;
-use Zend\Uri\UriInterface;
+use Eloquent\Schemer\Uri\DataUriInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 
 class DataLoader implements LoaderInterface
 {
@@ -33,7 +33,7 @@ class DataLoader implements LoaderInterface
     }
 
     /**
-     * @param string $defaultMimeType
+     * @param string $mimeType
      */
     public function setDefaultMimeType($mimeType)
     {
@@ -55,9 +55,10 @@ class DataLoader implements LoaderInterface
      */
     public function load(UriInterface $uri)
     {
-        if (!$uri instanceof DataUri) {
-            throw new InvalidArgumentException(
-                'URI must be a data URI.'
+        if (!$uri instanceof DataUriInterface) {
+            throw new InvalidUriTypeException(
+                $uri,
+                'Eloquent\Schemer\Uri\DataUriInterface'
             );
         }
 

@@ -11,23 +11,24 @@
 
 namespace Eloquent\Schemer\Loader\Exception;
 
+use Eloquent\Schemer\Uri\UriInterface;
 use Exception;
 use LogicException;
 
-final class UndefinedLoaderException extends LogicException
+final class RelativeUriException extends LogicException
 {
     /**
-     * @param string         $scheme
+     * @param UriInterface   $uri
      * @param Exception|null $previous
      */
-    public function __construct($scheme, Exception $previous = null)
+    public function __construct(UriInterface $uri, Exception $previous = null)
     {
-        $this->scheme = $scheme;
+        $this->uri = $uri;
 
         parent::__construct(
             sprintf(
-                'No loader defined for scheme %s.',
-                var_export($scheme, true)
+                'Unable to read from relative URI %s.',
+                var_export($uri->toString(), true)
             ),
             0,
             $previous
@@ -35,12 +36,12 @@ final class UndefinedLoaderException extends LogicException
     }
 
     /**
-     * @return string
+     * @return UriInterface
      */
-    public function scheme()
+    public function uri()
     {
-        return $this->scheme;
+        return $this->uri;
     }
 
-    private $scheme;
+    private $uri;
 }

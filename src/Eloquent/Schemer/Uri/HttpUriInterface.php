@@ -9,14 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Loader\Exception;
+namespace Eloquent\Schemer\Uri;
 
-use Eloquent\Schemer\Uri\UriInterface;
-
-interface LoadExceptionInterface
+interface HttpUriInterface extends UriInterface
 {
-    /**
-     * @return UriInterface
-     */
-    public function uri();
 }

@@ -14,7 +14,7 @@ namespace Eloquent\Schemer\Uri;
 use Zend\Uri\Exception\InvalidUriException;
 use Zend\Uri\Uri as ZendUri;
 
-class Uri extends ZendUri
+class Uri extends ZendUri implements UriInterface
 {
     /**
      * @param string $uri

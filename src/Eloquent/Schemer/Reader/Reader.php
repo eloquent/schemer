@@ -16,8 +16,8 @@ use Eloquent\Schemer\Loader\LoaderInterface;
 use Eloquent\Schemer\Serialization\ProtocolMap;
 use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 use Eloquent\Schemer\Value;
-use Zend\Uri\UriInterface;
 
 class Reader extends AbstractReader
 {
@@ -42,7 +42,7 @@ class Reader extends AbstractReader
             $protocolMap = new ProtocolMap;
         }
         if (null === $valueFactory) {
-            $valueFactory = new Value\Factory\ValueFactory($this->uriFactory());
+            $valueFactory = new Value\Factory\ValueFactory;
         }
 
         $this->loader = $loader;
@@ -75,8 +75,8 @@ class Reader extends AbstractReader
     }
 
     /**
-     * @param \Zend\Uri\UriInterface|string $uri
-     * @param string|null                   $mimeType
+     * @param UriInterface|string $uri
+     * @param string|null         $mimeType
      *
      * @return Value\ValueInterface
      */
@@ -91,9 +91,9 @@ class Reader extends AbstractReader
             $mimeType = $content->mimeType();
         }
 
-        return $this->valueFactory()->create(
-            $this->protocolMap()->get($mimeType)->thaw($content->data())
-        );
+        $value = $this->protocolMap()->get($mimeType)->thaw($content->data());
+
+        return $this->valueFactory()->create($value);
     }
 
     private $loader;

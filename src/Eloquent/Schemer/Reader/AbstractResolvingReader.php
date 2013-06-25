@@ -14,8 +14,8 @@ namespace Eloquent\Schemer\Reader;
 use Eloquent\Schemer\Reference\ReferenceResolverFactoryInterface;
 use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 use Eloquent\Schemer\Value;
-use Zend\Uri\UriInterface;
 
 abstract class AbstractResolvingReader extends AbstractReader
 {
@@ -56,8 +56,8 @@ abstract class AbstractResolvingReader extends AbstractReader
     }
 
     /**
-     * @param \Zend\Uri\UriInterface|string $uri
-     * @param string|null                   $mimeType
+     * @param UriInterface|string $uri
+     * @param string|null         $mimeType
      *
      * @return Value\ValueInterface
      */

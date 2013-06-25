@@ -13,14 +13,14 @@ namespace Eloquent\Schemer\Uri;
 
 use Zend\Uri\Exception\InvalidArgumentException;
 use Zend\Uri\Exception\InvalidUriException;
-use Zend\Uri\UriInterface;
+use Zend\Uri\UriInterface as ZendUriInterface;
 
-class DataUri extends Uri
+class DataUri extends Uri implements DataUriInterface
 {
     protected static $validSchemes = array('data');
 
     /**
-     * @param string|UriInterface|null $uri
+     * @param string|ZendUriInterface|null $uri
      */
     public function __construct($uri = null)
     {
@@ -33,7 +33,7 @@ class DataUri extends Uri
             $this->setRawData($uri->getRawData());
         } elseif (is_string($uri)) {
             $this->parse($uri);
-        } elseif ($uri instanceof UriInterface) {
+        } elseif ($uri instanceof ZendUriInterface) {
             $this->parse($uri->toString());
         } elseif ($uri !== null) {
             throw new InvalidArgumentException(sprintf(

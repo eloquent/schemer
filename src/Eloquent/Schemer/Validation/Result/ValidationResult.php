@@ -47,6 +47,14 @@ class ValidationResult
     }
 
     /**
+     * @param MatchInterface $match
+     */
+    public function addMatch(MatchInterface $match)
+    {
+        $this->matches[] = $match;
+    }
+
+    /**
      * @return array<MatchInterface>
      */
     public function matches()

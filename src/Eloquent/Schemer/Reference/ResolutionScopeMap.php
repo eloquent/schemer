@@ -15,10 +15,10 @@ use Eloquent\Equality\Comparator;
 use Eloquent\Schemer\Pointer\PointerFactory;
 use Eloquent\Schemer\Pointer\PointerFactoryInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
+use Eloquent\Schemer\Uri\UriInterface;
 use Eloquent\Schemer\Value;
 use InvalidArgumentException;
 use LogicException;
-use Zend\Uri\UriInterface;
 
 class ResolutionScopeMap
 {

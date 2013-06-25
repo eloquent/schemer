@@ -13,8 +13,10 @@ namespace Eloquent\Schemer\Constraint\Reader;
 
 use Eloquent\Schemer\Constraint\Factory\SchemaFactory;
 use Eloquent\Schemer\Constraint\Factory\SchemaFactoryInterface;
+use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Reader\ReaderInterface;
 use Eloquent\Schemer\Reader\SwitchingScopeResolvingReader;
+use Eloquent\Schemer\Uri\UriInterface;
 
 class SchemaReader implements SchemaReaderInterface
 {
@@ -54,10 +56,10 @@ class SchemaReader implements SchemaReaderInterface
     }
 
     /**
-     * @param \Zend\Uri\UriInterface|string $uri
-     * @param string|null                   $mimeType
+     * @param UriInterface|string $uri
+     * @param string|null         $mimeType
      *
-     * @return \Eloquent\Schemer\Constraint\Schema
+     * @return Schema
      */
     public function read($uri, $mimeType = null)
     {
@@ -70,7 +72,7 @@ class SchemaReader implements SchemaReaderInterface
      * @param string      $path
      * @param string|null $mimeType
      *
-     * @return \Eloquent\Schemer\Constraint\Schema
+     * @return Schema
      */
     public function readPath($path, $mimeType = null)
     {
@@ -83,7 +85,7 @@ class SchemaReader implements SchemaReaderInterface
      * @param string      $data
      * @param string|null $mimeType
      *
-     * @return \Eloquent\Schemer\Constraint\Schema
+     * @return Schema
      */
     public function readString($data, $mimeType = null)
     {

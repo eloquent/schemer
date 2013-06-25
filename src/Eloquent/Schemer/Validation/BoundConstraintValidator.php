@@ -17,23 +17,19 @@ use Eloquent\Schemer\Value\ConcreteValueInterface;
 class BoundConstraintValidator implements BoundConstraintValidatorInterface
 {
     /**
-     * @param ConstraintValidatorInterface $validator
-     * @param ConstraintInterface          $constraint
+     * @param ConstraintInterface               $constraint
+     * @param ConstraintValidatorInterface|null $validator
      */
     public function __construct(
-        ConstraintValidatorInterface $validator,
-        ConstraintInterface $constraint
+        ConstraintInterface $constraint,
+        ConstraintValidatorInterface $validator = null
     ) {
-        $this->validator = $validator;
-        $this->constraint = $constraint;
-    }
+        if (null === $validator) {
+            $validator = new DefaultingConstraintValidator;
+        }
 
-    /**
-     * @return ConstraintValidatorInterface
-     */
-    public function validator()
-    {
-        return $this->validator;
+        $this->constraint = $constraint;
+        $this->validator = $validator;
     }
 
     /**
@@ -45,11 +41,19 @@ class BoundConstraintValidator implements BoundConstraintValidatorInterface
     }
 
     /**
-     * @param ConcreteValueInterface $value
+     * @return ConstraintValidatorInterface
+     */
+    public function validator()
+    {
+        return $this->validator;
+    }
+
+    /**
+     * @param ConcreteValueInterface &$value
      *
      * @return ValidationResult
      */
-    public function validate(ConcreteValueInterface $value)
+    public function validate(ConcreteValueInterface &$value)
     {
         return $this->validator()->validate($this->constraint(), $value);
     }
