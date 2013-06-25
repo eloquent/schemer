@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1372135840">
-  <project timestamp="1372135840">
+<coverage generated="1372139550">
+  <project timestamp="1372139550">
     <package name="Eloquent\Schemer\Constraint\ArrayValue">
       <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/ArrayValue/AdditionalItemConstraint.php">
         <class name="AdditionalItemConstraint" namespace="Eloquent\Schemer\Constraint\ArrayValue">
@@ -3981,34 +3981,34 @@
           <metrics methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="27" coveredstatements="0" elements="31" coveredelements="0"/>
         </class>
         <line num="10" type="stmt" count="0"/>
-        <line num="25" type="method" name="__construct" crap="2" count="0"/>
-        <line num="26" type="stmt" count="0"/>
-        <line num="27" type="stmt" count="0"/>
+        <line num="27" type="method" name="__construct" crap="2" count="0"/>
         <line num="28" type="stmt" count="0"/>
         <line num="29" type="stmt" count="0"/>
         <line num="30" type="stmt" count="0"/>
         <line num="31" type="stmt" count="0"/>
         <line num="32" type="stmt" count="0"/>
         <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
         <line num="35" type="stmt" count="0"/>
-        <line num="36" type="stmt" count="0"/>
         <line num="37" type="stmt" count="0"/>
         <line num="38" type="stmt" count="0"/>
         <line num="39" type="stmt" count="0"/>
         <line num="40" type="stmt" count="0"/>
-        <line num="45" type="method" name="value" crap="2" count="0"/>
-        <line num="46" type="stmt" count="0"/>
-        <line num="47" type="stmt" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="47" type="method" name="value" crap="2" count="0"/>
         <line num="48" type="stmt" count="0"/>
-        <line num="53" type="method" name="constraint" crap="2" count="0"/>
-        <line num="54" type="stmt" count="0"/>
-        <line num="55" type="stmt" count="0"/>
+        <line num="49" type="stmt" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="55" type="method" name="constraint" crap="2" count="0"/>
         <line num="56" type="stmt" count="0"/>
-        <line num="61" type="method" name="result" crap="2" count="0"/>
-        <line num="62" type="stmt" count="0"/>
-        <line num="63" type="stmt" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="58" type="stmt" count="0"/>
+        <line num="63" type="method" name="result" crap="2" count="0"/>
         <line num="64" type="stmt" count="0"/>
-        <metrics loc="69" ncloc="46" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="0" elements="32" coveredelements="0"/>
+        <line num="65" type="stmt" count="0"/>
+        <line num="66" type="stmt" count="0"/>
+        <metrics loc="71" ncloc="48" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="0" elements="32" coveredelements="0"/>
       </file>
     </package>
     <package name="Eloquent\Schemer\Validation\Result">
@@ -4729,6 +4729,6 @@
       <line num="10" type="stmt" count="0"/>
       <metrics loc="87" ncloc="29" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="1" coveredelements="0"/>
     </file>
-    <metrics files="149" loc="12596" ncloc="8165" classes="112" methods="625" coveredmethods="128" conditionals="0" coveredconditionals="0" statements="3264" coveredstatements="1385" elements="3889" coveredelements="1513"/>
+    <metrics files="149" loc="12598" ncloc="8167" classes="112" methods="625" coveredmethods="128" conditionals="0" coveredconditionals="0" statements="3264" coveredstatements="1385" elements="3889" coveredelements="1513"/>
   </project>
 </coverage>
