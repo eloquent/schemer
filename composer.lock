@@ -477,12 +477,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezzatron/archer.git",
-                "reference": "0d3b03f060a0f72871a14cfa4cd69da60785fcba"
+                "reference": "c3bbb6a28d3545014a91834d28b718c6b6939967"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezzatron/archer/zipball/0d3b03f060a0f72871a14cfa4cd69da60785fcba",
-                "reference": "0d3b03f060a0f72871a14cfa4cd69da60785fcba",
+                "url": "https://api.github.com/repos/ezzatron/archer/zipball/c3bbb6a28d3545014a91834d28b718c6b6939967",
+                "reference": "c3bbb6a28d3545014a91834d28b718c6b6939967",
                 "shasum": ""
             },
             "require": {
@@ -547,7 +547,7 @@
             "support": {
                 "source": "https://github.com/ezzatron/archer/tree/feature/coveralls"
             },
-            "time": "2013-06-26 00:51:46"
+            "time": "2013-06-26 02:46:10"
         },
         {
             "name": "jamesmoss/toml",
