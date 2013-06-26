@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2db2b04bfe2d6c89d4a127dfba62ccde",
+    "hash": "0c63414bef13688cd41cd8d93857313c",
     "packages": [
         {
             "name": "eloquent/enumeration",
@@ -473,22 +473,23 @@
         },
         {
             "name": "icecave/archer",
-            "version": "0.5.0",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IcecaveStudios/archer.git",
-                "reference": "0.5.0"
+                "reference": "a3a6f086c9c2255af5b51e45587bc43a89a061b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IcecaveStudios/archer/zipball/0.5.0",
-                "reference": "0.5.0",
+                "url": "https://api.github.com/repos/IcecaveStudios/archer/zipball/a3a6f086c9c2255af5b51e45587bc43a89a061b3",
+                "reference": "a3a6f086c9c2255af5b51e45587bc43a89a061b3",
                 "shasum": ""
             },
             "require": {
                 "phake/phake": ">=1.0,<2.0",
                 "php": ">=5.3",
                 "sami/sami": ">=1.0,<2.0",
+                "satooshi/php-coveralls": ">=0.6,<1.0",
                 "symfony/console": ">=2.0,<3.0",
                 "symfony/process": ">=2.0,<3.0"
             },
@@ -540,7 +541,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2013-06-24 03:01:54"
+            "time": "2013-06-25 23:49:15"
         },
         {
             "name": "jamesmoss/toml",
@@ -1320,9 +1321,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "icecave/archer": 20
+    },
     "platform": {
         "php": ">=5.3.0",
         "ext-mbstring": "*"
