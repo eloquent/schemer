@@ -23,7 +23,6 @@ use Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Validation\ConstraintValidator;
 use Eloquent\Schemer\Validation\ConstraintValidatorInterface;
 use Eloquent\Schemer\Value;
-use RuntimeException;
 
 class SchemaFactory implements SchemaFactoryInterface
 {
@@ -86,7 +85,7 @@ class SchemaFactory implements SchemaFactoryInterface
                 $value
             );
             if (!$result->isValid()) {
-                throw new RuntimeException('Invalid schema.');
+                throw new Exception\InvalidSchemaException($result);
             }
         }
 
@@ -104,8 +103,9 @@ class SchemaFactory implements SchemaFactoryInterface
      */
     protected function createSchema(Value\ObjectValue $value)
     {
-        if ($this->hasRegisteredSchema($value)) {
-            return $this->registeredSchema($value);
+        $schema = $this->registeredSchema($value);
+        if (null !== $schema) {
+            return $schema;
         }
 
         if ($value->has('default')) {
@@ -664,25 +664,16 @@ class SchemaFactory implements SchemaFactoryInterface
     /**
      * @param Value\ConcreteValueInterface $value
      *
-     * @return boolean
-     */
-    protected function hasRegisteredSchema(Value\ConcreteValueInterface $value)
-    {
-        return array_key_exists(spl_object_hash($value), $this->schemas);
-    }
-
-    /**
-     * @param Value\ConcreteValueInterface $value
-     *
-     * @return Value\ConcreteValueInterface
+     * @return Schema|null
      */
     protected function registeredSchema(Value\ConcreteValueInterface $value)
     {
-        if (!$this->hasRegisteredSchema($value)) {
-            throw new LogicException('Undefined schema.');
+        $key = spl_object_hash($value);
+        if (array_key_exists($key, $this->schemas)) {
+            return $this->schemas[$key];
         }
 
-        return $this->schemas[spl_object_hash($value)];
+        return null;
     }
 
     private $formatConstraintFactory;
