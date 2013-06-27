@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1372328396">
-  <project timestamp="1372328396">
+<coverage generated="1372330580">
+  <project timestamp="1372330580">
     <package name="Eloquent\Schemer\Constraint\ArrayValue">
       <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/ArrayValue/AdditionalItemConstraint.php">
         <class name="AdditionalItemConstraint" namespace="Eloquent\Schemer\Constraint\ArrayValue">
@@ -103,6 +103,50 @@
         <line num="43" type="stmt" count="0"/>
         <line num="48" type="stmt" count="0"/>
         <metrics loc="47" ncloc="28" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="7" coveredelements="0"/>
+      </file>
+    </package>
+    <package name="Eloquent\Schemer\Constraint\Factory\Exception">
+      <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/Factory/Exception/InvalidSchemaException.php">
+        <class name="InvalidSchemaException" namespace="Eloquent\Schemer\Constraint\Factory\Exception">
+          <metrics methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="0" elements="39" coveredelements="0"/>
+        </class>
+        <line num="10" type="stmt" count="0"/>
+        <line num="26" type="method" name="__construct" crap="6" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="28" type="stmt" count="0"/>
+        <line num="29" type="stmt" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <line num="31" type="stmt" count="0"/>
+        <line num="32" type="stmt" count="0"/>
+        <line num="33" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="38" type="stmt" count="0"/>
+        <line num="39" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="43" type="stmt" count="0"/>
+        <line num="48" type="method" name="result" crap="2" count="0"/>
+        <line num="49" type="stmt" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="56" type="method" name="issueRenderer" crap="2" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="58" type="stmt" count="0"/>
+        <line num="59" type="stmt" count="0"/>
+        <line num="66" type="method" name="renderResult" crap="6" count="0"/>
+        <line num="67" type="stmt" count="0"/>
+        <line num="68" type="stmt" count="0"/>
+        <line num="69" type="stmt" count="0"/>
+        <line num="70" type="stmt" count="0"/>
+        <line num="71" type="stmt" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="73" type="stmt" count="0"/>
+        <line num="74" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <metrics loc="81" ncloc="57" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="0" elements="40" coveredelements="0"/>
       </file>
     </package>
     <package name="Eloquent\Schemer\Constraint\Factory">
@@ -391,38 +435,39 @@
       </file>
       <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/Factory/SchemaFactory.php">
         <class name="SchemaFactory" namespace="Eloquent\Schemer\Constraint\Factory">
-          <metrics methods="36" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="258" coveredstatements="103" elements="294" coveredelements="118"/>
+          <metrics methods="35" coveredmethods="14" conditionals="0" coveredconditionals="0" statements="259" coveredstatements="105" elements="294" coveredelements="119"/>
         </class>
-        <line num="35" type="method" name="__construct" crap="4.13" count="1"/>
+        <line num="34" type="method" name="__construct" crap="4.13" count="1"/>
+        <line num="39" type="stmt" count="1"/>
         <line num="40" type="stmt" count="1"/>
         <line num="41" type="stmt" count="1"/>
         <line num="42" type="stmt" count="1"/>
-        <line num="43" type="stmt" count="1"/>
+        <line num="43" type="stmt" count="0"/>
         <line num="44" type="stmt" count="0"/>
-        <line num="45" type="stmt" count="0"/>
+        <line num="46" type="stmt" count="1"/>
         <line num="47" type="stmt" count="1"/>
         <line num="48" type="stmt" count="1"/>
         <line num="49" type="stmt" count="1"/>
-        <line num="50" type="stmt" count="1"/>
-        <line num="55" type="method" name="formatConstraintFactory" crap="2" count="0"/>
-        <line num="57" type="stmt" count="0"/>
-        <line num="63" type="method" name="metaSchema" crap="1" count="1"/>
-        <line num="65" type="stmt" count="1"/>
-        <line num="71" type="method" name="constraintValidator" crap="2" count="0"/>
-        <line num="73" type="stmt" count="0"/>
-        <line num="81" type="method" name="create" crap="4.46" count="1"/>
-        <line num="83" type="stmt" count="1"/>
+        <line num="54" type="method" name="formatConstraintFactory" crap="2" count="0"/>
+        <line num="56" type="stmt" count="0"/>
+        <line num="62" type="method" name="metaSchema" crap="1" count="1"/>
+        <line num="64" type="stmt" count="1"/>
+        <line num="70" type="method" name="constraintValidator" crap="2" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="80" type="method" name="create" crap="4.46" count="1"/>
+        <line num="82" type="stmt" count="1"/>
+        <line num="83" type="stmt" count="0"/>
         <line num="84" type="stmt" count="0"/>
-        <line num="85" type="stmt" count="0"/>
+        <line num="86" type="stmt" count="0"/>
         <line num="87" type="stmt" count="0"/>
         <line num="88" type="stmt" count="0"/>
-        <line num="89" type="stmt" count="0"/>
-        <line num="91" type="stmt" count="0"/>
+        <line num="90" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="1"/>
         <line num="93" type="stmt" count="1"/>
         <line num="94" type="stmt" count="1"/>
-        <line num="95" type="stmt" count="1"/>
-        <line num="97" type="stmt" count="1"/>
-        <line num="105" type="method" name="createSchema" crap="4.01" count="1"/>
+        <line num="96" type="stmt" count="1"/>
+        <line num="104" type="method" name="createSchema" crap="4.01" count="1"/>
+        <line num="106" type="stmt" count="1"/>
         <line num="107" type="stmt" count="1"/>
         <line num="108" type="stmt" count="1"/>
         <line num="111" type="stmt" count="1"/>
@@ -681,14 +726,13 @@
         <line num="657" type="method" name="registerSchema" crap="1" count="1"/>
         <line num="661" type="stmt" count="1"/>
         <line num="662" type="stmt" count="1"/>
-        <line num="669" type="method" name="hasRegisteredSchema" crap="1" count="1"/>
+        <line num="669" type="method" name="registeredSchema" crap="2" count="1"/>
         <line num="671" type="stmt" count="1"/>
-        <line num="679" type="method" name="registeredSchema" crap="2.15" count="1"/>
-        <line num="681" type="stmt" count="1"/>
-        <line num="682" type="stmt" count="0"/>
-        <line num="685" type="stmt" count="1"/>
-        <line num="693" type="stmt" count="0"/>
-        <metrics loc="692" ncloc="487" classes="1" methods="36" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="258" coveredstatements="103" elements="294" coveredelements="107"/>
+        <line num="672" type="stmt" count="1"/>
+        <line num="673" type="stmt" count="1"/>
+        <line num="676" type="stmt" count="1"/>
+        <line num="684" type="stmt" count="0"/>
+        <metrics loc="683" ncloc="483" classes="1" methods="35" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="259" coveredstatements="105" elements="294" coveredelements="109"/>
       </file>
     </package>
     <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/Factory/FormatConstraintFactoryInterface.php">
@@ -4699,6 +4743,6 @@
       <line num="10" type="stmt" count="0"/>
       <metrics loc="87" ncloc="29" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="1" coveredelements="0"/>
     </file>
-    <metrics files="149" loc="12551" ncloc="8120" classes="112" methods="625" coveredmethods="128" conditionals="0" coveredconditionals="0" statements="3234" coveredstatements="1384" elements="3859" coveredelements="1512"/>
+    <metrics files="150" loc="12623" ncloc="8173" classes="113" methods="628" coveredmethods="128" conditionals="0" coveredconditionals="0" statements="3271" coveredstatements="1386" elements="3899" coveredelements="1514"/>
   </project>
 </coverage>
