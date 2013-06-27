@@ -11,27 +11,34 @@
 
 namespace Eloquent\Schemer\Pointer\Exception;
 
+use Eloquent\Schemer\Pointer\PointerInterface;
 use Exception;
+use LogicException;
 
-final class InvalidPointerException extends Exception
+final class NoParentException extends LogicException
 {
     /**
-     * @param string         $pointer
-     * @param Exception|null $previous
+     * @param PointerInterface $pointer
+     * @param Exception|null   $previous
      */
-    public function __construct($pointer, Exception $previous = null)
-    {
+    public function __construct(
+        PointerInterface $pointer,
+        Exception $previous = null
+    ) {
         $this->pointer = $pointer;
 
         parent::__construct(
-            sprintf('Invalid pointer %s.', var_export($pointer, true)),
+            sprintf(
+                'The pointer %s has no parent.',
+                var_export($pointer->string(), true)
+            ),
             0,
             $previous
         );
     }
 
     /**
-     * @return string
+     * @return PointerInterface
      */
     public function pointer()
     {

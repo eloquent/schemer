@@ -12,7 +12,6 @@
 namespace Eloquent\Schemer\Constraint;
 
 use Eloquent\Schemer\Value\ConcreteValueInterface;
-use InvalidArgumentException;
 
 class Schema implements SchemaInterface
 {
@@ -39,19 +38,30 @@ class Schema implements SchemaInterface
     }
 
     /**
+     * @param ConstraintInterface $constraint
+     */
+    public function addConstraint(ConstraintInterface $constraint)
+    {
+        $this->constraints[] = $constraint;
+    }
+
+    /**
+     * @param array<ConstraintInterface> $constraints
+     */
+    public function addConstraints(array $constraints)
+    {
+        foreach ($constraints as $constraint) {
+            $this->addConstraint($constraint);
+        }
+    }
+
+    /**
      * @param array<ConstraintInterface> $constraints
      */
     public function setConstraints(array $constraints)
     {
-        foreach ($constraints as $constraint) {
-            if (!$constraint instanceof ConstraintInterface) {
-                throw new InvalidArgumentException(
-                    'Invalid constraint(s).'
-                );
-            }
-        }
-
-        $this->constraints = $constraints;
+        $this->constraints = array();
+        $this->addConstraints($constraints);
     }
 
     /**
