@@ -13,9 +13,8 @@ namespace Eloquent\Schemer\Pointer\Exception;
 
 use Eloquent\Schemer\Pointer\PointerInterface;
 use Exception;
-use LogicException;
 
-final class NoParentException extends LogicException
+final class NoParentException extends Exception
 {
     /**
      * @param PointerInterface $pointer

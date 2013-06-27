@@ -33,6 +33,11 @@ interface ValueContainerInterface extends ValueInterface, Countable
 
     /**
      * @param integer|string $key
+     */
+    public function remove($key);
+
+    /**
+     * @param integer|string $key
      *
      * @return boolean
      */

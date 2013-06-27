@@ -12,9 +12,8 @@
 namespace Eloquent\Schemer\Serialization\Exception;
 
 use Exception;
-use LogicException;
 
-final class UndefinedProtocolException extends LogicException
+final class UndefinedProtocolException extends Exception
 {
     /**
      * @param string         $mimeType

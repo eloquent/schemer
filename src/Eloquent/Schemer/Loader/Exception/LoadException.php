@@ -13,10 +13,8 @@ namespace Eloquent\Schemer\Loader\Exception;
 
 use Eloquent\Schemer\Uri\UriInterface;
 use Exception;
-use RuntimeException;
 
-final class LoadException extends RuntimeException implements
-    LoadExceptionInterface
+final class LoadException extends Exception implements LoadExceptionInterface
 {
     /**
      * @param UriInterface   $uri

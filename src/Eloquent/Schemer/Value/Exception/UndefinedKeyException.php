@@ -13,30 +13,30 @@ namespace Eloquent\Schemer\Value\Exception;
 
 use Exception;
 
-final class UndefinedPropertyException extends Exception
+final class UndefinedKeyException extends Exception
 {
     /**
-     * @param string         $pointer
+     * @param mixed          $key
      * @param Exception|null $previous
      */
-    public function __construct($property, Exception $previous = null)
+    public function __construct($key, Exception $previous = null)
     {
-        $this->property = $property;
+        $this->key = $key;
 
         parent::__construct(
-            sprintf('Undefined property: %s.', var_export($property, true)),
+            sprintf('Undefined key %s.', var_export($key, true)),
             0,
             $previous
         );
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function property()
+    public function key()
     {
-        return $this->property;
+        return $this->key;
     }
 
-    private $property;
+    private $key;
 }

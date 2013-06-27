@@ -13,9 +13,8 @@ namespace Eloquent\Schemer\Loader\Exception;
 
 use Eloquent\Schemer\Uri\UriInterface;
 use Exception;
-use LogicException;
 
-final class RelativeUriException extends LogicException
+final class RelativeUriException extends Exception
 {
     /**
      * @param UriInterface   $uri

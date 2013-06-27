@@ -11,8 +11,6 @@
 
 namespace Eloquent\Schemer\Value;
 
-use InvalidArgumentException;
-
 class BooleanValue extends AbstractConcreteValue
 {
     /**
@@ -21,7 +19,7 @@ class BooleanValue extends AbstractConcreteValue
     public function __construct($value)
     {
         if (!is_bool($value)) {
-            throw new InvalidArgumentException('Value must be a boolean.');
+            throw new Exception\UnexpectedValueTypeException($value, 'boolean');
         }
 
         parent::__construct($value);
