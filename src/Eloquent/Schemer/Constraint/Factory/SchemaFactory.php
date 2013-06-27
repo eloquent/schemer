@@ -85,7 +85,7 @@ class SchemaFactory implements SchemaFactoryInterface
                 $value
             );
             if (!$result->isValid()) {
-                throw new Exception\InvalidSchemaException($result);
+                throw new Exception\InvalidSchemaException($value, $result);
             }
         }
 

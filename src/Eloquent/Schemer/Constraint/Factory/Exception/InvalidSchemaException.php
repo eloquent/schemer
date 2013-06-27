@@ -11,19 +11,22 @@
 
 namespace Eloquent\Schemer\Constraint\Factory\Exception;
 
-use Eloquent\Schemer\Validation\Result\ValidationResult;
 use Eloquent\Schemer\Validation\Result\IssueRenderer;
 use Eloquent\Schemer\Validation\Result\IssueRendererInterface;
+use Eloquent\Schemer\Validation\Result\ValidationResult;
+use Eloquent\Schemer\Value\ConcreteValueInterface;
 use Exception;
 
 final class InvalidSchemaException extends Exception
 {
     /**
+     * @param ConcreteValueInterface      $value
      * @param ValidationResult            $result
      * @param Exception|null              $previous
      * @param IssueRendererInterface|null $issueRenderer
      */
     public function __construct(
+        ConcreteValueInterface $value,
         ValidationResult $result,
         Exception $previous = null,
         IssueRendererInterface $issueRenderer = null
@@ -32,14 +35,26 @@ final class InvalidSchemaException extends Exception
             $issueRenderer = new IssueRenderer;
         }
 
+        $this->value = $value;
         $this->result = $result;
         $this->issueRenderer = $issueRenderer;
 
         parent::__construct(
-            sprintf("Invalid schema:\n%s", $this->renderResult($result)),
+            sprintf(
+                "Invalid schema:\n%s",
+                $issueRenderer->renderManyString($result->issues())
+            ),
             0,
             $previous
         );
+    }
+
+    /**
+     * @return ConcreteValueInterface
+     */
+    public function value()
+    {
+        return $this->value;
     }
 
     /**
@@ -58,24 +73,7 @@ final class InvalidSchemaException extends Exception
         return $this->issueRenderer;
     }
 
-    /**
-     * @param ValidationResult $result
-     *
-     * @return string
-     */
-    protected function renderResult(ValidationResult $result)
-    {
-        $renderedIssues = array();
-        foreach ($result->issues() as $issue) {
-            $renderedIssues[] = sprintf(
-                '  - %s',
-                $this->issueRenderer()->render($issue)
-            );
-        }
-
-        return implode("\n", $renderedIssues);
-    }
-
+    private $value;
     private $result;
     private $issueRenderer;
 }
