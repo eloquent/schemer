@@ -46,6 +46,26 @@
                     
                 </td>
                 <td class="last">
+                    <a href="#method_addConstraint">addConstraint</a>(<a href="../../../Eloquent/Schemer/Constraint/ConstraintInterface.html"><abbr title="Eloquent\Schemer\Constraint\ConstraintInterface">ConstraintInterface</abbr></a> $constraint)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_addConstraints">addConstraints</a>(array $constraints)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
                     <a href="#method_setConstraints">setConstraints</a>(array $constraints)
                     <p></p>
                 </td>
@@ -117,7 +137,7 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 25</div>
+        <div class="location">at line 24</div>
         <code>            public            
     <strong>__construct</strong>(array $constraints = null, <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a> $defaultValue = null, string|null $title = null, string|null $description = null)</code>
     </h3>
@@ -156,8 +176,58 @@
                     </div>
     </div>
 
+                <h3 id="method_addConstraint">
+        <div class="location">at line 43</div>
+        <code>            public            
+    <strong>addConstraint</strong>(<a href="../../../Eloquent/Schemer/Constraint/ConstraintInterface.html"><abbr title="Eloquent\Schemer\Constraint\ConstraintInterface">ConstraintInterface</abbr></a> $constraint)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../Eloquent/Schemer/Constraint/ConstraintInterface.html"><abbr title="Eloquent\Schemer\Constraint\ConstraintInterface">ConstraintInterface</abbr></a></td>
+                <td>$constraint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_addConstraints">
+        <div class="location">at line 51</div>
+        <code>            public            
+    <strong>addConstraints</strong>(array $constraints)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$constraints</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_setConstraints">
-        <div class="location">at line 44</div>
+        <div class="location">at line 61</div>
         <code>            public            
     <strong>setConstraints</strong>(array $constraints)</code>
     </h3>
@@ -182,7 +252,7 @@
     </div>
 
                 <h3 id="method_constraints">
-        <div class="location">at line 60</div>
+        <div class="location">at line 70</div>
         <code>            public            <abbr title="Eloquent\Schemer\Constraint\array&lt;integer,ConstraintInterface&gt;">array&lt;integer,ConstraintInterface&gt;</abbr>
     <strong>constraints</strong>()</code>
     </h3>
@@ -206,7 +276,7 @@
     </div>
 
                 <h3 id="method_defaultValue">
-        <div class="location">at line 68</div>
+        <div class="location">at line 78</div>
         <code>            public            <a href="../../../Eloquent/Schemer/Value/ConcreteValueInterface.html"><abbr title="Eloquent\Schemer\Value\ConcreteValueInterface">ConcreteValueInterface</abbr></a>|null
     <strong>defaultValue</strong>()</code>
     </h3>
@@ -230,7 +300,7 @@
     </div>
 
                 <h3 id="method_title">
-        <div class="location">at line 76</div>
+        <div class="location">at line 86</div>
         <code>            public            string|null
     <strong>title</strong>()</code>
     </h3>
@@ -254,7 +324,7 @@
     </div>
 
                 <h3 id="method_description">
-        <div class="location">at line 84</div>
+        <div class="location">at line 94</div>
         <code>            public            string|null
     <strong>description</strong>()</code>
     </h3>
@@ -278,7 +348,7 @@
     </div>
 
                 <h3 id="method_isEmpty">
-        <div class="location">at line 92</div>
+        <div class="location">at line 102</div>
         <code>            public            boolean
     <strong>isEmpty</strong>()</code>
     </h3>
@@ -302,7 +372,7 @@
     </div>
 
                 <h3 id="method_accept">
-        <div class="location">at line 102</div>
+        <div class="location">at line 112</div>
         <code>            public            mixed
     <strong>accept</strong>(<a href="../../../Eloquent/Schemer/Constraint/Visitor/ConstraintVisitorInterface.html"><abbr title="Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface">ConstraintVisitorInterface</abbr></a> $visitor)</code>
     </h3>

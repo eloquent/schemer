@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1372330580">
-  <project timestamp="1372330580">
+<coverage generated="1372331325">
+  <project timestamp="1372331325">
     <package name="Eloquent\Schemer\Constraint\ArrayValue">
       <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/ArrayValue/AdditionalItemConstraint.php">
         <class name="AdditionalItemConstraint" namespace="Eloquent\Schemer\Constraint\ArrayValue">
@@ -1170,39 +1170,43 @@
     <package name="Eloquent\Schemer\Constraint">
       <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/Schema.php">
         <class name="Schema" namespace="Eloquent\Schemer\Constraint">
-          <metrics methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="0" elements="29" coveredelements="0"/>
+          <metrics methods="10" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="0" elements="33" coveredelements="0"/>
         </class>
-        <line num="25" type="method" name="__construct" crap="6" count="0"/>
+        <line num="24" type="method" name="__construct" crap="6" count="0"/>
+        <line num="30" type="stmt" count="0"/>
         <line num="31" type="stmt" count="0"/>
         <line num="32" type="stmt" count="0"/>
-        <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
         <line num="35" type="stmt" count="0"/>
         <line num="36" type="stmt" count="0"/>
         <line num="37" type="stmt" count="0"/>
         <line num="38" type="stmt" count="0"/>
-        <line num="39" type="stmt" count="0"/>
-        <line num="44" type="method" name="setConstraints" crap="12" count="0"/>
+        <line num="43" type="method" name="addConstraint" crap="2" count="0"/>
+        <line num="45" type="stmt" count="0"/>
         <line num="46" type="stmt" count="0"/>
-        <line num="47" type="stmt" count="0"/>
-        <line num="48" type="stmt" count="0"/>
-        <line num="50" type="stmt" count="0"/>
-        <line num="52" type="stmt" count="0"/>
+        <line num="51" type="method" name="addConstraints" crap="6" count="0"/>
+        <line num="53" type="stmt" count="0"/>
         <line num="54" type="stmt" count="0"/>
         <line num="55" type="stmt" count="0"/>
-        <line num="60" type="method" name="constraints" crap="2" count="0"/>
-        <line num="62" type="stmt" count="0"/>
-        <line num="68" type="method" name="defaultValue" crap="2" count="0"/>
-        <line num="70" type="stmt" count="0"/>
-        <line num="76" type="method" name="title" crap="2" count="0"/>
-        <line num="78" type="stmt" count="0"/>
-        <line num="84" type="method" name="description" crap="2" count="0"/>
-        <line num="86" type="stmt" count="0"/>
-        <line num="92" type="method" name="isEmpty" crap="2" count="0"/>
-        <line num="94" type="stmt" count="0"/>
-        <line num="102" type="method" name="accept" crap="2" count="0"/>
+        <line num="56" type="stmt" count="0"/>
+        <line num="61" type="method" name="setConstraints" crap="2" count="0"/>
+        <line num="63" type="stmt" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <line num="65" type="stmt" count="0"/>
+        <line num="70" type="method" name="constraints" crap="2" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="78" type="method" name="defaultValue" crap="2" count="0"/>
+        <line num="80" type="stmt" count="0"/>
+        <line num="86" type="method" name="title" crap="2" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="94" type="method" name="description" crap="2" count="0"/>
+        <line num="96" type="stmt" count="0"/>
+        <line num="102" type="method" name="isEmpty" crap="2" count="0"/>
         <line num="104" type="stmt" count="0"/>
-        <line num="112" type="stmt" count="0"/>
-        <metrics loc="111" ncloc="74" classes="1" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="0" elements="29" coveredelements="0"/>
+        <line num="112" type="method" name="accept" crap="2" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="122" type="stmt" count="0"/>
+        <metrics loc="121" ncloc="78" classes="1" methods="10" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="0" elements="33" coveredelements="0"/>
       </file>
     </package>
     <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/SchemaInterface.php">
@@ -1886,55 +1890,80 @@
         <line num="43" type="stmt" count="0"/>
         <metrics loc="42" ncloc="27" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="0" elements="9" coveredelements="0"/>
       </file>
+      <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Pointer/Exception/NoParentException.php">
+        <class name="NoParentException" namespace="Eloquent\Schemer\Pointer\Exception">
+          <metrics methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="20" coveredelements="0"/>
+        </class>
+        <line num="10" type="stmt" count="0"/>
+        <line num="24" type="method" name="__construct" crap="2" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="28" type="stmt" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <line num="31" type="stmt" count="0"/>
+        <line num="32" type="stmt" count="0"/>
+        <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="37" type="stmt" count="0"/>
+        <line num="38" type="stmt" count="0"/>
+        <line num="43" type="method" name="pointer" crap="2" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="45" type="stmt" count="0"/>
+        <line num="46" type="stmt" count="0"/>
+        <metrics loc="49" ncloc="34" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="0" elements="21" coveredelements="0"/>
+      </file>
     </package>
     <package name="Eloquent\Schemer\Pointer">
       <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Pointer/Pointer.php">
         <class name="Pointer" namespace="Eloquent\Schemer\Pointer">
           <metrics methods="10" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="18" elements="46" coveredelements="23"/>
         </class>
-        <line num="21" type="method" name="__construct" crap="2.26" count="3"/>
-        <line num="23" type="stmt" count="3"/>
-        <line num="24" type="stmt" count="0"/>
-        <line num="25" type="stmt" count="0"/>
-        <line num="27" type="stmt" count="3"/>
-        <line num="28" type="stmt" count="3"/>
-        <line num="33" type="method" name="atoms" crap="1" count="2"/>
-        <line num="35" type="stmt" count="2"/>
-        <line num="41" type="method" name="lastAtom" crap="6" count="0"/>
-        <line num="43" type="stmt" count="0"/>
-        <line num="44" type="stmt" count="0"/>
+        <line num="19" type="method" name="__construct" crap="2.26" count="3"/>
+        <line num="21" type="stmt" count="3"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="3"/>
+        <line num="26" type="stmt" count="3"/>
+        <line num="31" type="method" name="atoms" crap="1" count="2"/>
+        <line num="33" type="stmt" count="2"/>
+        <line num="39" type="method" name="lastAtom" crap="6" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="45" type="stmt" count="0"/>
         <line num="47" type="stmt" count="0"/>
-        <line num="49" type="stmt" count="0"/>
-        <line num="55" type="method" name="hasAtoms" crap="1" count="3"/>
-        <line num="57" type="stmt" count="3"/>
-        <line num="65" type="method" name="join" crap="2" count="0"/>
-        <line num="67" type="stmt" count="0"/>
-        <line num="76" type="method" name="joinAtoms" crap="2" count="0"/>
-        <line num="78" type="stmt" count="0"/>
-        <line num="86" type="method" name="joinAtomSequence" crap="6" count="0"/>
+        <line num="53" type="method" name="hasAtoms" crap="1" count="3"/>
+        <line num="55" type="stmt" count="3"/>
+        <line num="63" type="method" name="join" crap="2" count="0"/>
+        <line num="65" type="stmt" count="0"/>
+        <line num="74" type="method" name="joinAtoms" crap="2" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="84" type="method" name="joinAtomSequence" crap="6" count="0"/>
+        <line num="86" type="stmt" count="0"/>
+        <line num="87" type="stmt" count="0"/>
         <line num="88" type="stmt" count="0"/>
         <line num="89" type="stmt" count="0"/>
-        <line num="90" type="stmt" count="0"/>
         <line num="91" type="stmt" count="0"/>
-        <line num="93" type="stmt" count="0"/>
-        <line num="99" type="method" name="parent" crap="6" count="0"/>
-        <line num="101" type="stmt" count="0"/>
+        <line num="97" type="method" name="parent" crap="6" count="0"/>
+        <line num="99" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="0"/>
         <line num="102" type="stmt" count="0"/>
-        <line num="104" type="stmt" count="0"/>
+        <line num="103" type="stmt" count="0"/>
         <line num="105" type="stmt" count="0"/>
-        <line num="107" type="stmt" count="0"/>
-        <line num="113" type="method" name="string" crap="2" count="3"/>
-        <line num="115" type="stmt" count="3"/>
-        <line num="116" type="stmt" count="1"/>
+        <line num="111" type="method" name="string" crap="2" count="3"/>
+        <line num="113" type="stmt" count="3"/>
+        <line num="114" type="stmt" count="1"/>
+        <line num="117" type="stmt" count="2"/>
+        <line num="118" type="stmt" count="2"/>
         <line num="119" type="stmt" count="2"/>
         <line num="120" type="stmt" count="2"/>
         <line num="121" type="stmt" count="2"/>
-        <line num="122" type="stmt" count="2"/>
+        <line num="122" type="method" name="anonymous function" crap="1" count="2"/>
         <line num="123" type="stmt" count="2"/>
-        <line num="124" type="method" name="anonymous function" crap="1" count="2"/>
-        <line num="125" type="stmt" count="2"/>
-        <line num="126" type="stmt" count="2"/>
-        <metrics loc="134" ncloc="92" classes="1" methods="10" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="33" coveredstatements="15" elements="43" coveredelements="19"/>
+        <line num="124" type="stmt" count="2"/>
+        <metrics loc="132" ncloc="90" classes="1" methods="10" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="33" coveredstatements="15" elements="43" coveredelements="19"/>
       </file>
       <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Pointer/PointerFactory.php">
         <class name="PointerFactory" namespace="Eloquent\Schemer\Pointer">
@@ -4743,6 +4772,6 @@
       <line num="10" type="stmt" count="0"/>
       <metrics loc="87" ncloc="29" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="1" coveredelements="0"/>
     </file>
-    <metrics files="150" loc="12623" ncloc="8173" classes="113" methods="628" coveredmethods="128" conditionals="0" coveredconditionals="0" statements="3271" coveredstatements="1386" elements="3899" coveredelements="1514"/>
+    <metrics files="151" loc="12680" ncloc="8209" classes="114" methods="632" coveredmethods="128" conditionals="0" coveredconditionals="0" statements="3292" coveredstatements="1386" elements="3924" coveredelements="1514"/>
   </project>
 </coverage>
