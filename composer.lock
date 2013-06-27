@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "db92e0c2f21f557d5068b05548f5785f",
+    "hash": "0c63414bef13688cd41cd8d93857313c",
     "packages": [
         {
             "name": "eloquent/enumeration",
@@ -473,29 +473,29 @@
         },
         {
             "name": "icecave/archer",
-            "version": "dev-feature/coveralls",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ezzatron/archer.git",
-                "reference": "c3bbb6a28d3545014a91834d28b718c6b6939967"
+                "url": "https://github.com/IcecaveStudios/archer.git",
+                "reference": "d10748d6ea660a27aa9f586ddfd32828383a57c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezzatron/archer/zipball/c3bbb6a28d3545014a91834d28b718c6b6939967",
-                "reference": "c3bbb6a28d3545014a91834d28b718c6b6939967",
+                "url": "https://api.github.com/repos/IcecaveStudios/archer/zipball/d10748d6ea660a27aa9f586ddfd32828383a57c0",
+                "reference": "d10748d6ea660a27aa9f586ddfd32828383a57c0",
                 "shasum": ""
             },
             "require": {
-                "phake/phake": "~1",
+                "phake/phake": ">=1.0,<2.0",
                 "php": ">=5.3",
-                "sami/sami": "~1",
-                "satooshi/php-coveralls": "~0.6",
-                "symfony/console": "~2",
-                "symfony/process": "~2"
+                "sami/sami": ">=1.0,<2.0",
+                "satooshi/php-coveralls": ">=0.6,<1.0",
+                "symfony/console": ">=2.0,<3.0",
+                "symfony/process": ">=2.0,<3.0"
             },
             "require-dev": {
-                "eloquent/liberator": "~1",
-                "symfony/event-dispatcher": "~2.1"
+                "eloquent/liberator": ">=1.0,<2.0",
+                "symfony/event-dispatcher": ">=2.1,<3.0"
             },
             "suggest": {
                 "ext-openssl": "OpenSSL is required to encrypt GitHub OAuth tokens for artifact publication."
@@ -510,23 +510,20 @@
                     "Icecave\\Archer": "lib"
                 }
             },
-            "scripts": {
-                "post-update-cmd": [
-                    "bin/archer internal:update-binaries"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
-                    "name": "James Harris",
-                    "email": "james.harris@icecave.com.au"
-                },
-                {
                     "name": "Erin Millard",
                     "email": "ezzatron@gmail.com",
                     "homepage": "http://ezzatron.com/"
+                },
+                {
+                    "name": "James Harris",
+                    "email": "james.harris@icecave.com.au",
+                    "homepage": "https://github.com/jmalloc"
                 }
             ],
             "description": "Testing, CI and documentation of PHP projects by convention.",
@@ -544,10 +541,7 @@
                 "testing",
                 "unit"
             ],
-            "support": {
-                "source": "https://github.com/ezzatron/archer/tree/feature/coveralls"
-            },
-            "time": "2013-06-26 02:46:10"
+            "time": "2013-06-26 04:06:49"
         },
         {
             "name": "jamesmoss/toml",

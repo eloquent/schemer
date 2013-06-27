@@ -26,7 +26,7 @@
         "symfony/yaml": "~2"
     },
     "require-dev": {
-        "icecave/archer": "dev-feature/coveralls@dev",
+        "icecave/archer": "dev-develop@dev",
         "jamesmoss/toml": "~0.1",
         "symfony/yaml": "~2"
     },
@@ -34,11 +34,5 @@
         "psr-0": {
             "Eloquent\\Schemer": "src"
         }
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/ezzatron/archer"
-        }
-    ]
+    }
 }
