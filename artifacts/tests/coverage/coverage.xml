@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1372215533">
-  <project timestamp="1372215533">
+<coverage generated="1372328396">
+  <project timestamp="1372328396">
     <package name="Eloquent\Schemer\Constraint\ArrayValue">
       <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/ArrayValue/AdditionalItemConstraint.php">
         <class name="AdditionalItemConstraint" namespace="Eloquent\Schemer\Constraint\ArrayValue">
@@ -391,51 +391,52 @@
       </file>
       <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/Factory/SchemaFactory.php">
         <class name="SchemaFactory" namespace="Eloquent\Schemer\Constraint\Factory">
-          <metrics methods="36" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="288" coveredstatements="104" elements="324" coveredelements="119"/>
+          <metrics methods="36" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="258" coveredstatements="103" elements="294" coveredelements="118"/>
         </class>
-        <line num="36" type="method" name="__construct" crap="4.13" count="1"/>
+        <line num="35" type="method" name="__construct" crap="4.13" count="1"/>
+        <line num="40" type="stmt" count="1"/>
         <line num="41" type="stmt" count="1"/>
         <line num="42" type="stmt" count="1"/>
         <line num="43" type="stmt" count="1"/>
-        <line num="44" type="stmt" count="1"/>
+        <line num="44" type="stmt" count="0"/>
         <line num="45" type="stmt" count="0"/>
-        <line num="46" type="stmt" count="0"/>
+        <line num="47" type="stmt" count="1"/>
         <line num="48" type="stmt" count="1"/>
         <line num="49" type="stmt" count="1"/>
         <line num="50" type="stmt" count="1"/>
-        <line num="51" type="stmt" count="1"/>
-        <line num="56" type="method" name="formatConstraintFactory" crap="2" count="0"/>
-        <line num="58" type="stmt" count="0"/>
-        <line num="64" type="method" name="metaSchema" crap="1" count="1"/>
-        <line num="66" type="stmt" count="1"/>
-        <line num="72" type="method" name="constraintValidator" crap="2" count="0"/>
-        <line num="74" type="stmt" count="0"/>
-        <line num="82" type="method" name="create" crap="4.46" count="1"/>
-        <line num="84" type="stmt" count="1"/>
+        <line num="55" type="method" name="formatConstraintFactory" crap="2" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="63" type="method" name="metaSchema" crap="1" count="1"/>
+        <line num="65" type="stmt" count="1"/>
+        <line num="71" type="method" name="constraintValidator" crap="2" count="0"/>
+        <line num="73" type="stmt" count="0"/>
+        <line num="81" type="method" name="create" crap="4.46" count="1"/>
+        <line num="83" type="stmt" count="1"/>
+        <line num="84" type="stmt" count="0"/>
         <line num="85" type="stmt" count="0"/>
-        <line num="86" type="stmt" count="0"/>
+        <line num="87" type="stmt" count="0"/>
         <line num="88" type="stmt" count="0"/>
         <line num="89" type="stmt" count="0"/>
-        <line num="90" type="stmt" count="0"/>
-        <line num="92" type="stmt" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="93" type="stmt" count="1"/>
         <line num="94" type="stmt" count="1"/>
         <line num="95" type="stmt" count="1"/>
-        <line num="96" type="stmt" count="1"/>
-        <line num="98" type="stmt" count="1"/>
-        <line num="106" type="method" name="createSchema" crap="4.01" count="1"/>
+        <line num="97" type="stmt" count="1"/>
+        <line num="105" type="method" name="createSchema" crap="4.01" count="1"/>
+        <line num="107" type="stmt" count="1"/>
         <line num="108" type="stmt" count="1"/>
-        <line num="109" type="stmt" count="1"/>
-        <line num="112" type="stmt" count="1"/>
+        <line num="111" type="stmt" count="1"/>
+        <line num="112" type="stmt" count="0"/>
         <line num="113" type="stmt" count="0"/>
-        <line num="114" type="stmt" count="0"/>
-        <line num="115" type="stmt" count="1"/>
+        <line num="114" type="stmt" count="1"/>
+        <line num="117" type="stmt" count="1"/>
         <line num="118" type="stmt" count="1"/>
         <line num="119" type="stmt" count="1"/>
         <line num="120" type="stmt" count="1"/>
         <line num="121" type="stmt" count="1"/>
         <line num="122" type="stmt" count="1"/>
         <line num="123" type="stmt" count="1"/>
-        <line num="124" type="stmt" count="1"/>
+        <line num="125" type="stmt" count="1"/>
         <line num="126" type="stmt" count="1"/>
         <line num="127" type="stmt" count="1"/>
         <line num="128" type="stmt" count="1"/>
@@ -447,278 +448,247 @@
         <line num="134" type="stmt" count="1"/>
         <line num="135" type="stmt" count="1"/>
         <line num="136" type="stmt" count="1"/>
-        <line num="137" type="stmt" count="1"/>
-        <line num="139" type="stmt" count="1"/>
-        <line num="148" type="method" name="createConstraints" crap="82.50" count="1"/>
-        <line num="154" type="stmt" count="1"/>
-        <line num="155" type="stmt" count="0"/>
+        <line num="138" type="stmt" count="1"/>
+        <line num="147" type="method" name="createConstraints" crap="82.50" count="1"/>
+        <line num="153" type="stmt" count="1"/>
+        <line num="154" type="stmt" count="0"/>
+        <line num="155" type="stmt" count="1"/>
         <line num="156" type="stmt" count="1"/>
         <line num="157" type="stmt" count="1"/>
-        <line num="158" type="stmt" count="1"/>
-        <line num="159" type="stmt" count="0"/>
-        <line num="160" type="stmt" count="1"/>
-        <line num="161" type="stmt" count="0"/>
-        <line num="162" type="stmt" count="1"/>
-        <line num="163" type="stmt" count="0"/>
-        <line num="164" type="stmt" count="1"/>
-        <line num="165" type="stmt" count="0"/>
-        <line num="168" type="stmt" count="1"/>
-        <line num="169" type="stmt" count="0"/>
-        <line num="170" type="stmt" count="1"/>
-        <line num="171" type="stmt" count="0"/>
-        <line num="172" type="stmt" count="1"/>
-        <line num="173" type="stmt" count="0"/>
-        <line num="174" type="stmt" count="1"/>
-        <line num="175" type="stmt" count="0"/>
-        <line num="178" type="stmt" count="1"/>
-        <line num="179" type="stmt" count="0"/>
-        <line num="180" type="stmt" count="1"/>
-        <line num="181" type="stmt" count="0"/>
-        <line num="182" type="stmt" count="1"/>
-        <line num="183" type="stmt" count="0"/>
-        <line num="186" type="stmt" count="1"/>
-        <line num="187" type="stmt" count="0"/>
-        <line num="188" type="stmt" count="1"/>
-        <line num="189" type="stmt" count="0"/>
-        <line num="190" type="stmt" count="1"/>
-        <line num="191" type="stmt" count="0"/>
-        <line num="194" type="stmt" count="1"/>
-        <line num="195" type="stmt" count="0"/>
-        <line num="198" type="stmt" count="1"/>
-        <line num="199" type="stmt" count="0"/>
-        <line num="200" type="stmt" count="1"/>
-        <line num="201" type="stmt" count="0"/>
-        <line num="204" type="stmt" count="1"/>
+        <line num="158" type="stmt" count="0"/>
+        <line num="159" type="stmt" count="1"/>
+        <line num="160" type="stmt" count="0"/>
+        <line num="161" type="stmt" count="1"/>
+        <line num="162" type="stmt" count="0"/>
+        <line num="163" type="stmt" count="1"/>
+        <line num="164" type="stmt" count="0"/>
+        <line num="167" type="stmt" count="1"/>
+        <line num="168" type="stmt" count="0"/>
+        <line num="169" type="stmt" count="1"/>
+        <line num="170" type="stmt" count="0"/>
+        <line num="171" type="stmt" count="1"/>
+        <line num="172" type="stmt" count="0"/>
+        <line num="173" type="stmt" count="1"/>
+        <line num="174" type="stmt" count="0"/>
+        <line num="177" type="stmt" count="1"/>
+        <line num="178" type="stmt" count="0"/>
+        <line num="179" type="stmt" count="1"/>
+        <line num="180" type="stmt" count="0"/>
+        <line num="181" type="stmt" count="1"/>
+        <line num="182" type="stmt" count="0"/>
+        <line num="185" type="stmt" count="1"/>
+        <line num="186" type="stmt" count="0"/>
+        <line num="187" type="stmt" count="1"/>
+        <line num="188" type="stmt" count="0"/>
+        <line num="189" type="stmt" count="1"/>
+        <line num="190" type="stmt" count="0"/>
+        <line num="193" type="stmt" count="1"/>
+        <line num="194" type="stmt" count="0"/>
+        <line num="197" type="stmt" count="1"/>
+        <line num="198" type="stmt" count="0"/>
+        <line num="199" type="stmt" count="1"/>
+        <line num="200" type="stmt" count="0"/>
+        <line num="203" type="stmt" count="1"/>
+        <line num="204" type="stmt" count="0"/>
         <line num="205" type="stmt" count="0"/>
         <line num="206" type="stmt" count="0"/>
-        <line num="207" type="stmt" count="0"/>
-        <line num="210" type="stmt" count="0"/>
-        <line num="213" type="stmt" count="1"/>
-        <line num="221" type="method" name="createCompositeConstraints" crap="6.97" count="1"/>
-        <line num="223" type="stmt" count="1"/>
+        <line num="209" type="stmt" count="0"/>
+        <line num="212" type="stmt" count="1"/>
+        <line num="220" type="method" name="createCompositeConstraints" crap="6.97" count="1"/>
+        <line num="222" type="stmt" count="1"/>
+        <line num="224" type="stmt" count="1"/>
         <line num="225" type="stmt" count="1"/>
         <line num="226" type="stmt" count="1"/>
         <line num="227" type="stmt" count="1"/>
-        <line num="228" type="stmt" count="1"/>
+        <line num="228" type="stmt" count="0"/>
         <line num="229" type="stmt" count="0"/>
-        <line num="230" type="stmt" count="0"/>
-        <line num="231" type="stmt" count="1"/>
+        <line num="230" type="stmt" count="1"/>
+        <line num="231" type="stmt" count="0"/>
         <line num="232" type="stmt" count="0"/>
-        <line num="233" type="stmt" count="0"/>
-        <line num="234" type="stmt" count="1"/>
+        <line num="233" type="stmt" count="1"/>
+        <line num="234" type="stmt" count="0"/>
         <line num="235" type="stmt" count="0"/>
-        <line num="236" type="stmt" count="0"/>
-        <line num="238" type="stmt" count="1"/>
-        <line num="248" type="method" name="createEnumConstraint" crap="2" count="0"/>
-        <line num="250" type="stmt" count="0"/>
-        <line num="258" type="method" name="createTypeConstraint" crap="14.86" count="1"/>
-        <line num="260" type="stmt" count="1"/>
-        <line num="261" type="stmt" count="1"/>
-        <line num="262" type="stmt" count="1"/>
-        <line num="263" type="stmt" count="1"/>
-        <line num="264" type="stmt" count="0"/>
+        <line num="237" type="stmt" count="1"/>
+        <line num="247" type="method" name="createEnumConstraint" crap="2" count="0"/>
+        <line num="249" type="stmt" count="0"/>
+        <line num="257" type="method" name="createTypeConstraint" crap="4.54" count="1"/>
+        <line num="259" type="stmt" count="1"/>
+        <line num="260" type="stmt" count="0"/>
+        <line num="261" type="stmt" count="0"/>
+        <line num="262" type="stmt" count="0"/>
+        <line num="263" type="stmt" count="0"/>
         <line num="265" type="stmt" count="0"/>
-        <line num="266" type="stmt" count="0"/>
-        <line num="267" type="stmt" count="0"/>
-        <line num="268" type="stmt" count="0"/>
-        <line num="270" type="stmt" count="0"/>
-        <line num="273" type="stmt" count="0"/>
-        <line num="274" type="stmt" count="0"/>
-        <line num="276" type="stmt" count="0"/>
-        <line num="279" type="stmt" count="0"/>
+        <line num="268" type="stmt" count="1"/>
+        <line num="269" type="stmt" count="1"/>
+        <line num="270" type="stmt" count="1"/>
+        <line num="278" type="method" name="createAllOfConstraint" crap="6" count="0"/>
+        <line num="280" type="stmt" count="0"/>
         <line num="281" type="stmt" count="0"/>
-        <line num="289" type="method" name="createAllOfConstraint" crap="6" count="0"/>
-        <line num="291" type="stmt" count="0"/>
-        <line num="292" type="stmt" count="0"/>
-        <line num="293" type="stmt" count="0"/>
-        <line num="294" type="stmt" count="0"/>
+        <line num="282" type="stmt" count="0"/>
+        <line num="283" type="stmt" count="0"/>
+        <line num="285" type="stmt" count="0"/>
+        <line num="293" type="method" name="createAnyOfConstraint" crap="6" count="0"/>
+        <line num="295" type="stmt" count="0"/>
         <line num="296" type="stmt" count="0"/>
-        <line num="304" type="method" name="createAnyOfConstraint" crap="6" count="0"/>
-        <line num="306" type="stmt" count="0"/>
-        <line num="307" type="stmt" count="0"/>
-        <line num="308" type="stmt" count="0"/>
-        <line num="309" type="stmt" count="0"/>
+        <line num="297" type="stmt" count="0"/>
+        <line num="298" type="stmt" count="0"/>
+        <line num="300" type="stmt" count="0"/>
+        <line num="308" type="method" name="createOneOfConstraint" crap="6" count="0"/>
+        <line num="310" type="stmt" count="0"/>
         <line num="311" type="stmt" count="0"/>
-        <line num="319" type="method" name="createOneOfConstraint" crap="6" count="0"/>
-        <line num="321" type="stmt" count="0"/>
-        <line num="322" type="stmt" count="0"/>
-        <line num="323" type="stmt" count="0"/>
-        <line num="324" type="stmt" count="0"/>
-        <line num="326" type="stmt" count="0"/>
-        <line num="334" type="method" name="createNotConstraint" crap="2" count="0"/>
-        <line num="336" type="stmt" count="0"/>
-        <line num="346" type="method" name="createMaximumPropertiesConstraint" crap="2" count="0"/>
-        <line num="348" type="stmt" count="0"/>
-        <line num="356" type="method" name="createMinimumPropertiesConstraint" crap="2" count="0"/>
+        <line num="312" type="stmt" count="0"/>
+        <line num="313" type="stmt" count="0"/>
+        <line num="315" type="stmt" count="0"/>
+        <line num="323" type="method" name="createNotConstraint" crap="2" count="0"/>
+        <line num="325" type="stmt" count="0"/>
+        <line num="335" type="method" name="createMaximumPropertiesConstraint" crap="2" count="0"/>
+        <line num="337" type="stmt" count="0"/>
+        <line num="345" type="method" name="createMinimumPropertiesConstraint" crap="2" count="0"/>
+        <line num="347" type="stmt" count="0"/>
+        <line num="355" type="method" name="createRequiredConstraints" crap="6" count="0"/>
+        <line num="357" type="stmt" count="0"/>
         <line num="358" type="stmt" count="0"/>
-        <line num="366" type="method" name="createRequiredConstraints" crap="6" count="0"/>
-        <line num="368" type="stmt" count="0"/>
-        <line num="369" type="stmt" count="0"/>
-        <line num="370" type="stmt" count="0"/>
-        <line num="371" type="stmt" count="0"/>
-        <line num="373" type="stmt" count="0"/>
-        <line num="381" type="method" name="createRequiredConstraint" crap="2" count="0"/>
-        <line num="383" type="stmt" count="0"/>
-        <line num="391" type="method" name="createPropertiesConstraint" crap="55.34" count="1"/>
-        <line num="394" type="stmt" count="1"/>
-        <line num="395" type="stmt" count="1"/>
-        <line num="396" type="stmt" count="1"/>
+        <line num="359" type="stmt" count="0"/>
+        <line num="360" type="stmt" count="0"/>
+        <line num="362" type="stmt" count="0"/>
+        <line num="370" type="method" name="createRequiredConstraint" crap="2" count="0"/>
+        <line num="372" type="stmt" count="0"/>
+        <line num="380" type="method" name="createPropertiesConstraint" crap="27.54" count="1"/>
+        <line num="383" type="stmt" count="1"/>
+        <line num="384" type="stmt" count="1"/>
+        <line num="385" type="stmt" count="1"/>
+        <line num="386" type="stmt" count="1"/>
+        <line num="387" type="stmt" count="0"/>
+        <line num="390" type="stmt" count="1"/>
+        <line num="391" type="stmt" count="1"/>
+        <line num="392" type="stmt" count="0"/>
+        <line num="393" type="stmt" count="0"/>
+        <line num="394" type="stmt" count="0"/>
+        <line num="395" type="stmt" count="0"/>
         <line num="397" type="stmt" count="1"/>
-        <line num="398" type="stmt" count="0"/>
-        <line num="401" type="stmt" count="1"/>
-        <line num="402" type="stmt" count="1"/>
-        <line num="403" type="stmt" count="0"/>
-        <line num="404" type="stmt" count="0"/>
+        <line num="398" type="stmt" count="1"/>
+        <line num="399" type="stmt" count="0"/>
+        <line num="400" type="stmt" count="0"/>
+        <line num="401" type="stmt" count="0"/>
+        <line num="402" type="stmt" count="0"/>
+        <line num="404" type="stmt" count="1"/>
+        <line num="405" type="stmt" count="1"/>
         <line num="406" type="stmt" count="0"/>
+        <line num="407" type="stmt" count="0"/>
+        <line num="408" type="stmt" count="0"/>
         <line num="409" type="stmt" count="0"/>
         <line num="410" type="stmt" count="0"/>
         <line num="411" type="stmt" count="0"/>
-        <line num="412" type="stmt" count="0"/>
+        <line num="413" type="stmt" count="0"/>
         <line num="414" type="stmt" count="1"/>
-        <line num="415" type="stmt" count="1"/>
-        <line num="416" type="stmt" count="0"/>
+        <line num="416" type="stmt" count="1"/>
         <line num="417" type="stmt" count="0"/>
-        <line num="419" type="stmt" count="0"/>
-        <line num="422" type="stmt" count="0"/>
-        <line num="423" type="stmt" count="0"/>
-        <line num="424" type="stmt" count="0"/>
-        <line num="425" type="stmt" count="0"/>
-        <line num="427" type="stmt" count="1"/>
-        <line num="428" type="stmt" count="1"/>
-        <line num="429" type="stmt" count="1"/>
-        <line num="430" type="stmt" count="1"/>
-        <line num="431" type="stmt" count="0"/>
-        <line num="432" type="stmt" count="0"/>
-        <line num="433" type="stmt" count="0"/>
+        <line num="420" type="stmt" count="1"/>
+        <line num="421" type="stmt" count="1"/>
+        <line num="422" type="stmt" count="1"/>
+        <line num="424" type="stmt" count="1"/>
+        <line num="432" type="method" name="createDependencyConstraints" crap="20" count="0"/>
         <line num="434" type="stmt" count="0"/>
         <line num="435" type="stmt" count="0"/>
         <line num="436" type="stmt" count="0"/>
+        <line num="437" type="stmt" count="0"/>
         <line num="438" type="stmt" count="0"/>
         <line num="439" type="stmt" count="0"/>
-        <line num="441" type="stmt" count="0"/>
-        <line num="443" type="stmt" count="1"/>
+        <line num="440" type="stmt" count="0"/>
+        <line num="442" type="stmt" count="0"/>
+        <line num="443" type="stmt" count="0"/>
         <line num="444" type="stmt" count="0"/>
-        <line num="447" type="stmt" count="1"/>
-        <line num="448" type="stmt" count="1"/>
-        <line num="449" type="stmt" count="1"/>
-        <line num="451" type="stmt" count="1"/>
-        <line num="459" type="method" name="createDependencyConstraints" crap="30" count="0"/>
-        <line num="461" type="stmt" count="0"/>
-        <line num="462" type="stmt" count="0"/>
-        <line num="463" type="stmt" count="0"/>
-        <line num="464" type="stmt" count="0"/>
-        <line num="465" type="stmt" count="0"/>
-        <line num="466" type="stmt" count="0"/>
-        <line num="467" type="stmt" count="0"/>
-        <line num="468" type="stmt" count="0"/>
-        <line num="469" type="stmt" count="0"/>
-        <line num="470" type="stmt" count="0"/>
-        <line num="471" type="stmt" count="0"/>
-        <line num="472" type="stmt" count="0"/>
+        <line num="445" type="stmt" count="0"/>
+        <line num="446" type="stmt" count="0"/>
+        <line num="447" type="stmt" count="0"/>
+        <line num="448" type="stmt" count="0"/>
+        <line num="449" type="stmt" count="0"/>
+        <line num="450" type="stmt" count="0"/>
+        <line num="452" type="stmt" count="0"/>
+        <line num="454" type="stmt" count="0"/>
+        <line num="464" type="method" name="createItemsConstraint" crap="87.20" count="1"/>
+        <line num="467" type="stmt" count="1"/>
+        <line num="468" type="stmt" count="1"/>
+        <line num="469" type="stmt" count="1"/>
+        <line num="470" type="stmt" count="1"/>
+        <line num="473" type="stmt" count="0"/>
         <line num="474" type="stmt" count="0"/>
         <line num="475" type="stmt" count="0"/>
         <line num="476" type="stmt" count="0"/>
         <line num="477" type="stmt" count="0"/>
         <line num="478" type="stmt" count="0"/>
         <line num="479" type="stmt" count="0"/>
+        <line num="480" type="stmt" count="0"/>
         <line num="481" type="stmt" count="0"/>
         <line num="483" type="stmt" count="0"/>
         <line num="485" type="stmt" count="0"/>
-        <line num="495" type="method" name="createItemsConstraint" crap="129.10" count="1"/>
-        <line num="498" type="stmt" count="1"/>
-        <line num="499" type="stmt" count="1"/>
-        <line num="500" type="stmt" count="1"/>
-        <line num="501" type="stmt" count="1"/>
-        <line num="504" type="stmt" count="0"/>
-        <line num="505" type="stmt" count="0"/>
-        <line num="506" type="stmt" count="0"/>
-        <line num="507" type="stmt" count="0"/>
-        <line num="508" type="stmt" count="0"/>
-        <line num="509" type="stmt" count="0"/>
-        <line num="510" type="stmt" count="0"/>
+        <line num="486" type="stmt" count="0"/>
+        <line num="487" type="stmt" count="0"/>
+        <line num="488" type="stmt" count="0"/>
+        <line num="489" type="stmt" count="0"/>
+        <line num="490" type="stmt" count="0"/>
+        <line num="491" type="stmt" count="0"/>
+        <line num="492" type="stmt" count="0"/>
+        <line num="493" type="stmt" count="0"/>
+        <line num="495" type="stmt" count="0"/>
+        <line num="497" type="stmt" count="0"/>
+        <line num="498" type="stmt" count="0"/>
+        <line num="499" type="stmt" count="0"/>
+        <line num="501" type="stmt" count="0"/>
+        <line num="509" type="method" name="createMaximumItemsConstraint" crap="2" count="0"/>
         <line num="511" type="stmt" count="0"/>
-        <line num="512" type="stmt" count="0"/>
-        <line num="513" type="stmt" count="0"/>
-        <line num="514" type="stmt" count="0"/>
-        <line num="516" type="stmt" count="0"/>
-        <line num="518" type="stmt" count="0"/>
-        <line num="520" type="stmt" count="0"/>
+        <line num="519" type="method" name="createMinimumItemsConstraint" crap="2" count="0"/>
         <line num="521" type="stmt" count="0"/>
-        <line num="522" type="stmt" count="0"/>
-        <line num="523" type="stmt" count="0"/>
-        <line num="524" type="stmt" count="0"/>
-        <line num="525" type="stmt" count="0"/>
-        <line num="526" type="stmt" count="0"/>
-        <line num="527" type="stmt" count="0"/>
-        <line num="528" type="stmt" count="0"/>
-        <line num="529" type="stmt" count="0"/>
-        <line num="530" type="stmt" count="0"/>
-        <line num="532" type="stmt" count="0"/>
-        <line num="534" type="stmt" count="0"/>
-        <line num="536" type="stmt" count="0"/>
-        <line num="537" type="stmt" count="0"/>
-        <line num="538" type="stmt" count="0"/>
-        <line num="540" type="stmt" count="0"/>
-        <line num="548" type="method" name="createMaximumItemsConstraint" crap="2" count="0"/>
-        <line num="550" type="stmt" count="0"/>
-        <line num="558" type="method" name="createMinimumItemsConstraint" crap="2" count="0"/>
-        <line num="560" type="stmt" count="0"/>
-        <line num="568" type="method" name="createUniqueItemsConstraint" crap="2" count="0"/>
-        <line num="570" type="stmt" count="0"/>
-        <line num="580" type="method" name="createMaximumLengthConstraint" crap="2" count="0"/>
-        <line num="582" type="stmt" count="0"/>
-        <line num="590" type="method" name="createMinimumLengthConstraint" crap="2" count="0"/>
+        <line num="529" type="method" name="createUniqueItemsConstraint" crap="2" count="0"/>
+        <line num="531" type="stmt" count="0"/>
+        <line num="541" type="method" name="createMaximumLengthConstraint" crap="2" count="0"/>
+        <line num="543" type="stmt" count="0"/>
+        <line num="551" type="method" name="createMinimumLengthConstraint" crap="2" count="0"/>
+        <line num="553" type="stmt" count="0"/>
+        <line num="561" type="method" name="createPatternConstraint" crap="2" count="0"/>
+        <line num="563" type="stmt" count="0"/>
+        <line num="573" type="method" name="createMultipleOfConstraint" crap="2" count="0"/>
+        <line num="575" type="stmt" count="0"/>
+        <line num="583" type="method" name="createMaximumConstraint" crap="3.19" count="1"/>
+        <line num="585" type="stmt" count="1"/>
+        <line num="586" type="stmt" count="1"/>
+        <line num="589" type="stmt" count="0"/>
+        <line num="590" type="stmt" count="0"/>
+        <line num="591" type="stmt" count="0"/>
         <line num="592" type="stmt" count="0"/>
-        <line num="600" type="method" name="createPatternConstraint" crap="2" count="0"/>
-        <line num="602" type="stmt" count="0"/>
-        <line num="612" type="method" name="createMultipleOfConstraint" crap="2" count="0"/>
-        <line num="614" type="stmt" count="0"/>
-        <line num="622" type="method" name="createMaximumConstraint" crap="3.19" count="1"/>
-        <line num="624" type="stmt" count="1"/>
-        <line num="625" type="stmt" count="1"/>
-        <line num="628" type="stmt" count="0"/>
-        <line num="629" type="stmt" count="0"/>
-        <line num="630" type="stmt" count="0"/>
-        <line num="631" type="stmt" count="0"/>
-        <line num="639" type="method" name="createMinimumConstraint" crap="3.19" count="1"/>
-        <line num="641" type="stmt" count="1"/>
-        <line num="642" type="stmt" count="1"/>
-        <line num="645" type="stmt" count="0"/>
-        <line num="646" type="stmt" count="0"/>
-        <line num="647" type="stmt" count="0"/>
-        <line num="648" type="stmt" count="0"/>
-        <line num="658" type="method" name="createMaximumDateTimeConstraint" crap="12" count="0"/>
-        <line num="660" type="stmt" count="0"/>
-        <line num="661" type="stmt" count="0"/>
-        <line num="662" type="stmt" count="0"/>
-        <line num="663" type="stmt" count="0"/>
-        <line num="664" type="stmt" count="0"/>
-        <line num="665" type="stmt" count="0"/>
-        <line num="668" type="stmt" count="0"/>
-        <line num="670" type="stmt" count="0"/>
-        <line num="678" type="method" name="createMinimumDateTimeConstraint" crap="12" count="0"/>
-        <line num="680" type="stmt" count="0"/>
-        <line num="681" type="stmt" count="0"/>
+        <line num="600" type="method" name="createMinimumConstraint" crap="3.19" count="1"/>
+        <line num="602" type="stmt" count="1"/>
+        <line num="603" type="stmt" count="1"/>
+        <line num="606" type="stmt" count="0"/>
+        <line num="607" type="stmt" count="0"/>
+        <line num="608" type="stmt" count="0"/>
+        <line num="609" type="stmt" count="0"/>
+        <line num="619" type="method" name="createMaximumDateTimeConstraint" crap="6" count="0"/>
+        <line num="621" type="stmt" count="0"/>
+        <line num="622" type="stmt" count="0"/>
+        <line num="625" type="stmt" count="0"/>
+        <line num="626" type="stmt" count="0"/>
+        <line num="627" type="stmt" count="0"/>
+        <line num="635" type="method" name="createMinimumDateTimeConstraint" crap="6" count="0"/>
+        <line num="637" type="stmt" count="0"/>
+        <line num="638" type="stmt" count="0"/>
+        <line num="641" type="stmt" count="0"/>
+        <line num="642" type="stmt" count="0"/>
+        <line num="643" type="stmt" count="0"/>
+        <line num="648" type="method" name="clear" crap="1" count="1"/>
+        <line num="650" type="stmt" count="1"/>
+        <line num="651" type="stmt" count="1"/>
+        <line num="657" type="method" name="registerSchema" crap="1" count="1"/>
+        <line num="661" type="stmt" count="1"/>
+        <line num="662" type="stmt" count="1"/>
+        <line num="669" type="method" name="hasRegisteredSchema" crap="1" count="1"/>
+        <line num="671" type="stmt" count="1"/>
+        <line num="679" type="method" name="registeredSchema" crap="2.15" count="1"/>
+        <line num="681" type="stmt" count="1"/>
         <line num="682" type="stmt" count="0"/>
-        <line num="683" type="stmt" count="0"/>
-        <line num="684" type="stmt" count="0"/>
-        <line num="685" type="stmt" count="0"/>
-        <line num="688" type="stmt" count="0"/>
-        <line num="690" type="stmt" count="0"/>
-        <line num="695" type="method" name="clear" crap="1" count="1"/>
-        <line num="697" type="stmt" count="1"/>
-        <line num="698" type="stmt" count="1"/>
-        <line num="704" type="method" name="registerSchema" crap="1" count="1"/>
-        <line num="708" type="stmt" count="1"/>
-        <line num="709" type="stmt" count="1"/>
-        <line num="716" type="method" name="hasRegisteredSchema" crap="1" count="1"/>
-        <line num="718" type="stmt" count="1"/>
-        <line num="726" type="method" name="registeredSchema" crap="2.15" count="1"/>
-        <line num="728" type="stmt" count="1"/>
-        <line num="729" type="stmt" count="0"/>
-        <line num="732" type="stmt" count="1"/>
-        <line num="740" type="stmt" count="0"/>
-        <metrics loc="739" ncloc="534" classes="1" methods="36" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="288" coveredstatements="104" elements="324" coveredelements="108"/>
+        <line num="685" type="stmt" count="1"/>
+        <line num="693" type="stmt" count="0"/>
+        <metrics loc="692" ncloc="487" classes="1" methods="36" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="258" coveredstatements="103" elements="294" coveredelements="107"/>
       </file>
     </package>
     <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/Factory/FormatConstraintFactoryInterface.php">
@@ -4729,6 +4699,6 @@
       <line num="10" type="stmt" count="0"/>
       <metrics loc="87" ncloc="29" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="1" coveredelements="0"/>
     </file>
-    <metrics files="149" loc="12598" ncloc="8167" classes="112" methods="625" coveredmethods="128" conditionals="0" coveredconditionals="0" statements="3264" coveredstatements="1385" elements="3889" coveredelements="1513"/>
+    <metrics files="149" loc="12551" ncloc="8120" classes="112" methods="625" coveredmethods="128" conditionals="0" coveredconditionals="0" statements="3234" coveredstatements="1384" elements="3859" coveredelements="1512"/>
   </project>
 </coverage>
