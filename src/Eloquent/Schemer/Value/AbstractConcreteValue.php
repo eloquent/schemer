@@ -16,7 +16,7 @@ abstract class AbstractConcreteValue implements ConcreteValueInterface
     /**
      * @param mixed $value
      */
-    public function __construct($value)
+    protected function __construct($value)
     {
         $this->value = $value;
     }
@@ -39,6 +39,13 @@ abstract class AbstractConcreteValue implements ConcreteValueInterface
     protected function unwrap(array &$valueMap)
     {
         return $this->value;
+    }
+
+    /**
+     * @param ValueInterface $value
+     */
+    protected function valueTypeCheck(ValueInterface $value)
+    {
     }
 
     protected $value;

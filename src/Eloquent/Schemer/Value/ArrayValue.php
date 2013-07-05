@@ -13,9 +13,7 @@ namespace Eloquent\Schemer\Value;
 
 use ArrayAccess;
 use ArrayIterator;
-use InvalidArgumentException;
 use IteratorAggregate;
-use LogicException;
 
 class ArrayValue extends AbstractConcreteValue implements
     ValueContainerInterface,
@@ -34,15 +32,10 @@ class ArrayValue extends AbstractConcreteValue implements
         $expectedIndex = 0;
         foreach ($value as $index => $subValue) {
             if ($index !== $expectedIndex++) {
-                throw new InvalidArgumentException(
-                    'Value must be a sequential array.'
-                );
+                throw new Exception\NonSequentialException(array_keys($value));
             }
-            if (!$subValue instanceof ValueInterface) {
-                throw new InvalidArgumentException(
-                    'Value must contain only instances of ValueInterface.'
-                );
-            }
+
+            $this->valueTypeCheck($subValue);
         }
 
         parent::__construct($value);
@@ -86,7 +79,31 @@ class ArrayValue extends AbstractConcreteValue implements
      */
     public function set($index, ValueInterface $value)
     {
+        if (!is_integer($index)) {
+            throw new Exception\InvalidKeyException($index);
+        }
+
+        for ($i = count($this->value); $i < $index - 1; $i ++) {
+            $this->value[] = null;
+        }
+
         $this->value[$index] = $value;
+    }
+
+    /**
+     * @param ValueInterface $value
+     */
+    public function add(ValueInterface $value)
+    {
+        $this->value[] = $value;
+    }
+
+    /**
+     * @param integer $index
+     */
+    public function remove($index)
+    {
+        array_splice($this->value, $index, 1);
     }
 
     /**
@@ -107,7 +124,7 @@ class ArrayValue extends AbstractConcreteValue implements
     public function get($index)
     {
         if (!$this->has($index)) {
-            throw new Exception\UndefinedIndexException($index);
+            throw new Exception\UndefinedKeyException($index);
         }
 
         return $this->value[$index];
@@ -184,24 +201,24 @@ class ArrayValue extends AbstractConcreteValue implements
     }
 
     /**
-     * @param integer $index
-     * @param mixed   $value
-     *
-     * @throws LogicException
+     * @param integer|null $index
+     * @param mixed        $value
      */
     public function offsetSet($index, $value)
     {
-        throw new LogicException('Not supported.');
+        if (null === $index) {
+            $this->add($value);
+        } else {
+            $this->set($index, $value);
+        }
     }
 
     /**
      * @param integer $index
-     *
-     * @throws LogicException
      */
     public function offsetUnset($index)
     {
-        throw new LogicException('Not supported.');
+        $this->remove($index);
     }
 
     /**

@@ -23,7 +23,6 @@ use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Uri\UriInterface;
 use Eloquent\Schemer\Value;
-use LogicException;
 
 class ReferenceResolver extends Value\Transform\AbstractValueTransform
 {
@@ -168,8 +167,9 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
             $this->currentBaseUri()
         );
 
-        if ($this->hasResolution($referenceUri)) {
-            return $this->resolution($referenceUri);
+        $resolution = $this->resolution($referenceUri);
+        if (null !== $resolution) {
+            return $resolution;
         }
         $resolution = $this->startResolution($referenceUri);
 
@@ -303,10 +303,6 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
 
     protected function popScopeMap()
     {
-        if (count($this->scopeMapStack) < 1) {
-            throw new LogicException('Scope map stack is empty.');
-        }
-
         array_pop($this->scopeMapStack);
     }
 
@@ -315,10 +311,6 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
      */
     protected function currentScopeMap()
     {
-        if (count($this->scopeMapStack) < 1) {
-            throw new LogicException('Scope map stack is empty.');
-        }
-
         return $this->scopeMapStack[count($this->scopeMapStack) - 1];
     }
 
@@ -367,28 +359,16 @@ class ReferenceResolver extends Value\Transform\AbstractValueTransform
     /**
      * @param UriInterface $referenceUri
      *
-     * @return boolean
-     */
-    protected function hasResolution(UriInterface $referenceUri)
-    {
-        return array_key_exists(
-            $referenceUri->toString(),
-            $this->resolutions
-        );
-    }
-
-    /**
-     * @param UriInterface $referenceUri
-     *
-     * @return Value\ValueInterface
+     * @return Value\ValueInterface|null
      */
     protected function resolution(UriInterface $referenceUri)
     {
-        if (!$this->hasResolution($referenceUri)) {
-            throw new LogicException('Undefined resolution.');
+        $key = $referenceUri->toString();
+        if (array_key_exists($key, $this->resolutions)) {
+            return $this->resolutions[$key];
         }
 
-        return $this->resolutions[$referenceUri->toString()];
+        return null;
     }
 
     private $baseUri;

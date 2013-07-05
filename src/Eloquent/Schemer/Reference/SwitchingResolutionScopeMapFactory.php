@@ -189,10 +189,6 @@ class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisi
 
     protected function popBaseUri()
     {
-        if (count($this->baseUriStack) < 1) {
-            throw new LogicException('Base URI stack is empty.');
-        }
-
         array_pop($this->baseUriStack);
     }
 
@@ -201,10 +197,6 @@ class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisi
      */
     protected function currentBaseUri()
     {
-        if (count($this->baseUriStack) < 1) {
-            throw new LogicException('Base URI stack is empty.');
-        }
-
         return $this->baseUriStack[count($this->baseUriStack) - 1];
     }
 
@@ -218,10 +210,6 @@ class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisi
 
     protected function popPointer()
     {
-        if (count($this->pointerStack) < 1) {
-            throw new LogicException('Pointer stack is empty.');
-        }
-
         array_pop($this->pointerStack);
     }
 
@@ -230,10 +218,6 @@ class SwitchingResolutionScopeMapFactory extends Value\Visitor\AbstractValueVisi
      */
     protected function currentPointer()
     {
-        if (count($this->pointerStack) < 1) {
-            throw new LogicException('Pointer stack is empty.');
-        }
-
         return $this->pointerStack[count($this->pointerStack) - 1];
     }
 

@@ -12,7 +12,6 @@
 namespace Eloquent\Schemer\Value;
 
 use ArrayIterator;
-use InvalidArgumentException;
 use IteratorAggregate;
 use stdClass;
 
@@ -28,12 +27,13 @@ class ObjectValue extends AbstractConcreteValue implements
         if (null === $value) {
             $value = new stdClass;
         }
+
         foreach (get_object_vars($value) as $property => $subValue) {
-            if (!$subValue instanceof ValueInterface) {
-                throw new InvalidArgumentException(
-                    'Value must contain only instances of ValueInterface.'
-                );
+            if (!is_string($property)) {
+                throw new Exception\InvalidKeyException($property);
             }
+
+            $this->valueTypeCheck($subValue);
         }
 
         parent::__construct($value);
@@ -89,16 +89,31 @@ class ObjectValue extends AbstractConcreteValue implements
     }
 
     /**
-     * @param integer        $property
+     * @param string         $property
      * @param ValueInterface $value
      */
     public function set($property, ValueInterface $value)
     {
+        if (!is_string($property)) {
+            throw new Exception\InvalidKeyException($property);
+        }
         if ('' === $property) {
             $property = '_empty_';
         }
 
         $this->value->$property = $value;
+    }
+
+    /**
+     * @param string $property
+     */
+    public function remove($property)
+    {
+        if ('' === $property) {
+            $property = '_empty_';
+        }
+
+        unset($this->value->$property);
     }
 
     /**
@@ -126,7 +141,7 @@ class ObjectValue extends AbstractConcreteValue implements
             $property = '_empty_';
         }
         if (!$this->has($property)) {
-            throw new Exception\UndefinedPropertyException($property);
+            throw new Exception\UndefinedKeyException($property);
         }
 
         return $this->value->$property;

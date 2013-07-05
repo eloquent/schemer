@@ -9,27 +9,24 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Validation\Exception;
+namespace Eloquent\Schemer\Constraint\Factory\Exception;
 
-use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Validation\Result\IssueRenderer;
 use Eloquent\Schemer\Validation\Result\IssueRendererInterface;
 use Eloquent\Schemer\Validation\Result\ValidationResult;
-use Eloquent\Schemer\Value\ValueInterface;
+use Eloquent\Schemer\Value\ConcreteValueInterface;
 use Exception;
 
-final class InvalidValueException extends Exception
+final class InvalidSchemaException extends Exception
 {
     /**
-     * @param ValueInterface              $value
-     * @param ConstraintInterface         $constraint
+     * @param ConcreteValueInterface      $value
      * @param ValidationResult            $result
      * @param Exception|null              $previous
      * @param IssueRendererInterface|null $issueRenderer
      */
     public function __construct(
-        ValueInterface $value,
-        ConstraintInterface $constraint,
+        ConcreteValueInterface $value,
         ValidationResult $result,
         Exception $previous = null,
         IssueRendererInterface $issueRenderer = null
@@ -39,13 +36,12 @@ final class InvalidValueException extends Exception
         }
 
         $this->value = $value;
-        $this->constraint = $constraint;
         $this->result = $result;
         $this->issueRenderer = $issueRenderer;
 
         parent::__construct(
             sprintf(
-                "The provided value is not valid against the given constraint:\n%s",
+                "Invalid schema:\n%s",
                 $issueRenderer->renderManyString($result->issues())
             ),
             0,
@@ -54,19 +50,11 @@ final class InvalidValueException extends Exception
     }
 
     /**
-     * @return ValueInterface
+     * @return ConcreteValueInterface
      */
     public function value()
     {
         return $this->value;
-    }
-
-    /**
-     * @return ConstraintInterface
-     */
-    public function constraint()
-    {
-        return $this->constraint;
     }
 
     /**
@@ -77,7 +65,15 @@ final class InvalidValueException extends Exception
         return $this->result;
     }
 
+    /**
+     * @return IssueRendererInterface
+     */
+    public function issueRenderer()
+    {
+        return $this->issueRenderer;
+    }
+
     private $value;
-    private $constraint;
     private $result;
+    private $issueRenderer;
 }

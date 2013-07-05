@@ -26,4 +26,17 @@ interface IssueRendererInterface
      * @return array<string>
      */
     public function renderMany(array $issues);
+
+    /**
+     * @param array<ValidationIssue> $issues
+     * @param string|null            $format
+     * @param string|null            $glue
+     *
+     * @return string
+     */
+    public function renderManyString(
+        array $issues,
+        $format = null,
+        $glue = null
+    );
 }

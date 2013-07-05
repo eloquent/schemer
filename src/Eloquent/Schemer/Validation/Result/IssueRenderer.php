@@ -72,5 +72,34 @@ class IssueRenderer implements IssueRendererInterface
         }, $issues);
     }
 
+    /**
+     * @param array<ValidationIssue> $issues
+     * @param string|null            $format
+     * @param string|null            $glue
+     *
+     * @return string
+     */
+    public function renderManyString(
+        array $issues,
+        $format = null,
+        $glue = null
+    ) {
+        if (null === $format) {
+            $format = '  - %s';
+        }
+        if (null === $glue) {
+            $glue = "\n";
+        }
+
+        $self = $this;
+
+        return implode(
+            $glue,
+            array_map(function (ValidationIssue $issue) use ($self, $format) {
+                return sprintf($format, $self->render($issue));
+            }, $issues)
+        );
+    }
+
     private $constraintRenderer;
 }

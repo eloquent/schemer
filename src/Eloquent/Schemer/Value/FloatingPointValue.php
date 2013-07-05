@@ -11,8 +11,6 @@
 
 namespace Eloquent\Schemer\Value;
 
-use InvalidArgumentException;
-
 class FloatingPointValue extends AbstractConcreteValue implements NumberValueInterface
 {
     /**
@@ -21,9 +19,7 @@ class FloatingPointValue extends AbstractConcreteValue implements NumberValueInt
     public function __construct($value)
     {
         if (!is_float($value)) {
-            throw new InvalidArgumentException(
-                'Value must be a floating-point number.'
-            );
+            throw new Exception\UnexpectedValueTypeException($value, 'float');
         }
 
         parent::__construct($value);

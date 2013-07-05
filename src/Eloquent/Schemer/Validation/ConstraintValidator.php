@@ -26,7 +26,6 @@ use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 use Eloquent\Schemer\Pointer\Pointer;
 use Eloquent\Schemer\Pointer\PointerInterface;
 use Eloquent\Schemer\Value;
-use LogicException;
 use Zend\Validator\EmailAddress;
 use Zend\Validator\Hostname;
 use Zend\Validator\Ip;
@@ -975,14 +974,9 @@ class ConstraintValidator implements
         array_push($this->contextStack, $context);
     }
 
-    /**
-     * @throws LogicException
-     */
     protected function popContext()
     {
-        if (null === array_pop($this->contextStack)) {
-            throw new LogicException('Validation context stack is empty.');
-        }
+        array_pop($this->contextStack);
     }
 
     protected function clear()
@@ -993,21 +987,14 @@ class ConstraintValidator implements
 
     /**
      * @return tuple<ConcreteValueInterface,PointerInterface>
-     * @throws LogicException
      */
     protected function currentContext()
     {
-        $count = count($this->contextStack);
-        if ($count < 1) {
-            throw new LogicException('Current validation context is undefined.');
-        }
-
-        return $this->contextStack[$count - 1];
+        return $this->contextStack[count($this->contextStack) - 1];
     }
 
     /**
      * @return ConcreteValueInterface
-     * @throws LogicException
      */
     protected function currentValue()
     {
@@ -1018,7 +1005,6 @@ class ConstraintValidator implements
 
     /**
      * @return PointerInterface
-     * @throws LogicException
      */
     protected function currentPointer()
     {

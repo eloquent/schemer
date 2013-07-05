@@ -11,8 +11,6 @@
 
 namespace Eloquent\Schemer\Value;
 
-use InvalidArgumentException;
-
 class IntegerValue extends AbstractConcreteValue implements NumberValueInterface
 {
     /**
@@ -21,7 +19,7 @@ class IntegerValue extends AbstractConcreteValue implements NumberValueInterface
     public function __construct($value)
     {
         if (!is_int($value)) {
-            throw new InvalidArgumentException('Value must be an integer.');
+            throw new Exception\UnexpectedValueTypeException($value, 'integer');
         }
 
         parent::__construct($value);

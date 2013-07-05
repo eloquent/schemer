@@ -11,8 +11,6 @@
 
 namespace Eloquent\Schemer\Value;
 
-use InvalidArgumentException;
-
 class StringValue extends AbstractConcreteValue
 {
     /**
@@ -21,7 +19,7 @@ class StringValue extends AbstractConcreteValue
     public function __construct($value)
     {
         if (!is_string($value)) {
-            throw new InvalidArgumentException('Value must be a string.');
+            throw new Exception\UnexpectedValueTypeException($value, 'string');
         }
 
         parent::__construct($value);

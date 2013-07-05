@@ -23,8 +23,6 @@ use Eloquent\Schemer\Constraint\StringValue;
 use Eloquent\Schemer\Validation\ConstraintValidator;
 use Eloquent\Schemer\Validation\ConstraintValidatorInterface;
 use Eloquent\Schemer\Value;
-use InvalidArgumentException;
-use RuntimeException;
 
 class SchemaFactory implements SchemaFactoryInterface
 {
@@ -87,7 +85,7 @@ class SchemaFactory implements SchemaFactoryInterface
                 $value
             );
             if (!$result->isValid()) {
-                throw new RuntimeException('Invalid schema.');
+                throw new Exception\InvalidSchemaException($value, $result);
             }
         }
 
@@ -105,8 +103,9 @@ class SchemaFactory implements SchemaFactoryInterface
      */
     protected function createSchema(Value\ObjectValue $value)
     {
-        if ($this->hasRegisteredSchema($value)) {
-            return $this->registeredSchema($value);
+        $schema = $this->registeredSchema($value);
+        if (null !== $schema) {
+            return $schema;
         }
 
         if ($value->has('default')) {
@@ -257,27 +256,17 @@ class SchemaFactory implements SchemaFactoryInterface
      */
     protected function createTypeConstraint(Value\ConcreteValueInterface $value)
     {
-        if ($value instanceof Value\StringValue) {
-            return new Generic\TypeConstraint(
-                array(Value\ValueType::instanceByValue($value->value()))
-            );
-        } elseif ($value instanceof Value\ArrayValue) {
+        if ($value instanceof Value\ArrayValue) {
             $valueTypes = array();
             foreach ($value as $typeValue) {
-                if (!$typeValue instanceof Value\StringValue) {
-                    throw new InvalidArgumentException(
-                        'Value for type constraint must be either a string or an array of strings.'
-                    );
-                }
-
                 $valueTypes[] = Value\ValueType::instanceByValue($typeValue->value());
             }
 
             return new Generic\TypeConstraint($valueTypes);
         }
 
-        throw new InvalidArgumentException(
-            'Value for type constraint must be either a string or an array of strings.'
+        return new Generic\TypeConstraint(
+            array(Value\ValueType::instanceByValue($value->value()))
         );
     }
 
@@ -400,12 +389,6 @@ class SchemaFactory implements SchemaFactoryInterface
 
         $schemas = array();
         if ($value->has('properties')) {
-            if (!$value->get('properties') instanceof Value\ObjectValue) {
-                throw new InvalidArgumentException(
-                    'Value for properties constraint must be an object.'
-                );
-            }
-
             foreach ($value->get('properties') as $property => $subValue) {
                 $schemas[$property] = $this->createSchema($subValue);
             }
@@ -413,21 +396,13 @@ class SchemaFactory implements SchemaFactoryInterface
 
         $patternSchemas = array();
         if ($value->has('patternProperties')) {
-            if (!$value->get('patternProperties') instanceof Value\ObjectValue) {
-                throw new InvalidArgumentException(
-                    'Value for patternProperties constraint must be an object.'
-                );
-            }
-
             foreach ($value->get('patternProperties') as $pattern => $subValue) {
                 $patternSchemas[$pattern] = $this->createSchema($subValue);
             }
         }
 
         if ($value->has('additionalProperties')) {
-            if ($value->get('additionalProperties') instanceof Value\ObjectValue) {
-                $additionalSchema = $this->createSchema($value->get('additionalProperties'));
-            } elseif ($value->get('additionalProperties') instanceof Value\BooleanValue) {
+            if ($value->get('additionalProperties') instanceof Value\BooleanValue) {
                 if ($value->getRaw('additionalProperties')) {
                     $additionalSchema = new Schema;
                 } else {
@@ -436,9 +411,7 @@ class SchemaFactory implements SchemaFactoryInterface
                     );
                 }
             } else {
-                throw new InvalidArgumentException(
-                    'Value for additionalProperties constraint must be either an object or a boolean.'
-                );
+                $additionalSchema = $this->createSchema($value->get('additionalProperties'));
             }
         } else {
             $additionalSchema = new Schema;
@@ -460,12 +433,7 @@ class SchemaFactory implements SchemaFactoryInterface
     {
         $constraints = array();
         foreach ($value as $property => $subValue) {
-            if ($subValue instanceof Value\ObjectValue) {
-                $constraints[] = new ObjectValue\DependencyConstraint(
-                    $property,
-                    $this->createSchema($subValue)
-                );
-            } elseif ($subValue instanceof Value\ArrayValue) {
+            if ($subValue instanceof Value\ArrayValue) {
                 $subConstraints = array();
                 foreach ($subValue as $subSubValue) {
                     $subConstraints[] = $this->createRequiredConstraint($subSubValue);
@@ -476,8 +444,9 @@ class SchemaFactory implements SchemaFactoryInterface
                     new Schema($subConstraints)
                 );
             } else {
-                throw new InvalidArgumentException(
-                    'Value for dependencies constraint must be an array of objects or arrays.'
+                $constraints[] = new ObjectValue\DependencyConstraint(
+                    $property,
+                    $this->createSchema($subValue)
                 );
             }
         }
@@ -504,32 +473,24 @@ class SchemaFactory implements SchemaFactoryInterface
         $schemas = array();
         $additionalSchema = null;
         if ($value->has('items')) {
-            if ($value->get('items') instanceof Value\ObjectValue) {
-                $additionalSchema = $this->createSchema($value->get('items'));
-            } elseif ($value->get('items') instanceof Value\ArrayValue) {
+            if ($value->get('items') instanceof Value\ArrayValue) {
                 foreach ($value->get('items') as $subValue) {
                     $schemas[] = $this->createSchema($subValue);
                 }
             } else {
-                throw new InvalidArgumentException(
-                    'Value for items constraint must be an object or an array.'
-                );
+                $additionalSchema = $this->createSchema($value->get('items'));
             }
         }
 
         if (null === $additionalSchema && $value->has('additionalItems')) {
-            if ($value->get('additionalItems') instanceof Value\ObjectValue) {
-                $additionalSchema = $this->createSchema($value->get('additionalItems'));
-            } elseif ($value->get('additionalItems') instanceof Value\BooleanValue) {
+            if ($value->get('additionalItems') instanceof Value\BooleanValue) {
                 if (!$value->getRaw('additionalItems')) {
                     $additionalSchema = new Schema(
                         array(new ArrayValue\AdditionalItemConstraint)
                     );
                 }
             } else {
-                throw new InvalidArgumentException(
-                    'Value for additionalItems constraint must be an object or a boolean.'
-                );
+                $additionalSchema = $this->createSchema($value->get('additionalItems'));
             }
         }
 
@@ -659,14 +620,10 @@ class SchemaFactory implements SchemaFactoryInterface
     {
         if ($value instanceof Value\DateTimeValue) {
             return new DateTimeValue\MaximumDateTimeConstraint($value->value());
-        } elseif ($value instanceof Value\StringValue) {
-            return new DateTimeValue\MaximumDateTimeConstraint(
-                new DateTime($value->value())
-            );
         }
 
-        throw new InvalidArgumentException(
-            'Value for maxDateTime constraint must be a date-time or a string.'
+        return new DateTimeValue\MaximumDateTimeConstraint(
+            new DateTime($value->value())
         );
     }
 
@@ -679,14 +636,10 @@ class SchemaFactory implements SchemaFactoryInterface
     {
         if ($value instanceof Value\DateTimeValue) {
             return new DateTimeValue\MinimumDateTimeConstraint($value->value());
-        } elseif ($value instanceof Value\StringValue) {
-            return new DateTimeValue\MinimumDateTimeConstraint(
-                new DateTime($value->value())
-            );
         }
 
-        throw new InvalidArgumentException(
-            'Value for minDateTime constraint must be a date-time or a string.'
+        return new DateTimeValue\MinimumDateTimeConstraint(
+            new DateTime($value->value())
         );
     }
 
@@ -711,25 +664,16 @@ class SchemaFactory implements SchemaFactoryInterface
     /**
      * @param Value\ConcreteValueInterface $value
      *
-     * @return boolean
-     */
-    protected function hasRegisteredSchema(Value\ConcreteValueInterface $value)
-    {
-        return array_key_exists(spl_object_hash($value), $this->schemas);
-    }
-
-    /**
-     * @param Value\ConcreteValueInterface $value
-     *
-     * @return Value\ConcreteValueInterface
+     * @return Schema|null
      */
     protected function registeredSchema(Value\ConcreteValueInterface $value)
     {
-        if (!$this->hasRegisteredSchema($value)) {
-            throw new LogicException('Undefined schema.');
+        $key = spl_object_hash($value);
+        if (array_key_exists($key, $this->schemas)) {
+            return $this->schemas[$key];
         }
 
-        return $this->schemas[spl_object_hash($value)];
+        return null;
     }
 
     private $formatConstraintFactory;

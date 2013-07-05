@@ -12,9 +12,8 @@
 namespace Eloquent\Schemer\Loader\Exception;
 
 use Exception;
-use LogicException;
 
-final class UndefinedLoaderException extends LogicException
+final class UndefinedLoaderException extends Exception
 {
     /**
      * @param string         $scheme

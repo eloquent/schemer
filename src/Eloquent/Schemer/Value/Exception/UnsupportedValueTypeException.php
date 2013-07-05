@@ -13,30 +13,33 @@ namespace Eloquent\Schemer\Value\Exception;
 
 use Exception;
 
-final class UndefinedPropertyException extends Exception
+final class UnsupportedValueTypeException extends Exception
 {
     /**
-     * @param string         $pointer
+     * @param mixed          $value
      * @param Exception|null $previous
      */
-    public function __construct($property, Exception $previous = null)
+    public function __construct($value, Exception $previous = null)
     {
-        $this->property = $property;
+        $this->value = $value;
 
         parent::__construct(
-            sprintf('Undefined property: %s.', var_export($property, true)),
+            sprintf(
+                'Values of type %s are not supported.',
+                var_export(gettype($value), true)
+            ),
             0,
             $previous
         );
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function property()
+    public function value()
     {
-        return $this->property;
+        return $this->value;
     }
 
-    private $property;
+    private $value;
 }

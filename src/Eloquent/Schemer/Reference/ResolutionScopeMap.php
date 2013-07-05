@@ -17,8 +17,6 @@ use Eloquent\Schemer\Pointer\PointerFactoryInterface;
 use Eloquent\Schemer\Pointer\PointerInterface;
 use Eloquent\Schemer\Uri\UriInterface;
 use Eloquent\Schemer\Value;
-use InvalidArgumentException;
-use LogicException;
 
 class ResolutionScopeMap
 {
@@ -99,9 +97,7 @@ class ResolutionScopeMap
             }
         }
 
-        throw new LogicException(
-            sprintf('No URI defined for pointer "%s"', $pointer->string())
-        );
+        throw new Exception\UndefinedUriException($pointer);
     }
 
     /**
@@ -138,12 +134,7 @@ class ResolutionScopeMap
         foreach ($this->map() as $tuple) {
             list($existingPointer) = $tuple;
             if ($this->comparator()->equals($existingPointer, $pointer)) {
-                throw new InvalidArgumentException(
-                    sprintf(
-                        'Mapping already exists at pointer %s.',
-                        var_export($pointer->string(), true)
-                    )
-                );
+                throw new Exception\MappingExistsException($pointer);
             }
         }
 

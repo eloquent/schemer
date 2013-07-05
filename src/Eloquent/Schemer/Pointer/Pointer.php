@@ -11,8 +11,6 @@
 
 namespace Eloquent\Schemer\Pointer;
 
-use LogicException;
-
 class Pointer implements PointerInterface
 {
     /**
@@ -99,7 +97,7 @@ class Pointer implements PointerInterface
     public function parent()
     {
         if (!$this->hasAtoms()) {
-            throw new LogicException('No valid parent pointer exists.');
+            throw new Exception\NoParentException($this);
         }
         $atoms = $this->atoms();
         array_pop($atoms);
