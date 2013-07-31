@@ -17,7 +17,7 @@
         "eloquent/equality": "~2",
         "eloquent/enumeration": "~3",
         "icecave/isolator": "~2",
-        "kriswallsmith/buzz": "~0.9",
+        "kriswallsmith/buzz": "~0.10",
         "zendframework/zend-uri": "~2,!=2.1.4",
         "zendframework/zend-validator": "~2,!=2.1.4"
     },
@@ -26,7 +26,7 @@
         "symfony/yaml": "~2"
     },
     "require-dev": {
-        "icecave/archer": "dev-develop@dev",
+        "icecave/archer": "1.0.0-alpha.2",
         "jamesmoss/toml": "~0.1",
         "symfony/yaml": "~2"
     },
