@@ -1,5 +1,10 @@
 # Schemer changelog
 
+## 0.3.2 (2013-07-31)
+
+* **[FIXED]** Bound constraint validator cannot be an optional dependency.
+* **[NEW]** Vastly improved exceptions ([#1]).
+
 ## 0.3.1 (2013-06-25)
 
 * **[FIXED]** Validating reader throws exceptions on validation failure ([#19]).
@@ -35,6 +40,7 @@
 
 <!-- References -->
 
+[#1]: https://github.com/eloquent/schemer/issues/1
 [#9]: https://github.com/eloquent/schemer/issues/9
 [#13]: https://github.com/eloquent/schemer/issues/13
 [#14]: https://github.com/eloquent/schemer/issues/14
