@@ -14,7 +14,6 @@ namespace Eloquent\Schemer\Reader;
 use Eloquent\Schemer\Uri\UriFactory;
 use Eloquent\Schemer\Uri\UriFactoryInterface;
 use Eloquent\Schemer\Uri\UriInterface;
-use Eloquent\Schemer\Validation\BoundConstraintValidator;
 use Eloquent\Schemer\Validation\BoundConstraintValidatorInterface;
 use Eloquent\Schemer\Validation\Exception\InvalidValueException;
 use Eloquent\Schemer\Value;
@@ -22,20 +21,17 @@ use Eloquent\Schemer\Value;
 class ValidatingReader extends AbstractReader
 {
     /**
-     * @param BoundConstraintValidatorInterface|null $validator
-     * @param ReaderInterface|null                   $reader
-     * @param UriFactoryInterface|null               $uriFactory
+     * @param BoundConstraintValidatorInterface $validator
+     * @param ReaderInterface|null              $reader
+     * @param UriFactoryInterface|null          $uriFactory
      */
     public function __construct(
-        BoundConstraintValidatorInterface $validator = null,
+        BoundConstraintValidatorInterface $validator,
         ReaderInterface $reader = null,
         UriFactoryInterface $uriFactory = null
     ) {
         parent::__construct($uriFactory);
 
-        if (null === $validator) {
-            $validator = new BoundConstraintValidator;
-        }
         if (null === $reader) {
             $reader = new FixedScopeResolvingReader;
         }
