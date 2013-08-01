@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1375342078">
-  <project timestamp="1375342078">
+<coverage generated="1375343127">
+  <project timestamp="1375343127">
     <package name="Eloquent\Schemer\Constraint\ArrayValue">
       <file name="/home/travis/build/eloquent/schemer/src/Eloquent/Schemer/Constraint/ArrayValue/AdditionalItemConstraint.php">
         <class name="AdditionalItemConstraint" namespace="Eloquent\Schemer\Constraint\ArrayValue">
