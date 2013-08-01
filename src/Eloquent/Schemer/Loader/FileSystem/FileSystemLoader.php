@@ -14,6 +14,7 @@ namespace Eloquent\Schemer\Loader\FileSystem;
 use Eloquent\Schemer\Loader\Content;
 use Eloquent\Schemer\Loader\Exception\InvalidUriTypeException;
 use Eloquent\Schemer\Loader\Exception\LoadException;
+use Eloquent\Schemer\Loader\ExtensionTypeMap;
 use Eloquent\Schemer\Loader\LoaderInterface;
 use Eloquent\Schemer\Uri\FileUriInterface;
 use Eloquent\Schemer\Uri\UriInterface;

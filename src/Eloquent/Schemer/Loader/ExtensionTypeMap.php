@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Loader\FileSystem;
+namespace Eloquent\Schemer\Loader;
 
 use Eloquent\Schemer\Loader\ContentType;
 

@@ -18,6 +18,7 @@ use Eloquent\Schemer\Loader\ContentType;
 use Eloquent\Schemer\Loader\Exception\InvalidUriTypeException;
 use Eloquent\Schemer\Loader\Exception\LoadException;
 use Eloquent\Schemer\Loader\Exception\RelativeUriException;
+use Eloquent\Schemer\Loader\ExtensionTypeMap;
 use Eloquent\Schemer\Loader\LoaderInterface;
 use Eloquent\Schemer\Uri\HttpUriInterface;
 use Eloquent\Schemer\Uri\UriInterface;
@@ -25,20 +26,30 @@ use Eloquent\Schemer\Uri\UriInterface;
 class HttpLoader implements LoaderInterface
 {
     /**
-     * @param string|null  $defaultMimeType
-     * @param Browser|null $browser
+     * @param ExtensionTypeMap|null $extensionMap
+     * @param Browser|null          $browser
      */
-    public function __construct($defaultMimeType = null, Browser $browser = null)
-    {
-        if (null === $defaultMimeType) {
-            $defaultMimeType = ContentType::JSON()->primaryMimeType();
+    public function __construct(
+        ExtensionTypeMap $extensionMap = null,
+        Browser $browser = null
+    ) {
+        if (null === $extensionMap) {
+            $extensionMap = new ExtensionTypeMap;
         }
         if (null === $browser) {
             $browser = new Browser;
         }
 
-        $this->defaultMimeType = $defaultMimeType;
+        $this->extensionMap = $extensionMap;
         $this->browser = $browser;
+    }
+
+    /**
+     * @return ExtensionTypeMap
+     */
+    public function extensionMap()
+    {
+        return $this->extensionMap;
     }
 
     /**
@@ -46,7 +57,7 @@ class HttpLoader implements LoaderInterface
      */
     public function setDefaultMimeType($mimeType)
     {
-        $this->defaultMimeType = $mimeType;
+        $this->extensionMap()->setDefaultMimeType($mimeType);
     }
 
     /**
@@ -54,7 +65,7 @@ class HttpLoader implements LoaderInterface
      */
     public function defaultMimeType()
     {
-        return $this->defaultMimeType;
+        return $this->extensionMap()->defaultMimeType();
     }
 
     /**
@@ -88,31 +99,52 @@ class HttpLoader implements LoaderInterface
             throw new LoadException($uri);
         }
 
-        return new Content(
-            $response->getContent(),
-            $this->mimeTypeByResponse($response)
-        );
+        $mimeType = $this->mimeTypeByResponse($response);
+        if (null === $mimeType) {
+            $mimeType = $this->extensionMap()->getByPath(
+                $this->pathFromUri($uri)
+            );
+        }
+
+        return new Content($response->getContent(), $mimeType);
     }
 
     /**
      * @param Response $response
      *
-     * @return string
+     * @return string|null
      */
     protected function mimeTypeByResponse(Response $response)
     {
-        $mimeType = $response->getHeader('Content-Type');
+        $mimeType = $response->getHeader('Content-Type', false);
         if (count($mimeType) > 0) {
             $mimeType = array_pop($mimeType);
             $mimeType = explode(';', $mimeType);
             $mimeType = trim(array_shift($mimeType));
 
-            return $mimeType;
+            if ('text/plain' !== strtolower($mimeType)) {
+                return $mimeType;
+            }
         }
 
-        return $this->defaultMimeType();
+        return null;
     }
 
-    private $defaultMimeType;
+    /**
+     * @param HttpUriInterface $uri
+     *
+     * @return string
+     */
+    protected function pathFromUri(HttpUriInterface $uri)
+    {
+        $path = $uri->getPath();
+        if (null === $path) {
+            $path = '';
+        }
+
+        return $path;
+    }
+
+    private $extensionMap;
     private $browser;
 }
