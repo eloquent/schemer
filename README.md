@@ -2,9 +2,15 @@
 
 *Generic schema validation library for PHP, based on JSON Schema.*
 
-[![Build Status]](http://travis-ci.org/eloquent/schemer)
-[![Test Coverage]](http://lqnt.co/schemer/artifacts/tests/coverage/)
+[![Build status]][Latest build]
+[![Test coverage]][Test coverage report]
+[![Uses semantic versioning]][SemVer]
 
-<!-- references -->
-[Build Status]: https://raw.github.com/eloquent/schemer/gh-pages/artifacts/images/icecave/regular/build-status.png
-[Test Coverage]: https://raw.github.com/eloquent/schemer/gh-pages/artifacts/images/icecave/regular/coverage.png
+<!-- References -->
+
+[Build status]: https://api.travis-ci.org/eloquent/schemer.png?branch=master
+[Latest build]: https://travis-ci.org/eloquent/schemer
+[SemVer]: http://semver.org/
+[Test coverage report]: https://coveralls.io/r/eloquent/schemer
+[Test coverage]: https://coveralls.io/repos/eloquent/schemer/badge.png?branch=master
+[Uses semantic versioning]: http://b.repl.ca/v1/semver-yes-brightgreen.png

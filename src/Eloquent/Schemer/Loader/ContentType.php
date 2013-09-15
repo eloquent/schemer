@@ -33,10 +33,8 @@ final class ContentType extends Multiton
         return $mimeTypes[0];
     }
 
-    protected static function initializeMultiton()
+    protected static function initializeMembers()
     {
-        parent::initializeMultiton();
-
         new static('JSON', array('application/json'));
         new static('TOML', array('application/x-toml'));
         new static('YAML', array('application/x-yaml'));

@@ -259,14 +259,14 @@ class SchemaFactory implements SchemaFactoryInterface
         if ($value instanceof Value\ArrayValue) {
             $valueTypes = array();
             foreach ($value as $typeValue) {
-                $valueTypes[] = Value\ValueType::instanceByValue($typeValue->value());
+                $valueTypes[] = Value\ValueType::memberByValue($typeValue->value());
             }
 
             return new Generic\TypeConstraint($valueTypes);
         }
 
         return new Generic\TypeConstraint(
-            array(Value\ValueType::instanceByValue($value->value()))
+            array(Value\ValueType::memberByValue($value->value()))
         );
     }
 
