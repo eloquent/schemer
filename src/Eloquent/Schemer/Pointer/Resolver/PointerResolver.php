@@ -57,6 +57,10 @@ class PointerResolver implements PointerResolverInterface
             return null;
         }
 
+        if (null === $value) {
+            return null;
+        }
+
         if (count($atoms) > 0) {
             return $this->resolveAtoms($pointer, $atoms, $value);
         }
