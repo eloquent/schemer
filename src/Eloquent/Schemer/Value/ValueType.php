@@ -11,9 +11,9 @@
 
 namespace Eloquent\Schemer\Value;
 
-use Eloquent\Enumeration\Enumeration;
+use Eloquent\Enumeration\AbstractEnumeration;
 
-final class ValueType extends Enumeration
+final class ValueType extends AbstractEnumeration
 {
     const ARRAY_TYPE = 'array';
     const BOOLEAN_TYPE = 'boolean';

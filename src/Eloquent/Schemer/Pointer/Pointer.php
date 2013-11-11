@@ -119,7 +119,7 @@ class Pointer implements PointerInterface
             implode(
                 '/',
                 array_map(
-                    function($value) {
+                    function ($value) {
                         return strtr($value, array('~' => '~0', '/' => '~1'));
                     },
                     $this->atoms()

@@ -11,9 +11,9 @@
 
 namespace Eloquent\Schemer\Loader;
 
-use Eloquent\Enumeration\Multiton;
+use Eloquent\Enumeration\AbstractMultiton;
 
-final class ContentType extends Multiton
+final class ContentType extends AbstractMultiton
 {
     /**
      * @return array<string>

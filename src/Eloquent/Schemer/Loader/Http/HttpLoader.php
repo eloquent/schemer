@@ -14,7 +14,6 @@ namespace Eloquent\Schemer\Loader\Http;
 use Buzz\Browser;
 use Buzz\Message\Response;
 use Eloquent\Schemer\Loader\Content;
-use Eloquent\Schemer\Loader\ContentType;
 use Eloquent\Schemer\Loader\Exception\InvalidUriTypeException;
 use Eloquent\Schemer\Loader\Exception\LoadException;
 use Eloquent\Schemer\Loader\Exception\RelativeUriException;
