@@ -16,6 +16,7 @@
         "ext-mbstring": "*"
     },
     "require-dev": {
+        "eloquent/liberator": "~2",
         "icecave/archer": "~1"
     },
     "autoload": {
