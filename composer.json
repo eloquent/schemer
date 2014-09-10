@@ -13,26 +13,14 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "ext-mbstring": "*",
-        "eloquent/equality": "~2",
-        "eloquent/enumeration": "~5",
-        "icecave/isolator": "~2",
-        "kriswallsmith/buzz": "~0.10.0",
-        "zendframework/zend-uri": "~2,!=2.1.4",
-        "zendframework/zend-validator": "~2,!=2.1.4"
-    },
-    "suggest": {
-        "jamesmoss/toml": "~0.1.0",
-        "symfony/yaml": "~2"
+        "ext-mbstring": "*"
     },
     "require-dev": {
-        "icecave/archer": "~1",
-        "jamesmoss/toml": "~0.1.0",
-        "symfony/yaml": "~2"
+        "icecave/archer": "~1"
     },
     "autoload": {
-        "psr-0": {
-            "Eloquent\\Schemer": "src"
+        "psr-4": {
+            "Eloquent\\Schemer\\": "src"
         }
     }
 }
