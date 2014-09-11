@@ -9,25 +9,21 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Exception;
+namespace Eloquent\Schemer\Persistence\Exception;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
 
-/**
- * @covers \Eloquent\Schemer\Exception\WriteException
- * @covers \Eloquent\Schemer\Exception\AbstractIoException
- */
 class WriteExceptionTest extends PHPUnit_Framework_TestCase
 {
     public function testException()
     {
-        $path = '/path/to/file';
+        $location = 'location';
         $cause = new Exception;
-        $exception = new WriteException($path, $cause);
+        $exception = new WriteException($location, $cause);
 
-        $this->assertSame($path, $exception->path());
-        $this->assertSame("Unable to write to '/path/to/file'.", $exception->getMessage());
+        $this->assertSame($location, $exception->location());
+        $this->assertSame("Unable to write to 'location'.", $exception->getMessage());
         $this->assertSame(0, $exception->getCode());
         $this->assertSame($cause, $exception->getPrevious());
     }
@@ -36,7 +32,7 @@ class WriteExceptionTest extends PHPUnit_Framework_TestCase
     {
         $exception = new WriteException;
 
-        $this->assertNull($exception->path());
+        $this->assertNull($exception->location());
         $this->assertSame("Unable to write to stream.", $exception->getMessage());
     }
 }

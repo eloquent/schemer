@@ -15,10 +15,6 @@ use Eloquent\Schemer\Constraint\Schema;
 use Phake;
 use PHPUnit_Framework_TestCase;
 
-/**
- * @covers \Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint
- * @covers \Eloquent\Schemer\Constraint\AbstractSchemaContainerConstraint
- */
 class ItemsConstraintTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()

@@ -9,7 +9,7 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Exception;
+namespace Eloquent\Schemer\Persistence\Exception;
 
 /**
  * The interface implemented by I/O exceptions.
@@ -17,9 +17,9 @@ namespace Eloquent\Schemer\Exception;
 interface IoExceptionInterface
 {
     /**
-     * Get the path.
+     * Get the location.
      *
-     * @return string|null The path, if available.
+     * @return string|null The location, if available.
      */
-    public function path();
+    public function location();
 }

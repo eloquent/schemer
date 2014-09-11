@@ -9,25 +9,21 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Exception;
+namespace Eloquent\Schemer\Persistence\Exception;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
 
-/**
- * @covers \Eloquent\Schemer\Exception\ReadException
- * @covers \Eloquent\Schemer\Exception\AbstractIoException
- */
 class ReadExceptionTest extends PHPUnit_Framework_TestCase
 {
     public function testException()
     {
-        $path = '/path/to/file';
+        $location = 'location';
         $cause = new Exception;
-        $exception = new ReadException($path, $cause);
+        $exception = new ReadException($location, $cause);
 
-        $this->assertSame($path, $exception->path());
-        $this->assertSame("Unable to read from '/path/to/file'.", $exception->getMessage());
+        $this->assertSame($location, $exception->location());
+        $this->assertSame("Unable to read from 'location'.", $exception->getMessage());
         $this->assertSame(0, $exception->getCode());
         $this->assertSame($cause, $exception->getPrevious());
     }
@@ -36,7 +32,7 @@ class ReadExceptionTest extends PHPUnit_Framework_TestCase
     {
         $exception = new ReadException;
 
-        $this->assertNull($exception->path());
+        $this->assertNull($exception->location());
         $this->assertSame("Unable to read from stream.", $exception->getMessage());
     }
 }

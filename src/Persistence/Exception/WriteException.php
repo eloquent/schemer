@@ -9,7 +9,7 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Exception;
+namespace Eloquent\Schemer\Persistence\Exception;
 
 use Exception;
 
@@ -21,18 +21,18 @@ final class WriteException extends AbstractIoException
     /**
      * Construct a new write exception.
      *
-     * @param string|null    $path  The path, if available.
-     * @param Exception|null $cause The cause, if available.
+     * @param string|null    $location The location, if available.
+     * @param Exception|null $cause    The cause, if available.
      */
-    public function __construct($path = null, Exception $cause = null)
+    public function __construct($location = null, Exception $cause = null)
     {
-        if (null === $path) {
+        if (null === $location) {
             $message = 'Unable to write to stream.';
         } else {
             $message =
-                sprintf('Unable to write to %s.', var_export($path, true));
+                sprintf('Unable to write to %s.', var_export($location, true));
         }
 
-        parent::__construct($message, $path, $cause);
+        parent::__construct($message, $location, $cause);
     }
 }

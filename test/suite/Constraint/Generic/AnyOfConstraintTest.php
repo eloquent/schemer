@@ -15,10 +15,6 @@ use Eloquent\Schemer\Constraint\Schema;
 use Phake;
 use PHPUnit_Framework_TestCase;
 
-/**
- * @covers \Eloquent\Schemer\Constraint\Generic\AnyOfConstraint
- * @covers \Eloquent\Schemer\Constraint\AbstractSchemaContainerConstraint
- */
 class AnyOfConstraintTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
