@@ -100,7 +100,10 @@ class DataReaderTest extends PHPUnit_Framework_TestCase
         } catch (Exception $exception) {}
 
         $this->assertInstanceOf('Eloquent\Schemer\Persistence\Exception\ReadException', $exception);
-        $this->assertInstanceOf('Eloquent\Schemer\Persistence\Exception\UnsupportedUriSchemeException', $exception->getPrevious());
+        $this->assertInstanceOf(
+            'Eloquent\Schemer\Persistence\Exception\UnsupportedUriSchemeException',
+            $exception->getPrevious()
+        );
         $this->assertSame("Unsupported URI scheme 'scheme'.", $exception->getPrevious()->getMessage());
     }
 
@@ -141,8 +144,14 @@ class DataReaderTest extends PHPUnit_Framework_TestCase
         } catch (Exception $exception) {}
 
         $this->assertInstanceOf('Eloquent\Schemer\Persistence\Exception\ReadException', $exception);
-        $this->assertInstanceOf('Eloquent\Schemer\Persistence\Exception\UnexpectedHttpResponseException', $exception->getPrevious());
-        $this->assertSame("Unexpected HTTP response: 'You done goofed' (444).", $exception->getPrevious()->getMessage());
+        $this->assertInstanceOf(
+            'Eloquent\Schemer\Persistence\Exception\UnexpectedHttpResponseException',
+            $exception->getPrevious()
+        );
+        $this->assertSame(
+            "Unexpected HTTP response: 'You done goofed' (444).",
+            $exception->getPrevious()->getMessage()
+        );
     }
 
     public function testReadFromHttpFailureRequestFailure()
