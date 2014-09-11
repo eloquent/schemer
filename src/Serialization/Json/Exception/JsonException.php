@@ -9,7 +9,7 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Serialization\Exception;
+namespace Eloquent\Schemer\Serialization\Json\Exception;
 
 use Exception;
 

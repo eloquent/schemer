@@ -9,7 +9,7 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Serialization;
+namespace Eloquent\Schemer\Serialization\Json;
 
 use Eloquent\Liberator\Liberator;
 use Exception;
@@ -65,7 +65,10 @@ class JsonDataSerializerTest extends PHPUnit_Framework_TestCase
         } catch (Exception $exception) {}
 
         $this->assertInstanceOf('Eloquent\Schemer\Serialization\Exception\SerializeException', $exception);
-        $this->assertInstanceOf('Eloquent\Schemer\Serialization\Exception\JsonException', $exception->getPrevious());
+        $this->assertInstanceOf(
+            'Eloquent\Schemer\Serialization\Json\Exception\JsonException',
+            $exception->getPrevious()
+        );
         $this->assertSame("JSON error: Syntax error.", $exception->getPrevious()->getMessage());
     }
 
@@ -82,7 +85,10 @@ class JsonDataSerializerTest extends PHPUnit_Framework_TestCase
         } catch (Exception $exception) {}
 
         $this->assertInstanceOf('Eloquent\Schemer\Serialization\Exception\UnserializeException', $exception);
-        $this->assertInstanceOf('Eloquent\Schemer\Serialization\Exception\JsonException', $exception->getPrevious());
+        $this->assertInstanceOf(
+            'Eloquent\Schemer\Serialization\Json\Exception\JsonException',
+            $exception->getPrevious()
+        );
         $this->assertSame("JSON error: Syntax error.", $exception->getPrevious()->getMessage());
     }
 

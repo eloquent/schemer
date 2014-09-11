@@ -9,11 +9,12 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Serialization;
+namespace Eloquent\Schemer\Serialization\Json;
 
-use Eloquent\Schemer\Serialization\Exception\JsonException;
+use Eloquent\Schemer\Serialization\DataSerializerInterface;
 use Eloquent\Schemer\Serialization\Exception\SerializeException;
 use Eloquent\Schemer\Serialization\Exception\UnserializeException;
+use Eloquent\Schemer\Serialization\Json\Exception\JsonException;
 use Icecave\Isolator\Isolator;
 
 /**
