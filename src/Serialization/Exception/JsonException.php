@@ -26,64 +26,36 @@ final class JsonException extends Exception
      */
     public function __construct($error, Exception $cause = null)
     {
-        if (defined('JSON_ERROR_RECURSION')) {
-            $jsonErrorRecursion = JSON_ERROR_RECURSION;
-        } else { // @codeCoverageIgnoreStart
-            $jsonErrorRecursion = 'JSON_ERROR_RECURSION';
-        } // @codeCoverageIgnoreEnd
-
-        if (defined('JSON_ERROR_INF_OR_NAN')) {
-            $jsonErrorInfOrNan = JSON_ERROR_INF_OR_NAN;
-        } else { // @codeCoverageIgnoreStart
-            $jsonErrorInfOrNan = 'JSON_ERROR_INF_OR_NAN';
-        } // @codeCoverageIgnoreEnd
-
-        if (defined('JSON_ERROR_UNSUPPORTED_TYPE')) {
-            $jsonErrorUnsupportedType = JSON_ERROR_UNSUPPORTED_TYPE;
-        } else { // @codeCoverageIgnoreStart
-            $jsonErrorUnsupportedType = 'JSON_ERROR_UNSUPPORTED_TYPE';
-        } // @codeCoverageIgnoreEnd
-
-        switch ($error) {
-            case JSON_ERROR_DEPTH:
-                $message = 'The maximum stack depth has been exceeded.';
-                break;
-
-            case JSON_ERROR_STATE_MISMATCH:
-                $message = 'Invalid or malformed JSON.';
-                break;
-
-            case JSON_ERROR_CTRL_CHAR:
-                $message =
-                    'Control character error, possibly incorrectly encoded.';
-                break;
-
-            case JSON_ERROR_SYNTAX:
-                $message = 'Syntax error.';
-                break;
-
-            case JSON_ERROR_UTF8:
-                $message =
-                    'Malformed UTF-8 characters, possibly incorrectly encoded.';
-                break;
-
-            case $jsonErrorRecursion:
-                $message = 'One or more recursive references in the value to ' .
-                    'be encoded.';
-                break;
-
-            case $jsonErrorInfOrNan:
-                $message =
-                    'One or more NAN or INF values in the value to be encoded.';
-                break;
-
-            case $jsonErrorUnsupportedType:
-                $message =
-                    'A value of a type that cannot be encoded was given.';
-                break;
-
-            default:
-                $message = 'Unknown error.';
+        if (JSON_ERROR_DEPTH === $error) {
+            $message = 'The maximum stack depth has been exceeded.';
+        } elseif (JSON_ERROR_STATE_MISMATCH === $error) {
+            $message = 'Invalid or malformed JSON.';
+        } elseif (JSON_ERROR_CTRL_CHAR === $error) {
+            $message = 'Control character error, possibly incorrectly encoded.';
+        } elseif (JSON_ERROR_SYNTAX === $error) {
+            $message = 'Syntax error.';
+        } elseif (JSON_ERROR_UTF8 === $error) {
+            $message =
+                'Malformed UTF-8 characters, possibly incorrectly encoded.';
+        } elseif (
+            defined('JSON_ERROR_RECURSION') &&
+            constant('JSON_ERROR_RECURSION') === $error
+        ) {
+            $message =
+                'One or more recursive references in the value to be encoded.';
+        } elseif (
+            defined('JSON_ERROR_INF_OR_NAN') &&
+            constant('JSON_ERROR_INF_OR_NAN') === $error
+        ) {
+            $message =
+                'One or more NAN or INF values in the value to be encoded.';
+        } elseif (
+            defined('JSON_ERROR_UNSUPPORTED_TYPE') &&
+            constant('JSON_ERROR_UNSUPPORTED_TYPE') === $error
+        ) {
+            $message = 'A value of a type that cannot be encoded was given.';
+        } else {
+            $message = 'Unknown error.';
         }
 
         parent::__construct(
