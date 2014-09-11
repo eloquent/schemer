@@ -23,16 +23,16 @@ class PathTypeMapperTest extends PHPUnit_Framework_TestCase
 
     public function typeByPathData()
     {
-        //                               path                  mimeType
-        return array(
-            'JSON'              => array('/path/to/file.json', 'application/json'),
-            'TOML'              => array('/path/to/file.toml', 'text/x-toml'),
-            'YAML short'        => array('/path/to/file.yml',  'application/x-yaml'),
-            'YAML long'         => array('/path/to/file.yaml', 'application/x-yaml'),
+        //                          path                  mimeType
+        return [
+            'JSON'              => ['/path/to/file.json', 'application/json'],
+            'TOML'              => ['/path/to/file.toml', 'text/x-toml'],
+            'YAML short'        => ['/path/to/file.yml',  'application/x-yaml'],
+            'YAML long'         => ['/path/to/file.yaml', 'application/x-yaml'],
 
-            'Unknown extension' => array('/path/to/file.xxx',  null),
-            'No extension'      => array('/path/to/file',      null),
-        );
+            'Unknown extension' => ['/path/to/file.xxx',  null],
+            'No extension'      => ['/path/to/file',      null],
+        ];
     }
 
     /**

@@ -18,7 +18,7 @@ class TypeConstraintTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        $this->types = array('string', 'number');
+        $this->types = ['string', 'number'];
         $this->constraint = new TypeConstraint($this->types);
     }
 

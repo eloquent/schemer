@@ -34,7 +34,7 @@ class ItemsConstraint extends AbstractSchemaContainerConstraint
         SchemaInterface $additionalSchema = null
     ) {
         if (null === $schemas) {
-            $schemas = array();
+            $schemas = [];
         }
         if (null === $additionalSchema) {
             $additionalSchema = Schema::createEmpty();

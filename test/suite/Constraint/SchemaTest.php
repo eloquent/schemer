@@ -21,7 +21,7 @@ class SchemaTest extends PHPUnit_Framework_TestCase
     {
         $this->constraintA = Phake::mock('Eloquent\Schemer\Constraint\ConstraintInterface');
         $this->constraintB = Phake::mock('Eloquent\Schemer\Constraint\ConstraintInterface');
-        $this->constraints = array($this->constraintA, $this->constraintB);
+        $this->constraints = [$this->constraintA, $this->constraintB];
         $this->defaultValue = 'defaultValue';
         $this->title = 'title';
         $this->description = 'description';
@@ -40,7 +40,7 @@ class SchemaTest extends PHPUnit_Framework_TestCase
     {
         $this->constraint = new Schema;
 
-        $this->assertSame(array(), $this->constraint->constraints());
+        $this->assertSame([], $this->constraint->constraints());
         $this->assertNull($this->constraint->defaultValue());
         $this->assertNull($this->constraint->title());
         $this->assertNull($this->constraint->description());

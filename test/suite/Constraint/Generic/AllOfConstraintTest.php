@@ -19,7 +19,7 @@ class AllOfConstraintTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        $this->schemas = array(new Schema, new Schema);
+        $this->schemas = [new Schema, new Schema];
         $this->constraint = new AllOfConstraint($this->schemas);
     }
 

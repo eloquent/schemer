@@ -18,7 +18,7 @@ class EnumerationConstraintTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        $this->members = array('foo', 'bar', 111);
+        $this->members = ['foo', 'bar', 111];
         $this->constraint = new EnumerationConstraint($this->members);
     }
 

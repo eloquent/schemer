@@ -19,7 +19,7 @@ class UnexpectedHttpResponseExceptionTest extends PHPUnit_Framework_TestCase
 {
     public function testException()
     {
-        $response = new Response(444, array(), null, array('reason_phrase' => 'You done goofed'));
+        $response = new Response(444, [], null, ['reason_phrase' => 'You done goofed']);
         $cause = new Exception;
         $exception = new UnexpectedHttpResponseException($response, $cause);
 

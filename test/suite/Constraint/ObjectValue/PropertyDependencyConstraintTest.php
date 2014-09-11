@@ -19,7 +19,7 @@ class PropertyDependencyConstraintTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->property = 'propertyA';
-        $this->dependentProperties = array('propertyB', 'propertyC');
+        $this->dependentProperties = ['propertyB', 'propertyC'];
         $this->constraint = new PropertyDependencyConstraint($this->property, $this->dependentProperties);
     }
 

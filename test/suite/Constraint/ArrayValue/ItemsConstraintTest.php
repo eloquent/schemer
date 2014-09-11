@@ -19,7 +19,7 @@ class ItemsConstraintTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        $this->schemas = array(new Schema, new Schema);
+        $this->schemas = [new Schema, new Schema];
         $this->additionalSchema = new Schema;
         $this->constraint = new ItemsConstraint($this->schemas, $this->additionalSchema);
     }
@@ -34,7 +34,7 @@ class ItemsConstraintTest extends PHPUnit_Framework_TestCase
     {
         $this->constraint = new ItemsConstraint;
 
-        $this->assertSame(array(), $this->constraint->schemas());
+        $this->assertSame([], $this->constraint->schemas());
         $this->assertSame(Schema::createEmpty(), $this->constraint->additionalSchema());
     }
 

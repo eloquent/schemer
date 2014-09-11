@@ -37,10 +37,10 @@ class PropertiesConstraint implements ConstraintInterface
         SchemaInterface $additionalSchema = null
     ) {
         if (null === $schemas) {
-            $schemas = array();
+            $schemas = [];
         }
         if (null === $patternSchemas) {
-            $patternSchemas = array();
+            $patternSchemas = [];
         }
         if (null === $additionalSchema) {
             $additionalSchema = Schema::createEmpty();

@@ -47,7 +47,7 @@ class Schema implements SchemaInterface
         $description = null
     ) {
         if (null === $constraints) {
-            $constraints = array();
+            $constraints = [];
         }
 
         $this->constraints = $constraints;

@@ -19,8 +19,8 @@ class PropertiesConstraintTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        $this->schemas = array(new Schema, new Schema);
-        $this->patternSchemas = array(new Schema, new Schema);
+        $this->schemas = [new Schema, new Schema];
+        $this->patternSchemas = [new Schema, new Schema];
         $this->additionalSchema = new Schema;
         $this->constraint = new PropertiesConstraint($this->schemas, $this->patternSchemas, $this->additionalSchema);
     }
@@ -36,8 +36,8 @@ class PropertiesConstraintTest extends PHPUnit_Framework_TestCase
     {
         $this->constraint = new PropertiesConstraint;
 
-        $this->assertSame(array(), $this->constraint->schemas());
-        $this->assertSame(array(), $this->constraint->patternSchemas());
+        $this->assertSame([], $this->constraint->schemas());
+        $this->assertSame([], $this->constraint->patternSchemas());
         $this->assertSame(Schema::createEmpty(), $this->constraint->additionalSchema());
     }
 

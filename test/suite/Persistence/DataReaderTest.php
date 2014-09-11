@@ -41,8 +41,8 @@ class DataReaderTest extends PHPUnit_Framework_TestCase
 
         $this->httpResponseBody = Stream::factory($this->data);
         $this->httpSuccessResponse =
-            new Response(200, array('content-type' => $this->jsonMimeType), $this->httpResponseBody);
-        $this->httpFailureResponse = new Response(444, array(), null, array('reason_phrase' => 'You done goofed'));
+            new Response(200, ['content-type' => $this->jsonMimeType], $this->httpResponseBody);
+        $this->httpFailureResponse = new Response(444, [], null, ['reason_phrase' => 'You done goofed']);
     }
 
     protected function tearDown()
@@ -124,7 +124,7 @@ class DataReaderTest extends PHPUnit_Framework_TestCase
 
     public function testReadFromHttpWithNoMimeType()
     {
-        $this->httpSuccessResponse->setHeader('content-type', array());
+        $this->httpSuccessResponse->setHeader('content-type', []);
         Phake::when($this->httpClient)->get($this->httpUri)->thenReturn($this->httpSuccessResponse);
         $expected = new DataPacket($this->data, $this->jsonMimeType);
         $actual = $this->reader->readFromHttp($this->httpUri);
@@ -179,14 +179,8 @@ class DataReaderTest extends PHPUnit_Framework_TestCase
     public function testReadFromFileFailure()
     {
         Phake::when($this->isolator)->file_get_contents($this->path)->thenReturn(false);
-        Phake::when($this->isolator)->error_get_last()->thenReturn(
-            array(
-                'message' => 'message',
-                'type' => E_ERROR,
-                'file' => '/path/to/file.php',
-                'line' => 111,
-            )
-        );
+        Phake::when($this->isolator)->error_get_last()
+            ->thenReturn(['message' => 'message', 'type' => E_ERROR, 'file' => '/path/to/file.php', 'line' => 111]);
         $exception = null;
         try {
             $this->reader->readFromFile($this->path);
@@ -233,14 +227,8 @@ class DataReaderTest extends PHPUnit_Framework_TestCase
     public function testReadFromStreamFailure()
     {
         Phake::when($this->isolator)->stream_get_contents($this->stream)->thenReturn(false);
-        Phake::when($this->isolator)->error_get_last()->thenReturn(
-            array(
-                'message' => 'message',
-                'type' => E_ERROR,
-                'file' => '/path/to/file.php',
-                'line' => 111,
-            )
-        );
+        Phake::when($this->isolator)->error_get_last()
+            ->thenReturn(['message' => 'message', 'type' => E_ERROR, 'file' => '/path/to/file.php', 'line' => 111]);
         $exception = null;
         try {
             $this->reader->readFromStream($this->stream);
