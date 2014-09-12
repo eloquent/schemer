@@ -24,21 +24,21 @@ class RequiredConstraint implements ConstraintInterface
     /**
      * Construct a new required constraint.
      *
-     * @param string $property The property.
+     * @param array<string> $properties The properties.
      */
-    public function __construct($property)
+    public function __construct(array $properties)
     {
-        $this->property = $property;
+        $this->properties = $properties;
     }
 
     /**
-     * Get the property.
+     * Get the properties.
      *
-     * @return string The property.
+     * @return array<string> The properties.
      */
-    public function property()
+    public function properties()
     {
-        return $this->property;
+        return $this->properties;
     }
 
     /**
@@ -53,5 +53,5 @@ class RequiredConstraint implements ConstraintInterface
         return $visitor->visitRequiredConstraint($this);
     }
 
-    private $property;
+    private $properties;
 }

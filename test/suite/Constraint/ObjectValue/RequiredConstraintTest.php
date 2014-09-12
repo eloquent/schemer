@@ -18,13 +18,13 @@ class RequiredConstraintTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        $this->property = 'propertyA';
-        $this->constraint = new RequiredConstraint($this->property);
+        $this->properties = ['propertyA', 'propertyB'];
+        $this->constraint = new RequiredConstraint($this->properties);
     }
 
     public function testConstructor()
     {
-        $this->assertSame($this->property, $this->constraint->property());
+        $this->assertSame($this->properties, $this->constraint->properties());
     }
 
     public function testAccept()
