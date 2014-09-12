@@ -36,9 +36,9 @@ class PropertiesConstraintTest extends PHPUnit_Framework_TestCase
     {
         $this->constraint = new PropertiesConstraint;
 
-        $this->assertSame([], $this->constraint->schemas());
-        $this->assertSame([], $this->constraint->patternSchemas());
-        $this->assertSame(Schema::createEmpty(), $this->constraint->additionalSchema());
+        $this->assertNull($this->constraint->schemas());
+        $this->assertNull($this->constraint->patternSchemas());
+        $this->assertNull($this->constraint->additionalSchema());
     }
 
     public function testAccept()

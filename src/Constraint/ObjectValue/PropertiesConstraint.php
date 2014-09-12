@@ -27,25 +27,15 @@ class PropertiesConstraint implements ConstraintInterface
     /**
      * Construct a new properties constraint.
      *
-     * @param array<string,SchemaInterface>|null $schemas          A map of property to schema.
-     * @param array<string,SchemaInterface>|null $patternSchemas   A map of pattern to schema.
-     * @param SchemaInterface|null               $additionalSchema The schema for additional properties.
+     * @param array<string,SchemaInterface>|null $schemas          A map of property to schema, or null if not specified.
+     * @param array<string,SchemaInterface>|null $patternSchemas   A map of pattern to schema, or null if not specified.
+     * @param SchemaInterface|null               $additionalSchema The schema for additional properties, or null if not specified.
      */
     public function __construct(
         array $schemas = null,
         array $patternSchemas = null,
         SchemaInterface $additionalSchema = null
     ) {
-        if (null === $schemas) {
-            $schemas = [];
-        }
-        if (null === $patternSchemas) {
-            $patternSchemas = [];
-        }
-        if (null === $additionalSchema) {
-            $additionalSchema = Schema::createEmpty();
-        }
-
         $this->schemas = $schemas;
         $this->patternSchemas = $patternSchemas;
         $this->additionalSchema = $additionalSchema;
@@ -54,7 +44,7 @@ class PropertiesConstraint implements ConstraintInterface
     /**
      * Get the property schemas.
      *
-     * @return array<string,SchemaInterface> A map of property to schema.
+     * @return array<string,SchemaInterface>|null A map of property to schema, or null if not specified.
      */
     public function schemas()
     {
@@ -64,7 +54,7 @@ class PropertiesConstraint implements ConstraintInterface
     /**
      * Get the pattern schemas.
      *
-     * @return array<string,SchemaInterface> A map of pattern to schema.
+     * @return array<string,SchemaInterface>|null A map of pattern to schema, or null if not specified.
      */
     public function patternSchemas()
     {
@@ -74,7 +64,7 @@ class PropertiesConstraint implements ConstraintInterface
     /**
      * Get the additional property schema.
      *
-     * @return SchemaInterface The schema for additional properties.
+     * @return SchemaInterface|null The schema for additional properties, or null if not specified.
      */
     public function additionalSchema()
     {

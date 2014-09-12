@@ -34,8 +34,8 @@ class ItemsConstraintTest extends PHPUnit_Framework_TestCase
     {
         $this->constraint = new ItemsConstraint;
 
-        $this->assertSame([], $this->constraint->schemas());
-        $this->assertSame(Schema::createEmpty(), $this->constraint->additionalSchema());
+        $this->assertNull($this->constraint->schemas());
+        $this->assertNull($this->constraint->additionalSchema());
     }
 
     public function testAccept()

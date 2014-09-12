@@ -11,7 +11,7 @@
 
 namespace Eloquent\Schemer\Constraint\ArrayValue;
 
-use Eloquent\Schemer\Constraint\AbstractSchemaContainerConstraint;
+use Eloquent\Schemer\Constraint\ConstraintInterface;
 use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Constraint\SchemaInterface;
@@ -21,34 +21,36 @@ use Eloquent\Schemer\Constraint\SchemaInterface;
  *
  * @link http://json-schema.org/latest/json-schema-validation.html#rfc.section.5.3.1
  */
-class ItemsConstraint extends AbstractSchemaContainerConstraint
+class ItemsConstraint implements ConstraintInterface
 {
     /**
      * Construct a new items constraint.
      *
-     * @param array<integer,SchemaInterface>|null $schemas          The item schemas by array index.
-     * @param SchemaInterface|null                $additionalSchema The schema for additional items.
+     * @param array<integer,SchemaInterface>|null $schemas          The item schemas by array index, or null if not specified.
+     * @param SchemaInterface|null                $additionalSchema The schema for additional items, or null if not specified.
      */
     public function __construct(
         array $schemas = null,
         SchemaInterface $additionalSchema = null
     ) {
-        if (null === $schemas) {
-            $schemas = [];
-        }
-        if (null === $additionalSchema) {
-            $additionalSchema = Schema::createEmpty();
-        }
-
-        parent::__construct($schemas);
-
+        $this->schemas = $schemas;
         $this->additionalSchema = $additionalSchema;
+    }
+
+    /**
+     * Get the schemas.
+     *
+     * @return array<SchemaInterface>|null The item schemas by array index, or null if not specified.
+     */
+    public function schemas()
+    {
+        return $this->schemas;
     }
 
     /**
      * Get the additional item schema.
      *
-     * @return SchemaInterface The schema for additional items.
+     * @return SchemaInterface|null The schema for additional items, or null if not specified.
      */
     public function additionalSchema()
     {
