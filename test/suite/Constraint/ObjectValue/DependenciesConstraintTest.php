@@ -11,22 +11,24 @@
 
 namespace Eloquent\Schemer\Constraint\ObjectValue;
 
-use Phake;
+use Eloquent\Schemer\Constraint\Schema;
 use PHPUnit_Framework_TestCase;
+use Phake;
 
-class PropertyDependencyConstraintTest extends PHPUnit_Framework_TestCase
+class DependenciesConstraintTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        $this->property = 'propertyA';
-        $this->dependentProperties = ['propertyB', 'propertyC'];
-        $this->constraint = new PropertyDependencyConstraint($this->property, $this->dependentProperties);
+        $this->dependencies = [
+            'propertyA' => new Schema,
+            'propertyB' => ['propertyC', 'propertyD'],
+        ];
+        $this->constraint = new DependenciesConstraint($this->dependencies);
     }
 
     public function testConstructor()
     {
-        $this->assertSame($this->property, $this->constraint->property());
-        $this->assertSame($this->dependentProperties, $this->constraint->dependentProperties());
+        $this->assertSame($this->dependencies, $this->constraint->dependencies());
     }
 
     public function testAccept()
@@ -34,6 +36,6 @@ class PropertyDependencyConstraintTest extends PHPUnit_Framework_TestCase
         $visitor = Phake::mock('Eloquent\Schemer\Constraint\ConstraintVisitorInterface');
         $this->constraint->accept($visitor);
 
-        Phake::verify($visitor)->visitPropertyDependencyConstraint($this->constraint);
+        Phake::verify($visitor)->visitDependenciesConstraint($this->constraint);
     }
 }

@@ -26,12 +26,11 @@ use Eloquent\Schemer\Constraint\Generic\TypeConstraint;
 use Eloquent\Schemer\Constraint\NumberValue\MaximumConstraint;
 use Eloquent\Schemer\Constraint\NumberValue\MinimumConstraint;
 use Eloquent\Schemer\Constraint\NumberValue\MultipleOfConstraint;
+use Eloquent\Schemer\Constraint\ObjectValue\DependenciesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MaximumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\MinimumPropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\PropertyDependencyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
-use Eloquent\Schemer\Constraint\ObjectValue\SchemaDependencyConstraint;
 use Eloquent\Schemer\Constraint\StringValue\Format\DateTimeFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\Format\EmailFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\Format\HostnameFormatConstraint;
@@ -214,6 +213,17 @@ interface ConstraintVisitorInterface
     // object constraints ======================================================
 
     /**
+     * Visit a dependencies constraint.
+     *
+     * @param DependenciesConstraint $constraint The constraint to visit.
+     *
+     * @return mixed The result of visitation.
+     */
+    public function visitDependenciesConstraint(
+        DependenciesConstraint $constraint
+    );
+
+    /**
      * Visit a maximum properties constraint.
      *
      * @param MaximumPropertiesConstraint $constraint The constraint to visit.
@@ -236,15 +246,6 @@ interface ConstraintVisitorInterface
     );
 
     /**
-     * Visit a required constraint.
-     *
-     * @param RequiredConstraint $constraint The constraint to visit.
-     *
-     * @return mixed The result of visitation.
-     */
-    public function visitRequiredConstraint(RequiredConstraint $constraint);
-
-    /**
      * Visit a properties constraint.
      *
      * @param PropertiesConstraint $constraint The constraint to visit.
@@ -254,26 +255,13 @@ interface ConstraintVisitorInterface
     public function visitPropertiesConstraint(PropertiesConstraint $constraint);
 
     /**
-     * Visit a property dependency constraint.
+     * Visit a required constraint.
      *
-     * @param PropertyDependencyConstraint $constraint The constraint to visit.
-     *
-     * @return mixed The result of visitation.
-     */
-    public function visitPropertyDependencyConstraint(
-        PropertyDependencyConstraint $constraint
-    );
-
-    /**
-     * Visit a schema dependency constraint.
-     *
-     * @param SchemaDependencyConstraint $constraint The constraint to visit.
+     * @param RequiredConstraint $constraint The constraint to visit.
      *
      * @return mixed The result of visitation.
      */
-    public function visitSchemaDependencyConstraint(
-        SchemaDependencyConstraint $constraint
-    );
+    public function visitRequiredConstraint(RequiredConstraint $constraint);
 
     // format constraints ======================================================
 
