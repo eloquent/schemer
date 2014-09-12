@@ -9,7 +9,7 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Serialization;
+namespace Eloquent\Schemer\Serialization\Constraint;
 
 use Eloquent\Schemer\Constraint\SchemaInterface;
 use Eloquent\Schemer\Serialization\Exception\SerializeException;
