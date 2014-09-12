@@ -108,6 +108,16 @@ class Schema implements SchemaInterface
     }
 
     /**
+     * Set the default value.
+     *
+     * @param mixed $defaultValue The default value.
+     */
+    public function setDefaultValue($defaultValue)
+    {
+        $this->defaultValue = $defaultValue;
+    }
+
+    /**
      * Get the default value.
      *
      * @return mixed The default value.
@@ -118,6 +128,16 @@ class Schema implements SchemaInterface
     }
 
     /**
+     * Set the title.
+     *
+     * @param string|null $title The title.
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
      * Get the title.
      *
      * @return string|null The title, or null if there is no title.
@@ -125,6 +145,16 @@ class Schema implements SchemaInterface
     public function title()
     {
         return $this->title;
+    }
+
+    /**
+     * Set the description.
+     *
+     * @param string|null $description The description.
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     /**

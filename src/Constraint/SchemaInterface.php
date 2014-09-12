@@ -47,6 +47,13 @@ interface SchemaInterface
     public function constraints();
 
     /**
+     * Set the default value.
+     *
+     * @param mixed $defaultValue The default value.
+     */
+    public function setDefaultValue($defaultValue);
+
+    /**
      * Get the default value.
      *
      * @return mixed The default value.
@@ -54,11 +61,25 @@ interface SchemaInterface
     public function defaultValue();
 
     /**
+     * Set the title.
+     *
+     * @param string|null $title The title.
+     */
+    public function setTitle($title);
+
+    /**
      * Get the title.
      *
      * @return string|null The title, or null if there is no title.
      */
     public function title();
+
+    /**
+     * Set the description.
+     *
+     * @param string|null $description The description.
+     */
+    public function setDescription($description);
 
     /**
      * Get the description.

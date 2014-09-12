@@ -73,6 +73,39 @@ class SchemaTest extends PHPUnit_Framework_TestCase
         $this->assertSame([$this->constraintB], $this->schema->constraints());
     }
 
+    public function testSetDefaultValue()
+    {
+        $this->schema->setDefaultValue(null);
+
+        $this->assertNull($this->schema->defaultValue());
+
+        $this->schema->setDefaultValue($this->defaultValue);
+
+        $this->assertSame($this->defaultValue, $this->schema->defaultValue());
+    }
+
+    public function testSetTitle()
+    {
+        $this->schema->setTitle(null);
+
+        $this->assertNull($this->schema->title());
+
+        $this->schema->setTitle($this->title);
+
+        $this->assertSame($this->title, $this->schema->title());
+    }
+
+    public function testSetDescription()
+    {
+        $this->schema->setDescription(null);
+
+        $this->assertNull($this->schema->description());
+
+        $this->schema->setDescription($this->description);
+
+        $this->assertSame($this->description, $this->schema->description());
+    }
+
     public function testIsEmpty()
     {
         $emptySchema = new Schema;
