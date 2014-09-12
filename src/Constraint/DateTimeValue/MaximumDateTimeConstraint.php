@@ -25,10 +25,10 @@ class MaximumDateTimeConstraint implements ConstraintInterface
     /**
      * Construct a new maximum date-time constraint.
      *
-     * @param DateTime     $maximum     The maximum date-time.
-     * @param boolean|null $isExclusive True if the maximum value is exclusive.
+     * @param DateTime|string $maximum     The maximum date-time.
+     * @param boolean|null    $isExclusive True if the maximum value is exclusive.
      */
-    public function __construct(DateTime $maximum, $isExclusive = null)
+    public function __construct($maximum, $isExclusive = null)
     {
         if (null === $isExclusive) {
             $isExclusive = false;
@@ -41,7 +41,7 @@ class MaximumDateTimeConstraint implements ConstraintInterface
     /**
      * Get the maximum date-time.
      *
-     * @return DateTime The maximum date-time.
+     * @return DateTime|string The maximum date-time.
      */
     public function maximum()
     {

@@ -25,10 +25,10 @@ class MinimumDateTimeConstraint implements ConstraintInterface
     /**
      * Construct a new minimum date-time constraint.
      *
-     * @param DateTime     $minimum     The minimum date-time.
-     * @param boolean|null $isExclusive True if the minimum value is exclusive.
+     * @param DateTime|string $minimum     The minimum date-time.
+     * @param boolean|null    $isExclusive True if the minimum value is exclusive.
      */
-    public function __construct(DateTime $minimum, $isExclusive = null)
+    public function __construct($minimum, $isExclusive = null)
     {
         if (null === $isExclusive) {
             $isExclusive = false;
@@ -41,7 +41,7 @@ class MinimumDateTimeConstraint implements ConstraintInterface
     /**
      * Get the minimum date-time.
      *
-     * @return DateTime The minimum date-time.
+     * @return DateTime|string The minimum date-time.
      */
     public function minimum()
     {
