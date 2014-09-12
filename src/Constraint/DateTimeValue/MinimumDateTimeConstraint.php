@@ -13,7 +13,7 @@ namespace Eloquent\Schemer\Constraint\DateTimeValue;
 
 use DateTime;
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 
 /**
  * Represents a minimum date-time constraint.

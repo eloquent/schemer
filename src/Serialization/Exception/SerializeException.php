@@ -21,7 +21,7 @@ final class SerializeException extends Exception
     /**
      * Construct a new serialize exception.
      *
-     * @param string         $value The value.
+     * @param mixed          $value The value.
      * @param Exception|null $cause The cause, if available.
      */
     public function __construct($value, Exception $cause = null)

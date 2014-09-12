@@ -12,7 +12,7 @@
 namespace Eloquent\Schemer\Constraint\Generic;
 
 use Eloquent\Schemer\Constraint\AbstractSchemaContainerConstraint;
-use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 
 /**
  * Represents an 'allOf' constraint.

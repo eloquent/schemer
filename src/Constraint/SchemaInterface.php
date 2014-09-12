@@ -14,8 +14,31 @@ namespace Eloquent\Schemer\Constraint;
 /**
  * The interface implemented by schemas.
  */
-interface SchemaInterface extends ConstraintInterface
+interface SchemaInterface
 {
+    /**
+     * Set the constraints.
+     *
+     * @param array<ConstraintInterface> $constraints The constraints.
+     */
+    public function setConstraints(array $constraints);
+
+    /**
+     * Add a constraint.
+     *
+     * @param ConstraintInterface $constraint The constraint.
+     */
+    public function addConstraint(ConstraintInterface $constraint);
+
+    /**
+     * Remove a constraint.
+     *
+     * @param ConstraintInterface $constraint The constraint.
+     *
+     * @return boolean True if the constraint existed in this schema.
+     */
+    public function removeConstraint(ConstraintInterface $constraint);
+
     /**
      * Get the constraints.
      *
@@ -50,4 +73,13 @@ interface SchemaInterface extends ConstraintInterface
      * @return boolean True if there are no constraints.
      */
     public function isEmpty();
+
+    /**
+     * Accept the supplied visitor.
+     *
+     * @param ConstraintVisitorInterface $visitor The visitor to accept.
+     *
+     * @return mixed The result of visitation.
+     */
+    public function accept(ConstraintVisitorInterface $visitor);
 }

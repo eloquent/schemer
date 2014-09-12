@@ -23,7 +23,7 @@ class DateTimeFormatConstraintTest extends PHPUnit_Framework_TestCase
 
     public function testAccept()
     {
-        $visitor = Phake::mock('Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface');
+        $visitor = Phake::mock('Eloquent\Schemer\Constraint\ConstraintVisitorInterface');
         $this->constraint->accept($visitor);
 
         Phake::verify($visitor)->visitDateTimeFormatConstraint($this->constraint);

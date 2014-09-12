@@ -9,7 +9,7 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Constraint\Visitor;
+namespace Eloquent\Schemer\Constraint;
 
 use Eloquent\Schemer\Constraint\ArrayValue\ItemsConstraint;
 use Eloquent\Schemer\Constraint\ArrayValue\MaximumItemsConstraint;
@@ -32,7 +32,6 @@ use Eloquent\Schemer\Constraint\ObjectValue\PropertiesConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\PropertyDependencyConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\RequiredConstraint;
 use Eloquent\Schemer\Constraint\ObjectValue\SchemaDependencyConstraint;
-use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Constraint\StringValue\Format\DateTimeFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\Format\EmailFormatConstraint;
 use Eloquent\Schemer\Constraint\StringValue\Format\HostnameFormatConstraint;
@@ -51,11 +50,11 @@ interface ConstraintVisitorInterface
     /**
      * Visit a schema.
      *
-     * @param Schema $schema The schema to visit.
+     * @param SchemaInterface $schema The schema to visit.
      *
      * @return mixed The result of visitation.
      */
-    public function visitSchema(Schema $schema);
+    public function visitSchema(SchemaInterface $schema);
 
     // array constraints =======================================================
 

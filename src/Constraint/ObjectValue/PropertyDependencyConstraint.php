@@ -12,7 +12,7 @@
 namespace Eloquent\Schemer\Constraint\ObjectValue;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
-use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 
 /**
  * Represents an individual property dependency constraint.

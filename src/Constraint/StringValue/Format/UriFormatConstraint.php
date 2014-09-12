@@ -11,7 +11,7 @@
 
 namespace Eloquent\Schemer\Constraint\StringValue\Format;
 
-use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
+use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 
 /**
  * Represents a 'uri' format constraint.

@@ -11,8 +11,6 @@
 
 namespace Eloquent\Schemer\Constraint;
 
-use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
-
 /**
  * The interface implemented by constraints.
  */

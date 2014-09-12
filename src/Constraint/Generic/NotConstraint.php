@@ -12,9 +12,9 @@
 namespace Eloquent\Schemer\Constraint\Generic;
 
 use Eloquent\Schemer\Constraint\ConstraintInterface;
+use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Constraint\SchemaInterface;
-use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 
 /**
  * Represents a 'not' constraint.

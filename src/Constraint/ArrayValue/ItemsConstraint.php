@@ -12,9 +12,9 @@
 namespace Eloquent\Schemer\Constraint\ArrayValue;
 
 use Eloquent\Schemer\Constraint\AbstractSchemaContainerConstraint;
+use Eloquent\Schemer\Constraint\ConstraintVisitorInterface;
 use Eloquent\Schemer\Constraint\Schema;
 use Eloquent\Schemer\Constraint\SchemaInterface;
-use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
 
 /**
  * Represents a set of 'items' and 'additionalItems' constraints.

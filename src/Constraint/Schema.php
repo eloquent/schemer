@@ -11,8 +11,6 @@
 
 namespace Eloquent\Schemer\Constraint;
 
-use Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface;
-
 /**
  * Represents a complete schema.
  */
@@ -54,6 +52,49 @@ class Schema implements SchemaInterface
         $this->defaultValue = $defaultValue;
         $this->title = $title;
         $this->description = $description;
+    }
+
+    /**
+     * Set the constraints.
+     *
+     * @param array<ConstraintInterface> $constraints The constraints.
+     */
+    public function setConstraints(array $constraints)
+    {
+        $this->constraints = $constraints;
+    }
+
+    /**
+     * Add a constraint.
+     *
+     * @param ConstraintInterface $constraint The constraint.
+     */
+    public function addConstraint(ConstraintInterface $constraint)
+    {
+        $this->constraints[] = $constraint;
+    }
+
+    /**
+     * Remove a constraint.
+     *
+     * @param ConstraintInterface $constraint The constraint.
+     *
+     * @return boolean True if the constraint existed in this schema.
+     */
+    public function removeConstraint(ConstraintInterface $constraint)
+    {
+        $isRemoved = false;
+
+        foreach ($this->constraints as $index => $thisConstraint) {
+            if ($thisConstraint === $constraint) {
+                array_splice($this->constraints, $index, 1);
+                $isRemoved = true;
+
+                break;
+            }
+        }
+
+        return $isRemoved;
     }
 
     /**

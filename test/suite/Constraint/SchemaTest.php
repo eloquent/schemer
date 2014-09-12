@@ -25,32 +25,59 @@ class SchemaTest extends PHPUnit_Framework_TestCase
         $this->defaultValue = 'defaultValue';
         $this->title = 'title';
         $this->description = 'description';
-        $this->constraint = new Schema($this->constraints, $this->defaultValue, $this->title, $this->description);
+        $this->schema = new Schema($this->constraints, $this->defaultValue, $this->title, $this->description);
+
+        $this->constraintC = Phake::mock('Eloquent\Schemer\Constraint\ConstraintInterface');
     }
 
     public function testConstructor()
     {
-        $this->assertSame($this->constraints, $this->constraint->constraints());
-        $this->assertSame($this->defaultValue, $this->constraint->defaultValue());
-        $this->assertSame($this->title, $this->constraint->title());
-        $this->assertSame($this->description, $this->constraint->description());
+        $this->assertSame($this->constraints, $this->schema->constraints());
+        $this->assertSame($this->defaultValue, $this->schema->defaultValue());
+        $this->assertSame($this->title, $this->schema->title());
+        $this->assertSame($this->description, $this->schema->description());
     }
 
     public function testConstructorDefaults()
     {
-        $this->constraint = new Schema;
+        $this->schema = new Schema;
 
-        $this->assertSame([], $this->constraint->constraints());
-        $this->assertNull($this->constraint->defaultValue());
-        $this->assertNull($this->constraint->title());
-        $this->assertNull($this->constraint->description());
+        $this->assertSame([], $this->schema->constraints());
+        $this->assertNull($this->schema->defaultValue());
+        $this->assertNull($this->schema->title());
+        $this->assertNull($this->schema->description());
+    }
+
+    public function testSetConstraints()
+    {
+        $this->constraints = [$this->constraintA, $this->constraintB];
+        $this->schema->setConstraints($this->constraints);
+
+        $this->assertSame($this->constraints, $this->schema->constraints());
+    }
+
+    public function testAddConstraint()
+    {
+        $this->schema->addConstraint($this->constraintC);
+
+        $this->assertSame([$this->constraintA, $this->constraintB, $this->constraintC], $this->schema->constraints());
+    }
+
+    public function testRemoveConstraint()
+    {
+        $this->schema->addConstraint($this->constraintB);
+
+        $this->assertTrue($this->schema->removeConstraint($this->constraintA));
+        $this->assertTrue($this->schema->removeConstraint($this->constraintB));
+        $this->assertFalse($this->schema->removeConstraint($this->constraintC));
+        $this->assertSame([$this->constraintB], $this->schema->constraints());
     }
 
     public function testIsEmpty()
     {
         $emptySchema = new Schema;
 
-        $this->assertFalse($this->constraint->isEmpty());
+        $this->assertFalse($this->schema->isEmpty());
         $this->assertTrue($emptySchema->isEmpty());
     }
 
@@ -65,9 +92,9 @@ class SchemaTest extends PHPUnit_Framework_TestCase
 
     public function testAccept()
     {
-        $visitor = Phake::mock('Eloquent\Schemer\Constraint\Visitor\ConstraintVisitorInterface');
-        $this->constraint->accept($visitor);
+        $visitor = Phake::mock('Eloquent\Schemer\Constraint\ConstraintVisitorInterface');
+        $this->schema->accept($visitor);
 
-        Phake::verify($visitor)->visitSchema($this->constraint);
+        Phake::verify($visitor)->visitSchema($this->schema);
     }
 }
