@@ -92,6 +92,39 @@ class DataReaderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    public function testReadFromUriWithAmbiguousUri()
+    {
+        Phake::when($this->isolator)->file_get_contents($this->path)->thenReturn($this->data);
+        $expected = new DataPacket($this->data, $this->mimeType);
+        $actual = $this->reader->readFromUri($this->path, $this->mimeType);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testReadFromUriWithNoPathUri()
+    {
+        Phake::when($this->isolator)->file_get_contents('')->thenReturn($this->data);
+        $expected = new DataPacket($this->data, $this->mimeType);
+        $actual = $this->reader->readFromUri('file://host', $this->mimeType);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testReadFromUriFailureInvalidUri()
+    {
+        $exception = null;
+        try {
+            $exception = $this->reader->readFromUri('scheme://');
+        } catch (Exception $exception) {}
+
+        $this->assertInstanceOf('Eloquent\Schemer\Persistence\Exception\ReadException', $exception);
+        $this->assertInstanceOf(
+            'Eloquent\Schemer\Persistence\Exception\InvalidUriException',
+            $exception->getPrevious()
+        );
+        $this->assertSame("Invalid URI 'scheme://'.", $exception->getPrevious()->getMessage());
+    }
+
     public function testReadFromUriFailureUnsupportedScheme()
     {
         $exception = null;

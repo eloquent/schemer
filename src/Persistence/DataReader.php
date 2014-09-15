@@ -13,6 +13,7 @@ namespace Eloquent\Schemer\Persistence;
 
 use Eloquent\Schemer\Mime\PathTypeMapper;
 use Eloquent\Schemer\Mime\PathTypeMapperInterface;
+use Eloquent\Schemer\Persistence\Exception\InvalidUriException;
 use Eloquent\Schemer\Persistence\Exception\ReadException;
 use Eloquent\Schemer\Persistence\Exception\UnexpectedHttpResponseException;
 use Eloquent\Schemer\Persistence\Exception\UnsupportedUriSchemeException;
@@ -97,20 +98,34 @@ class DataReader implements DataReaderInterface
     public function readFromUri($uri, $mimeType = null)
     {
         $uriParts = parse_url($uri);
+        if (false === $uriParts) {
+            throw new ReadException($uri, new InvalidUriException($uri));
+        }
 
-        switch (strtolower($uriParts['scheme'])) {
+        if (array_key_exists('scheme', $uriParts)) {
+            $scheme = strtolower($uriParts['scheme']);
+        } else {
+            $scheme = 'file';
+        }
+
+        switch ($scheme) {
             case 'http':
             case 'https':
                 return $this->readFromHttp($uri, $mimeType);
 
             case 'file':
-                return $this
-                    ->readFromFile(rawurldecode($uriParts['path']), $mimeType);
+                if (array_key_exists('path', $uriParts)) {
+                    $path = rawurldecode($uriParts['path']);
+                } else {
+                    $path = '';
+                }
+
+                return $this->readFromFile($path, $mimeType);
         }
 
         throw new ReadException(
             $uri,
-            new UnsupportedUriSchemeException($uriParts['scheme'])
+            new UnsupportedUriSchemeException($scheme)
         );
     }
 
