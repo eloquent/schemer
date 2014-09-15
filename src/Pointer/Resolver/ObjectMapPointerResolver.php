@@ -21,7 +21,7 @@ class ObjectMapPointerResolver implements PointerResolverInterface
     /**
      * Get a static object map pointer resolver instance.
      *
-     * @return DataSerializerInterface The static object map pointer resolver instance.
+     * @return PointerResolverInterface The static object map pointer resolver instance.
      */
     public static function instance()
     {

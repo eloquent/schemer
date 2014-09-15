@@ -20,11 +20,8 @@ class ObjectMapPointerResolverTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->resolver = new ObjectMapPointerResolver;
-    }
 
-    public function testResolve()
-    {
-        $value = (object) [
+        $this->value = (object) [
             'propertyA' => (object) [
                 'propertyAA' => [
                     'valueAAA',
@@ -34,31 +31,51 @@ class ObjectMapPointerResolverTest extends PHPUnit_Framework_TestCase
             ],
             'propertyB' => 'valueB',
         ];
+    }
 
-        $this->assertSame([$value, true], $this->resolver->resolve($value, Pointer::create('')));
-        $this->assertSame([$value->propertyA, true], $this->resolver->resolve($value, Pointer::create('/propertyA')));
+    public function testResolve()
+    {
+        $this->assertSame([$this->value, true], $this->resolver->resolve($this->value, Pointer::create('')));
         $this->assertSame(
-            [$value->propertyA->propertyAA, true],
-            $this->resolver->resolve($value, Pointer::create('/propertyA/propertyAA'))
+            [$this->value->propertyA, true],
+            $this->resolver->resolve($this->value, Pointer::create('/propertyA'))
         );
         $this->assertSame(
-            [$value->propertyA->propertyAA[0], true],
-            $this->resolver->resolve($value, Pointer::create('/propertyA/propertyAA/0'))
+            [$this->value->propertyA->propertyAA, true],
+            $this->resolver->resolve($this->value, Pointer::create('/propertyA/propertyAA'))
         );
         $this->assertSame(
-            [$value->propertyA->propertyAA[1], true],
-            $this->resolver->resolve($value, Pointer::create('/propertyA/propertyAA/1'))
+            [$this->value->propertyA->propertyAA[0], true],
+            $this->resolver->resolve($this->value, Pointer::create('/propertyA/propertyAA/0'))
         );
         $this->assertSame(
-            [$value->propertyA->propertyAA[2], true],
-            $this->resolver->resolve($value, Pointer::create('/propertyA/propertyAA/2'))
+            [$this->value->propertyA->propertyAA[1], true],
+            $this->resolver->resolve($this->value, Pointer::create('/propertyA/propertyAA/1'))
         );
-        $this->assertSame([$value->propertyB, true], $this->resolver->resolve($value, Pointer::create('/propertyB')));
-        $this->assertSame([null, false], $this->resolver->resolve($value, Pointer::create('/')));
-        $this->assertSame([null, false], $this->resolver->resolve($value, Pointer::create('/PROPERTYA')));
-        $this->assertSame([null, false], $this->resolver->resolve($value, Pointer::create('/propertyC')));
-        $this->assertSame([null, false], $this->resolver->resolve($value, Pointer::create('/propertyB/propertyC')));
-        $this->assertSame([null, false], $this->resolver->resolve($value, Pointer::create('/propertyAA')));
+        $this->assertSame(
+            [$this->value->propertyA->propertyAA[2], true],
+            $this->resolver->resolve($this->value, Pointer::create('/propertyA/propertyAA/2'))
+        );
+        $this->assertSame(
+            [$this->value->propertyB, true],
+            $this->resolver->resolve($this->value, Pointer::create('/propertyB'))
+        );
+        $this->assertSame([null, false], $this->resolver->resolve($this->value, Pointer::create('/')));
+        $this->assertSame([null, false], $this->resolver->resolve($this->value, Pointer::create('/PROPERTYA')));
+        $this->assertSame([null, false], $this->resolver->resolve($this->value, Pointer::create('/propertyC')));
+        $this->assertSame(
+            [null, false],
+            $this->resolver->resolve($this->value, Pointer::create('/propertyB/propertyC'))
+        );
+        $this->assertSame([null, false], $this->resolver->resolve($this->value, Pointer::create('/propertyAA')));
+    }
+
+    public function testResolveReturnsReference()
+    {
+        $result = $this->resolver->resolve($this->value, Pointer::create('/propertyA/propertyAA'));
+        $result[0][] = 'valueAAC';
+
+        $this->assertTrue(in_array('valueAAC', $this->value->propertyA->propertyAA, true));
     }
 
     public function testInstance()

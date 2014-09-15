@@ -68,7 +68,7 @@ interface PointerInterface
     /**
      * Get the parent of this pointer.
      *
-     * @return PointerInterface The parent pointer.
+     * @return PointerInterface|null The parent pointer, or null if there is no parent.
      */
     public function parent();
 
