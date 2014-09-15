@@ -41,66 +41,70 @@ class PointerTest extends PHPUnit_Framework_TestCase
 
     public function joinData()
     {
-        //                       joinAtoms                    atoms
+        //                       atoms               joinAtoms           resultAtoms
         return [
-            'Single atom'    => [['atomD'],                   ['atomA', 'atomB', 'atomC', 'atomD']],
-            'Multiple atoms' => [['atomD', 'atomE', 'atomF'], ['atomA', 'atomB', 'atomC', 'atomD', 'atomE', 'atomF']],
+            'Single atom'    => [['atomA', 'atomB'], ['atomC'],          ['atomA', 'atomB', 'atomC']],
+            'Multiple atoms' => [['atomA', 'atomB'], ['atomC', 'atomD'], ['atomA', 'atomB', 'atomC', 'atomD']],
         ];
     }
 
     /**
      * @dataProvider joinData
      */
-    public function testJoin($joinAtoms, $atoms)
+    public function testJoin($atoms, $joinAtoms, $resultAtoms)
     {
-        $pointer = $this->pointer->join(new Pointer($joinAtoms));
+        $pointer = new Pointer($atoms);
+        $joined = $pointer->join(new Pointer($joinAtoms));
 
-        $this->assertNotSame($this->pointer, $pointer);
-        $this->assertSame($atoms, $pointer->atoms());
+        $this->assertNotSame($pointer, $joined);
+        $this->assertSame($resultAtoms, $joined->atoms());
     }
 
     public function testJoinEmpty()
     {
-        $pointer = $this->pointer->join(new Pointer);
+        $joined = $this->pointer->join(new Pointer);
 
-        $this->assertSame($this->pointer, $pointer);
+        $this->assertSame($this->pointer, $joined);
     }
 
     /**
      * @dataProvider joinData
      */
-    public function testJoinAtoms($joinAtoms, $atoms)
+    public function testJoinAtoms($atoms, $joinAtoms, $resultAtoms)
     {
-        $pointer = call_user_func_array([$this->pointer, 'joinAtoms'], $joinAtoms);
+        $pointer = new Pointer($atoms);
+        $joined = call_user_func_array([$pointer, 'joinAtoms'], $joinAtoms);
 
-        $this->assertNotSame($this->pointer, $pointer);
-        $this->assertSame($atoms, $pointer->atoms());
+        $this->assertNotSame($pointer, $joined);
+        $this->assertSame($resultAtoms, $joined->atoms());
     }
 
     /**
      * @dataProvider joinData
      */
-    public function testJoinAtomSequence($joinAtoms, $atoms)
+    public function testJoinAtomSequence($atoms, $joinAtoms, $resultAtoms)
     {
-        $pointer = $this->pointer->joinAtomSequence($joinAtoms);
+        $pointer = new Pointer($atoms);
+        $joined = $pointer->joinAtomSequence($joinAtoms);
 
-        $this->assertNotSame($this->pointer, $pointer);
-        $this->assertSame($atoms, $pointer->atoms());
+        $this->assertNotSame($pointer, $joined);
+        $this->assertSame($resultAtoms, $joined->atoms());
     }
 
     public function testJoinAtomSequenceEmpty()
     {
-        $pointer = $this->pointer->joinAtomSequence([]);
+        $joined = $this->pointer->joinAtomSequence([]);
 
-        $this->assertSame($this->pointer, $pointer);
+        $this->assertSame($this->pointer, $joined);
     }
 
     public function parentData()
     {
-        //                       atoms                        parentAtoms
+        //                          atoms                        parentAtoms
         return [
-            'Single atom'    => [['atomA'],                   ['']],
-            'Multiple atoms' => [['atomA', 'atomB', 'atomC'], ['atomA', 'atomB']],
+            'Single atom'       => [['atomA'],                   []],
+            'Single empty atom' => [[''],                        []],
+            'Multiple atoms'    => [['atomA', 'atomB', 'atomC'], ['atomA', 'atomB']],
         ];
     }
 

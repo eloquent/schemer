@@ -130,9 +130,6 @@ class Pointer implements PointerInterface
         if ($this->size < 1) {
             return null;
         }
-        if (1 === $this->size) {
-            return new static(['']);
-        }
 
         $atoms = $this->atoms;
         array_pop($atoms);
@@ -157,7 +154,7 @@ class Pointer implements PointerInterface
                 '/',
                 array_map(
                     function ($value) {
-                        return strtr($value, array('~' => '~0', '/' => '~1'));
+                        return strtr($value, ['~' => '~0', '/' => '~1']);
                     },
                     $this->atoms
                 )
