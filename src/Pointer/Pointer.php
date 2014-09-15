@@ -11,11 +11,40 @@
 
 namespace Eloquent\Schemer\Pointer;
 
+use Eloquent\Schemer\Pointer\Factory\Exception\InvalidPointerException;
+use Eloquent\Schemer\Pointer\Factory\PointerFactory;
+
 /**
  * Represents a pointer into an value tree.
  */
 class Pointer implements PointerInterface
 {
+    /**
+     * Create a new pointer from its string representation.
+     *
+     * @param string|null $pointer The pointer string.
+     *
+     * @return PointerInterface        The newly created pointer.
+     * @throws InvalidPointerException If the supplied pointer string is invalid.
+     */
+    public static function create($pointer)
+    {
+        return static::factory()->create($pointer);
+    }
+
+    /**
+     * Create a new pointer from the fragment portion of the supplied URI.
+     *
+     * @param string $uri The URI.
+     *
+     * @return PointerInterface        The newly created pointer.
+     * @throws InvalidPointerException If the supplied pointer string is invalid.
+     */
+    public static function fromUri($uri)
+    {
+        return static::factory()->createFromUri($uri);
+    }
+
     /**
      * Construct a new pointer.
      *
@@ -39,20 +68,6 @@ class Pointer implements PointerInterface
     public function atoms()
     {
         return $this->atoms;
-    }
-
-    /**
-     * Get the last atom of this pointer.
-     *
-     * @return string|null The last atom, or null if there are no atoms.
-     */
-    public function lastAtom()
-    {
-        if ($this->size > 0) {
-            return $this->atoms[$this->size - 1];
-        }
-
-        return null;
     }
 
     /**
@@ -170,6 +185,16 @@ class Pointer implements PointerInterface
     public function __toString()
     {
         return $this->string();
+    }
+
+    /**
+     * Get a static instance of an appropriate factory for this type of pointer.
+     *
+     * @return PointerFactoryInterface The pointer factory.
+     */
+    protected static function factory()
+    {
+        return PointerFactory::instance();
     }
 
     private $atoms;

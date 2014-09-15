@@ -24,13 +24,6 @@ interface PointerInterface
     public function atoms();
 
     /**
-     * Get the last atom of this pointer.
-     *
-     * @return string|null The last atom, or null if there are no atoms.
-     */
-    public function lastAtom();
-
-    /**
      * Returns true if this pointer has atoms.
      *
      * @return boolean True if this pointer has atoms.

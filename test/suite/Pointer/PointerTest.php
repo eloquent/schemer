@@ -24,7 +24,6 @@ class PointerTest extends PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $this->assertSame($this->atoms, $this->pointer->atoms());
-        $this->assertSame('atomC', $this->pointer->lastAtom());
         $this->assertTrue($this->pointer->hasAtoms());
         $this->assertSame(3, $this->pointer->size());
     }
@@ -34,7 +33,6 @@ class PointerTest extends PHPUnit_Framework_TestCase
         $this->pointer = new Pointer;
 
         $this->assertSame([], $this->pointer->atoms());
-        $this->assertNull($this->pointer->lastAtom());
         $this->assertFalse($this->pointer->hasAtoms());
         $this->assertSame(0, $this->pointer->size());
     }
@@ -146,5 +144,18 @@ class PointerTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($string, $pointer->string());
         $this->assertSame($string, strval($pointer));
+    }
+
+    public function testCreate()
+    {
+        $this->assertSame(['foo', 'b~a/r', 'b/a~z', 'q~1ux'], Pointer::create('/foo/b~0a~1r/b~1a~0z/q~01ux')->atoms());
+    }
+
+    public function testFromUri()
+    {
+        $this->assertSame(
+            ['foo', 'b~a/r', 'b/a~z', 'q~1ux'],
+            Pointer::fromUri('http://example.org/#/foo/b~0%61%7E1r/b~1a~0z%2Fq~01ux')->atoms()
+        );
     }
 }
