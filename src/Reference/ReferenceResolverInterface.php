@@ -27,4 +27,15 @@ interface ReferenceResolverInterface
      * @throws ReferenceResolutionException If the value cannot be resolved.
      */
     public function resolve($value);
+
+    /**
+     * Resolve a value as specified by a URI.
+     *
+     * @param string $baseUri The base URI.
+     * @param string $uri     The URI reference.
+     *
+     * @return mixed                        The resolved value.
+     * @throws ReferenceResolutionException If the value cannot be resolved.
+     */
+    public function resolveUri($baseUri, $uri);
 }

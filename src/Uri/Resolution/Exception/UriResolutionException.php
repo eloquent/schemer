@@ -21,14 +21,14 @@ final class UriResolutionException extends Exception
     /**
      * Construct a new URI resolution exception.
      *
-     * @param string         $uri     The URI reference.
      * @param string         $baseUri The base URI.
+     * @param string         $uri     The URI reference.
      * @param Exception|null $cause   The cause, if available.
      */
-    public function __construct($uri, $baseUri, Exception $cause = null)
+    public function __construct($baseUri, $uri, Exception $cause = null)
     {
-        $this->uri = $uri;
         $this->baseUri = $baseUri;
+        $this->uri = $uri;
 
         parent::__construct(
             sprintf(
@@ -42,16 +42,6 @@ final class UriResolutionException extends Exception
     }
 
     /**
-     * Get the URI reference.
-     *
-     * @return string The URI reference.
-     */
-    public function uri()
-    {
-        return $this->uri;
-    }
-
-    /**
      * Get the base URI.
      *
      * @return string The base URI.
@@ -61,6 +51,16 @@ final class UriResolutionException extends Exception
         return $this->baseUri;
     }
 
-    private $uri;
+    /**
+     * Get the URI reference.
+     *
+     * @return string The URI reference.
+     */
+    public function uri()
+    {
+        return $this->uri;
+    }
+
     private $baseUri;
+    private $uri;
 }

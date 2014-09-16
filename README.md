@@ -6,6 +6,14 @@
 [![Test coverage]][Test coverage report]
 [![Uses semantic versioning]][SemVer]
 
+## Rewrite to-do
+
+- Reference resolution
+- Conversion of recursive map to references
+- Validation result objects
+- Schema reading
+- Validation
+
 <!-- References -->
 
 [Build status]: https://api.travis-ci.org/eloquent/schemer.png?branch=master

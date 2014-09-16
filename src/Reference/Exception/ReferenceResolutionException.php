@@ -21,20 +21,20 @@ final class ReferenceResolutionException extends Exception
     /**
      * Construct a new reference resolution exception.
      *
-     * @param string         $referenceUri The reference URI.
-     * @param string         $contextUri   The context URI.
-     * @param Exception|null $cause        The cause, if available.
+     * @param string         $baseUri The base URI.
+     * @param string         $uri     The URI reference.
+     * @param Exception|null $cause   The cause, if available.
      */
-    public function __construct($referenceUri, $contextUri, Exception $cause = null)
+    public function __construct($baseUri, $uri, Exception $cause = null)
     {
-        $this->referenceUri = $referenceUri;
-        $this->contextUri = $contextUri;
+        $this->baseUri = $baseUri;
+        $this->uri = $uri;
 
         parent::__construct(
             sprintf(
                 'Unable to resolve reference %s from context %s.',
-                var_export($referenceUri, true),
-                var_export($contextUri, true)
+                var_export($uri, true),
+                var_export($baseUri, true)
             ),
             0,
             $cause
@@ -42,25 +42,25 @@ final class ReferenceResolutionException extends Exception
     }
 
     /**
-     * Get the reference URI.
+     * Get the base URI.
      *
-     * @return string The reference URI.
+     * @return string The base URI.
      */
-    public function referenceUri()
+    public function baseUri()
     {
-        return $this->referenceUri;
+        return $this->baseUri;
     }
 
     /**
-     * Get the context URI.
+     * Get the URI reference.
      *
-     * @return string The context URI.
+     * @return string The URI reference.
      */
-    public function contextUri()
+    public function uri()
     {
-        return $this->contextUri;
+        return $this->uri;
     }
 
-    private $referenceUri;
-    private $contextUri;
+    private $baseUri;
+    private $uri;
 }

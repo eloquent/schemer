@@ -18,13 +18,13 @@ class UriResolutionExceptionTest extends PHPUnit_Framework_TestCase
 {
     public function testException()
     {
-        $uri = 'uri';
         $baseUri = 'baseUri';
+        $uri = 'uri';
         $cause = new Exception;
-        $exception = new UriResolutionException($uri, $baseUri, $cause);
+        $exception = new UriResolutionException($baseUri, $uri, $cause);
 
-        $this->assertSame($uri, $exception->uri());
         $this->assertSame($baseUri, $exception->baseUri());
+        $this->assertSame($uri, $exception->uri());
         $this->assertSame("Unable to resolve URI 'uri' against base URI 'baseUri'.", $exception->getMessage());
         $this->assertSame(0, $exception->getCode());
         $this->assertSame($cause, $exception->getPrevious());

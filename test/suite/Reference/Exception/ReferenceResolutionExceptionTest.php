@@ -18,17 +18,14 @@ class ReferenceResolutionExceptionTest extends PHPUnit_Framework_TestCase
 {
     public function testException()
     {
-        $referenceUri = 'path/to/reference';
-        $contextUri = 'file:///path/to/directory';
+        $baseUri = 'baseUri';
+        $uri = 'uri';
         $cause = new Exception;
-        $exception = new ReferenceResolutionException($referenceUri, $contextUri, $cause);
+        $exception = new ReferenceResolutionException($baseUri, $uri, $cause);
 
-        $this->assertSame($referenceUri, $exception->referenceUri());
-        $this->assertSame($contextUri, $exception->contextUri());
-        $this->assertSame(
-            "Unable to resolve reference 'path/to/reference' from context 'file:///path/to/directory'.",
-            $exception->getMessage()
-        );
+        $this->assertSame($baseUri, $exception->baseUri());
+        $this->assertSame($uri, $exception->uri());
+        $this->assertSame("Unable to resolve reference 'uri' from context 'baseUri'.", $exception->getMessage());
         $this->assertSame(0, $exception->getCode());
         $this->assertSame($cause, $exception->getPrevious());
     }

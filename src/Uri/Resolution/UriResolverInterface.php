@@ -21,11 +21,11 @@ interface UriResolverInterface
     /**
      * Resolve a URI reference against a base URI.
      *
-     * @param string $uri     The URI reference.
      * @param string $baseUri The base URI.
+     * @param string $uri     The URI reference.
      *
      * @return string                 The resolved URI.
      * @throws UriResolutionException If the URI reference cannot be resolved.
      */
-    public function resolve($uri, $baseUri);
+    public function resolve($baseUri, $uri);
 }
