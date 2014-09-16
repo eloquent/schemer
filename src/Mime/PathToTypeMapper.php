@@ -14,12 +14,12 @@ namespace Eloquent\Schemer\Mime;
 /**
  * Maps file paths to MIME types.
  */
-class PathTypeMapper implements PathTypeMapperInterface
+class PathToTypeMapper implements PathToTypeMapperInterface
 {
     /**
-     * Get a static path type mapper instance.
+     * Get a static path to type mapper instance.
      *
-     * @return PathTypeMapperInterface The static path type mapper instance.
+     * @return PathToTypeMapperInterface The static path to type mapper instance.
      */
     public static function instance()
     {
@@ -46,7 +46,7 @@ class PathTypeMapper implements PathTypeMapperInterface
     }
 
     /**
-     * Construct a new path type mapper.
+     * Construct a new path to type mapper.
      *
      * @param array<string,string>|null $extensionMap The extension map.
      */

@@ -14,7 +14,7 @@ namespace Eloquent\Schemer\Mime;
 use Eloquent\Liberator\Liberator;
 use PHPUnit_Framework_TestCase;
 
-class PathTypeMapperTest extends PHPUnit_Framework_TestCase
+class PathToTypeMapperTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
@@ -22,7 +22,7 @@ class PathTypeMapperTest extends PHPUnit_Framework_TestCase
             'a' => 'type-a',
             'b' => 'type-b',
         ];
-        $this->mapper = new PathTypeMapper($this->extensionMap);
+        $this->mapper = new PathToTypeMapper($this->extensionMap);
     }
 
     public function testConstructor()
@@ -32,16 +32,16 @@ class PathTypeMapperTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorDefaults()
     {
-        $this->mapper = new PathTypeMapper;
+        $this->mapper = new PathToTypeMapper;
 
-        $this->assertSame(PathTypeMapper::defaultExtensionMap(), $this->mapper->extensionMap());
+        $this->assertSame(PathToTypeMapper::defaultExtensionMap(), $this->mapper->extensionMap());
     }
 
     public function testSetExtensionMap()
     {
-        $this->mapper->setExtensionMap(PathTypeMapper::defaultExtensionMap());
+        $this->mapper->setExtensionMap(PathToTypeMapper::defaultExtensionMap());
 
-        $this->assertSame(PathTypeMapper::defaultExtensionMap(), $this->mapper->extensionMap());
+        $this->assertSame(PathToTypeMapper::defaultExtensionMap(), $this->mapper->extensionMap());
     }
 
     public function testSetExtensionMapEntry()
@@ -80,7 +80,7 @@ class PathTypeMapperTest extends PHPUnit_Framework_TestCase
      */
     public function testTypeByPath($path, $mimeType)
     {
-        $this->mapper = new PathTypeMapper;
+        $this->mapper = new PathToTypeMapper;
 
         $this->assertSame($mimeType, $this->mapper->typeByPath($path));
     }

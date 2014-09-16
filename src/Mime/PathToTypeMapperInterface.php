@@ -12,9 +12,9 @@
 namespace Eloquent\Schemer\Mime;
 
 /**
- * The interface implemented by path type mappers.
+ * The interface implemented by path to type mappers.
  */
-interface PathTypeMapperInterface
+interface PathToTypeMapperInterface
 {
     /**
      * Get the most likely MIME type for the supplied path.

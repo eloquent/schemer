@@ -12,7 +12,7 @@
 namespace Eloquent\Schemer\Persistence;
 
 use Eloquent\Liberator\Liberator;
-use Eloquent\Schemer\Mime\PathTypeMapper;
+use Eloquent\Schemer\Mime\PathToTypeMapper;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Message\Response;
@@ -25,10 +25,10 @@ class DataReaderTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        $this->pathTypeMapper = new PathTypeMapper;
+        $this->pathToTypeMapper = new PathToTypeMapper;
         $this->httpClient = Phake::mock('GuzzleHttp\Client');
         $this->isolator = Phake::mock(Isolator::className());
-        $this->reader = new DataReader($this->pathTypeMapper, $this->httpClient, $this->isolator);
+        $this->reader = new DataReader($this->pathToTypeMapper, $this->httpClient, $this->isolator);
 
         $this->httpUri = 'http://example.org/path/to/file.js%6Fn';
         $this->httpsUri = 'https://example.org/path/to/file.js%6Fn';
@@ -53,7 +53,7 @@ class DataReaderTest extends PHPUnit_Framework_TestCase
 
     public function testConstructor()
     {
-        $this->assertSame($this->pathTypeMapper, $this->reader->pathTypeMapper());
+        $this->assertSame($this->pathToTypeMapper, $this->reader->pathToTypeMapper());
         $this->assertSame($this->httpClient, $this->reader->httpClient());
     }
 
@@ -61,7 +61,7 @@ class DataReaderTest extends PHPUnit_Framework_TestCase
     {
         $this->reader = new DataReader;
 
-        $this->assertSame(PathTypeMapper::instance(), $this->reader->pathTypeMapper());
+        $this->assertSame(PathToTypeMapper::instance(), $this->reader->pathToTypeMapper());
         $this->assertEquals(new Client, $this->reader->httpClient());
     }
 

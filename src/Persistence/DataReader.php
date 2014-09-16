@@ -11,8 +11,8 @@
 
 namespace Eloquent\Schemer\Persistence;
 
-use Eloquent\Schemer\Mime\PathTypeMapper;
-use Eloquent\Schemer\Mime\PathTypeMapperInterface;
+use Eloquent\Schemer\Mime\PathToTypeMapper;
+use Eloquent\Schemer\Mime\PathToTypeMapperInterface;
 use Eloquent\Schemer\Persistence\Exception\ReadException;
 use Eloquent\Schemer\Persistence\Exception\UnexpectedHttpResponseException;
 use Eloquent\Schemer\Persistence\Exception\UnsupportedUriSchemeException;
@@ -45,35 +45,35 @@ class DataReader implements DataReaderInterface
     /**
      * Construct a new data reader.
      *
-     * @param PathTypeMapperInterface|null $pathTypeMapper The path type mapper to use.
-     * @param ClientInterface              $httpClient     The HTTP client to use.
-     * @param Isolator|null                $isolator       The isolator to use.
+     * @param PathToTypeMapperInterface|null $pathToTypeMapper The path to type mapper to use.
+     * @param ClientInterface                $httpClient       The HTTP client to use.
+     * @param Isolator|null                  $isolator         The isolator to use.
      */
     public function __construct(
-        PathTypeMapperInterface $pathTypeMapper = null,
+        PathToTypeMapperInterface $pathToTypeMapper = null,
         ClientInterface $httpClient = null,
         Isolator $isolator = null
     ) {
-        if (null === $pathTypeMapper) {
-            $pathTypeMapper = PathTypeMapper::instance();
+        if (null === $pathToTypeMapper) {
+            $pathToTypeMapper = PathToTypeMapper::instance();
         }
         if (null === $httpClient) {
             $httpClient = new Client;
         }
 
-        $this->pathTypeMapper = $pathTypeMapper;
+        $this->pathToTypeMapper = $pathToTypeMapper;
         $this->httpClient = $httpClient;
         $this->isolator = Isolator::get($isolator);
     }
 
     /**
-     * Get the path type mapper.
+     * Get the path to type mapper.
      *
-     * @return PathTypeMapperInterface The path type mapper.
+     * @return PathToTypeMapperInterface The path to type mapper.
      */
-    public function pathTypeMapper()
+    public function pathToTypeMapper()
     {
-        return $this->pathTypeMapper;
+        return $this->pathToTypeMapper;
     }
 
     /**
@@ -159,7 +159,7 @@ class DataReader implements DataReaderInterface
             if ($responseMimeType) {
                 $mimeType = $responseMimeType;
             } else {
-                $mimeType = $this->pathTypeMapper()
+                $mimeType = $this->pathToTypeMapper()
                     ->typeByPath(rawurldecode(parse_url($uri, PHP_URL_PATH)));
             }
         }
@@ -184,7 +184,7 @@ class DataReader implements DataReaderInterface
         }
 
         if (null === $mimeType) {
-            $mimeType = $this->pathTypeMapper()->typeByPath($path);
+            $mimeType = $this->pathToTypeMapper()->typeByPath($path);
         }
 
         return new DataPacket($data, $mimeType);
@@ -208,7 +208,7 @@ class DataReader implements DataReaderInterface
         }
 
         if (null === $mimeType) {
-            $mimeType = $this->pathTypeMapper()
+            $mimeType = $this->pathToTypeMapper()
                 ->typeByPath(rawurldecode(parse_url($uri, PHP_URL_PATH)));
         }
 
@@ -247,7 +247,7 @@ class DataReader implements DataReaderInterface
     }
 
     private static $instance;
-    private $pathTypeMapper;
+    private $pathToTypeMapper;
     private $httpClient;
     private $isolator;
 }
