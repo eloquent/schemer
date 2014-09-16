@@ -22,19 +22,36 @@ use GuzzleHttp\Url;
 class BoundUriResolver implements BoundUriResolverInterface
 {
     /**
-     * Construct a new bound URI resolver.
+     * Create a new bound URI resolver from a base URI string.
      *
      * @param string $baseUri The base URI.
+     *
+     * @return BoundUriResolverInterface The newly created bound URI resolver.
+     * @throws InvalidUriException       If the supplied base URI is invalid.
      */
-    public function __construct($baseUri)
+    public static function fromUriString($baseUri)
     {
         try {
-            $this->baseUriObject = Url::fromString($baseUri);
+            $baseUriObject = Url::fromString($baseUri);
         } catch (Exception $e) {
             throw new InvalidUriException($baseUri, $e);
         }
 
+        return new static($baseUri, $baseUriObject);
+    }
+
+    /**
+     * Construct a new bound URI resolver.
+     *
+     * @param string $baseUri The base URI.
+     * @param Url    $baseUri The base URI object.
+     *
+     * @internal
+     */
+    protected function __construct($baseUri, $baseUriObject)
+    {
         $this->baseUri = $baseUri;
+        $this->baseUriObject = $baseUriObject;
     }
 
     /**

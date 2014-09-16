@@ -12,6 +12,7 @@
 namespace Eloquent\Schemer\Reference;
 
 use Eloquent\Schemer\Reference\Exception\ReferenceResolutionException;
+use Eloquent\Schemer\Uri\Resolution\BoundUriResolverInterface;
 
 /**
  * The interface implemented by reference resolvers.
@@ -31,11 +32,16 @@ interface ReferenceResolverInterface
     /**
      * Resolve a value as specified by a URI.
      *
-     * @param string $baseUri The base URI.
-     * @param string $uri     The URI reference.
+     * @param string                         $baseUri     The base URI.
+     * @param string                         $uri         The URI reference.
+     * @param BoundUriResolverInterface|null $uriResolver The bound URI resolver to use.
      *
      * @return mixed                        The resolved value.
      * @throws ReferenceResolutionException If the value cannot be resolved.
      */
-    public function resolveUri($baseUri, $uri);
+    public function resolveUri(
+        $baseUri,
+        $uri,
+        BoundUriResolverInterface $uriResolver = null
+    );
 }

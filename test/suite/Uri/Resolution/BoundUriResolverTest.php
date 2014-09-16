@@ -19,7 +19,7 @@ class BoundUriResolverTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->baseUri = 'scheme://host';
-        $this->resolver = new BoundUriResolver($this->baseUri);
+        $this->resolver = BoundUriResolver::fromUriString($this->baseUri);
     }
 
     public function testConstructor()
@@ -62,14 +62,14 @@ class BoundUriResolverTest extends PHPUnit_Framework_TestCase
      */
     public function testResolve($baseUri, $uri, $resolvedUri)
     {
-        $resolver = new BoundUriResolver($baseUri);
+        $resolver = BoundUriResolver::fromUriString($baseUri);
 
         $this->assertSame($resolvedUri, $resolver->resolve($uri));
     }
 
     public function testResolveFailureInvalidUri()
     {
-        $resolver = new BoundUriResolver('scheme://host');
+        $resolver = BoundUriResolver::fromUriString('scheme://host');
         $exception = null;
         try {
             $resolver->resolve('scheme://');
@@ -80,11 +80,11 @@ class BoundUriResolverTest extends PHPUnit_Framework_TestCase
         $this->assertSame("Invalid URI 'scheme://'.", $exception->getPrevious()->getMessage());
     }
 
-    public function testResolveFailureInvalidBaseUri()
+    public function testFromUriStringFailureInvalidBaseUri()
     {
         $exception = null;
         try {
-            $resolver = new BoundUriResolver('scheme://');
+            $resolver = BoundUriResolver::fromUriString('scheme://');
         } catch (Exception $exception) {}
 
         $this->assertInstanceOf('Eloquent\Schemer\Uri\Exception\InvalidUriException', $exception);
