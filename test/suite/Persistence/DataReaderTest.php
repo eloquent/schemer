@@ -118,10 +118,7 @@ class DataReaderTest extends PHPUnit_Framework_TestCase
         } catch (Exception $exception) {}
 
         $this->assertInstanceOf('Eloquent\Schemer\Persistence\Exception\ReadException', $exception);
-        $this->assertInstanceOf(
-            'Eloquent\Schemer\Persistence\Exception\InvalidUriException',
-            $exception->getPrevious()
-        );
+        $this->assertInstanceOf('Eloquent\Schemer\Uri\Exception\InvalidUriException', $exception->getPrevious());
         $this->assertSame("Invalid URI 'scheme://'.", $exception->getPrevious()->getMessage());
     }
 

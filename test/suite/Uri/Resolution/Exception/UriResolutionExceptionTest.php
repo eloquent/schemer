@@ -9,21 +9,23 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Persistence\Exception;
+namespace Eloquent\Schemer\Uri\Resolution\Exception;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
 
-class InvalidUriExceptionTest extends PHPUnit_Framework_TestCase
+class UriResolutionExceptionTest extends PHPUnit_Framework_TestCase
 {
     public function testException()
     {
         $uri = 'uri';
+        $baseUri = 'baseUri';
         $cause = new Exception;
-        $exception = new InvalidUriException($uri, $cause);
+        $exception = new UriResolutionException($uri, $baseUri, $cause);
 
         $this->assertSame($uri, $exception->uri());
-        $this->assertSame("Invalid URI 'uri'.", $exception->getMessage());
+        $this->assertSame($baseUri, $exception->baseUri());
+        $this->assertSame("Unable to resolve URI 'uri' against base URI 'baseUri'.", $exception->getMessage());
         $this->assertSame(0, $exception->getCode());
         $this->assertSame($cause, $exception->getPrevious());
     }

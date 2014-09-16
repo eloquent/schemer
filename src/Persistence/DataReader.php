@@ -13,10 +13,10 @@ namespace Eloquent\Schemer\Persistence;
 
 use Eloquent\Schemer\Mime\PathTypeMapper;
 use Eloquent\Schemer\Mime\PathTypeMapperInterface;
-use Eloquent\Schemer\Persistence\Exception\InvalidUriException;
 use Eloquent\Schemer\Persistence\Exception\ReadException;
 use Eloquent\Schemer\Persistence\Exception\UnexpectedHttpResponseException;
 use Eloquent\Schemer\Persistence\Exception\UnsupportedUriSchemeException;
+use Eloquent\Schemer\Uri\Exception\InvalidUriException;
 use ErrorException;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;

@@ -9,7 +9,7 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Schemer\Persistence\Exception;
+namespace Eloquent\Schemer\Uri\Exception;
 
 use Exception;
 
