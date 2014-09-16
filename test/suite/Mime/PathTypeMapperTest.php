@@ -18,7 +18,47 @@ class PathTypeMapperTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
+        $this->extensionMap = [
+            'a' => 'type-a',
+            'b' => 'type-b',
+        ];
+        $this->mapper = new PathTypeMapper($this->extensionMap);
+    }
+
+    public function testConstructor()
+    {
+        $this->assertSame($this->extensionMap, $this->mapper->extensionMap());
+    }
+
+    public function testConstructorDefaults()
+    {
         $this->mapper = new PathTypeMapper;
+
+        $this->assertSame(PathTypeMapper::defaultExtensionMap(), $this->mapper->extensionMap());
+    }
+
+    public function testSetExtensionMap()
+    {
+        $this->mapper->setExtensionMap(PathTypeMapper::defaultExtensionMap());
+
+        $this->assertSame(PathTypeMapper::defaultExtensionMap(), $this->mapper->extensionMap());
+    }
+
+    public function testSetExtensionMapEntry()
+    {
+        $this->assertNull($this->mapper->typeByPath('/path/to/file.extension'));
+
+        $this->mapper->setExtensionMapEntry('extension', 'type');
+
+        $this->assertSame('type', $this->mapper->typeByPath('/path/to/file.extension'));
+    }
+
+    public function testRemoveExtensionMapEntry()
+    {
+        $this->assertSame('type-a', $this->mapper->typeByPath('/path/to/file.a'));
+        $this->assertTrue($this->mapper->removeExtensionMapEntry('a'));
+        $this->assertNull($this->mapper->typeByPath('/path/to/file.a'));
+        $this->assertFalse($this->mapper->removeExtensionMapEntry('a'));
     }
 
     public function typeByPathData()
@@ -40,6 +80,8 @@ class PathTypeMapperTest extends PHPUnit_Framework_TestCase
      */
     public function testTypeByPath($path, $mimeType)
     {
+        $this->mapper = new PathTypeMapper;
+
         $this->assertSame($mimeType, $this->mapper->typeByPath($path));
     }
 
